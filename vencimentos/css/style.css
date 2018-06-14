@@ -1,0 +1,149 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: arial,sans-serif;
+    font-size: 13px;
+}
+
+.container {
+    margin-top: 60px;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+#cursos {
+    display: flex;
+}
+
+#cursos tbody {
+    text-align: center;
+}
+
+.table-response {
+    width: 100%;
+    display: flex;
+}
+.hide {
+    display: none;
+}
+.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    empty-cells: show;
+    border: 1px solid #cbcbcb;
+    margin: 0 15px;
+    margin-bottom: 20px;
+    white-space: nowrap;
+}
+
+.table td,
+.table th {
+    border: 1px solid #cbcbcb;
+    border-width: 0 0 0 1px;
+    font-size: inherit;
+    margin: 0;
+    overflow: visible;
+    padding: 0.5em 1em;
+}
+
+.table td:first-child,
+.table th:first-child {
+    border-left-width: 0;
+}
+
+.table thead {
+    background-color: #002060;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tbody tr:nth-child(2n) {
+    background-color: #f2f2f2;
+}
+
+.table td {
+    border: 1px solid #e2efd9;
+}
+
+.hide {
+    display: none;
+}
+
+.popup{
+    position: absolute;
+    background: #ccc;
+    padding: 25px;
+    border-radius: 5px;
+}
+
+.table tbody > tr:last-child > td {
+    border-bottom-width: 0;
+}
+
+.salvar{
+    fill: #00aeff;
+}
+
+.cancelar{
+    background-color: #aa3f3f;
+    padding: 10px 35px;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    text-transform: uppercase;
+    color: #f1f1f1;
+    font-weight: bold;
+}
+
+.header-table {
+    margin: 0 0 15px 15px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#salvar {
+    position: fixed;
+    top: 5px;
+    right: 10px;
+    z-index: 1000;
+}
+
+#voltar {
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    z-index: 1000;
+}
+.fixed_top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 44px;
+    z-index: 10;
+    background: rgba(246,246,248,.85);
+}
+
+.flatpickr-input .open{
+    position: fixed;
+}
+.legenda .flex-row{
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0;
+}
+.legenda .color {
+    width: 50px;
+    height: 15px;
+    margin: 0  15px;
+}
