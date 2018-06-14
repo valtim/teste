@@ -426,10 +426,10 @@ var carregarDiario = function (diario) {
         retornaDiv('Tripulante 2', novaCombo('cmbPrimeiroOficial', 'Linhas/' + i + '/PrimeiroOficial', JSON.parse(localStorage.getItem("Tripulante")), 'Id', 'Trato', 'Tripulante 2'))
             .appendTo($('#pnLinha_' + idx));
 
-        retornaDiv('Função 1', novaCombo('FuncaoTrip1', 'Linhas/' + i + '/Funcao1', JSON.parse(localStorage.getItem("FuncaoBordo")), 'Id', 'Nome', 'Função 1'))
+        retornaDiv('Função 1', novaCombo('FuncaoTrip1', 'Linhas/' + i + '/FuncaoTrip1', JSON.parse(localStorage.getItem("FuncaoBordo")), 'Id', 'Nome', 'Função 1'))
             .appendTo($('#pnLinha_' + idx));
 
-        retornaDiv('Função 2', novaCombo('FuncaoTrip2', 'Linhas/' + i + '/Funcao2', JSON.parse(localStorage.getItem("FuncaoBordo")), 'Id', 'Nome', 'Função 2'))
+        retornaDiv('Função 2', novaCombo('FuncaoTrip2', 'Linhas/' + i + '/FuncaoTrip2', JSON.parse(localStorage.getItem("FuncaoBordo")), 'Id', 'Nome', 'Função 2'))
             .appendTo($('#pnLinha_' + idx));
 
         retornaDiv('Comb. na Decolagem(Lb)', novoInteiro('nrFuelDec', 'Linhas/' + i + '/FuelDec'))
