@@ -1,3 +1,5 @@
+var URL = window.location.origin === "http://localhost:8080" ? "https://teste.sistemasol.com.br" : "";
+
 function isDate(val) {
     if (val === null) {
         return false;
@@ -597,8 +599,10 @@ var salvar = function () {
                 alert("Diário Salvo");
                 $('#loading').hide();
             })
-        .fail(function () {
-            alert("Erro ao salvar. Se o problema persistir entre em contato com o Suporte. \n contato@sistemasol.com.br");
+        .fail(function (e) {
+            console.log("URL: ", URL + "/api/novodiario");
+            console.log("e: ", e.message);
+            // alert("Erro ao salvar. Se o problema persistir entre em contato com o Suporte. \n contato@sistemasol.com.br");
         });
 };
 
