@@ -105,6 +105,7 @@ var buscarBasicos = function () {
             localStorage.setItem("Prefixo", JSON.stringify(e.Prefixo));
             localStorage.setItem("Natureza", JSON.stringify(e.Natureza));
             localStorage.setItem("Abastecedora", JSON.stringify(e.Abastecedora));
+            localStorage.setItem("TipoDeOperacao", JSON.stringify(e.TipoDeOperacao));
             localStorage.setItem("FuncaoBordo", JSON.stringify(e.FuncaoBordo));
         },
         error: function (e) {

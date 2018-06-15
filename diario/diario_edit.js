@@ -432,6 +432,11 @@ var carregarDiario = function (diario) {
         retornaDiv('Função 2', novaCombo('FuncaoTrip2', 'Linhas/' + i + '/FuncaoTrip2', JSON.parse(localStorage.getItem("FuncaoBordo")), 'Id', 'Nome', 'Função 2'))
             .appendTo($('#pnLinha_' + idx));
 
+        retornaDiv('Tipo de Operação', novaCombo('TipoDeOperacao', 'Linhas/' + i + '/TipoDeOperacao', JSON.parse(localStorage.getItem("TipoDeOperacao")), 'Id', 'Nome', 'Tipo de Operação'))
+            .appendTo($('#pnLinha_' + idx));
+
+        $('<div />').appendTo($('#pnLinha_' + idx));
+
         retornaDiv('Comb. na Decolagem(Lb)', novoInteiro('nrFuelDec', 'Linhas/' + i + '/FuelDec'))
             .appendTo($('#pnLinha_' + idx));
 
