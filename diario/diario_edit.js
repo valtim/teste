@@ -271,6 +271,88 @@ var carregarDiario = function (diario) {
 
     $('<div />')
         .addClass('titulo_pagina')
+        .text('Procedimentos')
+        .appendTo("#primeira_pagina");
+
+    $('<div />')
+        .addClass('duas_colunas')
+        .attr('id', 'procedimento')
+        .appendTo("#primeira_pagina");
+
+    var procedimentoTable = $('<table />').appendTo($('#procedimento'));
+    procedimentoTable.append(
+        $('<tr />')
+        .append($('<td />').append(''))
+        .append($('<td colspan=2 />').append('1P'))
+        .append($('<td colspan=2 />').append('2P'))
+        .append($('<td colspan=2 />').append('3P'))
+        .append($('<td colspan=2 />').append('4P'))
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />'),
+            $('<td />').append('D'), $('<td />').append('N'),
+            $('<td />').append('D'), $('<td />').append('N'),
+            $('<td />').append('D'), $('<td />').append('N'),
+            $('<td />').append('D'), $('<td />').append('N')
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('ILS'),
+            $('<td />').append(novoNumero('ilsp1d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp1n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp2d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp2n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp3d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp3n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp4d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ilsp4n', []).prop('min', 0).prop('max', 100))
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('NDB/VOR'),
+            $('<td />').append(novoNumero('ndbvorp1d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp1n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp2d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp2n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp3d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp3n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp4d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('ndbvorp4n', []).prop('min', 0).prop('max', 100))
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('GNSS'),
+            $('<td />').append(novoNumero('gnssp1d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp1n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp2d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp2n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp3d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp3n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp4d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('gnssp4n', []).prop('min', 0).prop('max', 100))
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('VFR'),
+            $('<td />').append(novoNumero('vfrp1d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp1n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp2d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp2n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp3d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp3n', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp4d', []).prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoNumero('vfrp4n', []).prop('min', 0).prop('max', 100))
+        )
+    );
+    
+    
+    $('<div />')
+        .addClass('titulo_pagina')
         .text('Hora de Apresentação')
         .appendTo("#primeira_pagina");
 
