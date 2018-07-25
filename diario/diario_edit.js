@@ -300,53 +300,79 @@ var carregarDiario = function (diario) {
     procedimentoTable.append(
         $('<tr />').append(
             $('<td />').append('ILS'),
-            $('<td />').append(novoNumero('ilsp1d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp1n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp2d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp2n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp3d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp3n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp4d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ilsp4n', []).prop('min', 0).prop('max', 100))
+            $('<td />').append(novoInteiro('ilsp1d', 'Procedimentos/0/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp1n', 'Procedimentos/0/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp2d', 'Procedimentos/0/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp2n', 'Procedimentos/0/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp3d', 'Procedimentos/0/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp3n', 'Procedimentos/0/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp4d', 'Procedimentos/0/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ilsp4n', 'Procedimentos/0/Noturno4p').prop('min', 0).prop('max', 100))
         )
     );
     procedimentoTable.append(
         $('<tr />').append(
             $('<td />').append('NDB/VOR'),
-            $('<td />').append(novoNumero('ndbvorp1d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp1n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp2d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp2n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp3d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp3n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp4d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('ndbvorp4n', []).prop('min', 0).prop('max', 100))
+            $('<td />').append(novoInteiro('ndbvorp1d', 'Procedimentos/1/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp1n', 'Procedimentos/1/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp2d', 'Procedimentos/1/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp2n', 'Procedimentos/1/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp3d', 'Procedimentos/1/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp3n', 'Procedimentos/1/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp4d', 'Procedimentos/1/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('ndbvorp4n', 'Procedimentos/1/Noturno4p').prop('min', 0).prop('max', 100))
         )
     );
     procedimentoTable.append(
         $('<tr />').append(
             $('<td />').append('GNSS'),
-            $('<td />').append(novoNumero('gnssp1d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp1n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp2d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp2n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp3d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp3n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp4d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('gnssp4n', []).prop('min', 0).prop('max', 100))
+            $('<td />').append(novoInteiro('gnssp1d', 'Procedimentos/2/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp1n', 'Procedimentos/2/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp2d', 'Procedimentos/2/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp2n', 'Procedimentos/2/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp3d', 'Procedimentos/2/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp3n', 'Procedimentos/2/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp4d', 'Procedimentos/2/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('gnssp4n', 'Procedimentos/2/Noturno4p').prop('min', 0).prop('max', 100))
         )
     );
     procedimentoTable.append(
         $('<tr />').append(
             $('<td />').append('VFR'),
-            $('<td />').append(novoNumero('vfrp1d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp1n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp2d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp2n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp3d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp3n', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp4d', []).prop('min', 0).prop('max', 100)),
-            $('<td />').append(novoNumero('vfrp4n', []).prop('min', 0).prop('max', 100))
+            $('<td />').append(novoInteiro('vfrp1d', 'Procedimentos/3/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp1n', 'Procedimentos/3/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp2d', 'Procedimentos/3/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp2n', 'Procedimentos/3/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp3d', 'Procedimentos/3/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp3n', 'Procedimentos/3/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp4d', 'Procedimentos/3/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('vfrp4n', 'Procedimentos/3/Noturno4p').prop('min', 0).prop('max', 100))
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('DEC.OFF.'),
+            $('<td />').append(novoInteiro('decoffp1d', 'Procedimentos/4/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp1n', 'Procedimentos/4/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp2d', 'Procedimentos/4/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp2n', 'Procedimentos/4/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp3d', 'Procedimentos/4/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp3n', 'Procedimentos/4/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp4d', 'Procedimentos/4/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('decoffp4n', 'Procedimentos/4/Noturno4p').prop('min', 0).prop('max', 100))
+        )
+    );
+    procedimentoTable.append(
+        $('<tr />').append(
+            $('<td />').append('POU.OFF.'),
+            $('<td />').append(novoInteiro('pouoffp1d', 'Procedimentos/5/Diurno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp1n', 'Procedimentos/5/Noturno1p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp2d', 'Procedimentos/5/Diurno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp2n', 'Procedimentos/5/Noturno2p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp3d', 'Procedimentos/5/Diurno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp3n', 'Procedimentos/5/Noturno3p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp4d', 'Procedimentos/5/Diurno4p').prop('min', 0).prop('max', 100)),
+            $('<td />').append(novoInteiro('pouoffp4n', 'Procedimentos/5/Noturno4p').prop('min', 0).prop('max', 100))
         )
     );
     
