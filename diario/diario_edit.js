@@ -275,7 +275,7 @@ var carregarDiario = function (diario) {
         .appendTo("#primeira_pagina");
 
     $('<div />')
-        .addClass('duas_colunas')
+        .addClass('tabelinea')
         .attr('id', 'procedimento')
         .appendTo("#primeira_pagina");
 

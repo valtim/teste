@@ -5,6 +5,10 @@
     padding-top: 10px
 }
 
+#procedimento > table > tr > td {
+    text-align: center;
+}
+
 div {
     white-space: nowrap;
 }
