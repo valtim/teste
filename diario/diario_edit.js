@@ -235,10 +235,10 @@ var carregarDiario = function (diario) {
     retornaDiv('Prefixo', novaCombo('cmbPrefixo', 'Prefixo', JSON.parse(localStorage.getItem("Prefixo")), 'Id', 'PrefixoCompleto', 'Prefixo'))
         .appendTo($('#cabecalho'));
 
-    retornaDiv('Nº Diário', novoTexto('txtDiario', 'NumeroDoDiario'))
-        .appendTo($('#cabecalho'));
+    var nDiario = novoTexto('txtDiario', 'NumeroDoDiario');
+    retornaDiv('Nº Diário', nDiario).appendTo($('#cabecalho'));
 
-    retornaDiv('Folha Diário', novoTexto('txtFolha', 'NumeroDaFolha'))
+    retornaDiv('Folha Diário', novoNumero('txtFolha', $diario, 'NumeroDaFolha'))
         .appendTo($('#cabecalho'));
 
     retornaDiv('Refeição', novaHora('hrRefeicaoTrip2', 'Refeicao2'))
@@ -622,6 +622,20 @@ var carregarDiario = function (diario) {
 
     retornaDiv('Consumo Combustível', novoInteiro('TotalConsumoCombustivel', '', true))
         .appendTo($('#pnTotais'));
+
+    nDiario[0].onblur = function() {
+        if (this.value.trim() === "") {
+            alert("Entre com um valor");
+            this.focus();
+            return false;
+        } else {
+            if (! (/^\d\d\d\/\w\w\w\/\d\d\d\d$/.test(this.value))) {
+                alert("Entre com um valor válido: 'ddd/WWW/dddd'");
+                this.focus();
+                return false;
+            }
+        }
+    }
 };
 
 var setarCombo = function (obj) {
