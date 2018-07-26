@@ -627,12 +627,14 @@ var carregarDiario = function (diario) {
         if (this.value.trim() === "") {
             alert("Entre com um valor");
             this.focus();
-            return false;
+            this.setCustomValidity("Entre com um valor");
         } else {
             if (! (/^\d\d\d\/\w\w\w\/\d\d\d\d$/.test(this.value))) {
                 alert("Entre com um valor válido: 'ddd/WWW/dddd'");
                 this.focus();
-                return false;
+                this.setCustomValidity("Entre com um valor válido: 'ddd/WWW/dddd'");
+            } else {
+                this.setCustomValidity("");
             }
         }
     }
@@ -712,25 +714,33 @@ var mudouValor = function (obj) {
 };
 
 var salvar = function () {
-    $('#loading').show();
-    $.ajax({
-        method: "POST",
-        url: URL + "/api/novodiario",
-        headers: {
-            token: localStorage.getItem("token"),
-        },
-        data: $diario
-    })
-        .done(
+    var inputs = document.querySelectorAll('input');
+    var isInputValid = true;
+    for (i = 0; i < inputs.length; i++) {
+        if (!inputs[i].checkValidity()){
+            isInputValid = inputs[i].checkValidity();
+            break;
+        }
+    } 
+    if (isInputValid){
+        $('#loading').show();
+        $.ajax({
+            method: "POST",
+            url: URL + "/api/novodiario",
+            headers: {
+                token: localStorage.getItem("token"),
+            },
+            data: $diario
+        }).done(
             function (msg) {
-                alert("Diário Salvo");
-                $('#loading').hide();
-            })
-        .fail(function (e) {
-            console.log("URL: ", URL + "/api/novodiario");
-            console.log("e: ", e.message);
-            // alert("Erro ao salvar. Se o problema persistir entre em contato com o Suporte. \n contato@sistemasol.com.br");
+                    alert("Diário Salvo");
+                    $('#loading').hide();
+        }).fail(function (e) {
+                console.log("URL: ", URL + "/api/novodiario");
+                console.log("e: ", e.message);
+                // alert("Erro ao salvar. Se o problema persistir entre em contato com o Suporte. \n contato@sistemasol.com.br");
         });
+    }
 };
 
 function somarHoras(a, b) {
