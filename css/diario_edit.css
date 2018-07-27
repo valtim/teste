@@ -9,6 +9,11 @@
     text-align: center;
 }
 
+#basedeoperacao > *{
+    width: 70%;
+    margin: 0 auto;
+}
+
 div {
     white-space: nowrap;
 }

@@ -296,18 +296,24 @@ var carregarDiario = function (diario) {
         .appendTo("#primeira_pagina");
 
     $('<div />')
-        .addClass('tres_colunas')
+        // .addClass('tres_colunas')
         .attr('id', 'basedeoperacao')
         .appendTo("#primeira_pagina");
 
-    retornaDiv('Base ', novoTexto('txtBaseDeOperacao', 'BaseDeOperacao'))
-        .appendTo($('#basedeoperacao'));
+    $.ajax({
+        method: "GET",
+        url: URL + "/api/aeroportos"
+    }).done(function (response) {
+        retornaDiv('Base ', novaCombo('cmbBaseDeOperacao', 'Base Operacao', response, 'NomeICAO', 'NomeICAO')).appendTo('#basedeoperacao');
+    });
+    // retornaDiv('Base ', novoTexto('txtBaseDeOperacao', 'BaseDeOperacao'))
+    //     .appendTo($('#basedeoperacao'));
 
-    retornaDiv('Nascer ', novaHora('txtNascer', '', 'readonly'))
-        .appendTo($('#basedeoperacao'));
+    // retornaDiv('Nascer ', novaHora('txtNascer', '', 'readonly'))
+    //     .appendTo($('#basedeoperacao'));
 
-    retornaDiv('Por ', novaHora('txtPor', '', 'readonly'))
-        .appendTo($('#basedeoperacao'));
+    // retornaDiv('Por ', novaHora('txtPor', '', 'readonly'))
+    //     .appendTo($('#basedeoperacao'));
 
     $('<div />')
         .addClass('titulo_pagina')
@@ -814,8 +820,8 @@ var minutosParaHoras = function (valor) {
 
 
 var calcularDatas = function () {
-    var vNascerDoSol = stringParaMinutos($('#txtNascer').val());
-    var vPorDoSol = stringParaMinutos($('#txtPor').val());
+    // var vNascerDoSol = stringParaMinutos($('#txtNascer').val());
+    // var vPorDoSol = stringParaMinutos($('#txtPor').val());
 
     $.each($('.sessao'), function () {
         //$(this)
@@ -876,9 +882,9 @@ var calcularDatas = function () {
         var vIFRC = stringParaMinutos($(this).find('#hrIFRC').val());
         var Total = (vDecolagem - vPartida) + (vPouso - vDecolagem) + (vCorte - vPouso);
         var vNoturno = 0;
-        if (vPartida < vNascerDoSol) {
-            vNoturno = vNascerDoSol - vPartida;
-        }
+        // if (vPartida < vNascerDoSol) {
+        //     vNoturno = vNascerDoSol - vPartida;
+        // }
 
         if (vCorte > vPorDoSol) {
             vNoturno = vNoturno + (vCorte - vPorDoSol);
