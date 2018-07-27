@@ -886,9 +886,9 @@ var calcularDatas = function () {
         //     vNoturno = vNascerDoSol - vPartida;
         // }
 
-        if (vCorte > vPorDoSol) {
-            vNoturno = vNoturno + (vCorte - vPorDoSol);
-        }
+        // if (vCorte > vPorDoSol) {
+        //     vNoturno = vNoturno + (vCorte - vPorDoSol);
+        // }
         vNoturno = stringParaMinutos($(this).find('#hrNoturno').val());
         var obj = $(this).find('#hrTotal');
         obj.val(minutosParaHoras(Total));
