@@ -75,11 +75,17 @@ var novaCombo = function (id, databind, opcoes, key, desc, valorPadrao, readonly
         .appendTo($select);
 
     $.each(opcoes, function (item, value) {
-        $('<option />')
+        if(key && desc){
+            $('<option />')
             .attr('value', value[key])
             .text(value[desc])
             .appendTo($select);
-
+        } else {
+            $('<option />')
+            .attr('value', value)
+            .text(value)
+            .appendTo($select);
+        }
     });
 
     if (getValor(databind) !== undefined) {
@@ -211,19 +217,6 @@ var novoNumero = function (id, valor, databind, readonly) {
         .val(valor[databind], "HH:mm");
 };
 
-var changeDiario = function(){
-    var diario = document.getElementById('cmbDiario');
-    diario.onchange = function(){
-        console.log(this.value);
-        $.ajax({
-            method: "GET",
-            url: URL + "/api/folhadodiario/" + this.value
-        }).done(function (msg) {
-            console.log(msg);
-        });
-    };
-};
-
 var carregarDiario = function (diario) {
 
     $('<div />')
@@ -252,9 +245,9 @@ var carregarDiario = function (diario) {
     $.ajax({
         method: "GET",
         url: URL + "/api/bloco/" + document.getElementById('cmbPrefixo').value
-    }).done(function (msg) {
-        retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', msg, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
-        changeDiario();
+    }).done(function (response) {
+        retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', response, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
+        changeDiario(response);
     });
 
 
@@ -262,15 +255,31 @@ var carregarDiario = function (diario) {
         $.ajax({
             method: "GET",
             url: URL + "/api/bloco/" + this.value
-        }).done(function (msg) {
+        }).done(function (response) {
             diario.empty();
-            retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', msg, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
-            changeDiario();
+            retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', response, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
+            changeDiario(response);
         });
     };
 
-    retornaDiv('Folha Diário', novoNumero('txtFolha', $diario, 'NumeroDaFolha'))
-        .appendTo($('#cabecalho'));
+    var folhaDiario = $('<div id="folhaDiario" />').appendTo($('#cabecalho'));
+    var changeDiario = function(diarioList){
+        document.getElementById('cmbDiario').onchange = function(){
+            var valueSelected = this.value;
+            var diario = diarioList.filter(function(diario){
+                return diario.Numero === valueSelected;
+            })[0];
+            
+            $.ajax({
+                method: "GET",
+                url: URL + "/api/folhadodiario/" + diario.Id
+            }).done(function (msg) {
+                folhaDiario.empty();
+                retornaDiv('Folha Diário', novaCombo('cmbFolhaDiario', 'Folha Diario', msg)).appendTo(folhaDiario);
+            });
+        };
+    };
+    retornaDiv('Folha Diário', novaCombo('cmbFolhaDiario', 'Folha Diario', [])).appendTo(folhaDiario);
 
     retornaDiv('Refeição', novaHora('hrRefeicaoTrip2', 'Refeicao2'))
         .appendTo($('#tripulantes'));
