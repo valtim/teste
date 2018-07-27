@@ -211,6 +211,19 @@ var novoNumero = function (id, valor, databind, readonly) {
         .val(valor[databind], "HH:mm");
 };
 
+var changeDiario = function(){
+    var diario = document.getElementById('cmbDiario');
+    diario.onchange = function(){
+        console.log(this.value);
+        $.ajax({
+            method: "GET",
+            url: URL + "/api/folhadodiario/" + this.value
+        }).done(function (msg) {
+            console.log(msg);
+        });
+    };
+};
+
 var carregarDiario = function (diario) {
 
     $('<div />')
@@ -235,8 +248,26 @@ var carregarDiario = function (diario) {
     retornaDiv('Prefixo', novaCombo('cmbPrefixo', 'Prefixo', JSON.parse(localStorage.getItem("Prefixo")), 'Id', 'PrefixoCompleto', 'Prefixo'))
         .appendTo($('#cabecalho'));
 
-    var nDiario = novoTexto('txtDiario', 'NumeroDoDiario');
-    retornaDiv('Nº Diário', nDiario).appendTo($('#cabecalho'));
+    var diario = $('<div id="diario" />').appendTo($('#cabecalho'));
+    $.ajax({
+        method: "GET",
+        url: URL + "/api/bloco/" + document.getElementById('cmbPrefixo').value
+    }).done(function (msg) {
+        retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', msg, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
+        changeDiario();
+    });
+
+
+    document.getElementById('cmbPrefixo').onchange = function(){
+        $.ajax({
+            method: "GET",
+            url: URL + "/api/bloco/" + this.value
+        }).done(function (msg) {
+            diario.empty();
+            retornaDiv('Nº Diário', novaCombo('cmbDiario', 'Diario', msg, 'Numero', 'Numero', 'Número do Diário')).appendTo(diario);
+            changeDiario();
+        });
+    };
 
     retornaDiv('Folha Diário', novoNumero('txtFolha', $diario, 'NumeroDaFolha'))
         .appendTo($('#cabecalho'));
@@ -623,21 +654,6 @@ var carregarDiario = function (diario) {
     retornaDiv('Consumo Combustível', novoInteiro('TotalConsumoCombustivel', '', true))
         .appendTo($('#pnTotais'));
 
-    nDiario[0].onblur = function() {
-        if (this.value.trim() === "") {
-            alert("Entre com um valor");
-            this.focus();
-            this.setCustomValidity("Entre com um valor");
-        } else {
-            if (! (/^\d\d\d\/\w\w\w\/\d\d\d\d$/.test(this.value))) {
-                alert("Entre com um valor válido: 'ddd/WWW/dddd'");
-                this.focus();
-                this.setCustomValidity("Entre com um valor válido: 'ddd/WWW/dddd'");
-            } else {
-                this.setCustomValidity("");
-            }
-        }
-    }
 };
 
 var setarCombo = function (obj) {
