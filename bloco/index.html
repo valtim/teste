@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, minimal-ui, user-scalable=no">
     <link rel="stylesheet" href="/app/css/diario_edit.css">
+    <link rel="stylesheet" href="bloco.css">
     <link href="/app/img/ios/Icon-152.png" rel="apple-touch-icon" sizes="152x152" />
     <link href="/app/img/ios/Icon-167.png" rel="apple-touch-icon" sizes="167x167" />
     <link href="/app/img/ios/Icon-180.png" rel="apple-touch-icon" sizes="180x180" />
@@ -16,7 +17,32 @@
 <body id="Diario">
     
 
-    <div class="container"></div>
+    <div class="container">
+        <div class="menu_bloco">
+            <button id="novoBloco">Novo</button>
+            <button id="salvarBloco">Salvar</button>
+            <button id="excluirBloco">Excluir</button>
+        </div>
+
+
+        <div id="conteudo_bloco">
+            <table>
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>Prefixo</td>
+                        <td>Número</td>
+                        <td>Folha Inicial</td>
+                        <td>Folha Final</td>
+                        <td>Fechado</td>
+                        <td>Atualização</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <!--
 

@@ -1,0 +1,19 @@
+.menu_bloco > button{
+    height: 30px;
+    width: 200px;
+    margin-top: 25px;
+}
+
+table{
+    border-collapse: collapse;
+    margin-top: 25px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+table > thead > * {
+    font-weight: bold;
+}
