@@ -17,3 +17,8 @@ table, th, td {
 table > thead > * {
     font-weight: bold;
 }
+
+input {
+    width: '';
+    padding: 0;
+}
