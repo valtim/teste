@@ -1,7 +1,15 @@
 var URL = window.location.origin === "http://localhost:8080" ? "https://teste.sistemasol.com.br" : "";
 var tBody = document.querySelector('table').querySelector('tbody');
 var blocoList = [];
+var prefixoList = [];
 var id = 0;
+
+$.ajax({
+    method: "GET",
+    url: URL + "/api/prefixo"
+}).done(function(response) {
+    prefixoList = response;
+})
 
 $.ajax({
     method: "GET",
@@ -50,9 +58,10 @@ document.getElementById('novoBloco').onclick = function(){
         Numero: '',
         FolhaInicial: 0,
         FolhaFinal: 0,
-        Fechado: 0,
-        Atualizacao: new Date()
-    }
+        Fechado: false,
+        Atualizacao: new Date(),
+        Ativo: true
+    };
 
 
     var tr = $('<tr />');
@@ -60,13 +69,28 @@ document.getElementById('novoBloco').onclick = function(){
     .append($('<input />').attr('type', 'checkbox').attr('value', id))
     .appendTo(tr);
     
-    var dataPrefixo = $('<input />').attr('type', 'text').attr('data-prefixo', id);
-    $('<td />')
-    .append(dataPrefixo)
-    .appendTo(tr);
-    dataPrefixo[0].onchange = function(){
-        novo.Prefixo.PrefixoCompleto = this.value;
-    }
+    $select = $('<select />')
+    .attr('data-prefixo', id);
+
+    $('<option />')
+    .text('Selecione um prefixo')
+    .appendTo($select);
+
+    $.each(prefixoList, function (item, value) {
+        $('<option />')
+        .attr('value', value.Id)
+        .text(value.PrefixoCompleto)
+        .appendTo($select);
+    });
+
+    $select[0].onchange = function(){
+        var idSelected = this.value;
+        novo.Prefixo = prefixoList.filter(function(element){
+            return element.Id === idSelected;
+        })[0];
+    };
+
+    $('<td />').append($select).appendTo(tr);
 
     var dataNumero = $('<input />').attr('type', 'text').attr('data-numero', id);
     $('<td />')
@@ -74,7 +98,7 @@ document.getElementById('novoBloco').onclick = function(){
     .appendTo(tr);
     dataNumero[0].onchange = function(){
         novo.Numero = this.value;
-    }
+    };
 
     var dataFolhaInicial = $('<input />').attr('type', 'number').attr('data-folha-inicial', id);
     $('<td />')
@@ -82,7 +106,7 @@ document.getElementById('novoBloco').onclick = function(){
     .appendTo(tr);
     dataFolhaInicial[0].onchange = function(){
         novo.FolhaInicial = this.value;
-    }
+    };
     
     var dataFolhaFinal = $('<input />').attr('type', 'number').attr('data-folha-final', id);
     $('<td />')
@@ -90,15 +114,15 @@ document.getElementById('novoBloco').onclick = function(){
     .appendTo(tr);
     dataFolhaFinal[0].onchange = function(){
         novo.FolhaFinal = this.value;
-    }
+    };
 
-    var dataFechado = $('<input />').attr('type', 'number').attr('data-fechado', id);
+    var dataFechado = $('<input />').attr('type', 'checkbox').attr('data-fechado', id);
     $('<td />')
     .append(dataFechado)
     .appendTo(tr);
     dataFechado[0].onchange = function(){
-        novo.Fechado = this.value;
-    }
+        novo.Fechado = this.checked;
+    };
 
     $('<td />')
     .appendTo(tr);
@@ -124,7 +148,8 @@ document.getElementById('salvarBloco').onclick = function(){
     $.ajax({
         method: "POST",
         url: URL + "/api/bloco",
-        data: blocoList
+        data: blocoList,
+        contentType: 'application/json'
     }).done(function (response) {
         console.log('Response:', response);
     });
