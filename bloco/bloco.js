@@ -15,8 +15,10 @@ $.ajax({
     method: "GET",
     url: URL + "/api/bloco"
 }).done(function (response) {
-    blocoList = response;
-    response.forEach(function(bloco){
+    blocoList = response.filter(function(element){
+        return element.Ativo === true;
+    });
+    blocoList.forEach(function(bloco){
         var tr = $('<tr />');
         $('<td />')
         .append($('<input />').attr('type', 'checkbox').attr('value', bloco.Id))
@@ -47,7 +49,13 @@ $.ajax({
         .appendTo(tr);
 
         tr.appendTo(tBody);
-    });    
+    });
+    
+    $('tbody td').click(function(){
+        if (this.cellIndex > 0 && this.cellIndex < 6){
+            console.log(this.innerHTML);
+        }
+    });
 });
 
 document.getElementById('novoBloco').onclick = function(){
@@ -69,19 +77,7 @@ document.getElementById('novoBloco').onclick = function(){
     .append($('<input />').attr('type', 'checkbox').attr('value', id))
     .appendTo(tr);
     
-    $select = $('<select />')
-    .attr('data-prefixo', id);
-
-    $('<option />')
-    .text('Selecione um prefixo')
-    .appendTo($select);
-
-    $.each(prefixoList, function (item, value) {
-        $('<option />')
-        .attr('value', value.Id)
-        .text(value.PrefixoCompleto)
-        .appendTo($select);
-    });
+    var $select = createSelectPrefixo(id);
 
     $select[0].onchange = function(){
         var idSelected = this.value;
@@ -137,10 +133,9 @@ document.getElementById('excluirBloco').onclick = function(){
         $($(element).parent().parent()).remove();
         for (let index = 0; index < blocoList.length; index++) {
             if(blocoList[index].Id === element.value){
-                blocoList.splice(index, 1);
+                blocoList[index].Ativo = false;
             }
         }
-        console.log('blocoList: ', blocoList);
     });
 };
 
@@ -148,12 +143,38 @@ document.getElementById('salvarBloco').onclick = function(){
     $.ajax({
         method: "POST",
         url: URL + "/api/bloco",
-        data: blocoList,
+        data: JSON.stringify(blocoList),
         contentType: 'application/json'
     }).done(function (response) {
         console.log('Response:', response);
     });
 };
+
+function createSelectPrefixo(id){
+    var $select = $('<select />')
+    .attr('data-prefixo', id);
+
+    $('<option />')
+    .text('Selecione um prefixo')
+    .appendTo($select);
+
+    $.each(prefixoList, function (item, value) {
+        $('<option />')
+        .attr('value', value.Id)
+        .text(value.PrefixoCompleto)
+        .appendTo($select);
+    });
+
+    return $select;
+}
+
+function createNumero(id){
+    return $('<input />')
+    .attr('type', 'text')
+    .attr('data-numero', id)
+    .attr('pattern', '\d{3}\/\w{3}\/\d{4}')
+    .prop('required', true);
+}
 
 setTimeout(() => {
     $("#loading").hide();
