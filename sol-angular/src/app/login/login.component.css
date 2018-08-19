@@ -1,0 +1,14 @@
+.caixa_dialogo{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.login {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
