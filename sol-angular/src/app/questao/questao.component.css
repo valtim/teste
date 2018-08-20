@@ -1,0 +1,36 @@
+.questao{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: transparent;
+    padding: 10px 0;
+}
+
+.questao > span:nth-child(1){
+    background-color: #75c118;
+}
+
+.questao > span{
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 30px 10px;
+    width: 200px;
+    text-align: center;
+    background-color: #ff0001;
+}
+
+.questao > input {
+    display: none;
+}
+
+.questao > label{
+    padding: 20px;
+    border-radius: 50%;
+}
+
+.questao > input:checked+label{
+    background: #dbdbdb;
+    padding: 15px;
+    border: 5px solid #b9b9b9;
+}

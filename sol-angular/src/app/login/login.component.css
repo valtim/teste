@@ -12,3 +12,20 @@
     align-content: center;
     text-align: center;
 }
+
+.login > input {
+    width: 300px;
+    text-align: center;
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.33s, opacity 0.33s linear;
+}
+
+.show {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.33s;
+}

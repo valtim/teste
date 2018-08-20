@@ -1,34 +1,3 @@
-<div class="questao">
-  <span>
-    Descansado 
-  </span>
-  
-  <input type="radio" name="hora" value="1" id="1">
-  <label for="1">
-    <img src="../../assets/img/emoticon1.svg" alt="">
-  </label>
-
-  <input type="radio" name="hora" value="2" id="2">
-  <label for="2">
-    <img src="../../assets/img/emoticon2.svg" alt="">
-  </label>
-
-  <input type="radio" name="hora" value="3" id="3">
-  <label for="3">
-    <img src="../../assets/img/emoticon3.svg" alt="">
-  </label>
-
-  <input type="radio" name="hora" value="4" id="4">
-  <label for="4">
-    <img src="../../assets/img/emoticon4.svg" alt="">
-  </label>
-
-  <input type="radio" name="hora" value="5" id="5">
-  <label for="5">
-    <img src="../../assets/img/emoticon5.svg" alt="">
-  </label>
-  
-  <span>
-    Cansado
-  </span>
+<div *ngFor="let questao of questoes">
+  <app-questao respostaBoa={{questao.respostaBoa}} respostaMa={{questao.respostaMa}} name={{questao.name}}></app-questao>
 </div>

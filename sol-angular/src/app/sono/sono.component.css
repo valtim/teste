@@ -1,0 +1,64 @@
+.content{
+    height: calc(100% - 30px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.resposta {
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+}
+
+.resposta > input {
+    display: none;
+}
+
+.resposta > input + label {
+    padding: 15px;
+    border-radius: 5%;
+}
+
+.resposta > input:checked + label {
+    background-color: #cfcfcf;
+}
+
+.resposta > label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.2em;
+    justify-content: space-evenly;
+}
+
+p{
+    font-size: 1.5em;
+}
+
+.navegacao {
+    display: flex;
+    justify-content: space-around;
+    min-width: 60%;
+    margin-top: 25px;
+}
+
+.navegacao > button{
+    text-transform: uppercase;
+    padding: 15px;
+    border-radius: 5px;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+}
+
+.navegacao > button:last-child{
+    background-color: #00ce89;
+}

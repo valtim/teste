@@ -6,12 +6,14 @@ import { SonoComponent } from './sono/sono.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { QuestionarioComponent } from './questionario/questionario.component';
+import { QuestaoComponent } from './questao/questao.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SonoComponent,
     LoginComponent,
+    QuestaoComponent,
     QuestionarioComponent
   ],
   imports: [

@@ -1,35 +1,7 @@
-.questao{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #e0e0e0;
-    padding: 10px 0;
+div:nth-child(2n+1){
+    background-color: #f1f1f1;
 }
 
-.questao > span:nth-child(1){
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 30px 20px;
-    background-color: #75c118;
-}
-
-.questao > span{
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 30px 20px;
-    background-color: #ff0001;
-}
-
-.questao > input {
-    display: none;
-}
-
-.questao > label{
-    padding: 20px;
-    border-radius: 50%;
-}
-
-.questao > input:checked+label{
-    background: #acacac;
+div:nth-child(2n) {
+    background-color: #fcfcfc;
 }
