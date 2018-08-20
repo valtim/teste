@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { SonoComponent } from './sono/sono.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
+import { QuestionarioComponent } from './questionario/questionario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SonoComponent,
-    LoginComponent
+    LoginComponent,
+    QuestionarioComponent
   ],
   imports: [
     BrowserModule,
