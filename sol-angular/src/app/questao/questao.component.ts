@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { QuestaoService } from './questao.service';
 
 @Component({
   selector: 'app-questao',
@@ -11,9 +12,17 @@ export class QuestaoComponent implements OnInit {
   @Input() respostaMa: string;
   @Input() name: string;
 
-  constructor() { }
+  constructor(private dataQuestao: QuestaoService) { }
 
   ngOnInit() {
+  }
+
+  onChange(e) {
+    if (e.name === 'descanso' || e.name === 'concentrar') {
+      this.dataQuestao[e.name] = e.value * 2;
+    } else {
+      this.dataQuestao[e.name] = e.value * 1;
+    }
   }
 
 }

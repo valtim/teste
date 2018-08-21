@@ -46,31 +46,6 @@ p{
     font-size: 1.5em;
 }
 
-.navegacao {
-    display: flex;
-    justify-content: space-around;
-    min-width: 60%;
-    margin-top: 25px;
-}
-
-.navegacao > button{
-    text-transform: uppercase;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 5px;
-    vertical-align: middle;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    border: 1px solid transparent;
-    background: #e4e4e4;
-}
-
-.navegacao > button:last-child{
+.navegacao > a:last-child{
     background-color: #00ce89;
 }

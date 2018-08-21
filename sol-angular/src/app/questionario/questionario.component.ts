@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service';
+import { Router } from '@angular/router';
+import { QuestaoService } from '../questao/questao.service';
 
 @Component({
   selector: 'app-questionario',
@@ -9,7 +12,7 @@ export class QuestionarioComponent implements OnInit {
 
   questoes
 
-  constructor() {
+  constructor(private data: DataService, private route: Router, private dataQuestao: QuestaoService) {
     this.questoes = [
       {
         respostaBoa: 'Descansado',
@@ -39,7 +42,7 @@ export class QuestionarioComponent implements OnInit {
       {
         respostaBoa: 'Filhos ou conjugue bem de saúde',
         respostaMa: 'Problemas de saúde nos filhos ou conjugue',
-        name: 'saude_familia'
+        name: 'saudeFamilia'
       },
       {
         respostaBoa: 'Calmo',
@@ -49,37 +52,58 @@ export class QuestionarioComponent implements OnInit {
       {
         respostaBoa: 'Ausência de dor nos músculos do pescoço e ombros',
         respostaMa: 'Dor nos músculos do pescoço e ombros',
-        name: 'dor_muscular'
+        name: 'dorMuscular'
       },
       {
         respostaBoa: 'Ausência de dor nas costas e/ou região lombar',
         respostaMa: 'Dor nas costas e/ou região lombar',
-        name: 'dor_costa'
+        name: 'dorCosta'
       },
       {
         respostaBoa: 'Ausência de dor nas coxas, pernas e pés',
         respostaMa: 'Dor nas coxas, pernas e pés',
-        name: 'dor_perna'
+        name: 'dorPerna'
       },
       {
         respostaBoa: 'Ausência de dor de cabeça',
         respostaMa: 'Dor de cabeça',
-        name: 'dor_cabeca'
+        name: 'dorCabeca'
       },
       {
         respostaBoa: 'Ausência de dor nos braços, no punhos ou nas mãos',
         respostaMa: 'Dor nos braços, no punhos ou nas mãos',
-        name: 'dor_braco'
+        name: 'dorBraco'
       }
     ]
   }
 
   ngOnInit() {
+    // Abilitar isso !!
+    if (typeof this.data.user === 'undefined' || typeof this.data.oportunidadeSono === 'undefined' || typeof this.data.qualidadeSono === 'undefined') {
+      this.route.navigate(['/']);
+    }
   }
 
-  onclick(){
-    console.log('oportunidadeSono');
-    console.log('qualidadeSono');
+  onTerminar() {
+    console.log(this.data.user)
+    // console.log(this.data.oportunidadeSono)
+    // console.log(this.data.qualidadeSono)
+    // console.log(this.data.oportunidadeSono * this.data.qualidadeSono);
+    console.log(this.somar(this.data.oportunidadeSono * this.data.qualidadeSono, this.dataQuestao.descanso,
+      this.dataQuestao.concentrar,
+      this.dataQuestao.financeiro,
+      this.dataQuestao.produtividade,
+      this.dataQuestao.saude,
+      this.dataQuestao.saudeFamilia,
+      this.dataQuestao.calmo,
+      this.dataQuestao.dorMuscular,
+      this.dataQuestao.dorCosta,
+      this.dataQuestao.dorPerna,
+      this.dataQuestao.dorCabeca,
+      this.dataQuestao.dorBraco))
   }
 
+  somar(...args) {
+    return args.reduce((acumulador, atual) => acumulador = acumulador + atual);
+  }
 }

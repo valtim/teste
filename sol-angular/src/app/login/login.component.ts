@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
-  ANAC
-  USER
+  anac
+  user
 
-  constructor() {
-    this.ANAC = [
+  constructor(private data: DataService) {
+    this.anac = [
       {
         numero: 123456,
         nome: 'aluno 1'
@@ -38,14 +39,18 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.data.user = this.user;
+  }
+
   onChange(event: any) {
     let result = null;
-    this.USER = null;
+    this.user = null;
     if (event.target.value.length === 6) {
-      result = this.ANAC.filter(function (anac) {
+      result = this.anac.filter(function (anac) {
         return anac.numero === Number(event.target.value);
       })[0];
-      this.USER = result;
+      this.user = result;
     }
   }
 

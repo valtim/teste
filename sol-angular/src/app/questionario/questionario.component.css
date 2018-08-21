@@ -9,3 +9,7 @@ div:nth-child(2n) {
 .questoes{
     margin-top: 44px;
 }
+
+.navegacao > button:last-child{
+    background-color: #00ce89;
+}
