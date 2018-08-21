@@ -77,4 +77,9 @@ export class QuestionarioComponent implements OnInit {
   ngOnInit() {
   }
 
+  onclick(){
+    console.log('oportunidadeSono');
+    console.log('qualidadeSono');
+  }
+
 }

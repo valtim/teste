@@ -1,3 +1,8 @@
-<div *ngFor="let questao of questoes">
+<div class="questoes" *ngFor="let questao of questoes">
   <app-questao respostaBoa={{questao.respostaBoa}} respostaMa={{questao.respostaMa}} name={{questao.name}}></app-questao>
+</div>
+
+<div class="navegacao">
+  <button (click)="onclick()">Anterior</button>
+  <!-- <a routerLink="/questionario" class="nav-link">Próximo</a> -->
 </div>

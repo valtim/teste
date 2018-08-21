@@ -5,3 +5,7 @@ div:nth-child(2n+1){
 div:nth-child(2n) {
     background-color: #fcfcfc;
 }
+
+.questoes{
+    margin-top: 44px;
+}
