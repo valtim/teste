@@ -18,11 +18,7 @@ export class QuestaoComponent implements OnInit {
   }
 
   onChange(e) {
-    if (e.name === 'descanso' || e.name === 'concentrar') {
-      this.dataQuestao[e.name] = e.value * 2;
-    } else {
-      this.dataQuestao[e.name] = e.value * 1;
-    }
+    this.dataQuestao[e.name] = Number(e.value);
   }
 
 }

@@ -1,9 +1,12 @@
 <div class="caixa_dialogo">
   <div class="login">
-    <input type="tel" name="anac" placeholder="Número ANAC" (keyup)="onChange($event)" maxlength="6" size="6">
-    <div [ngClass]="{'hidden': !user, 'visible': user}">
-      <p *ngIf="user">Você é {{user.nome}} ?</p>
-      <a routerLink="/sono" class="btn">SIM</a>
+    <input type="tel" name="anac" placeholder="Digite o número ANAC" (keyup)="onChange($event)" maxlength="6" size="6">
+    <div [ngClass]="{'hidden': !user, 'visible': user}" style="width: 300px">
+      <p *ngIf="user">Você é {{user.Trato}} ?</p>
+      <div class="navegacao">
+        <button class="btn" (click)="onClickNao()"> NÃO </button>
+        <a routerLink="/sono" class="btn">SIM</a>
+      </div>
     </div>
   </div>
 </div>

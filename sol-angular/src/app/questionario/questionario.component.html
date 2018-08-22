@@ -1,8 +1,10 @@
-<div class="questoes" *ngFor="let questao of questoes">
-  <app-questao respostaBoa={{questao.respostaBoa}} respostaMa={{questao.respostaMa}} name={{questao.name}}></app-questao>
+<div class="questoes">
+  <div *ngFor="let questao of questoes">
+    <app-questao respostaBoa={{questao.respostaBoa}} respostaMa={{questao.respostaMa}} name={{questao.name}}></app-questao>
+  </div>
 </div>
 
 <div class="navegacao">
   <a routerLink="/sono" class="btn">Anterior</a>
-  <button class="btn" (click)="onTerminar()">Terminar</button>
+  <button class="btn" (click)="onTerminar()">Enviar</button>
 </div>

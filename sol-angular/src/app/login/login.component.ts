@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -11,32 +12,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   anac
   user
 
-  constructor(private data: DataService) {
-    this.anac = [
-      {
-        numero: 123456,
-        nome: 'aluno 1'
-      },
-      {
-        numero: 321456,
-        nome: 'aluno 2'
-      },
-      {
-        numero: 222333,
-        nome: 'aluno 3'
-      },
-      {
-        numero: 111222,
-        nome: 'aluno 4'
-      },
-      {
-        numero: 111111,
-        nome: 'aluno 5'
-      }
-    ];
-  }
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': '24bdd443-0570-40cc-bcde-b3edc401f49f'
+    })
+  };
+
+  constructor(private data: DataService, private http: HttpClient) { }
 
   ngOnInit() {
+    this.http.get('https://teste.sistemasol.com.br/api/tripulante', this.httpOptions).subscribe(data => {
+      this.anac = data;
+    });
   }
 
   ngOnDestroy() {
@@ -48,10 +36,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.user = null;
     if (event.target.value.length === 6) {
       result = this.anac.filter(function (anac) {
-        return anac.numero === Number(event.target.value);
+        return anac.CodigoANAC === Number(event.target.value);
       })[0];
       this.user = result;
     }
+  }
+
+  onClickNao() {
+    this.user = null;
+    let input = document.querySelector('input');
+    input.value = '';
+    input.focus();
   }
 
 }

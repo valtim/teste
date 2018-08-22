@@ -4,33 +4,51 @@
     justify-content: space-around;
     align-items: center;
     background-color: transparent;
-    padding: 10px 0;
+    margin: 5px 0;
 }
 
-.questao > span:nth-child(1){
+.questao > span:first-child{
     background-color: #75c118;
+}
+
+.questao > span:last-child{
+    background-color: #ff0001;
 }
 
 .questao > span{
     text-transform: uppercase;
     font-weight: bold;
-    padding: 30px 10px;
-    width: 200px;
+    padding: 20px 10px;
+    width: 250px;
+    margin: 0 5px;
     text-align: center;
-    background-color: #ff0001;
+    color: #303030;
+}
+
+.questao > label{
+    padding: 10px;
+    border-radius: 25%;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex;
+    /* flex-direction: column;
+    align-items: center; */
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .questao > input {
     display: none;
 }
 
-.questao > label{
-    padding: 20px;
-    border-radius: 50%;
-}
-
 .questao > input:checked+label{
     background: #dbdbdb;
-    padding: 15px;
+    padding: 5px;
     border: 5px solid #b9b9b9;
+}
+
+.questao > label > img{
+    width: 50%;
+    height: 50%;
 }

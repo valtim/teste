@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { SonoComponent } from './sono/sono.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { QuestionarioComponent } from './questionario/questionario.component';
 import { QuestaoComponent } from './questao/questao.component';
+import { ResultadoComponent } from './resultado/resultado.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { QuestaoComponent } from './questao/questao.component';
     SonoComponent,
     LoginComponent,
     QuestaoComponent,
-    QuestionarioComponent
+    QuestionarioComponent,
+    ResultadoComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
