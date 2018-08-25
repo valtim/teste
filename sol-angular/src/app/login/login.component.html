@@ -1,6 +1,11 @@
 <div class="caixa_dialogo">
   <div class="login">
-    <input type="tel" name="anac" placeholder="Digite o número ANAC" (keyup)="onChange($event)" maxlength="6" size="6">
+    <div [ngClass]="{'hidden': !anac, 'visible': anac}" style="display: flex; flex-direction:column;">
+      <label for="anac">
+        Digite o número ANAC:
+      </label>
+      <input type="tel" id="anac" name="anac" placeholder="Número ANAC" (keyup)="onChange($event)" maxlength="6" size="6">
+    </div>
     <div [ngClass]="{'hidden': !user, 'visible': user}" style="width: 300px">
       <p *ngIf="user">Você é {{user.Trato}} ?</p>
       <div class="navegacao">
@@ -8,5 +13,9 @@
         <a routerLink="/sono" class="btn">SIM</a>
       </div>
     </div>
+    <hr style="width: 400px; border: 1px #efefef solid;">
+    <p class="texto-compromentimento">
+      O comprometimento com a verdade e a essência desse trabalho!
+    </p>
   </div>
 </div>

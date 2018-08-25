@@ -14,7 +14,7 @@
     text-align: center;
 }
 
-.login > input {
+.login input {
     width: 300px;
     text-align: center;
     height: 34px;
@@ -39,4 +39,9 @@ a:last-child {
 
 p {
     font-size: 1.5em;
+}
+
+.texto-compromentimento{
+    font-style: italic;
+    color: #a4a4a4;
 }

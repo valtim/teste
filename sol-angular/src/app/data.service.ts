@@ -9,5 +9,6 @@ export class DataService {
   user: any
   oportunidadeSono: number
   qualidadeSono: number
+  quantidadeSono: number
   nivelFadiga: number
 }

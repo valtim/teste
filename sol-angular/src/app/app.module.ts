@@ -10,6 +10,7 @@ import { LoginComponent } from './login/login.component';
 import { QuestionarioComponent } from './questionario/questionario.component';
 import { QuestaoComponent } from './questao/questao.component';
 import { ResultadoComponent } from './resultado/resultado.component';
+import { GerenciamentoComponent } from './gerenciamento/gerenciamento.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ResultadoComponent } from './resultado/resultado.component';
     LoginComponent,
     QuestaoComponent,
     QuestionarioComponent,
-    ResultadoComponent
+    ResultadoComponent,
+    GerenciamentoComponent
   ],
   imports: [
     BrowserModule,

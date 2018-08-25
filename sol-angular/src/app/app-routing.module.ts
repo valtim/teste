@@ -4,12 +4,14 @@ import { SonoComponent } from './sono/sono.component';
 import { LoginComponent } from './login/login.component';
 import { QuestionarioComponent } from './questionario/questionario.component';
 import { ResultadoComponent } from './resultado/resultado.component';
+import { GerenciamentoComponent } from './gerenciamento/gerenciamento.component';
 
 const routes: Routes = [
   { path: 'resultado', component: ResultadoComponent },
   { path: 'sono', component: SonoComponent },
   { path: 'questionario', component: QuestionarioComponent },
-  { path: '', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '', component: GerenciamentoComponent }
 ]
 
 @NgModule({

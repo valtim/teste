@@ -12,6 +12,7 @@ export class SonoComponent implements OnInit, OnDestroy {
   user: any
   oportunidadeSono: number
   qualidadeSono: number
+  quantidadeSono: number
 
   constructor(private data: DataService, private route: Router) { }
 
@@ -19,9 +20,16 @@ export class SonoComponent implements OnInit, OnDestroy {
     this.user = this.data.user;
     this.oportunidadeSono = this.data.oportunidadeSono;
     this.qualidadeSono = this.data.qualidadeSono;
+    this.quantidadeSono = this.data.quantidadeSono;
 
     if (typeof this.user === 'undefined') {
       this.route.navigate(['/']);
+    }
+  }
+
+  onClickProximo() {
+    if (this.user && this.oportunidadeSono && this.qualidadeSono && this.quantidadeSono) {
+      this.route.navigate(['/questionario']);
     }
   }
 
@@ -29,5 +37,6 @@ export class SonoComponent implements OnInit, OnDestroy {
     this.data.user = this.user;
     this.data.oportunidadeSono = this.oportunidadeSono;
     this.data.qualidadeSono = this.qualidadeSono;
+    this.data.quantidadeSono = this.quantidadeSono;
   }
 }

@@ -1,56 +1,91 @@
 <div class="content">
   <div class="questao">
-    <p>Oportunidade de sono?</p>
+    <label for="oportunidadeSono">Oportunidade de sono?</label>
     <div class="resposta">
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="3.75" id="1">
-      <label for="1">1h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="1" id="oportunidadeSono1">
+      <label for="oportunidadeSono1">1h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="7.50" id="2">
-      <label for="2">2h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="2" id="oportunidadeSono2">
+      <label for="oportunidadeSono2">2h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="11.25" id="3">
-      <label for="3">3h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="3" id="oportunidadeSono3">
+      <label for="oportunidadeSono3">3h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="15" id="4">
-      <label for="4">4h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="4" id="oportunidadeSono4">
+      <label for="oportunidadeSono4">4h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="18.75" id="5">
-      <label for="5">5h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="5" id="oportunidadeSono5">
+      <label for="oportunidadeSono5">5h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="22.50" id="6">
-      <label for="6">6h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="6" id="oportunidadeSono6">
+      <label for="oportunidadeSono6">6h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="26.25" id="7">
-      <label for="7">7h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="7" id="oportunidadeSono7">
+      <label for="oportunidadeSono7">7h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="30.0" id="8">
-      <label for="8">8h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="8" id="oportunidadeSono8">
+      <label for="oportunidadeSono8">8h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="30.00" id="9">
-      <label for="9">9h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="9" id="oportunidadeSono9">
+      <label for="oportunidadeSono9">9h</label>
 
-      <input type="radio" name="hora" [(ngModel)]="oportunidadeSono" value="30.000" id="10">
-      <label for="10">10h</label>
+      <input type="radio" name="oportunidadeSono" [(ngModel)]="oportunidadeSono" value="10" id="oportunidadeSono10">
+      <label for="oportunidadeSono10">10h</label>
     </div>
   </div>
 
   <div class="questao">
-    <p>Qualidade do sono?</p>
+    <label for="">Quantidade de sono?</label>
     <div class="resposta">
-      <input type="radio" name="sono" [(ngModel)]="qualidadeSono" value="1" id="bom">
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="1" id="quantidadeSono1">
+      <label for="quantidadeSono1">1h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="2" id="quantidadeSono2">
+      <label for="quantidadeSono2">2h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="3" id="quantidadeSono3">
+      <label for="quantidadeSono3">3h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="4" id="quantidadeSono4">
+      <label for="quantidadeSono4">4h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="5" id="quantidadeSono5">
+      <label for="quantidadeSono5">5h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="6" id="quantidadeSono6">
+      <label for="quantidadeSono6">6h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="7" id="quantidadeSono7">
+      <label for="quantidadeSono7">7h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="8" id="quantidadeSono8">
+      <label for="quantidadeSono8">8h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="9" id="quantidadeSono9">
+      <label for="quantidadeSono9">9h</label>
+
+      <input type="radio" name="quantidadeSono" [(ngModel)]="quantidadeSono" value="10" id="quantidadeSono10">
+      <label for="quantidadeSono10">10h</label>
+    </div>
+  </div>
+
+  <div class="questao">
+    <label for="qualidadeSono">Qualidade do sono?</label>
+    <div class="resposta">
+      <input type="radio" name="qualidadeSono" [(ngModel)]="qualidadeSono" value="1" id="bom">
       <label for="bom">Bom</label>
 
-      <input type="radio" name="sono" [(ngModel)]="qualidadeSono" value="0.75" id="moderado">
+      <input type="radio" name="qualidadeSono" [(ngModel)]="qualidadeSono" value="2" id="moderado">
       <label for="moderado">Moderado</label>
 
-      <input type="radio" name="sono" [(ngModel)]="qualidadeSono" value="0.5" id="ruim">
+      <input type="radio" name="qualidadeSono" [(ngModel)]="qualidadeSono" value="3" id="ruim">
       <label for="ruim">Ruim</label>
     </div>
   </div>
 
   <div class="navegacao">
     <a routerLink="/" class="btn">Anterior</a>
-    <a routerLink="/questionario" class="btn">Próximo</a>
+    <button (click)="onClickProximo()" [ngClass]="{'btn': true, 'disable': !(this.user && this.oportunidadeSono && this.qualidadeSono)}">Próximo</button>
   </div>
 
 </div>

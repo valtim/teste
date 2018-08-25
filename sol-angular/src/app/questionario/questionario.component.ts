@@ -102,8 +102,9 @@ export class QuestionarioComponent implements OnInit {
         }
       });
     } else {
-      this.calculadora();
+      // this.calculadora();
       this.route.navigate(['/resultado']);
+      this.sendQuestionario();
     }
   }
 
@@ -124,55 +125,58 @@ export class QuestionarioComponent implements OnInit {
       financeiro: this.dataQuestao.financeiro,
       produtividade: this.dataQuestao.produtividade,
       saude: this.dataQuestao.saude,
-      saudeFamilia: this.dataQuestao.saudeFamilia
+      saudeFamilia: this.dataQuestao.saudeFamilia,
+      quantidadeSono: this.data.quantidadeSono
     }
 
-    this.http.post('https://teste.sistemasol.com.br/api/tripulante', params, this.httpOptions).subscribe(data => {
-      console.log('data: ', data);
-    });
+    console.log('params: ', params);
+
+    // this.http.post('https://teste.sistemasol.com.br/api/tripulante', params, this.httpOptions).subscribe(data => {
+    //   console.log('data: ', data);
+    // });
   }
 
-  calculadora() {
-    let qualidadeSono = this.data.oportunidadeSono * this.data.qualidadeSono;
-    let porcentagem = this.porcentagemQuestionario();
-    let total = qualidadeSono + porcentagem;
-    if (total > 80) {
-      this.data.nivelFadiga = 1;
-    } else {
-      if (total >= 70) {
-        this.data.nivelFadiga = 2;
-      } else {
-        this.data.nivelFadiga = 3;
-      }
-    }
-  }
+  // calculadora() {
+  //   let qualidadeSono = this.data.oportunidadeSono * this.data.qualidadeSono;
+  //   let porcentagem = this.porcentagemQuestionario();
+  //   let total = qualidadeSono + porcentagem;
+  //   if (total > 80) {
+  //     this.data.nivelFadiga = 1;
+  //   } else {
+  //     if (total >= 70) {
+  //       this.data.nivelFadiga = 2;
+  //     } else {
+  //       this.data.nivelFadiga = 3;
+  //     }
+  //   }
+  // }
 
-  porcentagemQuestionario() {
-    let descansoConcentracaoPorcentagem = [10, 8, 6, 4, 2];
-    let porcentagem = [5, 4, 3, 2, 1];
-    let result = [];
-    [this.dataQuestao.descanso,
-    this.dataQuestao.concentrar].forEach(element => {
-      result.push(descansoConcentracaoPorcentagem[element - 1]);
-    });
+  // porcentagemQuestionario() {
+  //   let descansoConcentracaoPorcentagem = [10, 8, 6, 4, 2];
+  //   let porcentagem = [5, 4, 3, 2, 1];
+  //   let result = [];
+  //   [this.dataQuestao.descanso,
+  //   this.dataQuestao.concentrar].forEach(element => {
+  //     result.push(descansoConcentracaoPorcentagem[element - 1]);
+  //   });
 
-    [this.dataQuestao.financeiro,
-    this.dataQuestao.produtividade,
-    this.dataQuestao.saude,
-    this.dataQuestao.saudeFamilia,
-    this.dataQuestao.calmo,
-    this.dataQuestao.dorMuscular,
-    this.dataQuestao.dorCosta,
-    this.dataQuestao.dorPerna,
-    this.dataQuestao.dorCabeca,
-    this.dataQuestao.dorBraco].forEach(element => {
-      result.push(porcentagem[element - 1]);
-    });
+  //   [this.dataQuestao.financeiro,
+  //   this.dataQuestao.produtividade,
+  //   this.dataQuestao.saude,
+  //   this.dataQuestao.saudeFamilia,
+  //   this.dataQuestao.calmo,
+  //   this.dataQuestao.dorMuscular,
+  //   this.dataQuestao.dorCosta,
+  //   this.dataQuestao.dorPerna,
+  //   this.dataQuestao.dorCabeca,
+  //   this.dataQuestao.dorBraco].forEach(element => {
+  //     result.push(porcentagem[element - 1]);
+  //   });
 
-    return this.somar(result);
-  }
+  //   return this.somar(result);
+  // }
 
-  somar(listaValores) {
-    return listaValores.reduce((acumulador, atual) => acumulador = acumulador + atual);
-  }
+  // somar(listaValores) {
+  //   return listaValores.reduce((acumulador, atual) => acumulador = acumulador + atual);
+  // }
 }
