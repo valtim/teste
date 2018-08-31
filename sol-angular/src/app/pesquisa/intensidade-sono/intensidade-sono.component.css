@@ -1,0 +1,16 @@
+.intensidade h2 {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.intensidade div{
+    margin: 5px 0;
+}
+
+.intensidade div:nth-child(2n){
+    background-color: #f1f1f1;
+}
+
+.navegacao button:last-child{
+    background-color: #00ce89;
+}

@@ -5,10 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
 
-  constructor() { }
+  private URL: string
   user: any
-  oportunidadeSono: number
-  qualidadeSono: number
-  quantidadeSono: number
-  nivelFadiga: number
+  reporte: boolean
+
+  constructor() {
+    this.URL = (window.location.host === 'localhost:4200') ? 'https://teste.sistemasol.com.br/' : 'https://www.controledafadiga.com.br/';
+  }
+
+  getURL() {
+    return this.URL;
+  }
 }

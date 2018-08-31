@@ -1,0 +1,14 @@
+<div class="content intensidade">
+  <h2>Nas Condições abaixo. Qual seria a sua intensidade de sono?</h2>
+
+  <div *ngFor="let questao of questoes">
+    <app-questao-sono condicao={{questao.condicao}} name={{questao.name}}></app-questao-sono>
+  </div>
+
+  <div class="navegacao">
+    <a routerLink="/questionario" class="btn">Anterior</a>
+    <a class="btn" routerLink="/"> Início </a>
+    <button class="btn" (click)="onTerminar()">Enviar</button>
+  </div>
+
+</div>

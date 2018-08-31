@@ -1,0 +1,21 @@
+<div class="content">
+
+  <h1>Consideraçoes Finais</h1>
+
+  <label for="outroSintomasCognitivos">*Causas prováveis que levaram você a fadiga:</label>
+  <textarea name="outroSintomasCognitivos" id="outroSintomasCognitivos"></textarea>
+
+  <label for="">*Como se Sentiu no Período
+    <select name="" id="" required [(ngModel)]="sentimento">
+      <option value="">Selecione um valor</option>
+      <option value="1">1</option>
+    </select>
+  </label>
+
+  <div class="navegacao">
+    <a routerLink="/contribuiram-fadiga" class="btn">Anterior</a>
+    <a class="btn" routerLink="/"> Início </a>
+    <button class="btn" (click)="onClickProximo()" [disabled]="!sentimento">Próximo</button>
+  </div>
+
+</div>

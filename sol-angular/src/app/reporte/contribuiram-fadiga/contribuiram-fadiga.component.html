@@ -1,0 +1,26 @@
+<div class="content">
+
+  <h1>Selecione os itens que contribuíram para sua fadiga.</h1>
+  <p>Selecione pelo menos uma alternativa.</p>
+  <div class="content-questao">
+    <div class="content">
+      <div class="form-check" *ngFor="let opcao of opcoes1">
+        <input type="checkbox" class="hide" name="{{opcao.name}}" [(ngModel)]="opcao.value" id="{{opcao.name}}">
+        <label for="{{opcao.name}}">{{opcao.text}}</label>
+      </div>
+    </div>
+    <div class="content">
+      <div class="form-check" *ngFor="let opcao of opcoes2">
+        <input type="checkbox" class="hide" name="{{opcao.name}}" [(ngModel)]="opcao.value" id="{{opcao.name}}">
+        <label for="{{opcao.name}}">{{opcao.text}}</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="navegacao">
+    <a routerLink="/reporte-voluntario" class="btn">Anterior</a>
+    <a class="btn" routerLink="/"> Início </a>
+    <button class="btn" (click)="onClickProximo()" [disabled]="!isOpcoesValid()">Próximo</button>
+  </div>
+
+</div>

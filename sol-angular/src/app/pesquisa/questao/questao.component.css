@@ -3,24 +3,25 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: transparent;
     margin: 5px 0;
 }
 
 .questao > span:first-child{
     background-color: #75c118;
+    margin-right: 5px;
 }
 
 .questao > span:last-child{
     background-color: #ff0001;
+    margin-left: 5px;
 }
 
 .questao > span{
     text-transform: uppercase;
     font-weight: bold;
-    padding: 20px 10px;
-    width: 250px;
-    margin: 0 5px;
+    padding: 20px 5px;
+    min-width: 145px;
+    width: 200px;
     text-align: center;
     color: #303030;
 }
@@ -31,8 +32,6 @@
     font-weight: bold;
     font-size: 1.2rem;
     display: flex;
-    /* flex-direction: column;
-    align-items: center; */
     flex-direction: row;
     justify-content: space-around;
     align-items: center;

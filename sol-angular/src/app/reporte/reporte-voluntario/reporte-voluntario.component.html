@@ -1,0 +1,18 @@
+<div class="content">
+
+  <h1>Reporte Voluntário de Fadiga</h1>
+  <h2>Considerando o seu nível de fadiga. Qual intervenção melhor te atende?</h2>
+
+  <input type="radio" name="intervecao" [(ngModel)]="intervecao" value="1" id="apto">
+  <label for="apto">Estou apto a cumprir programação de voo no dia seguinte ao reporte.</label>
+
+  <input type="radio" name="intervecao" [(ngModel)]="intervecao" value="0" id="naoApto">
+  <label for="naoApto">Não estou apto a cumprir a programação de voo no dia seguinte ao reporte.</label>
+
+  <div class="navegacao">
+    <a routerLink="/login" class="btn">Anterior</a>
+    <a class="btn" routerLink="/"> Início </a>
+    <button class="btn" (click)="onClickProximo()" [disabled]="!intervecao">Próximo</button>
+  </div>
+
+</div>

@@ -3,14 +3,22 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { SonoComponent } from './sono/sono.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
-import { QuestionarioComponent } from './questionario/questionario.component';
-import { QuestaoComponent } from './questao/questao.component';
 import { ResultadoComponent } from './resultado/resultado.component';
 import { GerenciamentoComponent } from './gerenciamento/gerenciamento.component';
+import { ReporteVoluntarioComponent } from './reporte/reporte-voluntario/reporte-voluntario.component';
+import { SonoComponent } from './pesquisa/sono/sono.component';
+import { QuestaoComponent } from './pesquisa/questao/questao.component';
+import { QuestionarioComponent } from './pesquisa/questionario/questionario.component';
+import { IntensidadeSonoComponent } from './pesquisa/intensidade-sono/intensidade-sono.component';
+import { QuestaoSonoComponent } from './pesquisa/questao-sono/questao-sono.component';
+import { ContribuiramFadigaComponent } from './reporte/contribuiram-fadiga/contribuiram-fadiga.component';
+import { SinaisFisiologicosComponent } from './reporte/sinais-fisiologicos/sinais-fisiologicos.component';
+import { SinaisCognitivosComponent } from './reporte/sinais-cognitivos/sinais-cognitivos.component';
+import { ContramedidasComponent } from './reporte/contramedidas/contramedidas.component';
+import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/consideracoes-finais.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +28,15 @@ import { GerenciamentoComponent } from './gerenciamento/gerenciamento.component'
     QuestaoComponent,
     QuestionarioComponent,
     ResultadoComponent,
-    GerenciamentoComponent
+    GerenciamentoComponent,
+    IntensidadeSonoComponent,
+    QuestaoSonoComponent,
+    ReporteVoluntarioComponent,
+    ContribuiramFadigaComponent,
+    SinaisFisiologicosComponent,
+    SinaisCognitivosComponent,
+    ContramedidasComponent,
+    ConsideracoesFinaisComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,13 @@
+.navegacao > button {
+    background-color: #00ce89;
+}
+
+.navegacao > button:disabled {
+    background-color: #466359;
+}
+
+textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 600px;
+    margin-bottom: 15px;
+}

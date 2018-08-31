@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../data.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,16 +20,22 @@ export class LoginComponent implements OnInit, OnDestroy {
     })
   };
 
-  constructor(private data: DataService, private http: HttpClient) { }
+  constructor(private data: DataService, private http: HttpClient, private route: Router) { }
 
   ngOnInit() {
-    this.http.get('https://teste.sistemasol.com.br/api/tripulante', this.httpOptions).subscribe(data => {
-      this.anac = data;
-    });
+    let URL = this.data.getURL();
+    if (this.data.reporte === undefined) {
+      this.route.navigate(['/']);
+    } else {
+      this.http.get(URL + 'api/tripulante', this.httpOptions).subscribe(data => {
+        this.anac = data;
+      });
+    }
   }
 
   ngOnDestroy() {
     this.data.user = this.user;
+    this.data.reporte = this.data.reporte;
   }
 
   onChange(event: any) {
@@ -47,6 +54,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     let input = document.querySelector('input');
     input.value = '';
     input.focus();
+  }
+
+  onClickSim() {
+    if (this.data.reporte) {
+      this.route.navigate(['/reporte-voluntario']);
+    } else {
+      this.route.navigate(['/sono']);
+    }
   }
 
 }

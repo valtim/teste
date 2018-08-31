@@ -22,9 +22,6 @@ export class ResultadoComponent implements OnInit {
   }
 
   onClickFechar() {
-    this.data.nivelFadiga = 0;
-    this.data.oportunidadeSono = 0;
-    this.data.qualidadeSono = 0;
     this.data.user = null;
     this.route.navigate(['/']);
   }
