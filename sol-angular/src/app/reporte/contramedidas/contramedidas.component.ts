@@ -55,7 +55,7 @@ export class ContramedidasComponent implements OnInit {
   }
 
   isOpcoesValid(): Boolean {
-    let result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
+    const result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
       return opcao.value;
     });
     return Boolean(result.length);

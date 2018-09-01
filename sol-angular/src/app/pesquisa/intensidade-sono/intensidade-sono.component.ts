@@ -11,17 +11,17 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 })
 export class IntensidadeSonoComponent implements OnInit, OnDestroy {
 
-  user
-  oportunidadeSono
-  qualidadeSono
-  pesquisaData
-
+  user;
+  oportunidadeSono;
+  qualidadeSono;
+  pesquisaData;
+  questoes;
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'token': '24bdd443-0570-40cc-bcde-b3edc401f49f'
     })
-  }
+  };
 
   constructor(private route: Router, private pesquisa: PesquisaService, private data: DataService, private http: HttpClient) { }
 
@@ -33,18 +33,18 @@ export class IntensidadeSonoComponent implements OnInit, OnDestroy {
       this.oportunidadeSono = this.pesquisa.oportunidadeSono;
       this.qualidadeSono = this.pesquisa.qualidadeSono;
     }
-  }
 
-  questoes = [
-    { condicao: 'Assistindo TV', name: 'assistindoTV' },
-    { condicao: 'Sentado e lendo', name: 'lendo' },
-    { condicao: 'Sentado em um lugar público', name: 'sentadoPublico' },
-    { condicao: 'Sentado conversando com alguém', name: 'sentadoConsersando' },
-    { condicao: 'Sentado calmamente após o almoço', name: 'sentadoAlmoco' },
-    { condicao: 'Como passageiro, andando uma hora sem parar', name: 'passageiro' },
-    { condicao: 'Enquanto para por alguns minutos ao pegar trânsito intenso', name: 'transitoIntenso' },
-    { condicao: 'Deitado, descansado à tarde, quando as circunstâncias permitem', name: 'deitadoDescansado' }
-  ]
+    this.questoes = [
+      { condicao: 'Assistindo TV', name: 'assistindoTV' },
+      { condicao: 'Sentado e lendo', name: 'lendo' },
+      { condicao: 'Sentado em um lugar público', name: 'sentadoPublico' },
+      { condicao: 'Sentado conversando com alguém', name: 'sentadoConsersando' },
+      { condicao: 'Sentado calmamente após o almoço', name: 'sentadoAlmoco' },
+      { condicao: 'Como passageiro, andando uma hora sem parar', name: 'passageiro' },
+      { condicao: 'Enquanto para por alguns minutos ao pegar trânsito intenso', name: 'transitoIntenso' },
+      { condicao: 'Deitado, descansado à tarde, quando as circunstâncias permitem', name: 'deitadoDescansado' }
+    ];
+  }
 
   onTerminar() {
     let terminar = true;
@@ -55,7 +55,7 @@ export class IntensidadeSonoComponent implements OnInit, OnDestroy {
     });
 
     if (terminar) {
-      let pesquisaData = {};
+      const pesquisaData = {};
       Object.keys(this.pesquisa).forEach((key) => {
         pesquisaData[key] = this.pesquisa[key];
       });

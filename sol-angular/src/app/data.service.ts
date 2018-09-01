@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class DataService {
 
-  private URL: string
-  user: any
-  reporte: boolean
+  private URL: string;
+  user: any;
+  reporte: boolean;
 
   constructor() {
     this.URL = (window.location.host === 'localhost:4200') ? 'https://teste.sistemasol.com.br/' : 'https://www.controledafadiga.com.br/';

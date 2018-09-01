@@ -83,14 +83,14 @@ export class SinaisFisiologicosComponent implements OnInit, OnDestroy {
   }
 
   isOpcoesValid(): Boolean {
-    let result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
+    const result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
       return opcao.value;
     });
     return Boolean(result.length);
   }
 
   onClickProximo() {
-    this.route.navigate(['/sinais-cognitivos'])
+    this.route.navigate(['/sinais-cognitivos']);
   }
 
   ngOnDestroy() {

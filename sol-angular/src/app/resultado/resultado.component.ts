@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ResultadoComponent implements OnInit {
 
-  trato: string
+  trato: string;
 
   constructor(private data: DataService, private route: Router) { }
 
@@ -17,7 +17,7 @@ export class ResultadoComponent implements OnInit {
     if (typeof this.data.user === 'undefined') {
       this.route.navigate(['/']);
     } else {
-      this.trato = this.data.user.Trato
+      this.trato = this.data.user.Trato;
     }
   }
 

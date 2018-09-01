@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  anac
-  user
+  anac;
+  user;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private data: DataService, private http: HttpClient, private route: Router) { }
 
   ngOnInit() {
-    let URL = this.data.getURL();
+    const URL = this.data.getURL();
     if (this.data.reporte === undefined) {
       this.route.navigate(['/']);
     } else {
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onClickNao() {
     this.user = null;
-    let input = document.querySelector('input');
+    const input = document.querySelector('input');
     input.value = '';
     input.focus();
   }

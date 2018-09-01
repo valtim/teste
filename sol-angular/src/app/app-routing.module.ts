@@ -27,7 +27,7 @@ const routes: Routes = [
   { path: 'contramedidas', component: ContramedidasComponent },
   { path: 'consideracoes-finais', component: ConsideracoesFinaisComponent },
   { path: '', component: GerenciamentoComponent }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

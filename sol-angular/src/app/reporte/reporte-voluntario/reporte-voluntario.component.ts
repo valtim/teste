@@ -9,7 +9,7 @@ import { ReporteService } from '../reporte.service';
 })
 export class ReporteVoluntarioComponent implements OnInit, OnDestroy {
 
-  intervecao
+  intervecao;
 
   constructor(private route: Router, private reporte: ReporteService) { }
 

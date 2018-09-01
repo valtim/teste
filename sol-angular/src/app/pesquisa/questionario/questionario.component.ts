@@ -55,7 +55,7 @@ export class QuestionarioComponent implements OnInit {
     if (!this.respondedAll()) {
       Array.from(document.querySelectorAll('.questao')).forEach(element => {
         (element as HTMLElement).style.background = '#ff8181';
-        let inputValid = element.querySelector('input:valid');
+        const inputValid = element.querySelector('input:valid');
         if (inputValid) {
           (inputValid.parentNode as HTMLElement).style.background = '';
         }

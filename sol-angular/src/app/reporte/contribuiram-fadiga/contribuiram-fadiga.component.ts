@@ -105,19 +105,19 @@ export class ContribuiramFadigaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.opcoes1.forEach((op) => {
       if (this.reporte[op.name]) {
-        op.value = this.reporte[op.name]
+        op.value = this.reporte[op.name];
       }
     });
 
     this.opcoes2.forEach((op) => {
       if (this.reporte[op.name]) {
-        op.value = this.reporte[op.name]
+        op.value = this.reporte[op.name];
       }
     });
   }
 
   isOpcoesValid(): Boolean {
-    let result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
+    const result = this.opcoes1.concat(this.opcoes2).filter((opcao) => {
       return opcao.value;
     });
     return Boolean(result.length);

@@ -10,10 +10,10 @@ import { PesquisaService } from '../pesquisa.service';
 })
 export class SonoComponent implements OnInit, OnDestroy {
 
-  user: any
-  oportunidadeSono: number
-  qualidadeSono: number
-  quantidadeSono: number
+  user: any;
+  oportunidadeSono: number;
+  qualidadeSono: number;
+  quantidadeSono: number;
 
   constructor(private data: DataService, private pesquisa: PesquisaService, private route: Router) { }
 
