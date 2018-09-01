@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { headersToString } from 'selenium-webdriver/http';
 import { DataService } from '../../data.service';
 import { PesquisaService } from '../pesquisa.service';
 
@@ -44,13 +42,6 @@ export class QuestionarioComponent implements OnInit {
       name: 'dor'
     }
   ];
-
-  // httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     'token': '24bdd443-0570-40cc-bcde-b3edc401f49f'
-  //   })
-  // };
 
   constructor(private data: DataService, private pesquisa: PesquisaService, private route: Router) { }
 

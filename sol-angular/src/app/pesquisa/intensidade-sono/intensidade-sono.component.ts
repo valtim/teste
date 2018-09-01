@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../../data.service';
 import { PesquisaService } from '../pesquisa.service';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-intensidade-sono',
@@ -13,8 +14,16 @@ export class IntensidadeSonoComponent implements OnInit, OnDestroy {
   user
   oportunidadeSono
   qualidadeSono
+  pesquisaData
 
-  constructor(private route: Router, private pesquisa: PesquisaService, private data: DataService) { }
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'token': '24bdd443-0570-40cc-bcde-b3edc401f49f'
+    })
+  }
+
+  constructor(private route: Router, private pesquisa: PesquisaService, private data: DataService, private http: HttpClient) { }
 
   ngOnInit() {
     if (this.data.user === undefined || this.pesquisa.oportunidadeSono === undefined || this.pesquisa.qualidadeSono === undefined) {
@@ -43,9 +52,22 @@ export class IntensidadeSonoComponent implements OnInit, OnDestroy {
       if (this.pesquisa[questao.name] === undefined) {
         terminar = false;
       }
-    })
+    });
+
     if (terminar) {
-      this.route.navigate(['/resultado']);
+      let pesquisaData = {};
+      Object.keys(this.pesquisa).forEach((key) => {
+        pesquisaData[key] = this.pesquisa[key];
+      });
+      this.pesquisaData = pesquisaData;
+      this.pesquisaData.Pessoa = this.data.user;
+      console.log(this.pesquisaData);
+      this.http.post('https://www.controledafadiga.com.br/api/pesquisa', this.pesquisaData, this.httpOptions).subscribe(data => {
+        console.log('Data :', data);
+      }, (error) => {
+        console.log('ERROR :', error);
+      });
+      // this.route.navigate(['/resultado']);
     }
   }
 
