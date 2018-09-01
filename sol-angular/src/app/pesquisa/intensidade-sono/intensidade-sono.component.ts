@@ -62,7 +62,7 @@ export class IntensidadeSonoComponent implements OnInit, OnDestroy {
       this.pesquisaData = pesquisaData;
       this.pesquisaData.Pessoa = this.data.user;
       console.log(this.pesquisaData);
-      this.http.post('https://www.controledafadiga.com.br/api/pesquisa', this.pesquisaData, this.httpOptions).subscribe(data => {
+      this.http.post('/api/pesquisa', this.pesquisaData, this.httpOptions).subscribe(data => {
         console.log('Data :', data);
       }, (error) => {
         console.log('ERROR :', error);
