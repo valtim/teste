@@ -1,0 +1,58 @@
+.search {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 15px 0;
+}
+
+.search>div>input {
+  text-align: center;
+}
+
+.resultado {
+  width: 100%;
+  min-height: 50%;
+}
+
+.descricao {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.tripulante {
+  margin: 10px;
+  background-color: #ddd;
+  color: black;
+  flex: auto;
+  display: flex;
+  justify-content: space-evenly;
+  min-width: 300px;
+}
+
+.nivel {
+  padding: 5px 0;
+  flex-grow: 2;
+}
+
+.nivel1 {
+  background-image: -webkit-linear-gradient(135deg, transparent 15%, #00ce89 10%);
+}
+
+.nivel2 {
+  background-image: -webkit-linear-gradient(135deg, transparent 15%, #ffe503 10%);
+}
+
+.nivel3 {
+  background-image: -webkit-linear-gradient(135deg, transparent 15%, #ff0202 10%);
+}
+
+.user {
+  padding: 5px 0;
+  flex-grow: 3;
+}

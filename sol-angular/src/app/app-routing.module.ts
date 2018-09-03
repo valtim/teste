@@ -12,6 +12,8 @@ import { SinaisFisiologicosComponent } from './reporte/sinais-fisiologicos/sinai
 import { SinaisCognitivosComponent } from './reporte/sinais-cognitivos/sinais-cognitivos.component';
 import { ContramedidasComponent } from './reporte/contramedidas/contramedidas.component';
 import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/consideracoes-finais.component';
+import { LoginGerenciaComponent } from './gerencia/login-gerencia/login-gerencia.component';
+import { StatusTripulanteComponent } from './gerencia/status-tripulante/status-tripulante.component';
 
 
 const routes: Routes = [
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'sinais-cognitivos', component: SinaisCognitivosComponent },
   { path: 'contramedidas', component: ContramedidasComponent },
   { path: 'consideracoes-finais', component: ConsideracoesFinaisComponent },
+  { path: 'gerencia/login', component: LoginGerenciaComponent },
+  { path: 'gerencia/status-tripulante', component: StatusTripulanteComponent },
   { path: '', component: GerenciamentoComponent }
 ];
 

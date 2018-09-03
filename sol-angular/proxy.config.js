@@ -1,42 +1,40 @@
-const proxy = [
-    {
-      context: '/api',
-      target: 'http://teste.controledafadiga.com.br',
-      //pathRewrite: {'^/api' : ''}
-    }
-  ];
+const proxy = [{
+  context: '/api',
+  target: 'http://teste.controledafadiga.com.br',
+  //pathRewrite: {'^/api' : ''}
+}];
 
 
-const proxyLocal =[
+const proxyLocal = [
 
-    {
-        "context": "/api",
-        "target":  {
-            "host": "teste.controledafadiga.com.br",
-            "protocol": "https:",
-            "port": 443
-          },
-          "secure": false,
-          "changeOrigin": true,
-          "logLevel": "info"
-      }
-    
+  {
+    "context": "/api",
+    "target": {
+      "host": "teste.controledafadiga.com.br",
+      "protocol": "https:",
+      "port": 443
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+
 ]
 
-const proxyRede =[
+const proxyRede = [
 
-    {
-        "context": "/api",
-        "target":  {
-            "host": "teste.controledafadiga.com.br",
-            "protocol": "https:",
-            "port": 443
-          },
-          "secure": false,
-          "changeOrigin": true,
-          "logLevel": "info"
-      }
-    
+  {
+    "context": "/api",
+    "target": {
+      "host": "teste.controledafadiga.com.br",
+      "protocol": "https:",
+      "port": 443
+    },
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+
 ]
 
-  module.exports = proxyRede;
+module.exports = proxyRede;

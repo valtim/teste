@@ -19,6 +19,8 @@ import { SinaisFisiologicosComponent } from './reporte/sinais-fisiologicos/sinai
 import { SinaisCognitivosComponent } from './reporte/sinais-cognitivos/sinais-cognitivos.component';
 import { ContramedidasComponent } from './reporte/contramedidas/contramedidas.component';
 import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/consideracoes-finais.component';
+import { LoginGerenciaComponent } from './gerencia/login-gerencia/login-gerencia.component';
+import { StatusTripulanteComponent } from './gerencia/status-tripulante/status-tripulante.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/con
     SinaisFisiologicosComponent,
     SinaisCognitivosComponent,
     ContramedidasComponent,
-    ConsideracoesFinaisComponent
+    ConsideracoesFinaisComponent,
+    LoginGerenciaComponent,
+    StatusTripulanteComponent
   ],
   imports: [
     BrowserModule,
