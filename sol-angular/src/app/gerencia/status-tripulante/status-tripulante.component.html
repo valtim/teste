@@ -32,14 +32,18 @@
     <p class="descricao" *ngIf="!tripulantes">
       Data Inicial e Data Final: Avaliações daquela intervalo de tempo
     </p>
-    <div class="tripulante" *ngFor="let tripulante of tripulantes; index as i; first as isFirst">
-      <div class="nivel" [ngClass]="{'nivel1': i === 0, 'nivel2': i % 2, 'nivel3': i % 3}">
-        Nivel 1:
-      </div>
-      <div class="user">
-        {{i+1}}/{{tripulantes.length}}. {{tripulante.Pessoa.Nome}}
+
+    <div style="border-bottom: 1px solid #eee; width:100%; margin: 0 10px;" *ngFor="let tripulante of tripulantes; index as i; first as isFirst">
+      <div class="tripulante" (click)="showInfoTripulante(tripulante)">
+        <div class="nivel" [ngClass]="{'nivel1': i === 0, 'nivel2': i % 2, 'nivel3': i % 3}">
+          Nivel 1:
+        </div>
+        <div class="user">
+          {{i+1}} / {{tripulantes.length}} - {{tripulante.Pessoa.Nome}}
+        </div>
       </div>
     </div>
+
   </div>
 
 </div>

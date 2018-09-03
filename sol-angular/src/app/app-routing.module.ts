@@ -14,6 +14,7 @@ import { ContramedidasComponent } from './reporte/contramedidas/contramedidas.co
 import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/consideracoes-finais.component';
 import { LoginGerenciaComponent } from './gerencia/login-gerencia/login-gerencia.component';
 import { StatusTripulanteComponent } from './gerencia/status-tripulante/status-tripulante.component';
+import { InfoTripulanteComponent } from './gerencia/info-tripulante/info-tripulante.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'consideracoes-finais', component: ConsideracoesFinaisComponent },
   { path: 'gerencia/login', component: LoginGerenciaComponent },
   { path: 'gerencia/status-tripulante', component: StatusTripulanteComponent },
+  { path: 'gerencia/info-tripulante', component: InfoTripulanteComponent },
   { path: '', component: GerenciamentoComponent }
 ];
 

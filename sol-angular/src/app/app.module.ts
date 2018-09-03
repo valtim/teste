@@ -21,6 +21,7 @@ import { ContramedidasComponent } from './reporte/contramedidas/contramedidas.co
 import { ConsideracoesFinaisComponent } from './reporte/consideracoes-finais/consideracoes-finais.component';
 import { LoginGerenciaComponent } from './gerencia/login-gerencia/login-gerencia.component';
 import { StatusTripulanteComponent } from './gerencia/status-tripulante/status-tripulante.component';
+import { InfoTripulanteComponent } from './gerencia/info-tripulante/info-tripulante.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { StatusTripulanteComponent } from './gerencia/status-tripulante/status-t
     ContramedidasComponent,
     ConsideracoesFinaisComponent,
     LoginGerenciaComponent,
-    StatusTripulanteComponent
+    StatusTripulanteComponent,
+    InfoTripulanteComponent
   ],
   imports: [
     BrowserModule,
