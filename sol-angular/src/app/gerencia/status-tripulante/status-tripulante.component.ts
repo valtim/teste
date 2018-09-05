@@ -15,58 +15,9 @@ export class StatusTripulanteComponent implements OnInit, OnDestroy {
   private tripulantes: any;
 
   ngOnInit() {
-    // this.tripulantes = [
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 1'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 1'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 1'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 1'
-    //     }
-    //   },
-    //   {
-    //     Pessoa: {
-    //       Nome: 'Teste 2'
-    //     }
-    //   }
-    // ];
+    if (this.info.tripulantes) {
+      this.tripulantes = this.info.tripulantes;
+    }
   }
 
   onBuscarTripulante() {

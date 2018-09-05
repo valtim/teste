@@ -15,7 +15,7 @@ export class InfoTripulanteComponent implements OnInit {
 
   ngOnInit() {
     this.tripulante = this.info.tripulante;
-
+    console.log(this.tripulante);
     this.sonolencia = [
       {
         questao: 'Assistindo TV',
@@ -91,4 +91,19 @@ export class InfoTripulanteComponent implements OnInit {
     ];
   }
 
+  setRespostas() { }
+
+  formatData(data: string) {
+    const Data = new Date(data);
+    let dia = Data.getDate();
+    if (dia < 10) {
+      dia = '0' + dia;
+    }
+    const mes = Data.getMonth() + 1;
+    if (mes < 10) {
+      mes = '0' + mes;
+    }
+    const ano = Data.getFullYear();
+    return dia + '/' + mes + '/' + ano + '  ' + Data.getHours() + ':' + Data.getMinutes();
+  }
 }
