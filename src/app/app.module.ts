@@ -6,9 +6,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { LoginComponent } from './login/login.component';
-import { DiarioBordoComponent } from './diario-bordo/diario-bordo.component';
+import { DiarioBordoComponent } from './diario/diario-bordo/diario-bordo.component';
 import { LoadingComponent } from './loading/loading.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     LoginComponent,
     DiarioBordoComponent,
-    LoadingComponent
+    LoadingComponent,
+    DiarioEditarComponent
   ],
   imports: [
     BrowserModule,
