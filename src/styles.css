@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+.container {
+  display: flex;
+  height: calc(100vh - 45px);
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, sans-serif;
+}
+
+input,
+textarea {
+  display: block;
+  height: 25px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #444;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn {
+  border-radius: 3px;
+  border-width: 0px;
+  box-sizing: border-box;
+  color: #444444 !important;
+  font-size: inherit;
+  height: 2.28571em;
+  line-height: 2.28571em;
+  max-width: 100%;
+  padding: 0px 8px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+input:focus {
+  border: 1px solid #82bbfc;
+}
+
+app-login,
+app-loading {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+app-diario-bordo {
+  width: 100%;
+}
+
+app-loading {
+  z-index: 9999;
+  background-color: rgba(139, 139, 139, 0.5);
+  position: absolute;
+  height: calc(100% - 45px);
+}
+
+.menu {
+  height: 45px;
+  background-color: #f7f7f9;
+  box-shadow: 0px 1px 5px #d6d6d6;
+  line-height: 45px;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu div {
+  margin: 0 25px;
+}
+
+.noShow {
+  display: none;
+}

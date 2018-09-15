@@ -1,0 +1,11 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.login input {
+  margin-bottom: 15px;
+}

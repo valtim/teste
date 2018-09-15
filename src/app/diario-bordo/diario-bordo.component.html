@@ -1,0 +1,13 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="home">
+  <div class="search">
+    <label for="">Data: </label>
+    <input type="date" name="data" [(ngModel)]="dataSearch" (change)="onChangeDate()">
+  </div>
+
+  <div class="result">
+    <div *ngFor="let diario of diarios; index as i; first as isFirst">
+      {{diario.Prefixo.PrefixoCompleto}}
+    </div>
+  </div>
+</div>
