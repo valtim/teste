@@ -6,7 +6,7 @@
   </div>
 
   <div class="result">
-    <div *ngFor="let diario of diarios; index as i; first as isFirst">
+    <div *ngFor="let diario of diarios; index as i; first as isFirst" (click)="onClickDiario(diario)">
       {{diario.Prefixo.PrefixoCompleto}}
     </div>
   </div>

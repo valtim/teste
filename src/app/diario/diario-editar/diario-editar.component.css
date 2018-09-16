@@ -1,0 +1,90 @@
+.page,
+.dadosLinha {
+  display: flex;
+  width: 100%;
+  flex-flow: wrap;
+  justify-content: space-evenly;
+}
+
+.page h3 {
+  width: 100%;
+  text-align: center;
+  background-color: #d8d8d8;
+  padding: 15px;
+  margin: 15px 0;
+}
+
+.page:nth-child(1) h3 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.form {
+  display: flex;
+  flex-flow: wrap;
+  padding: 0 15px;
+  margin: 5px 0;
+}
+
+.form {
+  width: 45%;
+}
+
+.form-3 {
+  width: 25%;
+}
+
+.form label+input,
+.form label+select {
+  width: 100%;
+}
+
+.form label+input[type=checkbox] {
+  width: auto;
+}
+
+table {
+  width: calc(100% - 40px);
+  margin: 0 20px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table,
+tr,
+td {
+  border: 1px solid #d8d8d8;
+}
+
+table input {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-error {
+  font-weight: bold;
+  color: red;
+}
+
+.linhas {
+  display: flex;
+  width: 100%;
+}
+
+.linha {
+  width: calc(100%/8);
+  text-align: center;
+  padding: 15px;
+  background-color: #dddddd;
+  border: 1px solid #d8d8d8;
+  cursor: pointer;
+}
+
+.selected {
+  background-color: #efefef;
+  border-bottom: none;
+}

@@ -12,15 +12,20 @@ body {
 }
 
 input,
+select,
 textarea {
   display: block;
   height: 25px;
   padding: 6px 12px;
   font-size: 14px;
-  line-height: 1.42857143;
+  line-height: 25px;
   color: #444;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+select {
+  height: 35px;
 }
 
 .btn {
@@ -49,7 +54,8 @@ app-loading {
   width: 100%;
 }
 
-app-diario-bordo {
+app-diario-bordo,
+app-diario-editar {
   width: 100%;
 }
 

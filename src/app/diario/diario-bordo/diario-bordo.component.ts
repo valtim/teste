@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { DiarioService } from '../diario.service';
 
 @Component({
   selector: 'app-diario-bordo',
@@ -9,7 +11,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class DiarioBordoComponent implements OnInit {
 
-  constructor(private appComponent: AppComponent, private http: HttpClient) { }
+  constructor(
+    private appComponent: AppComponent,
+    private http: HttpClient,
+    private router: Router,
+    private diario: DiarioService) { }
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -40,5 +46,10 @@ export class DiarioBordoComponent implements OnInit {
         this.diarios = data;
         this.loading = false;
       });
+  }
+
+  onClickDiario(diario: any) {
+    this.diario.diario = diario;
+    this.router.navigate(['/diario-bordo/editar']);
   }
 }

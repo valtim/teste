@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DiarioService } from '../diario.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-diario-editar',
@@ -8,20 +10,60 @@ import { Router } from '@angular/router';
 })
 export class DiarioEditarComponent implements OnInit {
 
-  @Input()
-  diario: any;
+  constructor(private route: Router, private diario: DiarioService) { }
 
-  constructor(private route: Router) { }
+  dataDiario: any;
+  linha = 0;
 
   ngOnInit() {
-    // this.diario = this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) => {
-    //     // (+) before `params.get()` turns the string into a number
-    //     this.selectedId = +params.get('id');
-    //     return this.service.getHeroes();
-    //   })
-    // );
-    console.log(this.diario);
+    // if (!this.diario.diario) {
+    //   this.route.navigate(['/diario-bordo']);
+    // }
+    this.dataDiario = this.diario.diario;
+    this.dataDiario.DataDoDiario = this.formatData(this.dataDiario.DataDoDiario);
+    for (let index = 1; index <= 4; index++) {
+      this.dataDiario['Refeicao' + index] = this.formatTime(this.dataDiario['Refeicao' + index]);
+      this.dataDiario['HoraDeApresentacao' + index] = this.formatTime(this.dataDiario['HoraDeApresentacao' + index]);
+    }
+    for (let index = 0; index < 8; index++) {
+      this.dataDiario.Linhas[index].Partida = this.formatTime(this.dataDiario.Linhas[index].Partida);
+      // this.dataDiario.Linhas[index].Partida = '00:0' + index;
+      this.dataDiario.Linhas[index].Decolagem = this.formatTime(this.dataDiario.Linhas[index].Decolagem);
+      this.dataDiario.Linhas[index].Pouso = this.formatTime(this.dataDiario.Linhas[index].Pouso);
+      this.dataDiario.Linhas[index].Corte = this.formatTime(this.dataDiario.Linhas[index].Corte);
+      this.dataDiario.Linhas[index].Diurno = this.formatTime(this.dataDiario.Linhas[index].Diurno);
+      this.dataDiario.Linhas[index].Noturno = this.formatTime(this.dataDiario.Linhas[index].Noturno);
+      this.dataDiario.Linhas[index].IFRC = this.formatTime(this.dataDiario.Linhas[index].IFRC);
+      this.dataDiario.Linhas[index].IFRR = this.formatTime(this.dataDiario.Linhas[index].IFRR);
+    }
+    console.log('Diario: ', this.diario.diario);
   }
 
+  formatData(data: string) {
+    return data.split('T')[0];
+  }
+
+  formatTime(data: string) {
+    if (!data) {
+      return '00:00';
+    }
+    let time: any = data.split('T')[1];
+    time = time.split(':');
+    time.splice(2, 1);
+    time = time.join(':');
+    return time;
+  }
+
+  refeicaoTracker(index) {
+    return this.dataDiario['Refeicao' + index];
+  }
+
+  changeLine(linha: number) {
+    this.linha = linha;
+  }
+
+  onScroll(e) {
+    console.log(e.target.value);
+    console.log(this.dataDiario.Refeicao1);
+  }
 }

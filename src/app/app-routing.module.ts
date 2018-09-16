@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'diario-bordo', component: DiarioBordoComponent },
-  { path: 'diario-bordo/editar/:diario', component: DiarioEditarComponent }
+  { path: 'diario-bordo/editar', component: DiarioEditarComponent }
 ];
 
 

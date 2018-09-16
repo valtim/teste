@@ -1,3 +1,407 @@
-<p>
-  diario-editar works!
-</p>
+<div class="page">
+  <h3>
+    Primeira Página
+  </h3>
+  <div class="form">
+    <label for="data">Data</label>
+    <input type="date" name="data" id="data" [(ngModel)]="dataDiario.DataDoDiario">
+  </div>
+  <div class="form">
+    <label for="prefixo">Prefixo</label>
+    <select id="prefixo" name="prefixo" [(ngModel)]="dataDiario.Prefixo.PrefixoCompleto">
+      <option value="">Prefixo</option>
+      <option value="PP-MAH">PP-MAH</option>
+      <option value="PT-HRE">PT-HRE</option>
+    </select>
+  </div>
+  <div class="form">
+    <label for="nDiario">Nº Diário</label>
+    <select id="nDiario">
+      <option value="">Defalt</option>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+  </div>
+  <div class="form">
+    <label for="nDiario">Folha Diário</label>
+    <select id="nDiario">
+      <option value="">Defalt</option>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="mercedes">Mercedes</option>
+      <option value="audi">Audi</option>
+    </select>
+  </div>
+  <div class="form">
+    <label for="fechar">Fechar</label>
+    <input type="checkbox" name="fechar" id="fechar">
+  </div>
+  <div class="form">
+    <label for="cancelar">Cancelar</label>
+    <input type="checkbox" name="cancelar" id="cancelar">
+  </div>
+</div>
+
+<div class="page">
+  <h3>
+    Hora de Apresentação
+  </h3>
+
+  <div *ngFor="let i of [1,2,3,4]" style="display: flex; width: 100%; flex-flow: wrap; justify-content: space-evenly;">
+    <div class="form form-3">
+      <label for="tripulante{{i}}">Tripulante {{i}}</label>
+      <select name="tripulante{{i}}" id="tripulante{{i}}">
+        <option value="">Tripulante</option>
+      </select>
+    </div>
+
+    <div class="form form-3">
+      <label for="refeicao{{i}}">Refeição</label>
+      <input type="time" name="dataDiario.Refeicao{{i}}" id="refeicao{{i}}" ngModel>
+    </div>
+
+    <div class="form form-3">
+      <label for="apresentacao{{i}}">Apresentação</label>
+      <input type="time" name="Apresentacao{{i}}" id="apresentacao{{i}}">
+    </div>
+  </div>
+
+</div>
+
+<div class="page">
+  <h3>Base</h3>
+  <div class="form form-3">
+    <label for="base">Base</label>
+    <input type="text" name="base" id="base">
+  </div>
+</div>
+
+<div class="page">
+  <h3>Procedimento</h3>
+  <div id="procedimento">
+    <table>
+      <tr>
+        <td rowspan="2"></td>
+        <td colspan="2">1P</td>
+        <td colspan="2">2P</td>
+        <td colspan="2">3P</td>
+        <td colspan="2">4P</td>
+      </tr>
+      <tr>
+        <td>D</td>
+        <td>N</td>
+        <td>D</td>
+        <td>N</td>
+        <td>D</td>
+        <td>N</td>
+        <td>D</td>
+        <td>N</td>
+      </tr>
+      <tr>
+        <td>Deco. Offshore</td>
+        <td><input id="decoffp1d" [(ngModel)]="dataDiario.Procedimentos[0].Diurno1p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp1n" [(ngModel)]="dataDiario.Procedimentos[0].Noturno1p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp2d" [(ngModel)]="dataDiario.Procedimentos[0].Diurno2p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp2n" [(ngModel)]="dataDiario.Procedimentos[0].Noturno2p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp3d" [(ngModel)]="dataDiario.Procedimentos[0].Diurno3p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp3n" [(ngModel)]="dataDiario.Procedimentos[0].Noturno3p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp4d" [(ngModel)]="dataDiario.Procedimentos[0].Diurno4p" min="0" max="100" type="tel"></td>
+        <td><input id="decoffp4n" [(ngModel)]="dataDiario.Procedimentos[0].Noturno4p" min="0" max="100" type="tel"></td>
+      </tr>
+      <tr>
+        <td>Pouso Offshore</td>
+        <td><input id="pouoffp1d" [(ngModel)]="dataDiario.Procedimentos[1].Diurno1p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp1n" [(ngModel)]="dataDiario.Procedimentos[1].Noturno1p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp2d" [(ngModel)]="dataDiario.Procedimentos[1].Diurno2p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp2n" [(ngModel)]="dataDiario.Procedimentos[1].Noturno2p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp3d" [(ngModel)]="dataDiario.Procedimentos[1].Diurno3p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp3n" [(ngModel)]="dataDiario.Procedimentos[1].Noturno3p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp4d" [(ngModel)]="dataDiario.Procedimentos[1].Diurno4p" min="0" max="100" type="tel"></td>
+        <td><input id="pouoffp4n" [(ngModel)]="dataDiario.Procedimentos[1].Noturno4p" min="0" max="100" type="tel"></td>
+      </tr>
+      <tr>
+        <td>Deco. Onshore</td>
+        <td><input id="deconp1d" [(ngModel)]="dataDiario.Procedimentos[2].Diurno1p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp1n" [(ngModel)]="dataDiario.Procedimentos[2].Noturno1p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp2d" [(ngModel)]="dataDiario.Procedimentos[2].Diurno2p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp2n" [(ngModel)]="dataDiario.Procedimentos[2].Noturno2p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp3d" [(ngModel)]="dataDiario.Procedimentos[2].Diurno3p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp3n" [(ngModel)]="dataDiario.Procedimentos[2].Noturno3p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp4d" [(ngModel)]="dataDiario.Procedimentos[2].Diurno4p" min="0" max="100" type="tel"></td>
+        <td><input id="deconp4n" [(ngModel)]="dataDiario.Procedimentos[2].Noturno4p" min="0" max="100" type="tel"></td>
+      </tr>
+      <tr>
+        <td>Pouso Onshore</td>
+        <td><input id="pouonp1d" [(ngModel)]="dataDiario.Procedimentos[3].Diurno1p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp1n" [(ngModel)]="dataDiario.Procedimentos[3].Noturno1p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp2d" [(ngModel)]="dataDiario.Procedimentos[3].Diurno2p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp2n" [(ngModel)]="dataDiario.Procedimentos[3].Noturno2p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp3d" [(ngModel)]="dataDiario.Procedimentos[3].Diurno3p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp3n" [(ngModel)]="dataDiario.Procedimentos[3].Noturno3p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp4d" [(ngModel)]="dataDiario.Procedimentos[3].Diurno4p" min="0" max="100" type="tel"></td>
+        <td><input id="pouonp4n" [(ngModel)]="dataDiario.Procedimentos[3].Noturno4p" min="0" max="100" type="tel"></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<div class="page">
+  <h3>Performance</h3>
+
+  <p class="text-center text-error" style="width: 100%">
+    Os valores de N1 devem ser digitados com
+    todos os dígitos incluindo a casa decimal.
+    <br>
+    Exemplos:
+    <br>
+    Para entrar 100,5 digite 1005
+    <br>
+    Para entrar 101 digite 1010
+    OAT
+  </p>
+
+  <div class="form">
+    <label for="oat">OAT</label>
+    <input type="tel" minlength="4" maxlength="4" name="oat" id="oat">
+  </div>
+
+  <div class="form">
+    <label for="q">Q (%)</label>
+    <input type="tel" minlength="4" maxlength="4" name="q" id="q">
+  </div>
+
+  <div class="form">
+    <label for="n11">N1 #1</label>
+    <input type="tel" minlength="4" maxlength="4" name="n11" id="n11">
+  </div>
+
+  <div class="form">
+    <label for="n12">N1 #2</label>
+    <input type="tel" minlength="4" maxlength="4" name="n12" id="n12">
+  </div>
+
+  <div class="form">
+    <label for="t51">T5 #1</label>
+    <input type="tel" minlength="4" maxlength="4" name="t51" id="t51">
+  </div>
+
+  <div class="form">
+    <label for="t52">T5 #2</label>
+    <input type="tel" minlength="4" maxlength="4" name="t52" id="t52">
+  </div>
+
+  <div class="form">
+    <label for="rpm">RPM</label>
+    <input type="tel" minlength="4" maxlength="4" name="rpm" id="rpm">
+  </div>
+
+  <div class="form">
+    <label for="tgt">TGT</label>
+    <input type="tel" minlength="4" maxlength="4" name="tgt" id="tgt">
+  </div>
+</div>
+
+<div class="page">
+  <h3>Linhas</h3>
+
+  <div class="linhas">
+    <div class="linha" [ngClass]="{'selected': linha === 0 }" (click)="changeLine(0)">
+      Linha 1
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 1 }" (click)="changeLine(1)">
+      Linha 2
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 2 }" (click)="changeLine(2)">
+      Linha 3
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 3 }" (click)="changeLine(3)">
+      Linha 4
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 4 }" (click)="changeLine(4)">
+      Linha 5
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 5 }" (click)="changeLine(5)">
+      Linha 6
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 6 }" (click)="changeLine(6)">
+      Linha 7
+    </div>
+    <div class="linha" [ngClass]="{'selected': linha === 7 }" (click)="changeLine(7)">
+      Linha 8
+    </div>
+  </div>
+
+  <div *ngFor="let i of [0,1,2,3,4,5,6,7]" style="width: 100%">
+    <div class="dadosLinha" *ngIf="i === linha">
+
+      <div class="form">
+        <label for="de">De</label>
+        <input type="text" [(ngModel)]="dataDiario.Linhas[i].De" name="de" id="de">
+      </div>
+
+      <div class="form">
+        <label for="para">Para</label>
+        <input type="text" [(ngModel)]="dataDiario.Linhas[i].Para" name="para" id="para">
+      </div>
+
+      <div class="form">
+        <label for="partida">Partida</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Partida" name="partida" id="partida">
+      </div>
+
+      <div class="form">
+        <label for="decolagem">Decolagem</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Decolagem" name="decolagem" id="decolagem">
+      </div>
+
+      <div class="form">
+        <label for="pouso">Pouso</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Pouso" name="pouso" id="pouso">
+      </div>
+
+      <div class="form">
+        <label for="corte">Corte</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Corte" name="corte" id="corte">
+      </div>
+
+      <div class="form">
+        <label for="diurno">Diurno</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Diurno" name="diurno" id="diurno">
+      </div>
+
+      <div class="form">
+        <label for="noturno">Noturno</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Noturno" name="noturno" id="noturno">
+      </div>
+
+      <div class="form">
+        <label for="ifrCapota">IFR Capota</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].IFRC" name="ifrCapota" id="ifrCapota">
+      </div>
+
+      <div class="form">
+        <label for="ifrReal">IFR Real</label>
+        <input type="time" [(ngModel)]="dataDiario.Linhas[i].IFRR" name="ifrReal" id="ifrReal">
+      </div>
+
+      <div class="form">
+        <label for="vfr">VFR</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].VooIFR" name="vfr" id="vfr">
+      </div>
+
+      <div class="form">
+        <label for="total">Total</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Total" name="total" id="total">
+      </div>
+
+      <div class="form">
+        <label for="pousos">Pousos</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Pousos" name="pousos" id="pousos">
+      </div>
+
+      <div class="form">
+        <label for="ciclos">Ciclos</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Ciclos" name="ciclos" id="ciclos">
+      </div>
+
+      <div class="form">
+        <label for="pax">Pax (Número)</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Pax" name="pax" id="pax">
+      </div>
+
+      <div class="form">
+        <label for="carga">Carga (Kg)</label>
+        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Carga" name="carga" id="carga">
+      </div>
+
+      <div class="form">
+        <label for="natureza">Natureza</label>
+        <select name="natureza" id="natureza">
+          <option value="">Natureza</option>
+        </select>
+      </div>
+
+      <div class="form">
+        <label for="cliente">Cliente</label>
+        <select name="cliente" id="cliente">
+          <option value="">Cliente</option>
+        </select>
+      </div>
+
+      <div class="form">
+        <label for="tripulante1">Tripulante 1</label>
+        <select name="tripulante1" id="tripulante1">
+          <option value="">Tripulante 1</option>
+        </select>
+      </div>
+
+      <div class="form">
+        <label for="tripulante2">Tripulante 2</label>
+        <select name="tripulante2" id="tripulante2">
+          <option value="">Tripulante 2</option>
+        </select>
+      </div>
+
+      <div class="form">
+        <label for="funcao1">Função 1</label>
+        <select name="funcao1" id="funcao1">
+          <option value="">Função 1</option>
+        </select>
+      </div>
+
+      <div class="form">
+        <label for="funcao2">Função 2</label>
+        <select name="funcao2" id="funcao2">
+          <option value="">Função 2</option>
+        </select>
+      </div>
+
+      <div class="form form-3"></div>
+      <div class="form form-3">
+        <label for="tipoOperacao">Tipo de Operação</label>
+        <select name="tipoOperacao" id="tipoOperacao">
+          <option value="">Tipo de Operação</option>
+        </select>
+      </div>
+      <div class="form form-3"></div>
+
+
+      <div class="form">
+        <label for="combDecolagem">Comb. na Decolagem (Lb)</label>
+        <input type="number" name="combDecolagem" id="combDecolagem">
+      </div>
+
+      <div class="form">
+        <label for="combPouso">Comb. no Pouso (Lb)</label>
+        <input type="number" name="combPouso" id="combPouso">
+      </div>
+
+
+      <div class="form">
+        <label for="consumoCombustivel">Consumo de Combustível</label>
+        <input type="number" name="consumoCombustivel" id="consumoCombustivel">
+      </div>
+
+      <div class="form">
+        <label for="combAbastecido">Comb. Abastecido (Litros)</label>
+        <input type="number" name="combAbastecido" id="combAbastecido">
+      </div>
+
+      <div class="form">
+        <label for="notaAbastecimento">Nota de Abastecimento</label>
+        <input type="text" name="notaAbastecimento" id="notaAbastecimento">
+      </div>
+
+      <div class="form">
+        <label for="abastecedora">Abastecedora</label>
+        <select name="abastecedora" id="abastecedora">
+          <option value="">Abastecedora</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+</div>
