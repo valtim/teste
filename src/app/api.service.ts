@@ -16,7 +16,26 @@ export class ApiService {
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token': 'a5748c43-9ff4-44ba-815e-22d122a75778'
+        'token': localStorage.getItem('token')
+      })
+    };
+  }
+
+  postLogin(username: string, password: string): Promise<any> {
+    return this.http.post(this.url + 'api/login', { 'username': username, 'password': password })
+      .toPromise()
+      .then((result: string) => {
+        this.updateToken(result);
+      })
+      .catch();
+  }
+
+  private updateToken(token: string): void {
+    localStorage.setItem('token', token);
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
       })
     };
   }
@@ -30,6 +49,20 @@ export class ApiService {
 
   getDiarioByDate(date: string): Promise<any> {
     return this.http.get(this.url + 'api/novodiario/' + date, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
+  getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
+    return this.http.get(this.url + `api/novodiario/${id}/${month}/${year}`, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
+  getPagamento(data: string): Promise<any> {
+    return this.http.get(this.url + `api/relatorio/pagamento/${data}`, this.httpOptions)
       .toPromise()
       .then()
       .catch();

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.component';
 import { BibliotecaComponent } from './gerenciar/biblioteca/biblioteca.component';
 import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
+import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
     LoadingComponent,
     DiarioEditarComponent,
     BibliotecaComponent,
-    PapeletaComponent
+    PapeletaComponent,
+    PagamentoComponent
   ],
   imports: [
     BrowserModule,

@@ -57,7 +57,8 @@ app-loading {
 app-diario-bordo,
 app-diario-editar,
 app-biblioteca,
-app-papeleta {
+app-papeleta,
+app-pagamento {
   width: 100%;
 }
 
@@ -73,10 +74,10 @@ app-loading {
   height: 45px;
   background-color: #f7f7f9;
   box-shadow: 0px 1px 5px #d6d6d6;
-  line-height: 45px;
   text-transform: uppercase;
   font-weight: bold;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 

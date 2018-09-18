@@ -1,12 +1,15 @@
 .content {
   display: flex;
   margin-top: 20px;
-  margin-left: 20px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
 }
 
 table {
   border-collapse: collapse;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 table,
@@ -18,4 +21,11 @@ td {
 
 table tr:nth-child(2n) {
   background-color: #ececec;
+}
+
+@media (max-width: 580px) {
+
+  table {
+    width: 90%;
+  }
 }

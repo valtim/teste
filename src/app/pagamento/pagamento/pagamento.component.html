@@ -1,0 +1,16 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="content">
+  <div style="width: 100%;display: flex;justify-content: center;margin-bottom: 15px;">
+    <select name="month" id="" [(ngModel)]="month" (change)="changeData()">
+      <option value="">Selecione uma data</option>
+      <option *ngFor="let data of datas" value="{{data.value}}">{{data.label}}</option>
+    </select>
+  </div>
+
+  <table>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+  </table>
+</div>
