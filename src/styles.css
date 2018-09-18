@@ -55,7 +55,9 @@ app-loading {
 }
 
 app-diario-bordo,
-app-diario-editar {
+app-diario-editar,
+app-biblioteca,
+app-papeleta {
   width: 100%;
 }
 
@@ -63,7 +65,8 @@ app-loading {
   z-index: 9999;
   background-color: rgba(139, 139, 139, 0.5);
   position: absolute;
-  height: calc(100% - 45px);
+  top: 0;
+  height: 100%;
 }
 
 .menu {

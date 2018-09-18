@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DiarioService } from '../diario.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-diario-editar',

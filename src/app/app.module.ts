@@ -10,6 +10,8 @@ import { DiarioBordoComponent } from './diario/diario-bordo/diario-bordo.compone
 import { LoadingComponent } from './loading/loading.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.component';
+import { BibliotecaComponent } from './gerenciar/biblioteca/biblioteca.component';
+import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.comp
     LoginComponent,
     DiarioBordoComponent,
     LoadingComponent,
-    DiarioEditarComponent
+    DiarioEditarComponent,
+    BibliotecaComponent,
+    PapeletaComponent
   ],
   imports: [
     BrowserModule,
