@@ -68,4 +68,10 @@ export class ApiService {
       .catch();
   }
 
+  getListas(): Promise<any> {
+    return this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
 }

@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'publicacao', component: BibliotecaComponent },
   { path: 'papeleta', component: PapeletaComponent },
   { path: 'relatorio-pagamento', component: PagamentoComponent },
-  { path: 'diario-bordo', component: DiarioBordoComponent },
-  { path: 'diario-bordo/editar', component: DiarioEditarComponent }
+  { path: 'relatorio-voo', component: DiarioBordoComponent },
+  { path: 'relatorio-voo/editar', component: DiarioEditarComponent }
 ];
 
 

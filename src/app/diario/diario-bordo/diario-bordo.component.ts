@@ -23,7 +23,7 @@ export class DiarioBordoComponent implements OnInit {
 
   dataSearch: string;
   ngOnInit() {
-    this.appComponent.setTitle('Diário de Bordo');
+    this.appComponent.setTitle('Relatório de Voo');
     this.dataSearch = new Date().toISOString().split('T')[0];
 
     this.api.getDiarioByDate(this.dataSearch).then((data) => {
@@ -47,6 +47,6 @@ export class DiarioBordoComponent implements OnInit {
 
   onClickDiario(diario: any) {
     this.diario.diario = diario;
-    this.router.navigate(['/diario-bordo/editar']);
+    this.router.navigate(['/relatorio-voo/editar']);
   }
 }
