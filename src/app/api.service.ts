@@ -13,12 +13,14 @@ export class ApiService {
   constructor(private http: HttpClient) {
     this.url = 'https://teste.sistemasol.com.br/';
 
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
-      })
-    };
+    if (localStorage.getItem('token')) {
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
+        })
+      };
+    }
   }
 
   postLogin(username: string, password: string): Promise<any> {
@@ -38,13 +40,6 @@ export class ApiService {
         'token': localStorage.getItem('token')
       })
     };
-  }
-
-  getTripulantes(): Promise<any> {
-    return this.http.get(this.url + 'api/Tripulante', this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
   }
 
   getDiarioByDate(date: string): Promise<any> {
@@ -68,10 +63,48 @@ export class ApiService {
       .catch();
   }
 
-  getListas(): Promise<any> {
-    return this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
+  getListas(): void {
+    this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
       .toPromise()
-      .then()
+      .then((result: any) => {
+        console.log('result: ', result);
+        localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
+        localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
+        localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
+        localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
+        localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
+        localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
+        localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
+        localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
+      })
       .catch();
+  }
+
+  getTripulantes(): any {
+    return JSON.parse(localStorage.getItem('Tripulante'));
+  }
+
+  getAbastecedoras(): any {
+    return JSON.parse(localStorage.getItem('Abastecedora'));
+  }
+
+  getProfixos(): any {
+    return JSON.parse(localStorage.getItem('Prefixo'));
+  }
+
+  getNaturezas(): any {
+    return JSON.parse(localStorage.getItem('Natureza'));
+  }
+
+  getFuncaoBordos(): any {
+    return JSON.parse(localStorage.getItem('FuncaoBordo'));
+  }
+
+  getClientes(): any {
+    return JSON.parse(localStorage.getItem('Cliente'));
+  }
+
+  getTipoDeOperacoes(): any {
+    return JSON.parse(localStorage.getItem('TipoDeOperacao'));
   }
 }

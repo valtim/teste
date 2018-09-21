@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.app.setTitle('sol');
-    this.api.getListas().then((data) => { console.log('data: ', data); });
+    this.api.getListas();
   }
 }
