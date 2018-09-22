@@ -4,6 +4,15 @@
   flex-direction: column;
 }
 
+#novo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+}
+
 .search {
   margin-bottom: 15px;
   padding-bottom: 15px;

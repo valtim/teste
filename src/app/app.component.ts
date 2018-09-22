@@ -19,8 +19,8 @@ export class AppComponent {
   }
 
   backClicked() {
-    if (this._location.path() === '/diario-bordo/editar') {
-      this.router.navigate(['/diario-bordo']);
+    if (this._location.path() === '/relatorio-voo/editar' || this._location.path() === '/relatorio-voo/novo') {
+      this.router.navigate(['/relatorio-voo']);
     } else {
       this.router.navigate(['/home']);
     }

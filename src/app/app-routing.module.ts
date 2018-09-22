@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'papeleta', component: PapeletaComponent },
   { path: 'relatorio-pagamento', component: PagamentoComponent },
   { path: 'relatorio-voo', component: DiarioBordoComponent },
+  { path: 'relatorio-voo/novo', component: DiarioEditarComponent },
   { path: 'relatorio-voo/editar', component: DiarioEditarComponent }
 ];
 
