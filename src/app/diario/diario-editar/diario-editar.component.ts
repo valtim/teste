@@ -70,21 +70,11 @@ export class DiarioEditarComponent implements OnInit {
         this.dataDiario.Linhas[index].IFRC = this.formatTime(this.dataDiario.Linhas[index].IFRC);
         this.dataDiario.Linhas[index].IFRR = this.formatTime(this.dataDiario.Linhas[index].IFRR);
 
-        this.dataDiario.Linhas[index].total = this.totalLinha(
-          this.dataDiario.Linhas[index].Decolagem,
-          this.dataDiario.Linhas[index].Partida,
-          this.dataDiario.Linhas[index].Pouso,
-          this.dataDiario.Linhas[index].Corte);
+        this.totalLinha(index);
 
-        this.dataDiario.Linhas[index].vrf = this.fewerHours(
-          this.fewerHours(
-            this.dataDiario.Linhas[index].total,
-            this.dataDiario.Linhas[index].IFRR),
-          this.dataDiario.Linhas[index].IFRC);
+        this.VFR(index);
 
-        this.dataDiario.Linhas[index].Diurno = this.fewerHours(
-          this.dataDiario.Linhas[index].total,
-          this.dataDiario.Linhas[index].Noturno);
+        this.Diurno(index);
 
         if (!this.dataDiario.Linhas[index].Cliente) {
           this.dataDiario.Linhas[index].Cliente = {};
@@ -141,6 +131,13 @@ export class DiarioEditarComponent implements OnInit {
     return hours + ':' + minutos;
   }
 
+  Diurno(index: number): string {
+    this.dataDiario.Linhas[index].Diurno = this.fewerHours(
+      this.dataDiario.Linhas[index].total,
+      this.dataDiario.Linhas[index].Noturno);
+    return this.dataDiario.Linhas[index].Diurno;
+  }
+
   fewerHours(hour1: string, hour2: string): string {
     let hours = 0;
     let minutos = 0;
@@ -162,11 +159,12 @@ export class DiarioEditarComponent implements OnInit {
     return hoursStr + ':' + minutosStr;
   }
 
-  totalLinha(Decolagem: string, Partida: string, Pouso: string, Corte: string): string {
+  totalLinha(index: number): string {
     // (vDecolagem - vPartida) + (vPouso - vDecolagem) + (vCorte - vPouso)
-    let total = this.fewerHours(Decolagem, Partida);
-    total = this.sumHours(total, this.fewerHours(Pouso, Decolagem));
-    total = this.sumHours(total, this.fewerHours(Corte, Pouso));
+    let total = this.fewerHours(this.dataDiario.Linhas[index].Decolagem, this.dataDiario.Linhas[index].Partida);
+    total = this.sumHours(total, this.fewerHours(this.dataDiario.Linhas[index].Pouso, this.dataDiario.Linhas[index].Decolagem));
+    total = this.sumHours(total, this.fewerHours(this.dataDiario.Linhas[index].Corte, this.dataDiario.Linhas[index].Pouso));
+    this.dataDiario.Linhas[index].total = total;
     return total;
   }
 
@@ -211,40 +209,29 @@ export class DiarioEditarComponent implements OnInit {
   totalColunaNumber(name: string): number {
     let total = 0;
     for (let index = 0; index < this.dataDiario.Linhas.length; index++) {
-      total += this.dataDiario.Linhas[index][name];
+      if (this.dataDiario.Linhas[index][name]) {
+        total += parseInt(this.dataDiario.Linhas[index][name], 10);
+      }
     }
     return total;
   }
 
-  vrf(TOTAL, IFRR, IFRC): string {
-    return this.fewerHours(this.fewerHours(TOTAL, IFRR), IFRC);
-  }
-
-  diurno(total, Noturno): string {
-    return this.fewerHours(total, Noturno);
+  VFR(index: number): string {
+    this.dataDiario.Linhas[index].vfr = this.fewerHours(
+      this.fewerHours(this.dataDiario.Linhas[index].total, this.dataDiario.Linhas[index].IFRR),
+      this.dataDiario.Linhas[index].IFRC);
+    return this.dataDiario.Linhas[index].vfr;
   }
 
   totalTotal(): string {
     let total = '';
     total = this.sumHours(
-      this.totalLinha(
-        this.dataDiario.Linhas[0].Decolagem,
-        this.dataDiario.Linhas[0].Partida,
-        this.dataDiario.Linhas[0].Pouso,
-        this.dataDiario.Linhas[0].Corte),
-      this.totalLinha(
-        this.dataDiario.Linhas[1].Decolagem,
-        this.dataDiario.Linhas[1].Partida,
-        this.dataDiario.Linhas[1].Pouso,
-        this.dataDiario.Linhas[1].Corte)
+      this.totalLinha(0),
+      this.totalLinha(1)
     );
     for (let index = 2; index < this.dataDiario.Linhas.length; index++) {
       total = this.sumHours(total,
-        this.totalLinha(
-          this.dataDiario.Linhas[index].Decolagem,
-          this.dataDiario.Linhas[index].Partida,
-          this.dataDiario.Linhas[index].Pouso,
-          this.dataDiario.Linhas[index].Corte)
+        this.totalLinha(index)
       );
     }
     return total;
