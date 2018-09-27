@@ -100,3 +100,11 @@ table input {
   background-color: #efefef;
   border-bottom: none;
 }
+
+#salvar {
+  position: absolute;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+}

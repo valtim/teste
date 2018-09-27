@@ -1,4 +1,15 @@
 <div class="page">
+
+  <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="salvarDario()">
+    <g>
+      <rect x="248" y="352" width="16" height="96"></rect>
+      <path d="M399.3,183.6c0-1.2,0.2-2.4,0.2-3.6c0-64.3-52.8-116.4-116.8-116.4c-46.1,0-85.8,27.1-104.4,66.3
+		c-8.1-4.1-17.1-6.4-26.8-6.4c-29.6,0-54.1,23.6-58.9,52C57.4,187.6,32,222.2,32,261.8c0,49.7,40.1,90.2,89.6,90.2H182h31h35V205.8
+		l-54.7,54.5l-11.6-11.6l74.5-74.3l74.5,74.3l-11.8,11.6L264,205.8V352h134c45,0,82-37.3,82-82.8C480,223.7,444.5,183.7,399.3,183.6
+		z"></path>
+    </g>
+  </svg>
+
   <h3>
     Primeira Página
   </h3>
@@ -8,70 +19,40 @@
   </div>
   <div class="form">
     <label for="prefixo">Prefixo</label>
-    <select id="prefixo" name="prefixo" [(ngModel)]="dataDiario.Prefixo.PrefixoCompleto">
+    <select id="prefixo" name="prefixo" [(ngModel)]="dataDiario.Prefixo.PrefixoCompleto" (change)="getBlocos()">
       <option value="">Prefixo</option>
       <option *ngFor="let prefixo of prefixos" value="{{prefixo.PrefixoCompleto}}">{{prefixo.PrefixoCompleto}}</option>
     </select>
   </div>
   <div class="form">
     <label for="nDiario">Nº Diário</label>
-    <select id="nDiario">
+    <select id="nDiario" name="nDiario" [(ngModel)]="dataDiario.NumeroDoDiario">
       <option value="">Nº Diário</option>
-      <!-- <option *ngFor="let nDiario of nDiarios" value="{{}}">{{}}</option> -->
+      <option *ngFor="let bloco of blocos" value="{{bloco.Numero}}">{{bloco.Numero}}</option>
     </select>
   </div>
   <div class="form">
-    <label for="nDiario">Folha Diário</label>
-    <select id="nDiario">
-      <option value="">Defalt</option>
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="mercedes">Mercedes</option>
-      <option value="audi">Audi</option>
+    <label for="nFolhaDiario">Folha Diário</label>
+    <select id="nFolhaDiario" name="nFolhaDiario" [(ngModel)]="dataDiario.NumeroDaFolha">
+      <option value="">Folha Diário</option>
+      <option *ngFor="let folha of folhaDiario()" value="{{folha}}">{{folha}}</option>
     </select>
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
     <label for="fechar">Fechar</label>
-    <input type="checkbox" name="fechar" id="fechar">
+    <input type="checkbox" name="fechar" id="fechar" [(ngModel)]="dataDiario.Fechado">
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
     <label for="cancelar">Cancelar</label>
-    <input type="checkbox" name="cancelar" id="cancelar">
+    <input type="checkbox" name="cancelar" id="cancelar" [(ngModel)]="dataDiario.Cancelada">
   </div>
 </div>
-
-<!-- <div class="page">
-  <h3>
-    Hora de Apresentação
-  </h3>
-
-  <div *ngFor="let i of [1,2,3,4]" style="display: flex; width: 100%; flex-flow: wrap; justify-content: space-evenly;">
-    <div class="form form-3">
-      <label for="tripulante{{i}}">Tripulante {{i}}</label>
-      <select name="tripulante{{i}}" id="tripulante{{i}}">
-        <option value="">Tripulante</option>
-        <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
-      </select>
-    </div>
-
-    <div class="form form-3">
-      <label for="refeicao{{i}}">Refeição</label>
-      <input type="time" name="dataDiario.Refeicao{{i}}" id="refeicao{{i}}" ngModel>
-    </div>
-
-    <div class="form form-3">
-      <label for="apresentacao{{i}}">Apresentação</label>
-      <input type="time" name="Apresentacao{{i}}" id="apresentacao{{i}}">
-    </div>
-  </div>
-
-</div> -->
 
 <div class="page">
   <h3>Base</h3>
   <div class="form form-3">
     <label for="base">Base</label>
-    <input type="text" name="base" id="base">
+    <input type="text" name="base" id="base" [(ngModel)]="dataDiario.BaseDeOperacao">
   </div>
 </div>
 
@@ -83,30 +64,30 @@
         <td rowspan="2"></td>
         <td colspan="2">
           <label for="tripulante1">Tripulante 1</label>
-          <select name="tripulante1" id="tripulante1" style="width: 100%">
+          <select name="tripulante1" id="tripulante1" style="width: 100%" [(ngModel)]="dataDiario.Trip1.Trato">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante2">Tripulante 2</label>
-          <select name="tripulante2" id="tripulante2" style="width: 100%">
+          <select name="tripulante2" id="tripulante2" style="width: 100%" [(ngModel)]="dataDiario.Trip2.Trato">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante3">Tripulante 3</label>
-          <select name="tripulante3" id="tripulante3" style="width: 100%">
+          <select name="tripulante3" id="tripulante3" style="width: 100%" [(ngModel)]="dataDiario.Trip3.Trato">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante4">Tripulante 4</label>
-          <select name="tripulante4" id="tripulante4" style="width: 100%">
+          <select name="tripulante4" id="tripulante4" style="width: 100%" [(ngModel)]="dataDiario.Trip4.Trato">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
           </select>
         </td>
       </tr>
@@ -185,253 +166,47 @@
 
   <div class="form">
     <label for="oat">OAT</label>
-    <input type="tel" minlength="4" maxlength="4" name="oat" id="oat">
+    <input type="tel" minlength="4" maxlength="4" name="oat" id="oat" [(ngModel)]="dataDiario.OAT">
   </div>
 
   <div class="form">
     <label for="q">Q (%)</label>
-    <input type="tel" minlength="4" maxlength="4" name="q" id="q">
+    <input type="tel" minlength="4" maxlength="4" name="q" id="q" [(ngModel)]="dataDiario.Q">
   </div>
 
   <div class="form">
     <label for="n11">N1 #1</label>
-    <input type="tel" minlength="4" maxlength="4" name="n11" id="n11">
+    <input type="tel" minlength="4" maxlength="4" name="n11" id="n11" [(ngModel)]="dataDiario.N1_1">
   </div>
 
   <div class="form">
     <label for="n12">N1 #2</label>
-    <input type="tel" minlength="4" maxlength="4" name="n12" id="n12">
+    <input type="tel" minlength="4" maxlength="4" name="n12" id="n12" [(ngModel)]="dataDiario.N1_2">
   </div>
 
   <div class="form">
     <label for="t51">T5 #1</label>
-    <input type="tel" minlength="4" maxlength="4" name="t51" id="t51">
+    <input type="tel" minlength="4" maxlength="4" name="t51" id="t51" [(ngModel)]="dataDiario.T5_1">
   </div>
 
   <div class="form">
     <label for="t52">T5 #2</label>
-    <input type="tel" minlength="4" maxlength="4" name="t52" id="t52">
+    <input type="tel" minlength="4" maxlength="4" name="t52" id="t52" [(ngModel)]="dataDiario.T5_2">
   </div>
 
   <div class="form">
     <label for="rpm">RPM</label>
-    <input type="tel" minlength="4" maxlength="4" name="rpm" id="rpm">
+    <input type="tel" minlength="4" maxlength="4" name="rpm" id="rpm" [(ngModel)]="dataDiario.RPM">
   </div>
 
   <div class="form">
     <label for="tgt">TGT</label>
-    <input type="tel" minlength="4" maxlength="4" name="tgt" id="tgt">
+    <input type="tel" minlength="4" maxlength="4" name="tgt" id="tgt" [(ngModel)]="dataDiario.TGT">
   </div>
 </div>
 
 <div class="page">
   <h3>Linhas</h3>
-
-  <!-- <div class="linhas">
-    <div class="linha" [ngClass]="{'selected': linha === 0 }" (click)="changeLine(0)">
-      Linha 1
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 1 }" (click)="changeLine(1)">
-      Linha 2
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 2 }" (click)="changeLine(2)">
-      Linha 3
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 3 }" (click)="changeLine(3)">
-      Linha 4
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 4 }" (click)="changeLine(4)">
-      Linha 5
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 5 }" (click)="changeLine(5)">
-      Linha 6
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 6 }" (click)="changeLine(6)">
-      Linha 7
-    </div>
-    <div class="linha" [ngClass]="{'selected': linha === 7 }" (click)="changeLine(7)">
-      Linha 8
-    </div>
-  </div> -->
-
-  <!-- <div *ngFor="let i of [0,1,2,3,4,5,6,7]" style="width: 100%">
-    <div class="dadosLinha" *ngIf="i === linha">
-
-      <div class="form">
-        <label for="de">De</label>
-        <input type="text" [(ngModel)]="dataDiario.Linhas[i].De" name="de" id="de">
-      </div>
-
-      <div class="form">
-        <label for="para">Para</label>
-        <input type="text" [(ngModel)]="dataDiario.Linhas[i].Para" name="para" id="para">
-      </div>
-
-      <div class="form">
-        <label for="partida">Partida</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Partida" name="partida" id="partida">
-      </div>
-
-      <div class="form">
-        <label for="decolagem">Decolagem</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Decolagem" name="decolagem" id="decolagem">
-      </div>
-
-      <div class="form">
-        <label for="pouso">Pouso</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Pouso" name="pouso" id="pouso">
-      </div>
-
-      <div class="form">
-        <label for="corte">Corte</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Corte" name="corte" id="corte">
-      </div>
-
-      <div class="form">
-        <label for="diurno">Diurno</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Diurno" name="diurno" id="diurno">
-      </div>
-
-      <div class="form">
-        <label for="noturno">Noturno</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].Noturno" name="noturno" id="noturno">
-      </div>
-
-      <div class="form">
-        <label for="ifrCapota">IFR Capota</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].IFRC" name="ifrCapota" id="ifrCapota">
-      </div>
-
-      <div class="form">
-        <label for="ifrReal">IFR Real</label>
-        <input type="time" [(ngModel)]="dataDiario.Linhas[i].IFRR" name="ifrReal" id="ifrReal">
-      </div>
-
-      <div class="form">
-        <label for="vfr">VFR</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].VooIFR" name="vfr" id="vfr">
-      </div>
-
-      <div class="form">
-        <label for="total">Total</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Total" name="total" id="total">
-      </div>
-
-      <div class="form">
-        <label for="pousos">Pousos</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Pousos" name="pousos" id="pousos">
-      </div>
-
-      <div class="form">
-        <label for="ciclos">Ciclos</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Ciclos" name="ciclos" id="ciclos">
-      </div>
-
-      <div class="form">
-        <label for="pax">Pax (Número)</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Pax" name="pax" id="pax">
-      </div>
-
-      <div class="form">
-        <label for="carga">Carga (Kg)</label>
-        <input type="number" [(ngModel)]="dataDiario.Linhas[i].Carga" name="carga" id="carga">
-      </div>
-
-      <div class="form">
-        <label for="natureza">Natureza</label>
-        <select name="natureza" id="natureza">
-          <option value="">Natureza</option>
-          <option *ngFor="let natureza of naturezas" value="{{natureza}}">{{natureza.Nome}}</option>
-        </select>
-      </div>
-
-      <div class="form">
-        <label for="cliente">Cliente</label>
-        <select name="cliente" id="cliente">
-          <option value="">Cliente</option>
-          <option *ngFor="let cliente of clientes" value="{{cliente}}">{{cliente.Nome}}</option>
-        </select>
-      </div>
-
-      <div class="form">
-        <label for="tripulante1">Tripulante 1</label>
-        <select name="tripulante1" id="tripulante1">
-          <option value="">Tripulante 1</option>
-          <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
-        </select>
-      </div>
-
-      <div class="form">
-        <label for="tripulante2">Tripulante 2</label>
-        <select name="tripulante2" id="tripulante2">
-          <option value="">Tripulante 2</option>
-          <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
-        </select>
-      </div>
-
-      <div class="form">
-        <label for="funcao1">Função 1</label>
-        <select name="funcao1" id="funcao1">
-          <option value="">Função 1</option>
-          <option *ngFor="let funcao of funcaoBordos" value="{{funcao}}">{{funcao.Nome}}</option>
-        </select>
-      </div>
-
-      <div class="form">
-        <label for="funcao2">Função 2</label>
-        <select name="funcao2" id="funcao2">
-          <option value="">Função 2</option>
-          <option *ngFor="let funcao of funcaoBordos" value="{{funcao}}">{{funcao.Nome}}</option>
-        </select>
-      </div>
-
-      <div class="form form-3"></div>
-      <div class="form form-3">
-        <label for="tipoOperacao">Tipo de Operação</label>
-        <select name="tipoOperacao" id="tipoOperacao">
-          <option value="">Tipo de Operação</option>
-          <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Nome}}">{{tipoDeOperacao.Nome}}</option>
-        </select>
-      </div>
-      <div class="form form-3"></div>
-
-
-      <div class="form">
-        <label for="combDecolagem">Comb. na Decolagem (Lb)</label>
-        <input type="number" name="combDecolagem" id="combDecolagem">
-      </div>
-
-      <div class="form">
-        <label for="combPouso">Comb. no Pouso (Lb)</label>
-        <input type="number" name="combPouso" id="combPouso">
-      </div>
-
-
-      <div class="form">
-        <label for="consumoCombustivel">Consumo de Combustível</label>
-        <input type="number" name="consumoCombustivel" id="consumoCombustivel">
-      </div>
-
-      <div class="form">
-        <label for="combAbastecido">Comb. Abastecido (Litros)</label>
-        <input type="number" name="combAbastecido" id="combAbastecido">
-      </div>
-
-      <div class="form">
-        <label for="notaAbastecimento">Nota de Abastecimento</label>
-        <input type="text" name="notaAbastecimento" id="notaAbastecimento">
-      </div>
-
-      <div class="form">
-        <label for="abastecedora">Abastecedora</label>
-        <select name="abastecedora" id="abastecedora">
-          <option value="">Abastecedora</option>
-          <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Nome}}">{{abastecedora.Nome}}</option>
-        </select>
-      </div>
-
-    </div>
-  </div> -->
 
   <div style="overflow-x:auto;">
     <table class="table-linha">
@@ -473,47 +248,75 @@
         <tr *ngFor="let linha of dataDiario.Linhas; index as i">
           <td>Página {{i+1}}</td>
           <td>
-            <input type="text" [(ngModel)]="linha.De" name="de" id="de">
+            <input type="text" [(ngModel)]="linha.OrigemDeclarada" name="de" id="de">
           </td>
           <td>
-            <input type="text" [(ngModel)]="linha.Para" name="para" id="para">
+            <input type="text" [(ngModel)]="linha.DestinoDeclarado" name="para" id="para">
           </td>
-          <td>{{linha.Partida}}</td>
-          <td>{{linha.Decolagem}}</td>
-          <td>{{linha.Pouso}}</td>
-          <td>{{linha.Corte}}</td>
-          <td>{{linha.Diurno}}</td>
-          <td>{{linha.Noturno}}</td>
-          <td>{{linha.IFRC}}</td>
-          <td>{{linha.IFRR}}</td>
-          <td>VFR</td>
-          <td>{{totalLinha(linha.Decolagem, linha.Partida, linha.Pouso, linha.Corte)}}</td>
-          <td>{{linha.Pousos}}</td>
-          <td>{{linha.Ciclos}}</td>
-          <td>{{linha.Pax}}</td>
-          <td>{{linha.Carga}}</td>
           <td>
-            <select name="natureza" id="natureza">
+            <input type="time" name="Partida" id="Partida" [(ngModel)]="linha.Partida">
+          </td>
+          <td>
+            <input type="time" name="Decolagem" id="Decolagem" [(ngModel)]="linha.Decolagem">
+          </td>
+          <td>
+            <input type="time" name="Pouso" id="Pouso" [(ngModel)]="linha.Pouso">
+          </td>
+          <td>
+            <input type="time" name="Corte" id="Corte" [(ngModel)]="linha.Corte">
+          </td>
+          <td>
+            <input type="time" name="Noturno" id="Noturno" [(ngModel)]="linha.Diurno" readonly>
+          </td>
+          <td>
+            <input type="time" name="Noturno" id="Noturno" [(ngModel)]="linha.Noturno">
+          </td>
+          <td>
+            <input type="time" name="IFRC" id="IFRC" [(ngModel)]="linha.IFRC">
+          </td>
+          <td>
+            <input type="time" name="IFRR" id="IFRR" [(ngModel)]="linha.IFRR">
+          </td>
+          <td>
+            <input type="time" name="vrf" id="vrf" [(ngModel)]="linha.vrf" readonly>
+          </td>
+          <td>
+            <input type="time" name="total" id="total" [(ngModel)]="linha.total" readonly>
+          </td>
+          <td>
+            <input type="number" min="0" name="Pousos" id="Pousos" [(ngModel)]="linha.Pousos">
+          </td>
+          <td>
+            <input type="number" min="0" name="Ciclos" id="Ciclos" [(ngModel)]="linha.Ciclos">
+          </td>
+          <td>
+            <input type="number" min="0" name="Pax" id="Pax" [(ngModel)]="linha.Pax">
+          </td>
+          <td>
+            <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga">
+          </td>
+          <td>
+            <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza">
               <option value="">Natureza</option>
-              <option *ngFor="let natureza of naturezas" value="{{natureza}}">{{natureza.Nome}}</option>
+              <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
             </select>
           </td>
           <td>
-            <select name="cliente" id="cliente">
+            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Nome">
               <option value="">Cliente</option>
-              <option *ngFor="let cliente of clientes" value="{{cliente}}">{{cliente.Nome}}</option>
+              <option *ngFor="let cliente of clientes" value="{{cliente.Nome}}">{{cliente.Nome}}</option>
             </select>
           </td>
           <td>
-            <select name="tripulante1" id="tripulante1">
+            <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Trato">
               <option value="">Tripulante 1</option>
-              <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
             </select>
           </td>
           <td>
-            <select name="funcao1" id="funcao1">
+            <select name="funcao1" id="funcao1" [(ngModel)]="linha.Comandante.CargoStr">
               <option value="">Função 1</option>
-              <option *ngFor="let funcao of funcaoBordos" value="{{funcao}}">{{funcao.Nome}}</option>
+              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Nome}}">{{funcao.Nome}}</option>
             </select>
           </td>
           <td>
@@ -546,8 +349,36 @@
             </select>
           </td>
         </tr>
+        <tr style="background: #c6c6c6;height: 30px;font-weight: bold;">
+          <td>TOTAL</td>
+          <td colspan="2"></td>
+          <td>{{totalColunaHora('Partida')}}</td>
+          <td>{{totalColunaHora('Decolagem')}}</td>
+          <td>{{totalColunaHora('Pouso')}}</td>
+          <td>{{totalColunaHora('Corte')}}</td>
+          <td>{{totalColunaHora('Diurno')}}</td>
+          <td>{{totalColunaHora('Noturno')}}</td>
+          <td>{{totalColunaHora('IFRC')}}</td>
+          <td>{{totalColunaHora('IFRR')}}</td>
+          <td></td>
+          <td>{{totalTotal()}}</td>
+          <td>{{totalColunaNumber('Pousos')}}</td>
+          <td>{{totalColunaNumber('Ciclos')}}</td>
+          <td>{{totalColunaNumber('Pax')}}</td>
+          <td>{{totalColunaNumber('Carga')}}</td>
+          <td colspan="7"></td>
+          <td>{{totalColunaNumber('FuelDec')}}</td>
+          <td>{{totalColunaNumber('FuelPou')}}</td>
+          <td>{{totalColunaNumber('ConsumoDeCombustivel')}}</td>
+          <td>{{totalColunaNumber('QuantidadeAbastecida')}}</td>
+          <td colspan="2"></td>
+        </tr>
       </tbody>
     </table>
   </div>
 
+  <div class="form" style="margin: 15px 0">
+    <label for="Ocorrencias">Ocorrências</label>
+    <textarea name="Ocorrencias" cols="68" rows="10"></textarea>
+  </div>
 </div>

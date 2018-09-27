@@ -107,4 +107,18 @@ export class ApiService {
   getTipoDeOperacoes(): any {
     return JSON.parse(localStorage.getItem('TipoDeOperacao'));
   }
+
+  getBloco(IdPrefixo: string): Promise<any> {
+    return this.http.get(this.url + `api/bloco/${IdPrefixo}`, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
+  postDiarioVoo(diarioVoo: any): Promise<any> {
+    return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
 }
