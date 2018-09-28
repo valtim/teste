@@ -1,10 +1,14 @@
 <app-loading *ngIf="loading"></app-loading>
 <div class="login">
   <label for="username">Nome</label>
-  <input type="text" id="username" name="username" [(ngModel)]="username">
+  <input type="text" id="username" name="username" [(ngModel)]="username" (change)="hideError()">
 
   <label for="password">Password:</label>
-  <input type="password" id="password" name="password" [(ngModel)]="password">
+  <input type="password" id="password" name="password" [(ngModel)]="password" (change)="hideError()">
+
+  <p class="error" *ngIf="error">
+    {{error}}
+  </p>
 
   <button class="btn" (click)="login()">Login</button>
 </div>

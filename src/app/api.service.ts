@@ -126,7 +126,7 @@ export class ApiService {
   }
 
   getLogoff(): Promise<any> {
-    return this.http.get(this.url + 'app/logoff/', this.httpOptions)
+    return this.http.get(this.url + 'api/exit', this.httpOptions)
       .toPromise()
       .then()
       .catch();
