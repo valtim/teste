@@ -13,6 +13,7 @@ import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.comp
 import { BibliotecaComponent } from './gerenciar/biblioteca/biblioteca.component';
 import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
+import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
     DiarioEditarComponent,
     BibliotecaComponent,
     PapeletaComponent,
-    PagamentoComponent
+    PagamentoComponent,
+    TrocaSenhaComponent
   ],
   imports: [
     BrowserModule,

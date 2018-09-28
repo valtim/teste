@@ -12,32 +12,29 @@ export class PapeletaComponent implements OnInit {
   constructor(private api: ApiService, private app: AppComponent) { }
   private tripulantes;
   private loading = true;
-  private diario;
+  private diario: any;
   private yearMonth: string;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.app.setTitle('Papeleta');
-
-    this.api.getTripulantes()
-      .then((result) => {
-        this.tripulantes = result;
-        this.loading = false;
-      }).catch((error) => {
-        console.log(error);
-        this.loading = false;
-      });
+    if (!this.tripulantes) {
+      this.tripulantes = this.api.getTripulantes();
+      this.loading = false;
+    }
   }
 
-  showPapeleta(id) {
-    this.loading = true;
-    const year = this.yearMonth.split('-')[0];
-    const month = this.yearMonth.split('-')[1];
-    this.api.getDiarioTripulante(id, month, year)
-      .then((data) => {
-        this.diario = data;
-        this.loading = false;
-      }).catch((error) => {
-        this.loading = false;
-      });
+  showPapeleta(id: string) {
+    if (this.yearMonth) {
+      this.loading = true;
+      const year = this.yearMonth.split('-')[0];
+      const month = this.yearMonth.split('-')[1];
+      this.api.getDiarioTripulante(id, month, year)
+        .then((data) => {
+          this.diario = data;
+          this.loading = false;
+        }).catch((error) => {
+          this.loading = false;
+        });
+    }
   }
 }

@@ -7,10 +7,26 @@
     </select>
   </div>
 
-  <table>
-    <tr>
-      <td>1</td>
-      <td>2</td>
+  <table *ngIf="tripulantes">
+    <thead>
+      <tr>
+        <th>Trato</th>
+        <th>ANAC</th>
+        <th>Voo Tripulação</th>
+        <th>Feriado / Domingo</th>
+        <th>Função</th>
+        <th>Voo Noturno</th>
+        <th>Jornada Noturna</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let tripulante of tripulantes">
+      <td>{{tripulante.Trato}}</td>
+      <td>{{tripulante.CodigoANAC}}</td>
+      <td>{{tripulante.voo_tripulacao}}</td>
+      <td>{{tripulante.feriado_ou_domingo}}</td>
+      <td>{{tripulante.FUNCAO}}</td>
+      <td>{{tripulante.voo_noturno}}</td>
+      <td>{{tripulante.jornada_noturna}}</td>
     </tr>
   </table>
 </div>

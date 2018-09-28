@@ -11,15 +11,17 @@
   margin: 5px 0;
   padding: 5px;
   text-align: center;
-  background: #ececec;
+  background: #e3e3e3;
   height: 30px;
   line-height: 30px;
   text-decoration: none;
   color: #333;
+  cursor: pointer;
 }
 
 
-.home div:nth-child(2n) {
+.home div:nth-child(2n),
+.home a:nth-child(2n) {
   background: #f3f3f3;
 }
 

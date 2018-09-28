@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-pagamento',
@@ -8,11 +9,15 @@ import { ApiService } from '../../api.service';
 })
 export class PagamentoComponent implements OnInit {
 
-  constructor(private api: ApiService) { }
+  constructor(private app: AppComponent, private api: ApiService) { }
   private datas;
   private month;
+  private tripulantes: any;
+  private loading = false;
 
   ngOnInit() {
+    this.app.setTitle('Relatório de Pagamento');
+    this.month = '';
     this.createData();
   }
 
@@ -27,7 +32,14 @@ export class PagamentoComponent implements OnInit {
   }
 
   changeData() {
-    this.api.getPagamento(this.month).then(data => console.log(data));
+    this.loading = true;
+    this.api.getPagamento(this.month).then((data) => {
+      this.tripulantes = data;
+      this.loading = false;
+    }).catch((error) => {
+      console.log(error);
+      this.loading = false;
+    });
   }
 
 }

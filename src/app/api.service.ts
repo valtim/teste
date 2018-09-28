@@ -64,20 +64,23 @@ export class ApiService {
   }
 
   getListas(): void {
-    this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
-      .toPromise()
-      .then((result: any) => {
-        console.log('result: ', result);
-        localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
-        localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
-        localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
-        localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
-        localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
-        localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
-        localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
-        localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
-      })
-      .catch();
+    if (!(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente') && localStorage.getItem('FuncaoBordo')
+      && localStorage.getItem('Natureza') && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao') &&
+      localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))) {
+      this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
+        .toPromise()
+        .then((result: any) => {
+          localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
+          localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
+          localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
+          localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
+          localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
+          localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
+          localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
+          localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
+        })
+        .catch();
+    }
   }
 
   getTripulantes(): any {
@@ -117,6 +120,13 @@ export class ApiService {
 
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
+  getLogoff(): Promise<any> {
+    return this.http.get(this.url + 'app/logoff/', this.httpOptions)
       .toPromise()
       .then()
       .catch();
