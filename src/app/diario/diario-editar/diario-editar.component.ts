@@ -193,8 +193,8 @@ export class DiarioEditarComponent implements OnInit {
   }
 
   salvarDario() {
-    console.log(this.dataDiario);
-    // this.api.postDiarioVoo(this.dataDiario);
+    // console.log(this.dataDiario);
+    this.api.postDiarioVoo(this.dataDiario);
   }
 
   totalColunaHora(name: string): string {
