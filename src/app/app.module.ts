@@ -14,6 +14,7 @@ import { BibliotecaComponent } from './gerenciar/biblioteca/biblioteca.component
 import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
+import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
     BibliotecaComponent,
     PapeletaComponent,
     PagamentoComponent,
-    TrocaSenhaComponent
+    TrocaSenhaComponent,
+    VencimentoCarteiraComponent
   ],
   imports: [
     BrowserModule,

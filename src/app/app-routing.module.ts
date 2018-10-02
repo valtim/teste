@@ -7,6 +7,7 @@ import { DiarioEditarComponent } from './diario/diario-editar/diario-editar.comp
 import { BibliotecaComponent } from './gerenciar/biblioteca/biblioteca.component';
 import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
+import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'relatorio-pagamento', component: PagamentoComponent },
   { path: 'relatorio-voo', component: DiarioBordoComponent },
   { path: 'relatorio-voo/novo', component: DiarioEditarComponent },
-  { path: 'relatorio-voo/editar', component: DiarioEditarComponent }
+  { path: 'relatorio-voo/editar', component: DiarioEditarComponent },
+  { path: 'vencimento-carteira', component: VencimentoCarteiraComponent },
 ];
 
 

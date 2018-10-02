@@ -1,0 +1,94 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="header-table">
+  <img src="../../assets/img/emar.jpg" alt="Logo da Emar Táxi Aéreo">
+  <div class="legenda">
+    <div class="flex-row">
+      <div class="color" style="background-color: #bdd6ee"></div>60 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #ffff00"></div>30 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #f7caac"></div>15 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #ff0000"></div>Vencidos
+    </div>
+  </div>
+  <h1>Quadro de Tripulantes - CTE-OPE-011, Revisão 01, Data: 16/09/2018</h1>
+</div>
+
+<div class="table-response">
+  <table id="trato" class="table">
+    <thead>
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Trato</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tripulante of tripulantes; index as i; first as isFirst">
+        <td>{{tripulante.Trato}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table id="pessoas" class="table">
+    <thead>
+      <tr>
+        <td colspan="4">Dados Pessoais</td>
+      </tr>
+      <tr>
+        <td>Tripulante</td>
+        <td>Cód. Anac</td>
+        <td>Tipo de Operação</td>
+        <td>Cargo</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tripulante of tripulantes; index as i; first as isFirst" id="{{tripulante.Id}}">
+        <td>{{tripulante.NomeCompleto}}</td>
+        <td>{{tripulante.CodigoANAC}}</td>
+        <td>{{tripulante.OperacaoStr}}</td>
+        <td>{{tripulante.CargoStr}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div id="cursos">
+
+    <table *ngFor="let certificado of certificados" id="" class="table">
+      <thead>
+        <tr>
+          <td [attr.colspan]="certificado.Titles.length">{{certificado.Grupo}}</td>
+        </tr>
+        <tr>
+          <td *ngFor="let title of certificado.Titles">{{title.Nome}}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tripulante of tripulantes">
+          <td *ngFor="let title of certificado.Titles" [style.background-color]="colorBackgroundVencimento(tripulante.Id, title.Id)"
+            (click)="showUltimoVoo($event)">
+            {{getDataVencimento(tripulante.Id,title.Id)}}
+            <div class="ultimo-voo" *ngIf="getUltimosVoos(tripulante.Id, title.Id)">
+              <div *ngFor="let voo of getUltimosVoos(tripulante.Id, title.Id); index as i;">
+                Data do Voo: {{formatData(voo.Data)}}<br>
+                Prefixo: {{voo.Prefixo}}<br>
+                Numero do DB: {{voo.NumeroDoDiario}}<br>
+                Folha do DB: {{voo.NumeroDaFolha}}<br>
+                Ocorrência: {{voo.Quantidade}}<br>
+                <br *ngIf="i !== getUltimosVoos(tripulante.Id,title.Id).length - 1">
+                <hr *ngIf="i !== getUltimosVoos(tripulante.Id,title.Id).length - 1">
+                <br *ngIf="i !== getUltimosVoos(tripulante.Id,title.Id).length - 1">
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

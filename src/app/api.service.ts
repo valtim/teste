@@ -118,6 +118,20 @@ export class ApiService {
       .catch();
   }
 
+  getCertificado(): Promise<any> {
+    return this.http.get(this.url + 'api/certificado', this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
+  getVencimento(): Promise<any> {
+    return this.http.get(this.url + 'api/vencimento', this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
       .toPromise()

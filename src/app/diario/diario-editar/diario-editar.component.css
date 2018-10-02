@@ -17,6 +17,7 @@
 .page:nth-child(1) h3 {
   margin: 0;
   margin-bottom: 15px;
+  margin-top: 45px;
 }
 
 .form {
@@ -73,11 +74,6 @@ table input {
   font-weight: bold;
   color: red;
 }
-
-/* .linhas {
-  display: flex;
-  width: 100%;
-} */
 
 .table-linha {
   margin-bottom: 20px;
