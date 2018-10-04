@@ -59,7 +59,7 @@
 
   <div id="cursos">
 
-    <table *ngFor="let certificado of certificados" id="" class="table">
+    <table *ngFor="let certificado of certificados" [attr.id]="certificado.Grupo.split(' ')[0]" class="table">
       <thead>
         <tr>
           <td [attr.colspan]="certificado.Titles.length">{{certificado.Grupo}}</td>
@@ -68,11 +68,11 @@
           <td *ngFor="let title of certificado.Titles">{{title.Nome}}</td>
         </tr>
       </thead>
-      <tbody>
+      <tbody (click)="showUltimoVoo($event)">
         <tr *ngFor="let tripulante of tripulantes">
-          <td *ngFor="let title of certificado.Titles" [style.background-color]="colorBackgroundVencimento(tripulante.Id, title.Id)"
-            (click)="showUltimoVoo($event)">
-            {{getDataVencimento(tripulante.Id,title.Id)}}
+          <td *ngFor="let title of certificado.Titles" [attr.data-tripulante-id]="tripulante.Id"
+            [attr.data-vencimento-id]="title.Id" [style.background-color]="colorBackgroundVencimento(tripulante.Id, title.Id)">
+            {{getDataVencimento(tripulante.Id, title.Id, certificado.Grupo)}}
             <div class="ultimo-voo" *ngIf="getUltimosVoos(tripulante.Id, title.Id)">
               <div *ngFor="let voo of getUltimosVoos(tripulante.Id, title.Id); index as i;">
                 Data do Voo: {{formatData(voo.Data)}}<br>

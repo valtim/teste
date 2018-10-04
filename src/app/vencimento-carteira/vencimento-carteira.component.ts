@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppComponent } from '../app.component';
+import flatpickr from 'flatpickr';
 
 @Component({
   selector: 'app-vencimento-carteira',
@@ -14,27 +15,31 @@ export class VencimentoCarteiraComponent implements OnInit {
   private certificados: any;
   private vencimentos: any;
   private loading = true;
+  private calendarOpen = false;
 
   ngOnInit() {
     this.app.setTitle('Controle de Vencimento');
     this.tripulantes = this.api.getTripulantes();
-    this.api.getCertificado().then(result => {
-      this.certificados = result;
-      this.montarCertificados();
-    });
+    if (!localStorage.getItem('Certificado')) {
+      this.api.getCertificado().then(result => {
+        localStorage.setItem('Certificado', JSON.stringify(result));
+        this.montarCertificados(result);
+      });
+    } else {
+      this.montarCertificados(JSON.parse(localStorage.getItem('Certificado')));
+    }
     this.api.getVencimento().then(result => {
       this.vencimentos = result;
       this.loading = false;
-      console.log(this.vencimentos);
     });
   }
 
-  montarCertificados() {
+  montarCertificados(certificados) {
     const novoCertificados = [];
-    this.certificados.forEach(cert => {
+    certificados.forEach(cert => {
       const titles = [];
       const nomeGrupo = cert.Grupo.Nome;
-      const grupo = this.certificados.filter((elemt) => {
+      const grupo = certificados.filter((elemt) => {
         return elemt.Grupo.Nome === nomeGrupo;
       });
 
@@ -43,8 +48,8 @@ export class VencimentoCarteiraComponent implements OnInit {
           Id: element.Id,
           Nome: element.Nome
         });
-        const index = this.certificados.indexOf(element);
-        this.certificados.splice(index, 1);
+        const index = certificados.indexOf(element);
+        certificados.splice(index, 1);
       });
 
       novoCertificados.push({ Grupo: nomeGrupo, Titles: titles });
@@ -60,17 +65,18 @@ export class VencimentoCarteiraComponent implements OnInit {
     return days + '-' + month + '-' + result.getFullYear();
   }
 
-  getDataVencimento(IdTripulante: string, IdCertificado: string): string {
+  getDataVencimento(IdTripulante: string, IdCertificado: string, Grupo: string): string {
     if (!this.vencimentos) {
       return '';
     }
 
-    const vencimento = this.vencimentos.filter((element) => {
-      return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
-    })[0];
-
+    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
     if (!vencimento || !vencimento.DataDeVencimento) {
-      return 'n/a';
+      if (Grupo === 'Experiência Recente') {
+        return 'Não atende';
+      } else {
+        return 'n/a';
+      }
     }
 
     return this.formatData(vencimento.DataDeVencimento);
@@ -81,10 +87,7 @@ export class VencimentoCarteiraComponent implements OnInit {
       return false;
     }
 
-    const vencimento = this.vencimentos.filter((element) => {
-      return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
-    })[0];
-
+    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
     if (!vencimento || !vencimento.DataDeVencimento) {
       return false;
     }
@@ -92,13 +95,47 @@ export class VencimentoCarteiraComponent implements OnInit {
     return vencimento.UltimosVoos;
   }
 
+  getVencimento(IdTripulante: string, IdCertificado: string) {
+    return this.vencimentos.filter((element) => {
+      return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
+    })[0];
+  }
+
   showUltimoVoo(element) {
-    if (element.target.querySelector('.ultimo-voo')) {
-      if (element.target.querySelector('.ultimo-voo').style.display === 'none' ||
-        element.target.querySelector('.ultimo-voo').style.display === '') {
-        element.target.querySelector('.ultimo-voo').style.display = 'block';
+    if (!this.calendarOpen) {
+      if (element.target.offsetParent && element.target.offsetParent.id === 'Experiência') {
+        const div = Array.from(document.getElementById('Experiência').querySelectorAll('.ultimo-voo'))
+          .filter((divUltimo: HTMLElement) => {
+            return divUltimo.style.display === 'block';
+          })[0] as HTMLElement;
+        if (div) {
+          div.style.display = 'none';
+        }
+        if (element.target.querySelector('.ultimo-voo')) {
+          if (element.target.querySelector('.ultimo-voo').style.display === 'none' ||
+            element.target.querySelector('.ultimo-voo').style.display === '') {
+            element.target.querySelector('.ultimo-voo').style.display = 'block';
+          } else {
+            element.target.querySelector('.ultimo-voo').style.display = 'none';
+          }
+        }
       } else {
-        element.target.querySelector('.ultimo-voo').style.display = 'none';
+        const cell = element.target;
+        (flatpickr(cell, {
+          onChange: (selectedDates, dateStr, instance) => {
+            cell.innerText = this.formatData(dateStr + 'T00:00:00');
+            const vencimento = this.getVencimento(cell.dataset.tripulanteId, cell.dataset.vencimentoId);
+            vencimento.DataDeVencimento = dateStr + 'T00:00:00';
+          },
+          onOpen: () => {
+            this.calendarOpen = true;
+          },
+          onClose: () => {
+            this.calendarOpen = false;
+          },
+          disableMobile: true,
+          appendTo: cell,
+        }) as any).toggle();
       }
     }
   }
@@ -114,9 +151,7 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!this.vencimentos) {
       return '';
     }
-    const vencimento = this.vencimentos.filter((element) => {
-      return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
-    })[0];
+    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
 
     const diasVencimento = this.diffDaysDate(new Date(vencimento.DataDeVencimento), hoje);
     if (diasVencimento > 30 && diasVencimento <= 60 && vencimento.Certificado.DiasAntesDoVencimento >= 60) {
@@ -128,7 +163,7 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (diasVencimento > 0 && diasVencimento <= 15 && vencimento.Certificado.DiasAntesDoVencimento >= 15) {
       return '#f7caac';
     }
-    if (diasVencimento < 0 && vencimento.Certificado.DiasAntesDoVencimento >= 15) {
+    if (diasVencimento <= 0 && vencimento.Certificado.DiasAntesDoVencimento >= 15) {
       return '#ff0000';
     }
     return '';
