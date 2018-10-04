@@ -132,6 +132,13 @@ export class ApiService {
       .catch();
   }
 
+  postVencimento(vencimentoList: Array<any>): Promise<any> {
+    return this.http.post(this.url + 'api/vencimento', vencimentoList, this.httpOptions)
+      .toPromise()
+      .then()
+      .catch();
+  }
+
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
       .toPromise()

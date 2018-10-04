@@ -31,6 +31,7 @@
 
 #cursos tbody tr td {
   white-space: nowrap;
+  cursor: pointer;
 }
 
 #trato.table>tbody {
@@ -87,4 +88,12 @@
   padding: 25px;
   border-radius: 5px;
   display: none;
+}
+
+#salvar {
+  position: fixed;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  z-index: 2;
 }

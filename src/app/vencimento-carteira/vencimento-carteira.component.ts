@@ -15,7 +15,8 @@ export class VencimentoCarteiraComponent implements OnInit {
   private certificados: any;
   private vencimentos: any;
   private loading = true;
-  private calendarOpen = false;
+  private ultimosVoos: any;
+  private vencimentoListToSave = [];
 
   ngOnInit() {
     this.app.setTitle('Controle de Vencimento');
@@ -31,6 +32,7 @@ export class VencimentoCarteiraComponent implements OnInit {
     this.api.getVencimento().then(result => {
       this.vencimentos = result;
       this.loading = false;
+      this.montarDatas();
     });
   }
 
@@ -57,6 +59,30 @@ export class VencimentoCarteiraComponent implements OnInit {
     this.certificados = novoCertificados;
   }
 
+
+  montarDatas() {
+    const data = {};
+    this.tripulantes.forEach(tripulente => {
+      this.certificados.forEach(certificado => {
+        certificado.Titles.forEach(title => {
+          const vencimento = this.getVencimento(tripulente.Id, title.Id);
+          if (vencimento.UltimosVoos && vencimento.UltimosVoos.length) {
+            data[tripulente.Id + title.Id] = {
+              Data: this.getDataVencimento(tripulente.Id, title.Id, certificado.Grupo),
+              Voo: vencimento.UltimosVoos
+            };
+          } else {
+            data[tripulente.Id + title.Id] = {
+              Data: this.getDataVencimento(tripulente.Id, title.Id, certificado.Grupo),
+              Voo: []
+            };
+          }
+        });
+      });
+    });
+    this.ultimosVoos = data;
+  }
+
   formatData(data: string) {
     const result = new Date(data);
     const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
@@ -73,6 +99,9 @@ export class VencimentoCarteiraComponent implements OnInit {
     const vencimento = this.getVencimento(IdTripulante, IdCertificado);
     if (!vencimento || !vencimento.DataDeVencimento) {
       if (Grupo === 'Experiência Recente') {
+        if (vencimento.NaoAtende) {
+          return 'Sem dados';
+        }
         return 'Não atende';
       } else {
         return 'n/a';
@@ -82,60 +111,77 @@ export class VencimentoCarteiraComponent implements OnInit {
     return this.formatData(vencimento.DataDeVencimento);
   }
 
-  getUltimosVoos(IdTripulante: string, IdCertificado: string) {
-    if (!this.vencimentos) {
-      return false;
-    }
-
-    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
-    if (!vencimento || !vencimento.DataDeVencimento) {
-      return false;
-    }
-
-    return vencimento.UltimosVoos;
-  }
-
   getVencimento(IdTripulante: string, IdCertificado: string) {
+    if (!this.vencimentos) {
+      return null;
+    }
     return this.vencimentos.filter((element) => {
       return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
     })[0];
   }
 
-  showUltimoVoo(element) {
-    if (!this.calendarOpen) {
-      if (element.target.offsetParent && element.target.offsetParent.id === 'Experiência') {
-        const div = Array.from(document.getElementById('Experiência').querySelectorAll('.ultimo-voo'))
-          .filter((divUltimo: HTMLElement) => {
-            return divUltimo.style.display === 'block';
-          })[0] as HTMLElement;
-        if (div) {
-          div.style.display = 'none';
-        }
-        if (element.target.querySelector('.ultimo-voo')) {
-          if (element.target.querySelector('.ultimo-voo').style.display === 'none' ||
-            element.target.querySelector('.ultimo-voo').style.display === '') {
-            element.target.querySelector('.ultimo-voo').style.display = 'block';
-          } else {
-            element.target.querySelector('.ultimo-voo').style.display = 'none';
+  showPopUp(element) {
+    if (element.target.offsetParent && element.target.offsetParent.id === 'Experiência') {
+      const div = Array.from(document.getElementById('Experiência').querySelectorAll('.ultimo-voo'))
+        .filter((divUltimo: HTMLElement) => {
+          return divUltimo.style.display === 'block';
+        })[0] as HTMLElement;
+
+      if (element.target.querySelector('.ultimo-voo')) {
+        if (element.target.querySelector('.ultimo-voo').style.display === 'none' ||
+          element.target.querySelector('.ultimo-voo').style.display === '') {
+          if (div) {
+            div.style.display = 'none';
           }
+          element.target.querySelector('.ultimo-voo').style.display = 'block';
+        } else {
+          element.target.querySelector('.ultimo-voo').style.display = 'none';
         }
-      } else {
-        const cell = element.target;
-        (flatpickr(cell, {
+      }
+    } else {
+      const cell = element.target;
+      const vencimento = this.getVencimento(cell.dataset.tripulanteId, cell.dataset.vencimentoId);
+      let fp = cell._flatpickr;
+      if (!fp) {
+        fp = (flatpickr(cell, {
           onChange: (selectedDates, dateStr, instance) => {
             cell.innerText = this.formatData(dateStr + 'T00:00:00');
-            const vencimento = this.getVencimento(cell.dataset.tripulanteId, cell.dataset.vencimentoId);
             vencimento.DataDeVencimento = dateStr + 'T00:00:00';
+            vencimento.NaoControlado = false;
+            const existVencimentoToSave = !this.vencimentoListToSave || !this.vencimentoListToSave.filter((venc) => {
+              return venc.Id === vencimento.Id;
+            })[0];
+            if (existVencimentoToSave) {
+              this.vencimentoListToSave.push(vencimento);
+              document.getElementById('salvar').style.fill = '#157dfb';
+            }
           },
-          onOpen: () => {
-            this.calendarOpen = true;
+          onOpen: (selectedDates, dateStr, instance) => {
+            if (!instance.calendarContainer.querySelector('button')) {
+              const btn = document.createElement('button');
+              btn.innerText = 'Cancelar';
+              btn.className = 'cancelar';
+              btn.onclick = () => {
+                vencimento.NaoControlado = true;
+                vencimento.DataDeVencimento = null;
+                cell.style.backgroundColor = '';
+                cell.innerText = 'n/a';
+                const existVencimentoToSave = !this.vencimentoListToSave || !this.vencimentoListToSave.filter((venc) => {
+                  return venc.Id === vencimento.Id;
+                })[0];
+                if (existVencimentoToSave) {
+                  this.vencimentoListToSave.push(vencimento);
+                  document.getElementById('salvar').style.fill = '#157dfb';
+                }
+                instance.close();
+              };
+              instance.calendarContainer.appendChild(btn);
+            }
           },
-          onClose: () => {
-            this.calendarOpen = false;
-          },
-          disableMobile: true,
-          appendTo: cell,
+          disableMobile: true
         }) as any).toggle();
+      } else {
+        fp.open();
       }
     }
   }
@@ -148,10 +194,11 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   colorBackgroundVencimento(IdTripulante: string, IdCertificado: string): string {
     const hoje = new Date();
-    if (!this.vencimentos) {
+    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
+
+    if (!this.vencimentos || !vencimento.DataDeVencimento) {
       return '';
     }
-    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
 
     const diasVencimento = this.diffDaysDate(new Date(vencimento.DataDeVencimento), hoje);
     if (diasVencimento > 30 && diasVencimento <= 60 && vencimento.Certificado.DiasAntesDoVencimento >= 60) {
@@ -167,5 +214,14 @@ export class VencimentoCarteiraComponent implements OnInit {
       return '#ff0000';
     }
     return '';
+  }
+
+  salvarVencimento() {
+    if (this.vencimentoListToSave.length) {
+      this.api.postVencimento(this.vencimentoListToSave).then((response) => {
+        this.vencimentoListToSave = [];
+        document.getElementById('salvar').style.fill = '#000000';
+      });
+    }
   }
 }

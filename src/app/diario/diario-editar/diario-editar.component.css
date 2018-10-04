@@ -103,4 +103,5 @@ table input {
   right: 25px;
   cursor: pointer;
   fill: #157dfb;
+  z-index: 2;
 }
