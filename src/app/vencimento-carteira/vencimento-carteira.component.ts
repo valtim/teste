@@ -88,7 +88,7 @@ export class VencimentoCarteiraComponent implements OnInit {
     const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
     const month = months[result.getMonth()];
     const days = result.getDate() < 10 ? '0' + result.getDate() : result.getDate();
-    return days + '-' + month + '-' + result.getFullYear();
+    return `${days} - ${month} - ${result.getFullYear()}`;
   }
 
   getDataVencimento(IdTripulante: string, IdCertificado: string, Grupo: string): string {
@@ -97,14 +97,16 @@ export class VencimentoCarteiraComponent implements OnInit {
     }
 
     const vencimento = this.getVencimento(IdTripulante, IdCertificado);
-    if (!vencimento || !vencimento.DataDeVencimento) {
-      if (Grupo === 'Experiência Recente') {
+    if (vencimento.NaoControlado) {
+      return 'n/a';
+    }
+
+    if (!vencimento.DataDeVencimento) {
+      if (vencimento.Certificado.Grupo.Id === '54d12aff-307b-4299-956b-5be9f114868e') {
         if (vencimento.NaoAtende) {
           return 'Sem dados';
         }
         return 'Não atende';
-      } else {
-        return 'n/a';
       }
     }
 
@@ -115,38 +117,38 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!this.vencimentos) {
       return null;
     }
-    return this.vencimentos.filter((element) => {
-      return element.Certificado.Id === IdCertificado && element.Tripulante.Id === IdTripulante;
+    return this.vencimentos.filter(({ Certificado, Tripulante }) => {
+      return Certificado.Id === IdCertificado && Tripulante.Id === IdTripulante;
     })[0];
   }
 
-  showPopUp(element) {
-    if (element.target.offsetParent && element.target.offsetParent.id === 'Experiência') {
+  showPopUp({ target }) {
+    if (target.offsetParent && target.offsetParent.id === 'Experiência') {
       const div = Array.from(document.getElementById('Experiência').querySelectorAll('.ultimo-voo'))
         .filter((divUltimo: HTMLElement) => {
           return divUltimo.style.display === 'block';
         })[0] as HTMLElement;
 
-      if (element.target.querySelector('.ultimo-voo')) {
-        if (element.target.querySelector('.ultimo-voo').style.display === 'none' ||
-          element.target.querySelector('.ultimo-voo').style.display === '') {
+      if (target.querySelector('.ultimo-voo')) {
+        if (target.querySelector('.ultimo-voo').style.display === 'none' ||
+          target.querySelector('.ultimo-voo').style.display === '') {
           if (div) {
             div.style.display = 'none';
           }
-          element.target.querySelector('.ultimo-voo').style.display = 'block';
+          target.querySelector('.ultimo-voo').style.display = 'block';
         } else {
-          element.target.querySelector('.ultimo-voo').style.display = 'none';
+          target.querySelector('.ultimo-voo').style.display = 'none';
         }
       }
     } else {
-      const cell = element.target;
+      const cell = target;
       const vencimento = this.getVencimento(cell.dataset.tripulanteId, cell.dataset.vencimentoId);
       let fp = cell._flatpickr;
       if (!fp) {
         fp = (flatpickr(cell, {
           onChange: (selectedDates, dateStr, instance) => {
-            cell.innerText = this.formatData(dateStr + 'T00:00:00');
-            vencimento.DataDeVencimento = dateStr + 'T00:00:00';
+            cell.innerText = this.formatData(`${dateStr}T00:00:00`);
+            vencimento.DataDeVencimento = `${dateStr}T00:00:00`;
             vencimento.NaoControlado = false;
             const existVencimentoToSave = !this.vencimentoListToSave || !this.vencimentoListToSave.filter((venc) => {
               return venc.Id === vencimento.Id;
@@ -194,23 +196,23 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   colorBackgroundVencimento(IdTripulante: string, IdCertificado: string): string {
     const hoje = new Date();
-    const vencimento = this.getVencimento(IdTripulante, IdCertificado);
+    const { DataDeVencimento, Certificado } = this.getVencimento(IdTripulante, IdCertificado);
 
-    if (!this.vencimentos || !vencimento.DataDeVencimento) {
+    if (!DataDeVencimento) {
       return '';
     }
 
-    const diasVencimento = this.diffDaysDate(new Date(vencimento.DataDeVencimento), hoje);
-    if (diasVencimento > 30 && diasVencimento <= 60 && vencimento.Certificado.DiasAntesDoVencimento >= 60) {
+    const diasVencimento = this.diffDaysDate(new Date(DataDeVencimento), hoje);
+    if (diasVencimento > 30 && diasVencimento <= 60 && Certificado.DiasAntesDoVencimento >= 60) {
       return '#bdd6ee';
     }
-    if (diasVencimento > 15 && diasVencimento <= 30 && vencimento.Certificado.DiasAntesDoVencimento >= 30) {
+    if (diasVencimento > 15 && diasVencimento <= 30 && Certificado.DiasAntesDoVencimento >= 30) {
       return '#ffff00';
     }
-    if (diasVencimento > 0 && diasVencimento <= 15 && vencimento.Certificado.DiasAntesDoVencimento >= 15) {
+    if (diasVencimento > 0 && diasVencimento <= 15 && Certificado.DiasAntesDoVencimento >= 15) {
       return '#f7caac';
     }
-    if (diasVencimento <= 0 && vencimento.Certificado.DiasAntesDoVencimento >= 15) {
+    if (diasVencimento <= 0 && Certificado.DiasAntesDoVencimento >= 15) {
       return '#ff0000';
     }
     return '';
@@ -223,5 +225,53 @@ export class VencimentoCarteiraComponent implements OnInit {
         document.getElementById('salvar').style.fill = '#000000';
       });
     }
+  }
+
+  exportExcel() {
+    const html = document.querySelector('.table-response');
+    const result = html.cloneNode(true) as HTMLElement;
+    Array.from(result.querySelector('#cursos').querySelectorAll('td.flatpickr-input')).forEach(function (element: HTMLElement) {
+      element.removeChild(element.lastChild);
+      element.innerHTML = element.innerText;
+    });
+    Array.from(result.querySelector('#cursos').lastElementChild.querySelector('tbody').querySelectorAll('td')).forEach(function (element) {
+      element.removeChild(element.lastChild);
+      element.innerHTML = element.innerText;
+    });
+    const tabela = result.querySelectorAll('table')[0];
+    Array.from(result.querySelectorAll('table')).forEach(function (element, index) {
+      if (index !== 0) {
+        Array.from(element.querySelector('thead').querySelector('tr').querySelectorAll('td')).forEach(function (td) {
+          tabela.querySelector('thead').querySelector('tr').appendChild(td);
+        });
+        Array.from(element.querySelector('thead').querySelectorAll('tr')[1].querySelectorAll('td')).forEach(function (td) {
+          tabela.querySelector('thead').querySelectorAll('tr')[1].appendChild(td);
+        });
+        Array.from(element.querySelector('tbody').querySelectorAll('tr')).forEach(function (row, i) {
+          Array.from(row.querySelectorAll('td')).forEach(function (cell) {
+            tabela.querySelector('tbody').querySelectorAll('tr')[i].appendChild(cell);
+          });
+        });
+      }
+    });
+    const uri = 'data:application/vnd.ms-excel;base64,';
+    const template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"'
+      + 'xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><?xml version="1.0" encoding="UTF-8" standalone="yes"?'
+      + '><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}'
+      + '</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets>'
+      + '</x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+    const base64 = function (s) {
+      return window.btoa(unescape(encodeURIComponent(s)));
+    };
+    const format = function (s, c) {
+      return s.replace(/{(\w+)}/g, function (m, p) {
+        return c[p];
+      });
+    };
+    const ctx = {
+      worksheet: name || '',
+      table: result.innerHTML
+    };
+    window.open(uri + base64(format(template, ctx)));
   }
 }
