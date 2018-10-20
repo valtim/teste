@@ -1,4 +1,4 @@
-<app-loading class="no-print" *ngIf="loading"></app-loading>
+<app-loading *ngIf="loading"></app-loading>
 <div class="content">
   <div style="width: 100%;display: flex;justify-content: center; margin-bottom: 15px;">
     <input class="no-print" type="month" name="data" placeholder="YYYY-MM" [(ngModel)]="yearMonth">
@@ -14,58 +14,148 @@
   <table *ngIf="diario">
     <tr>
       <th rowspan="4" colspan="3"><img src="../../../assets/img/emar.jpg"></th>
-      <th colspan="6">Av. Rui Barbosa, 698, sala 709 – Centro<br>Macaé – RJ – CEP: 27.910-361 - Brasil</th>
+      <th colspan="12">
+        EMAR TÁXI AÉREO LTDA
+        <p style="font-weight: normal;">
+          Av. Rui Barbosa, 698, sala 709 – Centro - Macaé – RJ – CEP: 27.910-361<br>
+          CNPJ: 04.155.548/0001-61
+        </p>
+        Papeleta individual de horário de serviço externo
+      </th>
     </tr>
     <tr>
-      <th colspan="6">Ficha de Controle de Regulamentação do Aeronauta</th>
+      <th colspan="12">Ficha de Controle de Regulamentação do Aeronauta</th>
     </tr>
     <tr>
-      <th>Nome:</th>
-      <th colspan="3">{{diario.Nome}}</th>
-      <th>Cód. ANAC:</th>
-      <th>{{diario.ANAC}}</th>
+      <th colspan="6">Nome: {{diario.Nome}}</th>
+      <th colspan="6">Cód. ANAC: {{diario.ANAC}}</th>
     </tr>
     <tr>
-      <th>Função:</th>
-      <th>{{diario.Funcao.Nome}}</th>
-      <th>Mês:</th>
-      <th>{{diario.Mes}}</th>
-      <th>Ano:</th>
-      <th>{{diario.Ano}}</th>
+      <th colspan="4">Função: {{diario.Funcao.Nome}}</th>
+      <th colspan="4">Mês: {{diario.Mes}}</th>
+      <th colspan="4">Ano: {{diario.Ano}}</th>
     </tr>
     <tr>
-      <td colspan="3">Apres. Jornada</td>
-      <td colspan="2">Intervalo Refeição</td>
-      <td colspan="2">Término Jornada</td>
-      <td colspan="2">Total Voo</td>
+      <th rowspan="2">Dia</th>
+      <th rowspan="2">Cód</th>
+      <th rowspan="2">Hora de Apresentação</th>
+
+      <th colspan="3">Horas Totais</th>
+      <th colspan="2">Intervalo Refeição</th>
+      <th colspan="2">Término Jornada</th>
+      <th colspan="2">Interrupição Programada</th>
+      <th colspan="3">Total Voo</th>
     </tr>
     <tr>
-      <td>Dia</td>
-      <td>Cód</td>
-      <td>Hora</td>
-      <td>Início</td>
-      <td>Término</td>
-      <td>Dia</td>
-      <td>Hora</td>
-      <td>Dia</td>
-      <td>Mês</td>
+      <th>VFR</th>
+      <th>IFR</th>
+      <th>NOT</th>
+      <th>Início</th>
+      <th>Término</th>
+      <th>Dia</th>
+      <th>Hora</th>
+      <th>Início</th>
+      <th>Término</th>
+      <th>Horas de Jornada</th>
+      <th>Horas de Voo Dia</th>
+      <th>Horas de Voo Mês</th>
     </tr>
     <tr *ngFor="let linha of diario.Linhas; index as i; first as isFirst">
       <td>{{linha.DiaDaSemana}} {{i+1}}</td>
-      <td></td>
-      <td>{{linha.HoraApresentacao}}</td>
-      <td>{{linha.HoraDeRefeicao}}</td>
-      <td>{{linha.HoraFimDeRefeicao}}</td>
+      <td>{{linha.Ocorrencia}}</td>
+      <td>{{linha.HoraDeApresentacao}}</td>
+      <td>{{linha.TempoVFR}}</td>
+      <td>{{linha.TempoIFR}}</td>
+      <td>{{linha.TempoNoturno}}</td>
+      <td>{{ linha.SemAlmoco ? '---' : linha.HoraDeRefeicao}}</td>
+      <td>{{ linha.SemAlmoco ? '---' : linha.HoraFimDeRefeicao}}</td>
       <td>{{linha.DiaDaSemana}} {{i+1}}</td>
       <td>{{linha.TerminoJornada}}</td>
+      <td></td>
+      <td></td>
+      <td>{{linha.Jornada}}</td>
       <td>{{linha.TempoDeVoo}}</td>
       <td>{{linha.TempoAcumulado}}</td>
     </tr>
     <tr>
-      <td colspan="9">Recebi do Tripulante {{diario.Nome}} regulamentação referente {{diario.Mes}} {{diario.Ano}}</td>
+      <td colspan="18">Recebi do Tripulante {{diario.Nome}} regulamentação referente {{diario.Mes}} {{diario.Ano}}</td>
     </tr>
     <tr>
-      <td class="assinatura" colspan="9">Nome e Assinatura do Recebedor</td>
+      <td class="assinatura" colspan="18">Nome e Assinatura do Recebedor</td>
+    </tr>
+  </table>
+
+  <table class="tabela-clone" *ngIf="diario">
+    <tr>
+      <th rowspan="4" colspan="3"><img src="../../../assets/img/emar.jpg"></th>
+      <th colspan="12">
+        EMAR TÁXI AÉREO LTDA
+        <p style="font-weight: normal;">
+          Av. Rui Barbosa, 698, sala 709 – Centro - Macaé – RJ – CEP: 27.910-361<br>
+          CNPJ: 04.155.548/0001-61
+        </p>
+        Papeleta individual de horário de serviço externo
+      </th>
+    </tr>
+    <tr>
+      <th colspan="12">Ficha de Controle de Regulamentação do Aeronauta</th>
+    </tr>
+    <tr>
+      <th colspan="6">Nome: {{diario.Nome}}</th>
+      <th colspan="6">Cód. ANAC: {{diario.ANAC}}</th>
+    </tr>
+    <tr>
+      <th colspan="4">Função: {{diario.Funcao.Nome}}</th>
+      <th colspan="4">Mês: {{diario.Mes}}</th>
+      <th colspan="4">Ano: {{diario.Ano}}</th>
+    </tr>
+    <tr>
+      <td rowspan="2">Dia</td>
+      <td rowspan="2">Cód</td>
+      <td rowspan="2">Hora de Apresentação</td>
+
+      <td colspan="3">Horas Totais</td>
+      <td colspan="2">Intervalo Refeição</td>
+      <td colspan="2">Término Jornada</td>
+      <td colspan="2">Interrupição Programada</td>
+      <td colspan="3">Total Voo</td>
+    </tr>
+    <tr>
+      <td>VFR</td>
+      <td>IFR</td>
+      <td>NOT</td>
+      <td>Início</td>
+      <td>Término</td>
+      <td>Dia</td>
+      <td>Hora</td>
+      <td>Início</td>
+      <td>Término</td>
+      <td>Horas de Jornada</td>
+      <td>Horas de Voo Dia</td>
+      <td>Horas de Voo Mês</td>
+    </tr>
+    <tr *ngFor="let linha of diario.Linhas; index as i; first as isFirst">
+      <td>{{linha.DiaDaSemana}} {{i+1}}</td>
+      <td>{{linha.Ocorrencia}}</td>
+      <td>{{linha.HoraDeApresentacao}}</td>
+      <td>{{linha.TempoVFR}}</td>
+      <td>{{linha.TempoIFR}}</td>
+      <td>{{linha.TempoNoturno}}</td>
+      <td>{{ linha.SemAlmoco ? '---' : linha.HoraDeRefeicao}}</td>
+      <td>{{ linha.SemAlmoco ? '---' : linha.HoraFimDeRefeicao}}</td>
+      <td>{{linha.DiaDaSemana}} {{i+1}}</td>
+      <td>{{linha.TerminoJornada}}</td>
+      <td></td>
+      <td></td>
+      <td>{{linha.Jornada}}</td>
+      <td>{{linha.TempoDeVoo}}</td>
+      <td>{{linha.TempoAcumulado}}</td>
+    </tr>
+    <tr>
+      <td colspan="18">Recebi do Tripulante {{diario.Nome}} regulamentação referente {{diario.Mes}} {{diario.Ano}}</td>
+    </tr>
+    <tr>
+      <td class="assinatura" colspan="18">Nome e Assinatura do Recebedor</td>
     </tr>
   </table>
 </div>

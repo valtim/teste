@@ -21,6 +21,7 @@ export class PapeletaComponent implements OnInit {
       this.tripulantes = this.api.getTripulantes();
       this.loading = false;
     }
+    this.yearMonth = '2018-03';
   }
 
   showPapeleta(id: string) {

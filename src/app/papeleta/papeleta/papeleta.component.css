@@ -23,8 +23,18 @@ table tr:nth-child(2n) {
   background-color: #ececec;
 }
 
+.tabela-clone {
+  display: none;
+}
+
 @media (max-width: 580px) {
   table {
     width: 90%;
+  }
+}
+
+@media print {
+  .tabela-clone {
+    display: block;
   }
 }
