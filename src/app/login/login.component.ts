@@ -13,7 +13,6 @@ export class LoginComponent implements OnInit {
   private username: string;
   private password: string;
   private loading = false;
-  private error: string;
 
   ngOnInit() {
   }
@@ -27,16 +26,16 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
         })
         .catch((error) => {
-          this.error = 'Usuário ou senha incorreto';
+          this.api.error = 'Usuário ou senha incorreto';
           this.loading = false;
         });
     } else {
-      this.error = 'Usuário ou senha obrigatórios';
+      this.api.error = 'Usuário ou senha obrigatórios';
     }
   }
 
   hideError() {
-    this.error = '';
+    this.api.error = '';
   }
 
 }

@@ -6,8 +6,8 @@
   <label for="password">Password:</label>
   <input type="password" id="password" name="password" [(ngModel)]="password" (change)="hideError()">
 
-  <p class="error" *ngIf="error">
-    {{error}}
+  <p class="error" *ngIf="api.error">
+    {{api.error}}
   </p>
 
   <button class="btn" (click)="login()">Login</button>

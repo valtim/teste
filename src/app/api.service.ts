@@ -9,6 +9,7 @@ export class ApiService {
 
   private httpOptions: any;
   private url: string;
+  error: string;
 
   constructor(private http: HttpClient) {
     this.url = 'https://teste.sistemasol.com.br/';
@@ -23,7 +24,7 @@ export class ApiService {
     }
   }
 
-  postLogin(username: string, password: string): Promise<any> {
+  async postLogin(username: string, password: string): Promise<any> {
     return this.http.post(this.url + 'api/login', { 'username': username, 'password': password })
       .toPromise()
       .then((result: string) => {
