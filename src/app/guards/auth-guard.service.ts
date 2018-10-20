@@ -10,17 +10,17 @@ export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router, private api: ApiService) { }
 
-  private isAuthenticated = false;
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    if (localStorage.getItem('token')) {
-      this.isAuthenticated = true;
-    }
-    this.api.error = 'Você não tem permissão';
+    return this.checkLogin();
+  }
+
+  checkLogin(): boolean {
+    if (localStorage.getItem('token')) { return true; }
+    this.api.error = 'Você não tem permissão.';
     this.router.navigate(['']);
-    return this.isAuthenticated;
+    return false;
   }
 }
