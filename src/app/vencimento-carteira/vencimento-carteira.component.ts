@@ -104,9 +104,9 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!vencimento.DataDeVencimento) {
       if (vencimento.Certificado.Grupo.Id === '54d12aff-307b-4299-956b-5be9f114868e') {
         if (vencimento.NaoAtende) {
-          return 'Sem dados';
+          return 'Não atende';
         }
-        return 'Não atende';
+        return `${vencimento.UltimosVoos.length} Ocorrência(s)`;
       }
     }
 
@@ -129,12 +129,13 @@ export class VencimentoCarteiraComponent implements OnInit {
           return divUltimo.style.display === 'block';
         })[0] as HTMLElement;
 
+      if (div) {
+        div.style.display = 'none';
+      }
+
       if (target.querySelector('.ultimo-voo')) {
         if (target.querySelector('.ultimo-voo').style.display === 'none' ||
           target.querySelector('.ultimo-voo').style.display === '') {
-          if (div) {
-            div.style.display = 'none';
-          }
           target.querySelector('.ultimo-voo').style.display = 'block';
         } else {
           target.querySelector('.ultimo-voo').style.display = 'none';
@@ -196,23 +197,23 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   colorBackgroundVencimento(IdTripulante: string, IdCertificado: string): string {
     const hoje = new Date();
-    const { DataDeVencimento, Certificado } = this.getVencimento(IdTripulante, IdCertificado);
+    const { DataDeVencimento } = this.getVencimento(IdTripulante, IdCertificado);
 
     if (!DataDeVencimento) {
       return '';
     }
 
     const diasVencimento = this.diffDaysDate(new Date(DataDeVencimento), hoje);
-    if (diasVencimento > 30 && diasVencimento <= 60 && Certificado.DiasAntesDoVencimento >= 60) {
+    if (diasVencimento > 30 && diasVencimento <= 60) {
       return '#bdd6ee';
     }
-    if (diasVencimento > 15 && diasVencimento <= 30 && Certificado.DiasAntesDoVencimento >= 30) {
+    if (diasVencimento > 15 && diasVencimento <= 30) {
       return '#ffff00';
     }
-    if (diasVencimento > 0 && diasVencimento <= 15 && Certificado.DiasAntesDoVencimento >= 15) {
+    if (diasVencimento > 0 && diasVencimento <= 15) {
       return '#f7caac';
     }
-    if (diasVencimento <= 0 && Certificado.DiasAntesDoVencimento >= 15) {
+    if (diasVencimento <= 0) {
       return '#ff0000';
     }
     return '';
