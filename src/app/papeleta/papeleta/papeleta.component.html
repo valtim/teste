@@ -1,10 +1,10 @@
-<app-loading *ngIf="loading"></app-loading>
+<app-loading class="no-print" *ngIf="loading"></app-loading>
 <div class="content">
   <div style="width: 100%;display: flex;justify-content: center; margin-bottom: 15px;">
-    <input type="month" name="data" placeholder="YYYY-MM" [(ngModel)]="yearMonth">
+    <input class="no-print" type="month" name="data" placeholder="YYYY-MM" [(ngModel)]="yearMonth">
   </div>
 
-  <table>
+  <table class="no-print">
     <tr *ngFor="let tripulante of tripulantes; index as i; first as isFirst" (click)="showPapeleta(tripulante.Id)">
       <td>{{tripulante.CodigoANAC}}</td>
       <td>{{tripulante.NomeCompleto}}</td>

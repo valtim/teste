@@ -110,3 +110,9 @@ app-loading {
 .flatpickr-calendar {
   position: fixed !important;
 }
+
+@media print {
+  .no-print {
+    display: none;
+  }
+}

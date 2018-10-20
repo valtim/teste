@@ -24,7 +24,6 @@ table tr:nth-child(2n) {
 }
 
 @media (max-width: 580px) {
-
   table {
     width: 90%;
   }

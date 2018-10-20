@@ -16,42 +16,42 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'publicacao',
     component: BibliotecaComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'papeleta',
     component: PapeletaComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'relatorio-pagamento',
     component: PagamentoComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'relatorio-voo',
     component: DiarioBordoComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'relatorio-voo/novo',
     component: DiarioEditarComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'relatorio-voo/editar',
     component: DiarioEditarComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'vencimento-carteira',
     component: VencimentoCarteiraComponent,
-    canActivate: [AuthGuardService]
+    // canActivate: [AuthGuardService]
   },
 ];
 
