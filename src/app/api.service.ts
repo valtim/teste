@@ -12,7 +12,7 @@ export class ApiService {
   error: string;
 
   constructor(private http: HttpClient) {
-    this.url = 'https://teste.sistemasol.com.br/';
+    this.url = window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '';
 
     if (localStorage.getItem('token')) {
       this.httpOptions = {

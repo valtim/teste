@@ -13,8 +13,14 @@
 
   <table *ngIf="diario">
     <tr>
-      <th rowspan="4" colspan="3"><img src="assets/img/emar.jpg"></th>
-      <th colspan="12">
+      <th class="border" colspan="9"><img src="assets/img/emar.jpg"></th>
+      <th class="border" colspan="6">
+        Data do Registro: XX/XX/XX <br>
+        Página 1 de 1
+      </th>
+    </tr>
+    <tr>
+      <th class="border" colspan="15">
         EMAR TÁXI AÉREO LTDA
         <p style="font-weight: normal;">
           Av. Rui Barbosa, 698, sala 709 – Centro - Macaé – RJ – CEP: 27.910-361<br>
@@ -24,16 +30,13 @@
       </th>
     </tr>
     <tr>
-      <th colspan="12">Ficha de Controle de Regulamentação do Aeronauta</th>
-    </tr>
-    <tr>
-      <th colspan="6">Nome: {{diario.Nome}}</th>
+      <th colspan="9">Nome: {{diario.Nome}}</th>
       <th colspan="6">Cód. ANAC: {{diario.ANAC}}</th>
     </tr>
     <tr>
-      <th colspan="4">Função: {{diario.Funcao.Nome}}</th>
-      <th colspan="4">Mês: {{diario.Mes}}</th>
-      <th colspan="4">Ano: {{diario.Ano}}</th>
+      <th colspan="5">Função: {{diario.Funcao.Nome}}</th>
+      <th colspan="5">Mês: {{diario.Mes}}</th>
+      <th colspan="5">Ano: {{diario.Ano}}</th>
     </tr>
     <tr>
       <th rowspan="2">Dia</th>
@@ -87,8 +90,14 @@
 
   <table class="tabela-clone" *ngIf="diario">
     <tr>
-      <th rowspan="4" colspan="3"><img src="assets/img/emar.jpg"></th>
-      <th colspan="12">
+      <th class="border" colspan="9"><img src="assets/img/emar.jpg"></th>
+      <th class="border" colspan="6">
+        Data do Registro: XX/XX/XX <br>
+        Página 1 de 1
+      </th>
+    </tr>
+    <tr>
+      <th class="border" colspan="15">
         EMAR TÁXI AÉREO LTDA
         <p style="font-weight: normal;">
           Av. Rui Barbosa, 698, sala 709 – Centro - Macaé – RJ – CEP: 27.910-361<br>
@@ -98,41 +107,38 @@
       </th>
     </tr>
     <tr>
-      <th colspan="12">Ficha de Controle de Regulamentação do Aeronauta</th>
-    </tr>
-    <tr>
-      <th colspan="6">Nome: {{diario.Nome}}</th>
+      <th colspan="9">Nome: {{diario.Nome}}</th>
       <th colspan="6">Cód. ANAC: {{diario.ANAC}}</th>
     </tr>
     <tr>
-      <th colspan="4">Função: {{diario.Funcao.Nome}}</th>
-      <th colspan="4">Mês: {{diario.Mes}}</th>
-      <th colspan="4">Ano: {{diario.Ano}}</th>
+      <th colspan="5">Função: {{diario.Funcao.Nome}}</th>
+      <th colspan="5">Mês: {{diario.Mes}}</th>
+      <th colspan="5">Ano: {{diario.Ano}}</th>
     </tr>
     <tr>
-      <td rowspan="2">Dia</td>
-      <td rowspan="2">Cód</td>
-      <td rowspan="2">Hora de Apresentação</td>
+      <th rowspan="2">Dia</th>
+      <th rowspan="2">Cód</th>
+      <th rowspan="2">Hora de Apresentação</th>
 
-      <td colspan="3">Horas Totais</td>
-      <td colspan="2">Intervalo Refeição</td>
-      <td colspan="2">Término Jornada</td>
-      <td colspan="2">Interrupição Programada</td>
-      <td colspan="3">Total Voo</td>
+      <th colspan="3">Horas Totais</th>
+      <th colspan="2">Intervalo Refeição</th>
+      <th colspan="2">Término Jornada</th>
+      <th colspan="2">Interrupição Programada</th>
+      <th colspan="3">Total Voo</th>
     </tr>
     <tr>
-      <td>VFR</td>
-      <td>IFR</td>
-      <td>NOT</td>
-      <td>Início</td>
-      <td>Término</td>
-      <td>Dia</td>
-      <td>Hora</td>
-      <td>Início</td>
-      <td>Término</td>
-      <td>Horas de Jornada</td>
-      <td>Horas de Voo Dia</td>
-      <td>Horas de Voo Mês</td>
+      <th>VFR</th>
+      <th>IFR</th>
+      <th>NOT</th>
+      <th>Início</th>
+      <th>Término</th>
+      <th>Dia</th>
+      <th>Hora</th>
+      <th>Início</th>
+      <th>Término</th>
+      <th>Horas de Jornada</th>
+      <th>Horas de Voo Dia</th>
+      <th>Horas de Voo Mês</th>
     </tr>
     <tr *ngFor="let linha of diario.Linhas; index as i; first as isFirst">
       <td>{{linha.DiaDaSemana}} {{i+1}}</td>
