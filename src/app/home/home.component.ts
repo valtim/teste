@@ -12,9 +12,9 @@ export class HomeComponent implements OnInit {
 
   constructor(private app: AppComponent, private api: ApiService, private router: Router) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.app.setTitle('Sol');
-    this.api.getListas();
+    this.api.getListas(() => { });
   }
 
   logoff(): void {

@@ -64,12 +64,14 @@ export class ApiService {
       .catch();
   }
 
-  getListas(): void {
-    if (!(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente') && localStorage.getItem('FuncaoBordo')
-      && localStorage.getItem('Natureza') && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao') &&
-      localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))) {
-      this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
-        .toPromise()
+  getListas(callback: Function): void {
+    if (
+      !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
+      && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
+      && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
+      && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
+    ) {
+      this.http.get(this.url + 'api/listaspadrao', this.httpOptions).toPromise()
         .then((result: any) => {
           localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
           localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
@@ -79,6 +81,7 @@ export class ApiService {
           localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
           localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
           localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
+          callback();
         })
         .catch();
     }

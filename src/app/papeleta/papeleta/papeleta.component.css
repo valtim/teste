@@ -12,9 +12,8 @@ table {
   margin-bottom: 15px;
 }
 
-table,
-tr,
-td {
+table tr td,
+table tr th {
   border: 1px solid #d8d8d8;
   padding: 10px;
 }
