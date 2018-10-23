@@ -17,14 +17,15 @@ export class PapeletaComponent implements OnInit {
 
   ngOnInit(): void {
     this.app.setTitle('Papeleta');
-    if (!localStorage.getItem('Tripulante')) {
-      this.api.getListas(() => {
-        this.tripulantes = this.api.getTripulantes();
-      });
-    }
     if (!this.tripulantes) {
       this.tripulantes = this.api.getTripulantes();
       this.loading = false;
+    }
+    if (!localStorage.getItem('Tripulante')) {
+      this.api.getListas(() => {
+        this.tripulantes = this.api.getTripulantes();
+        this.loading = false;
+      });
     }
   }
 
