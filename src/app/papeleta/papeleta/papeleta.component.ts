@@ -14,6 +14,7 @@ export class PapeletaComponent implements OnInit {
   private loading = true;
   private diario: any;
   private yearMonth: string;
+  private dataDoDia: string;
 
   ngOnInit(): void {
     this.app.setTitle('Papeleta');
@@ -34,6 +35,15 @@ export class PapeletaComponent implements OnInit {
       this.loading = true;
       const year = this.yearMonth.split('-')[0];
       const month = this.yearMonth.split('-')[1];
+      //const day = this.yearMonth.split('-')[2];
+
+      var today = new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1; //January is 0!
+      var yyyy = today.getFullYear();
+
+      this.dataDoDia = dd + '/' + mm + '/' + yyyy;
+
       this.api.getDiarioTripulante(id, month, year)
         .then((data) => {
           this.diario = data;
