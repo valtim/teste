@@ -12,7 +12,7 @@ export class ApiService {
   error: string;
 
   constructor(private http: HttpClient) {
-    this.url = "/"; //window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '';
+    this.url = '/'; // window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '';
 
     if (localStorage.getItem('token')) {
       this.httpOptions = {
@@ -67,9 +67,9 @@ export class ApiService {
   getListas(callback: Function): void {
     if (
       !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
-      && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
-      && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
-      && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
+        && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
+        && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
+        && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
     ) {
       this.http.get(this.url + 'api/listaspadrao', this.httpOptions).toPromise()
         .then((result: any) => {

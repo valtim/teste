@@ -10,10 +10,11 @@ import { AppComponent } from '../../app.component';
 export class PagamentoComponent implements OnInit {
 
   constructor(private app: AppComponent, private api: ApiService) { }
-  private datas;
-  private month;
-  private tripulantes: any;
-  private loading = false;
+
+  public tripulantes: any;
+  public datas;
+  public month;
+  public loading = false;
 
   ngOnInit() {
     this.app.setTitle('Relatório de Pagamento');

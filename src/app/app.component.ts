@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 })
 export class AppComponent {
 
-  private title: string;
+  public title: string;
 
   constructor(private router: Router, private _location: Location) {
   }

@@ -10,9 +10,9 @@ import { ApiService } from '../api.service';
 export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private api: ApiService) { }
-  private username: string;
-  private password: string;
-  private loading = false;
+  public username: string;
+  public password: string;
+  public loading = false;
 
   ngOnInit() {
   }

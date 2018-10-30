@@ -18,8 +18,8 @@ export class DiarioBordoComponent implements OnInit {
     private diario: DiarioService) { }
 
 
-  private loading = true;
-  private diarios;
+  public loading = true;
+  public diarios;
 
   dataSearch: string;
   ngOnInit() {

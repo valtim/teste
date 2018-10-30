@@ -10,9 +10,9 @@ import { AppComponent } from '../../app.component';
 export class PapeletaComponent implements OnInit {
 
   constructor(private api: ApiService, private app: AppComponent) { }
-  private tripulantes;
-  private loading = true;
-  private diario: any;
+  public tripulantes;
+  public diario: any;
+  public loading = true;
   private yearMonth: string;
   private dataDoDia: string;
 
@@ -35,12 +35,12 @@ export class PapeletaComponent implements OnInit {
       this.loading = true;
       const year = this.yearMonth.split('-')[0];
       const month = this.yearMonth.split('-')[1];
-      //const day = this.yearMonth.split('-')[2];
+      // const day = this.yearMonth.split('-')[2];
 
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; //January is 0!
-      var yyyy = today.getFullYear();
+      const today = new Date();
+      const dd = today.getDate();
+      const mm = today.getMonth() + 1; // January is 0!
+      const yyyy = today.getFullYear();
 
       this.dataDoDia = dd + '/' + mm + '/' + yyyy;
 

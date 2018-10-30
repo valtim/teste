@@ -12,8 +12,9 @@ export class DiarioEditarComponent implements OnInit {
 
   constructor(private route: Router, private diario: DiarioService, private api: ApiService) { }
 
-  dataDiario: any;
-  prefixos: any;
+  public dataDiario: any;
+  public prefixos: any;
+  public blocos: any;
   nDiarios: any;
   tipoDeOperacoes: any;
   abastecedoras: any;
@@ -21,7 +22,6 @@ export class DiarioEditarComponent implements OnInit {
   funcaoBordos: any;
   clientes: any;
   naturezas: any;
-  blocos: any;
 
   ngOnInit() {
     if (!this.diario.diario) {

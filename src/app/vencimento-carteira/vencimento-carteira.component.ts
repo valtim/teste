@@ -11,12 +11,13 @@ import flatpickr from 'flatpickr';
 export class VencimentoCarteiraComponent implements OnInit {
 
   constructor(private api: ApiService, private app: AppComponent) { }
-  private tripulantes: any;
-  private certificados: any;
-  private vencimentos: any;
-  private loading = true;
-  private ultimosVoos: any;
-  private vencimentoListToSave = [];
+
+  public tripulantes: any;
+  public certificados: any;
+  public vencimentos: any;
+  public loading = true;
+  public ultimosVoos: any;
+  public vencimentoListToSave = [];
 
   ngOnInit() {
     this.app.setTitle('Controle de Vencimento');
