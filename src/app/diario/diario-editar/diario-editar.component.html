@@ -229,12 +229,12 @@
           <td>Ciclos</td>
           <td>Pax (Número)</td>
           <td>Carga (Kg)</td>
-          <td>Natureza</td>
-          <td>Cliente</td>
           <td>Tripulante 1</td>
           <td>Função 1</td>
           <td>Tripulante 2</td>
           <td>Função 2</td>
+          <td>Natureza</td>
+          <td>Cliente</td>
           <td>Tipo de Operação</td>
           <td>Comb. na Decolagem(Lb)</td>
           <td>Comb. no Pouso(Lb)</td>
@@ -246,7 +246,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let linha of dataDiario.Linhas; index as i">
-          <td>Página {{i+1}}</td>
+          <td>{{i+1}}</td>
           <td>
             <input type="text" [(ngModel)]="linha.OrigemDeclarada" name="de" id="de">
           </td>
@@ -296,18 +296,6 @@
             <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga">
           </td>
           <td>
-            <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza">
-              <option value="">Natureza</option>
-              <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
-            </select>
-          </td>
-          <td>
-            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Nome">
-              <option value="">Cliente</option>
-              <option *ngFor="let cliente of clientes" value="{{cliente.Nome}}">{{cliente.Nome}}</option>
-            </select>
-          </td>
-          <td>
             <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Trato">
               <option value="">Tripulante 1</option>
               <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
@@ -329,6 +317,18 @@
             <select name="funcao2" id="funcao2">
               <option value="">Função 2</option>
               <option *ngFor="let funcao of funcaoBordos" value="{{funcao}}">{{funcao.Nome}}</option>
+            </select>
+          </td>
+          <td>
+            <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza">
+              <option value="">Natureza</option>
+              <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
+            </select>
+          </td>
+          <td>
+            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Nome">
+              <option value="">Cliente</option>
+              <option *ngFor="let cliente of clientes" value="{{cliente.Nome}}">{{cliente.Nome}}</option>
             </select>
           </td>
           <td>
@@ -380,6 +380,6 @@
 
   <div class="form" style="margin: 15px 0">
     <label for="Ocorrencias">Ocorrências</label>
-    <textarea name="Ocorrencias" cols="68" rows="10"></textarea>
+    <textarea name="Ocorrencias" cols="100" rows="35"></textarea>
   </div>
 </div>
