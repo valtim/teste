@@ -84,6 +84,10 @@ table input {
   margin-bottom: 20px;
 }
 
+.table-linha thead tr td {
+  white-space: nowrap;
+}
+
 .table-linha input[type='text'] {
   width: 100px;
 }

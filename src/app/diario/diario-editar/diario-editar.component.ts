@@ -10,7 +10,10 @@ import { ApiService } from '../../api.service';
 })
 export class DiarioEditarComponent implements OnInit {
 
-  constructor(private route: Router, private diario: DiarioService, private api: ApiService) { }
+  constructor(
+    private route: Router,
+    private diario: DiarioService,
+    private api: ApiService) { }
 
   public dataDiario: any;
   public prefixos: any;
@@ -34,7 +37,6 @@ export class DiarioEditarComponent implements OnInit {
       if (this.dataDiario.Prefixo.Id) {
         this.api.getBloco(this.dataDiario.Prefixo.Id).then(result => {
           this.blocos = result;
-          // console.log('Bloco: ', this.blocos);
         });
       }
 
@@ -96,7 +98,6 @@ export class DiarioEditarComponent implements OnInit {
       this.funcaoBordos = this.api.getFuncaoBordos();
       this.clientes = this.api.getClientes();
       this.naturezas = this.api.getNaturezas();
-      // console.log('funcaoBordos: ', this.funcaoBordos);
       console.log('dataDiario: ', this.dataDiario);
     }
   }
@@ -194,7 +195,7 @@ export class DiarioEditarComponent implements OnInit {
 
   salvarDario() {
     console.log(this.dataDiario);
-    // this.api.postDiarioVoo(this.dataDiario);
+    this.api.postDiarioVoo(this.dataDiario);
   }
 
   totalColunaHora(name: string): string {
