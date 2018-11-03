@@ -85,6 +85,9 @@ export class DiarioEditarComponent implements OnInit {
         if (!this.dataDiario.Linhas[index].Comandante) {
           this.dataDiario.Linhas[index].Comandante = {};
         }
+        if (!this.dataDiario.Linhas[index].PrimeiroOficial) {
+          this.dataDiario.Linhas[index].PrimeiroOficial = {};
+        }
       }
 
       if (!this.dataDiario.NumeroDoDiario) {

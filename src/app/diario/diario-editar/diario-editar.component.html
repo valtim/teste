@@ -65,30 +65,30 @@
         <td rowspan="2"></td>
         <td colspan="2">
           <label for="tripulante1">Tripulante 1</label>
-          <select name="tripulante1" id="tripulante1" style="width: 100%" [(ngModel)]="dataDiario.Trip1.Trato">
+          <select name="tripulante1" id="tripulante1" style="width: 100%" [(ngModel)]="dataDiario.Trip1.Id">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante2">Tripulante 2</label>
-          <select name="tripulante2" id="tripulante2" style="width: 100%" [(ngModel)]="dataDiario.Trip2.Trato">
+          <select name="tripulante2" id="tripulante2" style="width: 100%" [(ngModel)]="dataDiario.Trip2.Id">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante3">Tripulante 3</label>
-          <select name="tripulante3" id="tripulante3" style="width: 100%" [(ngModel)]="dataDiario.Trip3.Trato">
+          <select name="tripulante3" id="tripulante3" style="width: 100%" [(ngModel)]="dataDiario.Trip3.Id">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td colspan="2">
           <label for="tripulante4">Tripulante 4</label>
-          <select name="tripulante4" id="tripulante4" style="width: 100%" [(ngModel)]="dataDiario.Trip4.Trato">
+          <select name="tripulante4" id="tripulante4" style="width: 100%" [(ngModel)]="dataDiario.Trip4.Id">
             <option value="">Tripulante</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
       </tr>
@@ -297,9 +297,9 @@
             <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga">
           </td>
           <td>
-            <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Trato">
+            <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Id">
               <option value="">Tripulante 1</option>
-              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Trato}}">{{tripulante.Trato}}</option>
+              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
             </select>
           </td>
           <td>
@@ -309,9 +309,9 @@
             </select>
           </td>
           <td>
-            <select name="tripulante2" id="tripulante2">
+            <select name="tripulante2" id="tripulante2" [(ngModel)]="linha.PrimeiroOficial.Id">
               <option value="">Tripulante 2</option>
-              <option *ngFor="let tripulante of tripulantes" value="{{tripulante}}">{{tripulante.Trato}}</option>
+              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
             </select>
           </td>
           <td>
