@@ -20,9 +20,9 @@
   </div>
   <div class="form">
     <label for="prefixo">Prefixo</label>
-    <select id="prefixo" name="prefixo" [(ngModel)]="dataDiario.Prefixo.PrefixoCompleto" (change)="getBlocos()">
+    <select id="prefixo" name="prefixo" [(ngModel)]="dataDiario.Prefixo.Id" (change)="getBlocos()">
       <option value="">Prefixo</option>
-      <option *ngFor="let prefixo of prefixos" value="{{prefixo.PrefixoCompleto}}">{{prefixo.PrefixoCompleto}}</option>
+      <option *ngFor="let prefixo of prefixos" value="{{prefixo.Id}}">{{prefixo.PrefixoCompleto}}</option>
     </select>
   </div>
   <div class="form">
@@ -327,9 +327,9 @@
             </select>
           </td>
           <td>
-            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Nome">
+            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Id">
               <option value="">Cliente</option>
-              <option *ngFor="let cliente of clientes" value="{{cliente.Nome}}">{{cliente.Nome}}</option>
+              <option *ngFor="let cliente of clientes" value="{{cliente.Id}}">{{cliente.Nome}}</option>
             </select>
           </td>
           <td>
@@ -381,6 +381,6 @@
 
   <div class="form" style="margin: 15px 0">
     <label for="Ocorrencias">Ocorrências</label>
-    <textarea name="Ocorrencias" cols="100" rows="35"></textarea>
+    <textarea [(ngModel)]="dataDiario.Ocorrencias" name="Ocorrencias" cols="100" rows="35"></textarea>
   </div>
 </div>

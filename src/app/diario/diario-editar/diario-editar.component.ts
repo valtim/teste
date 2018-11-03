@@ -43,19 +43,19 @@ export class DiarioEditarComponent implements OnInit {
 
       if (!this.dataDiario.Trip1) {
         this.dataDiario.Trip1 = {};
-        this.dataDiario.Trip1.Trato = '';
+        this.dataDiario.Trip1.Id = '';
       }
       if (!this.dataDiario.Trip2) {
         this.dataDiario.Trip2 = {};
-        this.dataDiario.Trip2.Trato = '';
+        this.dataDiario.Trip2.Id = '';
       }
       if (!this.dataDiario.Trip3) {
         this.dataDiario.Trip3 = {};
-        this.dataDiario.Trip3.Trato = '';
+        this.dataDiario.Trip3.Id = '';
       }
       if (!this.dataDiario.Trip4) {
         this.dataDiario.Trip4 = {};
-        this.dataDiario.Trip4.Trato = '';
+        this.dataDiario.Trip4.Id = '';
       }
 
       this.dataDiario.DataDoDiario = this.formatData(this.dataDiario.DataDoDiario);
@@ -81,12 +81,15 @@ export class DiarioEditarComponent implements OnInit {
 
         if (!this.dataDiario.Linhas[index].Cliente) {
           this.dataDiario.Linhas[index].Cliente = {};
+          this.dataDiario.Linhas[index].Cliente.Id = '';
         }
         if (!this.dataDiario.Linhas[index].Comandante) {
           this.dataDiario.Linhas[index].Comandante = {};
+          this.dataDiario.Linhas[index].Comandante.Id = '';
         }
         if (!this.dataDiario.Linhas[index].PrimeiroOficial) {
           this.dataDiario.Linhas[index].PrimeiroOficial = {};
+          this.dataDiario.Linhas[index].PrimeiroOficial.Id = '';
         }
       }
 
@@ -104,7 +107,6 @@ export class DiarioEditarComponent implements OnInit {
       this.naturezas = this.api.getNaturezas();
 
       this.loading = false;
-      console.log('dataDiario: ', this.dataDiario);
     }
   }
 
@@ -200,6 +202,7 @@ export class DiarioEditarComponent implements OnInit {
   }
 
   salvarDario() {
+    this.refatorarDataDiario();
     console.log(this.dataDiario);
     this.loading = true;
     this.api.postDiarioVoo(this.dataDiario).then(() => {
@@ -207,6 +210,32 @@ export class DiarioEditarComponent implements OnInit {
     }).catch(() => {
       this.loading = false;
     });
+  }
+
+  refatorarDataDiario() {
+    if (this.dataDiario.Trip1.Id === '') {
+      this.dataDiario.Trip1 = null;
+    }
+    if (this.dataDiario.Trip2.Id === '') {
+      this.dataDiario.Trip2 = null;
+    }
+    if (this.dataDiario.Trip3.Id === '') {
+      this.dataDiario.Trip3 = null;
+    }
+    if (this.dataDiario.Trip4.Id === '') {
+      this.dataDiario.Trip4 = null;
+    }
+    for (let index = 0; index < this.dataDiario.Linhas.length; index++) {
+      if (this.dataDiario.Linhas[index].Comandante.Id === '') {
+        this.dataDiario.Linhas[index].Comandante = null;
+      }
+      if (this.dataDiario.Linhas[index].PrimeiroOficial.Id === '') {
+        this.dataDiario.Linhas[index].PrimeiroOficial = null;
+      }
+      if (this.dataDiario.Linhas[index].Cliente.Id === '') {
+        this.dataDiario.Linhas[index].Cliente = null;
+      }
+    }
   }
 
   totalColunaHora(name: string): string {
