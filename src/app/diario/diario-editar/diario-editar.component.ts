@@ -18,6 +18,7 @@ export class DiarioEditarComponent implements OnInit {
   public dataDiario: any;
   public prefixos: any;
   public blocos: any;
+  public loading = true;
   nDiarios: any;
   tipoDeOperacoes: any;
   abastecedoras: any;
@@ -98,6 +99,8 @@ export class DiarioEditarComponent implements OnInit {
       this.funcaoBordos = this.api.getFuncaoBordos();
       this.clientes = this.api.getClientes();
       this.naturezas = this.api.getNaturezas();
+
+      this.loading = false;
       console.log('dataDiario: ', this.dataDiario);
     }
   }
@@ -195,7 +198,12 @@ export class DiarioEditarComponent implements OnInit {
 
   salvarDario() {
     console.log(this.dataDiario);
-    this.api.postDiarioVoo(this.dataDiario);
+    this.loading = true;
+    this.api.postDiarioVoo(this.dataDiario).then(() => {
+      this.loading = false;
+    }).catch(() => {
+      this.loading = false;
+    });
   }
 
   totalColunaHora(name: string): string {
