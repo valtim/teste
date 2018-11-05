@@ -24,7 +24,7 @@ export class DiarioBordoComponent implements OnInit {
   dataSearch: string;
   ngOnInit() {
     this.appComponent.setTitle('Relatório de Voo');
-    this.dataSearch = new Date().toISOString().split('T')[0];
+    this.dataSearch = this.diario.dataSearch ? this.diario.dataSearch : new Date().toISOString().split('T')[0];
 
     this.api.getDiarioByDate(this.dataSearch).then((data) => {
       this.diarios = data;
@@ -37,6 +37,7 @@ export class DiarioBordoComponent implements OnInit {
 
   onChangeDate() {
     this.loading = true;
+    this.diario.dataSearch = this.dataSearch;
     this.api.getDiarioByDate(this.dataSearch).then((data) => {
       this.diarios = data;
       this.loading = false;

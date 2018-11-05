@@ -9,6 +9,7 @@ export class ApiService {
 
   private httpOptions: any;
   private url: string;
+  private permission;
   error: string;
 
   constructor(private http: HttpClient) {
@@ -155,5 +156,17 @@ export class ApiService {
       .toPromise()
       .then()
       .catch();
+  }
+
+  getMenuPermission() {
+    this.http.get(this.url + 'api/menu', this.httpOptions)
+      .toPromise()
+      .then((response) => {
+        this.permission = response;
+      });
+  }
+
+  getPermission(): any {
+    return this.permission;
   }
 }

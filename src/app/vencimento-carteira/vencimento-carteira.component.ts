@@ -105,7 +105,7 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!vencimento.DataDeVencimento) {
       if (vencimento.Certificado.Grupo.Id === '54d12aff-307b-4299-956b-5be9f114868e') {
         if (vencimento.NaoAtende) {
-          return 'Não atende';
+          return 'Sem dados';
         }
         return `${vencimento.UltimosVoos.length} Ocorrência(s)`;
       }

@@ -14,10 +14,11 @@ export class AuthGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    return this.checkLogin();
+    return this.checkLogin(state.url);
   }
 
-  checkLogin(): boolean {
+  checkLogin(url: string): boolean {
+    console.log(this.api.getPermission());
     if (localStorage.getItem('token')) { return true; }
     this.api.error = 'Você não tem permissão.';
     this.router.navigate(['']);

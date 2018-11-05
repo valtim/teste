@@ -14,12 +14,12 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.app.setTitle('Sol');
+    this.api.getMenuPermission();
     this.api.getListas(() => { });
   }
 
   logoff(): void {
     this.api.getLogoff().then((result) => {
-      console.log('result', result);
       localStorage.removeItem('Abastecedora');
       localStorage.removeItem('Cliente');
       localStorage.removeItem('FuncaoBordo');

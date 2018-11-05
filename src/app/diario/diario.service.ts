@@ -7,5 +7,5 @@ import { Injectable } from '@angular/core';
 export class DiarioService {
 
   diario: any;
-
+  dataSearch: string;
 }
