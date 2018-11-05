@@ -64,7 +64,7 @@ app-pagamento {
 
 app-loading {
   z-index: 9999;
-  background-color: rgba(139, 139, 139, 0.5);
+  background-color: #50505080;
   position: fixed;
   top: 0;
   height: 100%;

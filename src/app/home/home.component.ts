@@ -10,15 +10,22 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  private loading: boolean;
+
   constructor(private app: AppComponent, private api: ApiService, private router: Router) { }
 
   async ngOnInit() {
     this.app.setTitle('Sol');
-    this.api.getMenuPermission();
+    if (!this.api.getPermission()) {
+      this.loading = true;
+      this.api.getMenuPermission();
+    }
     this.api.getListas(() => { });
+    this.loading = false;
   }
 
   logoff(): void {
+    this.loading = true;
     this.api.getLogoff().then((result) => {
       localStorage.removeItem('Abastecedora');
       localStorage.removeItem('Cliente');
@@ -29,6 +36,7 @@ export class HomeComponent implements OnInit {
       localStorage.removeItem('TipoDeProcedimento');
       localStorage.removeItem('Tripulante');
       localStorage.removeItem('token');
+      this.loading = false;
       this.router.navigate(['/']);
     });
   }
