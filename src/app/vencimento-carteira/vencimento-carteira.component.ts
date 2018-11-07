@@ -37,11 +37,11 @@ export class VencimentoCarteiraComponent implements OnInit {
     });
   }
 
-  montarCertificados(certificados) {
+  montarCertificados(certificados: Array<any>) {
     const novoCertificados = [];
-    certificados.forEach(cert => {
+    while (certificados.length) {
       const titles = [];
-      const nomeGrupo = cert.Grupo.Nome;
+      const nomeGrupo = certificados[0].Grupo.Nome;
       const grupo = certificados.filter((elemt) => {
         return elemt.Grupo.Nome === nomeGrupo;
       });
@@ -56,7 +56,7 @@ export class VencimentoCarteiraComponent implements OnInit {
       });
 
       novoCertificados.push({ Grupo: nomeGrupo, Titles: titles });
-    });
+    }
     this.certificados = novoCertificados;
   }
 

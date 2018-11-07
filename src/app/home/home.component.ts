@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
       localStorage.removeItem('TipoDeProcedimento');
       localStorage.removeItem('Tripulante');
       localStorage.removeItem('token');
+      localStorage.removeItem('Certificado');
       this.loading = false;
       this.router.navigate(['/']);
     });
