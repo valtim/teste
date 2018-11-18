@@ -1,5 +1,5 @@
 <app-loading *ngIf="loading"></app-loading>
-<div class="login">
+<form class="login" (submit)="login()">
   <label for="username">Nome</label>
   <input type="text" id="username" name="username" [(ngModel)]="username" (change)="hideError()">
 
@@ -10,5 +10,5 @@
     {{api.error}}
   </p>
 
-  <button class="btn" (click)="login()">Login</button>
-</div>
+  <button class="btn">Login</button>
+</form>

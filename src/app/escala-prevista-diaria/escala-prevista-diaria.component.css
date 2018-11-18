@@ -1,0 +1,57 @@
+.content {
+  display: flex;
+  margin-top: 55px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.trabalhos {
+  width: 90%;
+}
+
+.trabalhos>tbody>tr>td {
+  text-align: center;
+}
+
+.info {
+  display: flex;
+  width: 90%;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.coordenadorObs {
+  display: flex;
+  flex-direction: column;
+  width: 55%;
+}
+
+.coordenadorObs>label:last-child {
+  margin-top: 10px;
+}
+
+.coordenadorObs>label>input,
+.coordenadorObs>label>textarea {
+  width: 100%;
+}
+
+.coordenadorObs>label>textarea {
+  height: 180px;
+}
+
+.info>label {
+  width: 40%;
+}
+
+.info>label>textarea {
+  height: 250px;
+  width: 100%;
+}
+
+.excluir {
+  background: #e4e4e4;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}

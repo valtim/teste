@@ -9,6 +9,7 @@ import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 import { AuthGuardService } from './guards/auth-guard.service';
+import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
 
 
 const routes: Routes = [
@@ -51,6 +52,11 @@ const routes: Routes = [
   {
     path: 'vencimento-carteira',
     component: VencimentoCarteiraComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'escala-prevista',
+    component: EscalaPrevistaDiariaComponent,
     canActivate: [AuthGuardService]
   },
 ];

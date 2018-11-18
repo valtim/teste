@@ -166,6 +166,15 @@ export class ApiService {
       });
   }
 
+  getEscala(dataEscala: string): Promise<any> {
+    return this.http.get(this.url + 'api/novaescala/' + dataEscala, this.httpOptions)
+      .toPromise();
+  }
+
+  getBase(): Promise<any> {
+    return this.http.get(this.url + 'api/base', this.httpOptions).toPromise();
+  }
+
   getPermission(): any {
     return this.permission;
   }

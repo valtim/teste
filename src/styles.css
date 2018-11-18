@@ -26,6 +26,7 @@ textarea {
 
 select {
   height: 35px;
+  text-align: center;
 }
 
 .btn {
@@ -58,7 +59,8 @@ app-diario-bordo,
 app-diario-editar,
 app-biblioteca,
 app-papeleta,
-app-pagamento {
+app-pagamento,
+app-escala-prevista-diaria {
   width: 100%;
 }
 
@@ -109,6 +111,45 @@ app-loading {
 
 .flatpickr-calendar {
   position: fixed !important;
+}
+
+.table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+  margin: 0 15px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  /* white-space: nowrap; */
+}
+
+.table-response {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.table tbody tr:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+
+.table thead tr td {
+  background-color: #002060;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  height: 70px;
+}
+
+.table td,
+.table th {
+  text-align: center;
+  border: 1px solid #cbcbcb;
+  margin: 0;
+  overflow: visible;
+  padding: 0.5em 1em;
+  height: 20px;
 }
 
 @media print {

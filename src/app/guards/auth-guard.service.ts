@@ -18,7 +18,7 @@ export class AuthGuardService implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    console.log(this.api.getPermission());
+    // console.log(this.api.getPermission());
     if (localStorage.getItem('token')) { return true; }
     this.api.error = 'Você não tem permissão.';
     this.router.navigate(['']);

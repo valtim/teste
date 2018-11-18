@@ -15,6 +15,7 @@ import { PapeletaComponent } from './papeleta/papeleta/papeleta.component';
 import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
+import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-ca
     PapeletaComponent,
     PagamentoComponent,
     TrocaSenhaComponent,
-    VencimentoCarteiraComponent
+    VencimentoCarteiraComponent,
+    EscalaPrevistaDiariaComponent
   ],
   imports: [
     BrowserModule,
