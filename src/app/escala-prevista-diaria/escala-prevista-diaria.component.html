@@ -23,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let trabalho of escala.Escalas">
+      <tr *ngFor="let trabalho of escalasAtivas()">
         <td>
           {{trabalho.Prefixo.TipoDeAeronave.Nome}}
           <label for="disponivel" style="display: flex;align-items: center;">
@@ -74,7 +74,7 @@
           <textarea name="" id="" cols="" rows="" [(ngModel)]="trabalho.Observacao"></textarea>
         </td>
         <td>
-          <button class="excluir">
+          <button class="excluir" (click)="deleteEscala(trabalho)">
             <img src="assets/icons/trash-icon.svg" alt="Lixeira">
           </button>
         </td>

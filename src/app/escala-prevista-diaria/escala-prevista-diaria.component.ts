@@ -104,7 +104,12 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
     this.escala.Escalas.push(novaEscala);
   }
 
-  show() {
+  deleteEscala(escala) {
+    escala.Ativo = false;
     console.log(this.escala);
+  }
+
+  escalasAtivas() {
+    return this.escala.Escalas.filter(trabalho => trabalho.Ativo);
   }
 }
