@@ -3,8 +3,9 @@
 
   <label for="data" style="width: 200px;display: flex;justify-content: center; flex-direction: column; margin-bottom: 15px;">
     Data:
-    <input id="data" type="date" [(ngModel)]="dataEscalaTrabalho">
+    <input id="data" type="date" [(ngModel)]="dataEscalaTrabalho" (change)="onChangeDate()">
   </label>
+  <button class="btn" (click)="newEscala()">Nova Escala</button>
 
   <table class="table trabalhos">
     <thead>
@@ -25,12 +26,20 @@
       <tr *ngFor="let trabalho of escala.Escalas">
         <td>
           {{trabalho.Prefixo.TipoDeAeronave.Nome}}
-          <label for="disponivel" style="display: flex;align-items: center;" [(ngModel)]="trabalho.Disponibilidade">
-            <input type="checkbox" name="disponivel" id="disponivel">
+          <label for="disponivel" style="display: flex;align-items: center;">
+            <input type="checkbox" name="disponivel" id="disponivel" [(ngModel)]="trabalho.Disponibilidade">
             Disponível
           </label>
         </td>
-        <td></td>
+        <td>
+          <div *ngIf="!trabalho.novo">
+            {{trabalho.Prefixo.PrefixoCompleto}}
+          </div>
+          <select name="prefixo" [(ngModel)]="trabalho.Prefixo" (change)="show()" *ngIf="trabalho.novo">
+            <option value="">---</option>
+            <option *ngFor="let prefixo of prefixos" [ngValue]="prefixo">{{prefixo.PrefixoCompleto}}</option>
+          </select>
+        </td>
         <td>
           <select name="comandate" [(ngModel)]="trabalho.Escalas[0].Tripulante.Id">
             <option value="">---</option>
@@ -38,16 +47,16 @@
           </select>
         </td>
         <td>
-          <select name="oficial" [(ngModel)]="trabalho.Escalas[1].Tripulante.Id">
+          <select name="oficial" [(ngModel)]="trabalho.Escalas[1].Tripulante.Id" *ngIf="trabalho.Prefixo.TipoDeAeronave.NumeroDeTripulantes === 2">
             <option value="">---</option>
             <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td>
-          <input type="time" name="apresentacao" [(ngModel)]="trabalho.HoraDaApresentacao">
+          <input type="time" name="apresentacao" [(ngModel)]="trabalho.HoraDaApresentacao" (change)="onChangeApresentacao(trabalho)">
         </td>
         <td>
-          <input type="time" name="refeicao">
+          <input type="time" name="refeicao" readonly [(ngModel)]="trabalho.LimiteDeRefeicao">
         </td>
         <td>
           <select name="base" [(ngModel)]="trabalho.Localidade.Id">
@@ -56,13 +65,13 @@
           </select>
         </td>
         <td>
-          <select name="cliente" [(ngModel)]="trabalho.Prefixo.Cliente.Id">
+          <select name="cliente" [(ngModel)]="trabalho.Cliente.Id">
             <option value="">---</option>
             <option *ngFor="let cliente of clientes" value="{{cliente.Id}}">{{cliente.Nome}}</option>
           </select>
         </td>
         <td>
-          <textarea name="" id="" cols="" rows=""></textarea>
+          <textarea name="" id="" cols="" rows="" [(ngModel)]="trabalho.Observacao"></textarea>
         </td>
         <td>
           <button class="excluir">

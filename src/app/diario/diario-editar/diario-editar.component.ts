@@ -98,7 +98,7 @@ export class DiarioEditarComponent implements OnInit {
         this.dataDiario.NumeroDaFolha = '';
       }
 
-      this.prefixos = this.api.getProfixos();
+      this.prefixos = this.api.getPrefixos();
       this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
       this.abastecedoras = this.api.getAbastecedoras();
       this.tripulantes = this.api.getTripulantes();

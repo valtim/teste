@@ -19,6 +19,7 @@
   width: 90%;
   flex-wrap: nowrap;
   justify-content: space-between;
+  margin-bottom: 30px;
 }
 
 .coordenadorObs {
@@ -54,4 +55,8 @@
   border: none;
   padding: 5px;
   border-radius: 5px;
+}
+
+.btn {
+  background-color: #1fce45;
 }

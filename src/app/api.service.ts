@@ -96,7 +96,7 @@ export class ApiService {
     return JSON.parse(localStorage.getItem('Abastecedora'));
   }
 
-  getProfixos(): any {
+  getPrefixos(): any {
     return JSON.parse(localStorage.getItem('Prefixo'));
   }
 

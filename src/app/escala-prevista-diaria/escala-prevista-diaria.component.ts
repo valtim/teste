@@ -15,6 +15,7 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   clientes: any;
   tripulantes: any;
   bases: any;
+  prefixos: any;
 
   constructor(private app: AppComponent, private api: ApiService) {
     this.escala = {
@@ -28,16 +29,19 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
 
   ngOnInit() {
     this.app.setTitle('Escala de Trabalho');
-    this.dataEscalaTrabalho = '2018/11/10';
+    this.dataEscalaTrabalho = new Date().toISOString().split('T')[0];
     this.loading = true;
-
+    this.prefixos = this.api.getPrefixos();
     this.clientes = this.api.getClientes();
     this.tripulantes = this.api.getTripulantes();
     this.api.getBase().then(response => {
       this.bases = response;
-      console.log(this.bases);
     });
+    this.onChangeDate();
+  }
 
+  onChangeDate() {
+    this.loading = true;
     this.api.getEscala(this.dataEscalaTrabalho)
       .then((response) => {
         if (response) {
@@ -50,14 +54,12 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
             }
           });
 
-          if (!escala.Escalas[1]) {
-            escala.Escalas[1] = {
-              Tripulante: { Id: '' },
-              umeroDoTripulante: 2
-            };
-          }
-
           escala.HoraDaApresentacao = escala.HoraDaApresentacao.split('T')[1];
+          escala.LimiteDeRefeicao = escala.LimiteDeRefeicao.split('T')[1];
+
+          if (!escala.Cliente) {
+            escala.Cliente = { Id: '' };
+          }
         });
         console.log('Resposta: ', this.escala);
         this.loading = false;
@@ -67,4 +69,42 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
       });
   }
 
+  onChangeApresentacao(escala) {
+    const [h, m, s] = escala.HoraDaApresentacao.split(':');
+    let hora: string | number = Number(h) + 6;
+    hora = hora < 10 ? '0' + hora : hora;
+    escala.LimiteDeRefeicao = hora + ':' + m + ':' + s;
+  }
+
+  newEscala() {
+    const novaEscala = {
+      novo: true,
+      Ativo: true,
+      Cliente: { Id: '' },
+      Data: new Date(),
+      Disponibilidade: false,
+      Escalas: [
+        {
+          NumeroDoTripulante: 1,
+          Tripulante: { Id: '' }
+        },
+        {
+          NumeroDoTripulante: 2,
+          Tripulante: { Id: '' }
+        }
+      ],
+      HoraDaApresentacao: '00:00:00',
+      Id: '',
+      LimiteDeRefeicao: '',
+      Localidade: { Id: '' },
+      Observacao: '',
+      Prefixo: { Id: '', PrefixoCompleto: '', TipoDeAeronave: {} },
+      SemApresentacao: true,
+    };
+    this.escala.Escalas.push(novaEscala);
+  }
+
+  show() {
+    console.log(this.escala);
+  }
 }
