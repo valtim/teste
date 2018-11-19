@@ -23,7 +23,12 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, .18);
 }
 
+.message>div>h4 {
+  margin: 5px 0;
+}
+
 .message>div>p {
+  margin: 5px 0 15px 0;
   color: #444;
 }
 

@@ -63,6 +63,15 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         });
         this.loading = false;
       }).catch(error => {
+        this.api.message = {
+          show: true,
+          title: error.error.Message,
+          message: 'Você gostaria de copiar a ultima escala?',
+          type: 'alert',
+          callBack: () => {
+            console.log('Copiar a ultima escala');
+          }
+        };
         console.log('Error: ', error);
         this.loading = false;
       });

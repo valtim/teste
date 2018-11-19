@@ -27,6 +27,7 @@ export class ApiService {
 
     this.message = {
       show: false,
+      title: '',
       message: '',
       type: 'alert',
       callBack: () => { }
