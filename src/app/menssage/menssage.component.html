@@ -1,0 +1,31 @@
+<div class="message" *ngIf="api.message.show">
+  <div>
+    <svg *ngIf="api.message.type === 'success'" width="50" height="50" viewBox="0 0 26.723 26.723">
+      <path d="M26.59 13.361a13.23 13.23 0 0 1-13.229 13.23A13.23 13.23 0 0 1 .132 13.36 13.23 13.23 0 0 1 13.362.132a13.23 13.23 0 0 1 13.229 13.23z"
+        fill="#77ca7f" />
+      <path d="M20.556 5.965L10.624 17.27l-4.457-5.372-1.593 1.813 4.582 5.231-.002.003 1.593 1.814 1.425-1.623L22.15 7.78z"
+        fill="#e6e6e6" />
+    </svg>
+
+    <svg *ngIf="api.message.type === 'error'" width="50" height="50" viewBox="0 0 26.723 26.723">
+      <path d="M26.59 13.361a13.23 13.23 0 0 1-13.229 13.23A13.23 13.23 0 0 1 .132 13.36 13.23 13.23 0 0 1 13.362.132a13.23 13.23 0 0 1 13.229 13.23z"
+        fill="#e8492f" />
+      <g fill="#e6e6e6">
+        <path d="M5.27 19.469L19.469 5.27l1.984 1.984L7.254 21.453z" />
+        <path d="M7.254 5.27l14.199 14.199-1.984 1.984L5.27 7.254z" />
+      </g>
+    </svg>
+
+    <svg *ngIf="api.message.type === 'alert'" width="50" height="50" viewBox="0 0 26.723 26.723">
+      <path d="M26.59 13.361a13.23 13.23 0 0 1-13.229 13.23A13.23 13.23 0 0 1 .132 13.36 13.23 13.23 0 0 1 13.362.132a13.23 13.23 0 0 1 13.229 13.23z"
+        fill="#ffc53c" fill-opacity=".941" />
+      <path d="M3.321 11.958h20.08v2.806H3.322z" fill="#e6e6e6" />
+    </svg>
+
+    <p>{{api.message.message}}</p>
+    <div class="btns">
+      <button class="btn sucess" (click)="onClickOK()">OK</button>
+      <button class="btn neutro" (click)="onClickCancel()">Cancelar</button>
+    </div>
+  </div>
+</div>

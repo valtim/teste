@@ -16,6 +16,7 @@ import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
+import { MenssageComponent } from './menssage/menssage.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-p
     PagamentoComponent,
     TrocaSenhaComponent,
     VencimentoCarteiraComponent,
-    EscalaPrevistaDiariaComponent
+    EscalaPrevistaDiariaComponent,
+    MenssageComponent
   ],
   imports: [
     BrowserModule,

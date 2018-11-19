@@ -11,6 +11,7 @@ export class ApiService {
   private url: string;
   private permission;
   error: string;
+  message: any;
 
   constructor(private http: HttpClient) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '/';
@@ -23,6 +24,13 @@ export class ApiService {
         })
       };
     }
+
+    this.message = {
+      show: false,
+      message: '',
+      type: 'alert',
+      callBack: () => { }
+    };
   }
 
   async postLogin(username: string, password: string): Promise<any> {

@@ -61,7 +61,6 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
             escala.Cliente = { Id: '' };
           }
         });
-        console.log('Resposta: ', this.escala);
         this.loading = false;
       }).catch(error => {
         console.log('Error: ', error);
@@ -105,8 +104,11 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   }
 
   deleteEscala(escala) {
-    escala.Ativo = false;
-    console.log(this.escala);
+    this.api.message.show = true;
+    this.api.message.message = `Você tem certeza que gostaria de excluir a escala ${escala.Prefixo.PrefixoCompleto} ?`;
+    this.api.message.callBack = () => {
+      escala.Ativo = false;
+    };
   }
 
   escalasAtivas() {
