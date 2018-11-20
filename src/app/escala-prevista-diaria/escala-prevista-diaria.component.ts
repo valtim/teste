@@ -145,7 +145,7 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
       LimiteDeRefeicao: '',
       Localidade: { Id: '' },
       Observacao: '',
-      Prefixo: { Id: '', PrefixoCompleto: '', TipoDeAeronave: {} },
+      Prefixo: { Id: '', PrefixoCompleto: '', TipoDeAeronave: { NumeroDeTripulantes: 2 } },
       SemApresentacao: true,
     };
     this.escala.Escalas.push(novaEscala);
@@ -161,5 +161,23 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
 
   escalasAtivas() {
     return this.escala.Escalas.filter(trabalho => trabalho.Ativo);
+  }
+
+  enviarEmail() {
+    this.api.message.show = true;
+    this.api.message.title = 'Enviar email';
+    this.api.message.message = 'Você tem certeza que gostaria de enviar um email para a lista de distribuição?';
+    this.api.message.callBack = () => {
+      this.api.getEnviarEscalaEmail(this.dataEscalaTrabalho).then(response => {
+        this.api.message.show = true;
+        this.api.message.type = 'success';
+        this.api.message.title = 'Email enviado com sucesso.';
+      }).catch(error => {
+        this.api.message.show = true;
+        this.api.message.type = 'error';
+        this.api.message.title = error.error.Message;
+        this.api.message.message = error.error.ExceptionMessage;
+      });
+    };
   }
 }

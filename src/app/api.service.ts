@@ -179,4 +179,8 @@ export class ApiService {
   getPermission(): any {
     return this.permission;
   }
+
+  getEnviarEscalaEmail(data: string): Promise<any> {
+    return this.http.get(this.url + 'api/escalaporemail/' + data, this.httpOptions).toPromise();
+  }
 }

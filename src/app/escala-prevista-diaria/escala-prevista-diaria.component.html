@@ -22,7 +22,7 @@
       <img src="assets/icons/search.svg" alt="Buscar">
     </button>
   </div>
-  <button class="btn" (click)="newEscala()">Nova Escala</button>
+  <button class="btn btn-success" (click)="newEscala()">Nova Escala</button>
 
   <table class="table trabalhos">
     <thead>
@@ -52,7 +52,7 @@
           <div *ngIf="!trabalho.novo">
             {{trabalho.Prefixo.PrefixoCompleto}}
           </div>
-          <select name="prefixo" [(ngModel)]="trabalho.Prefixo" (change)="show()" *ngIf="trabalho.novo">
+          <select name="prefixo" [(ngModel)]="trabalho.Prefixo" *ngIf="trabalho.novo">
             <option value="">---</option>
             <option *ngFor="let prefixo of prefixos" [ngValue]="prefixo">{{prefixo.PrefixoCompleto}}</option>
           </select>
@@ -115,7 +115,8 @@
 
     <label for="listaDistribuicao">
       Lista de Distribuição:
-      <textarea name="listaDistribuicao" id="listaDistribuicao" [(ngModel)]="escala.ListaDeEmails" cols="45"></textarea>
+      <textarea name="listaDistribuicao" id="listaDistribuicao" [(ngModel)]="escala.ListaDeEmails"></textarea>
+      <button class="btn btn-email" (click)="enviarEmail()">Enviar E-mail</button>
     </label>
 
   </div>
