@@ -43,31 +43,31 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   onChangeDate() {
     this.loading = true;
     this.api.getEscala(this.dataEscalaTrabalho)
-      .then((response) => {
+      .then((response: Response) => {
         if (response) {
-          this.escala = response;
-        }
-        this.escala.Escalas.forEach(escala => {
-          escala.Escalas.forEach(trip => {
-            if (!trip.Tripulante) {
-              trip.Tripulante = { Id: '' };
+          this.montarEscala(response);
+        } else {
+          this.api.message = {
+            show: true,
+            title: 'Não encontramos a escala do dia ' + new Date(this.dataEscalaTrabalho + 'T00:00:00').toLocaleDateString(),
+            message: 'Você gostaria de copiar a ultima escala?',
+            type: 'alert',
+            callBack: () => {
+              this.loading = true;
+              this.api.getUltimaEscala().then((resp) => {
+                this.montarEscala(resp);
+                this.loading = false;
+              });
             }
-          });
-
-          escala.HoraDaApresentacao = escala.HoraDaApresentacao.split('T')[1];
-          escala.LimiteDeRefeicao = escala.LimiteDeRefeicao.split('T')[1];
-
-          if (!escala.Cliente) {
-            escala.Cliente = { Id: '' };
-          }
-        });
+          };
+        }
         this.loading = false;
       }).catch(error => {
         this.api.message = {
           show: true,
           title: error.error.Message,
-          message: 'Você gostaria de copiar a ultima escala?',
-          type: 'alert',
+          message: '',
+          type: 'error',
           callBack: () => {
             console.log('Copiar a ultima escala');
           }
@@ -75,6 +75,24 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         console.log('Error: ', error);
         this.loading = false;
       });
+  }
+
+  private montarEscala(responseEscala) {
+    this.escala = responseEscala;
+    this.escala.Escalas.forEach(escala => {
+      escala.Escalas.forEach(trip => {
+        if (!trip.Tripulante) {
+          trip.Tripulante = { Id: '' };
+        }
+      });
+
+      escala.HoraDaApresentacao = escala.HoraDaApresentacao.split('T')[1];
+      escala.LimiteDeRefeicao = escala.LimiteDeRefeicao.split('T')[1];
+
+      if (!escala.Cliente) {
+        escala.Cliente = { Id: '' };
+      }
+    });
   }
 
   onChangeApresentacao(escala) {

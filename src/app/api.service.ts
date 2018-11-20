@@ -55,23 +55,17 @@ export class ApiService {
 
   getDiarioByDate(date: string): Promise<any> {
     return this.http.get(this.url + 'api/novodiario/' + date, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
     return this.http.get(this.url + `api/novodiario/${id}/${month}/${year}`, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getPagamento(data: string): Promise<any> {
     return this.http.get(this.url + `api/relatorio/pagamento/${data}`, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getListas(callback: Function): void {
@@ -127,44 +121,32 @@ export class ApiService {
 
   getBloco(IdPrefixo: string): Promise<any> {
     return this.http.get(this.url + `api/bloco/${IdPrefixo}`, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getCertificado(): Promise<any> {
     return this.http.get(this.url + 'api/certificado', this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getVencimento(): Promise<any> {
     return this.http.get(this.url + 'api/vencimento', this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   postVencimento(vencimentoList: Array<any>): Promise<any> {
     return this.http.post(this.url + 'api/vencimento', vencimentoList, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getLogoff(): Promise<any> {
     return this.http.get(this.url + 'api/exit', this.httpOptions)
-      .toPromise()
-      .then()
-      .catch();
+      .toPromise();
   }
 
   getMenuPermission() {
@@ -177,6 +159,11 @@ export class ApiService {
 
   getEscala(dataEscala: string): Promise<any> {
     return this.http.get(this.url + 'api/novaescala/' + dataEscala, this.httpOptions)
+      .toPromise();
+  }
+
+  getUltimaEscala(): Promise<any> {
+    return this.http.get(this.url + 'api/ultimaescala', this.httpOptions)
       .toPromise();
   }
 
