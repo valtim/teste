@@ -57,9 +57,6 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
               this.api.getUltimaEscala().then((resp) => {
                 resp.Data = new Date();
                 resp.Id = null;
-                resp.Escalas.forEach(escala => {
-                  escala.Id = null;
-                });
                 this.montarEscala(resp);
                 this.loading = false;
               });
