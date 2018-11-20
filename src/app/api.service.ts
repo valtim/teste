@@ -167,6 +167,11 @@ export class ApiService {
       .toPromise();
   }
 
+  postEscala(escala: any): Promise<any> {
+    return this.http.post(this.url + 'api/novaescala', escala, this.httpOptions)
+      .toPromise();
+  }
+
   getBase(): Promise<any> {
     return this.http.get(this.url + 'api/base', this.httpOptions).toPromise();
   }

@@ -18,6 +18,7 @@ export class MenssageComponent implements OnInit {
       this.api.message.callBack();
     }
     this.api.message.show = false;
+    this.api.message.callBack = this.onClickCancel();
   }
 
   onClickCancel() {

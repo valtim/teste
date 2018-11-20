@@ -55,6 +55,11 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
             callBack: () => {
               this.loading = true;
               this.api.getUltimaEscala().then((resp) => {
+                resp.Data = new Date();
+                resp.Id = null;
+                resp.Escalas.forEach(escala => {
+                  escala.Id = null;
+                });
                 this.montarEscala(resp);
                 this.loading = false;
               });
@@ -93,6 +98,25 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         escala.Cliente = { Id: '' };
       }
     });
+  }
+
+  salvarEscala() {
+    this.api.message.show = true;
+    this.api.message.title = 'Salvar alteração.';
+    this.api.message.message = 'Você tem certeza que gostaria de salvar as alterações feitas?';
+    this.api.message.callBack = () => {
+      this.loading = true;
+      this.api.postEscala(this.escala).then(response => {
+        console.log('OK: ', response);
+        this.loading = false;
+      }).catch((error) => {
+        this.api.message.show = true;
+        this.api.message.type = 'error';
+        this.api.message.title = error.error.Message;
+        this.api.message.message = error.error.ExceptionMessage;
+        this.loading = false;
+      });
+    };
   }
 
   onChangeApresentacao(escala) {

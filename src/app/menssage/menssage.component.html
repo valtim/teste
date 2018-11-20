@@ -24,8 +24,10 @@
     <h4>{{api.message.title}}</h4>
     <p>{{api.message.message}}</p>
     <div class="btns">
-      <button class="btn sucess" (click)="onClickOK()">OK</button>
-      <button class="btn neutro" (click)="onClickCancel()">Cancelar</button>
+      <button class="btn sucess" [ngClass]="{'error': api.message.type === 'error'}" (click)="onClickOK()">
+        OK
+      </button>
+      <button class="btn neutro" *ngIf="api.message.type === 'alert'" (click)="onClickCancel()">Cancelar</button>
     </div>
   </div>
 </div>
