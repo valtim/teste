@@ -183,4 +183,8 @@ export class ApiService {
   getEnviarEscalaEmail(data: string): Promise<any> {
     return this.http.get(this.url + 'api/escalaporemail/' + data, this.httpOptions).toPromise();
   }
+
+  getNTripulante(): Promise<any> {
+    return this.http.get(this.url + 'api/ntripulante', this.httpOptions).toPromise();
+  }
 }

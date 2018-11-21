@@ -17,6 +17,7 @@ import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
 import { MenssageComponent } from './menssage/menssage.component';
+import { TripulanteComponent } from './tripulante/tripulante.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MenssageComponent } from './menssage/menssage.component';
     TrocaSenhaComponent,
     VencimentoCarteiraComponent,
     EscalaPrevistaDiariaComponent,
-    MenssageComponent
+    MenssageComponent,
+    TripulanteComponent
   ],
   imports: [
     BrowserModule,

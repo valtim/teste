@@ -76,7 +76,7 @@
           <input type="time" name="refeicao" readonly [(ngModel)]="trabalho.LimiteDeRefeicao">
         </td>
         <td>
-          <select name="base" [(ngModel)]="trabalho.Localidade.Id">
+          <select name="base" [(ngModel)]="trabalho.Localidade.Id" [ngClass]="{'error': !trabalho.Localidade.Id}">
             <option value="">---</option>
             <option *ngFor="let base of bases" value="{{base.Id}}">{{base.NomeICAO}}</option>
           </select>

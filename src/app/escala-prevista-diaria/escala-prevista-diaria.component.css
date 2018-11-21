@@ -67,6 +67,10 @@
   background-color: #cecece;
 }
 
+.error {
+  border: solid 2px #ff6969;
+}
+
 #salvar {
   position: fixed;
   top: 5px;

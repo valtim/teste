@@ -98,22 +98,36 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   }
 
   salvarEscala() {
-    this.api.message.show = true;
-    this.api.message.title = 'Salvar alteração.';
-    this.api.message.message = 'Você tem certeza que gostaria de salvar as alterações feitas?';
-    this.api.message.callBack = () => {
-      this.loading = true;
-      this.api.postEscala(this.escala).then(response => {
-        console.log('OK: ', response);
-        this.loading = false;
-      }).catch((error) => {
-        this.api.message.show = true;
-        this.api.message.type = 'error';
-        this.api.message.title = error.error.Message;
-        this.api.message.message = error.error.ExceptionMessage;
-        this.loading = false;
-      });
-    };
+    const baseSelected = !!this.escala.Escalas.filter(trabalho => trabalho.Localidade.Id === '' || !trabalho.Localidade).length;
+    if (baseSelected) {
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'O campo Base é obrigatório',
+        message: 'Selecione uma base para cada escala de trabalho'
+      };
+    } else {
+      this.api.message = {
+        show: true,
+        title: 'Salvar alteração.',
+        message: 'Você tem certeza que gostaria de salvar as alterações feitas?',
+        callBack: () => {
+          this.loading = true;
+          this.api.postEscala(this.escala).then(response => {
+            console.log('OK: ', response);
+            this.loading = false;
+          }).catch((error) => {
+            this.api.message = {
+              show: true,
+              type: 'error',
+              title: error.error.Message,
+              message: error.error.ExceptionMessage
+            };
+            this.loading = false;
+          });
+        }
+      };
+    }
   }
 
   onChangeApresentacao(escala) {
@@ -160,7 +174,15 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   }
 
   escalasAtivas() {
-    return this.escala.Escalas.filter(trabalho => trabalho.Ativo);
+    return this.escala.Escalas.filter(trabalho => trabalho.Ativo).map(trabalho => {
+      if (trabalho && !trabalho.Prefixo) {
+        trabalho.Prefixo = {
+          PrefixoCompleto: '',
+          TipoDeAeronave: { Nome: '' }
+        };
+      }
+      return trabalho;
+    });
   }
 
   enviarEmail() {

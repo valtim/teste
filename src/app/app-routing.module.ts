@@ -10,6 +10,7 @@ import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
+import { TripulanteComponent } from './tripulante/tripulante.component';
 
 
 const routes: Routes = [
@@ -57,6 +58,11 @@ const routes: Routes = [
   {
     path: 'escala-prevista',
     component: EscalaPrevistaDiariaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'tripulante',
+    component: TripulanteComponent,
     canActivate: [AuthGuardService]
   },
 ];

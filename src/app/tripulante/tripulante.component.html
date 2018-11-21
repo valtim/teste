@@ -1,0 +1,58 @@
+<div class="content">
+
+  <div class="search">
+    <label for="nome">
+      Nome:
+      <input type="text" id="nome">
+    </label>
+
+    <label for="trato">
+      Trato:
+      <input type="text" id="trato">
+    </label>
+
+    <label for="anac">
+      ANAC:
+      <input type="text" id="anac">
+    </label>
+
+    <button class="btn">Search</button>
+
+    <button class="btn">Excluir</button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Trato</th>
+        <th>Código ANAC</th>
+        <th>Nome Completo</th>
+        <th>Peso (Lb)</th>
+        <th>Peso (Kg)</th>
+        <th>Email</th>
+        <th>Base</th>
+        <th>Tipo de Operação</th>
+        <th>Cargo</th>
+        <th>Atualização</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tripulante of tripulantes">
+        <td>
+          <input type="checkbox" name="" id="" style="display: inherit;">
+        </td>
+        <td>{{tripulante.Trato}}</td>
+        <td>{{tripulante.CodigoANAC}}</td>
+        <td>{{tripulante.NomeCompleto}}</td>
+        <td>{{tripulante.UltimoPeso}}</td>
+        <td>{{tripulante.UltimoPesoKG}}</td>
+        <td></td>
+        <td></td>
+        <td>{{tripulante.OperacaoStr}}</td>
+        <td>{{tripulante.CargoStr}}</td>
+        <td>{{tripulante.Atualizacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

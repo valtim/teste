@@ -1,0 +1,19 @@
+.content {
+  display: flex;
+  margin-top: 55px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
+}
+
+.table {
+  width: 90%;
+}
+
+.search {
+  display: flex;
+  width: 90%;
+  margin: 15px 0;
+  justify-content: space-around;
+  align-items: end;
+}
