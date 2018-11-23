@@ -85,16 +85,16 @@
       <input type="date" id="data-admissao" name="data-admissao" [(ngModel)]="tripulante.Admissao">
     </label>
 
-    <label class="label2" for="base" [(ngModel)]="tripulante.Base.Id">
+    <label class="label2" for="base">
       Base Contratual:
-      <select name="base" id="base">
-        <option *ngFor="let base of bases" [ngValue]="base.Id">{{base.Nome}}</option>
+      <select name="base" id="base" [(ngModel)]="tripulante.Base.Id">
+        <option *ngFor="let base of bases" value="{{base.Id}}">{{base.Nome}}</option>
       </select>
     </label>
 
-    <label class="label2" for="cargo" [(ngModel)]="tripulante.Cargo.Id">
+    <label class="label2" for="cargo">
       Cargo:
-      <select name="cargo" id="cargo">
+      <select name="cargo" id="cargo" [(ngModel)]="tripulante.Cargo.Id">
         <option value=""></option>
       </select>
     </label>

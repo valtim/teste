@@ -21,7 +21,10 @@ export class TripulanteComponent implements OnInit {
     private app: AppComponent,
     private api: ApiService
   ) {
-
+    this.tripulante = {
+      Base: {},
+      Cargo: {}
+    };
   }
 
   ngOnInit() {
@@ -44,4 +47,30 @@ export class TripulanteComponent implements OnInit {
     this.template = name;
     console.log(this.template);
   }
+}
+
+interface Tripulante {
+  Ativo: boolean;
+  Atualizacao: string;
+  Id: string;
+  Trato: string;
+  NomeCompleto: string;
+  CodigoANAC: number;
+  UltimoPeso: number;
+  Email: string;
+  Identidade: string;
+  CPF: string;
+  Nascimento: string;
+  Licenca: string;
+  Endereco: string;
+  Idioma: string;
+  Admissao: string;
+  Operacao: Array<any>;
+  Experiencia: Array<any>;
+  Especializacoes: Array<any>;
+  InformacoesAcademicas: Array<any>;
+  RelativoFuncaoGeral: Array<any>;
+  RelativoFuncaoEmpresa: Array<any>;
+  Base: any;
+  Cargo: any;
 }
