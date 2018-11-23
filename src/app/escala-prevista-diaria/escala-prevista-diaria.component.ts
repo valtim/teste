@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ApiService } from '../api.service';
-
 @Component({
   selector: 'app-escala-prevista-diaria',
   templateUrl: './escala-prevista-diaria.component.html',
@@ -18,17 +17,14 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   prefixos: any;
 
   constructor(private app: AppComponent, private api: ApiService) {
-    this.escala = {
-      Coordenador: '',
-      Comentario: '',
-      ListaDeEmails: '',
-      Escalas: []
-    };
     this.clientes = [];
   }
 
   ngOnInit() {
     this.app.setTitle('Escala de Trabalho');
+    this.escala = {
+      Escalas: []
+    };
     this.dataEscalaTrabalho = new Date().toISOString().split('T')[0];
     this.loading = true;
     this.prefixos = this.api.getPrefixos();
@@ -55,7 +51,7 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
             callBack: () => {
               this.loading = true;
               this.api.getUltimaEscala().then((resp) => {
-                resp.Data = new Date();
+                resp.Data = this.dataEscalaTrabalho + 'T00:00:00';
                 resp.Id = null;
                 this.montarEscala(resp);
                 this.loading = false;
@@ -79,12 +75,16 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
       });
   }
 
+  compareMatricula(matricula1: any, matricula2: any): boolean {
+    return matricula1 && matricula2 ? matricula1.Id === matricula2.Id : matricula1 === matricula2;
+  }
+
   private montarEscala(responseEscala) {
     this.escala = responseEscala;
     this.escala.Escalas.forEach(escala => {
       escala.Escalas.forEach(trip => {
         if (!trip.Tripulante) {
-          trip.Tripulante = { Id: '' };
+          trip.Tripulante = { Id: '', Trato: '' };
         }
       });
 
@@ -174,15 +174,7 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   }
 
   escalasAtivas() {
-    return this.escala.Escalas.filter(trabalho => trabalho.Ativo).map(trabalho => {
-      if (trabalho && !trabalho.Prefixo) {
-        trabalho.Prefixo = {
-          PrefixoCompleto: '',
-          TipoDeAeronave: { Nome: '' }
-        };
-      }
-      return trabalho;
-    });
+    return this.escala.Escalas.filter(trabalho => trabalho.Ativo);
   }
 
   enviarEmail() {

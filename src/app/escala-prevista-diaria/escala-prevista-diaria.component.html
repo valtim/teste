@@ -24,6 +24,9 @@
   </div>
   <button class="btn btn-success" (click)="newEscala()">Nova Escala</button>
 
+  <p style="width: 90%;" *ngIf="escala.Data">
+    Trabalhando no dia: {{escala.Data | date: 'dd/MM/yyyy'}}
+  </p>
   <table class="table trabalhos">
     <thead>
       <tr>
@@ -49,12 +52,11 @@
           </label>
         </td>
         <td>
-          <div *ngIf="!trabalho.novo">
-            {{trabalho.Prefixo.PrefixoCompleto}}
-          </div>
-          <select name="prefixo" [(ngModel)]="trabalho.Prefixo" *ngIf="trabalho.novo">
-            <option value="">---</option>
-            <option *ngFor="let prefixo of prefixos" [ngValue]="prefixo">{{prefixo.PrefixoCompleto}}</option>
+          <select name="prefixo" [compareWith]="compareMatricula" [(ngModel)]="trabalho.Prefixo">
+            <option [ngValue]="{Id: '', TipoDeAeronave: {NumeroDeTripulantes:2, Id: ''}}">---</option>
+            <option *ngFor="let pref of prefixos" [ngValue]="pref">
+              {{pref.PrefixoCompleto}}
+            </option>
           </select>
         </td>
         <td>
