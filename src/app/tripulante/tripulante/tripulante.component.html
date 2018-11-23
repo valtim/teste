@@ -1,0 +1,231 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="content">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <b class="nav-link" (click)="onClickTabs('dados-pessoais')" [ngClass]="{'active': template === 'dados-pessoais'}"
+        href="#">
+        Dados Pessoais
+      </b>
+    </li>
+    <li class="nav-item">
+      <b class="nav-link" (click)="onClickTabs('experiencia')" [ngClass]="{'active': template === 'experiencia'}" href="#">Experiência</b>
+    </li>
+    <li class="nav-item">
+      <b class="nav-link" (click)="onClickTabs('expecializacao')" [ngClass]="{'active': template === 'expecializacao'}"
+        href="#">Expecialização</b>
+    </li>
+    <li class="nav-item">
+      <b class="nav-link" (click)="onClickTabs('informacoes-academicas')" [ngClass]="{'active': template === 'informacoes-academicas'}"
+        href="#">Informações Acadêmicas</b>
+    </li>
+    <li class="nav-item">
+      Cursos e Treinamentos Relativos a Função
+      <div style="display: flex;justify-content: space-around;">
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-geral')" [ngClass]="{'active': template === 'cursos-treinamentos-geral'}"
+          href="#">GERAL</b>
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-emar')" [ngClass]="{'active': template === 'cursos-treinamentos-emar'}"
+          href="#">EMAR</b>
+      </div>
+    </li>
+  </ul>
+
+  <div class="template" *ngIf="template === 'dados-pessoais'">
+    <label class="label1" for="nome-completo">
+      Nome Completo:
+      <input type="text" id="nome-completo" name="nome-completo" [(ngModel)]="tripulante.NomeCompleto">
+    </label>
+
+    <label class="label2" for="anac">
+      Código ANAC:
+      <input type="text" id="anac" name="anac" [(ngModel)]="tripulante.CodigoANAC">
+    </label>
+
+    <label class="label2" for="trato">
+      Trato:
+      <input type="text" id="trato" name="trato" [(ngModel)]="tripulante.Trato">
+    </label>
+
+    <label class="label2" for="identidade">
+      Identidade:
+      <input type="text" id="identidade" name="identidade" [(ngModel)]="tripulante.Identidade">
+    </label>
+
+    <label class="label2" for="cpf">
+      CPF:
+      <input type="text" id="cpf" name="cpf" [(ngModel)]="tripulante.CPF">
+    </label>
+
+    <label class="label2" for="data-nascimento">
+      Data de Nascimento:
+      <input type="date" id="data-nascimento" name="data-nascimento" [(ngModel)]="tripulante.Nascimento">
+    </label>
+
+    <label class="label2" for="licenca">
+      Licença:
+      <input type="text" id="licenca" name="licenca" [(ngModel)]="tripulante.Licenca">
+    </label>
+
+    <label class="label2" for="endereco">
+      Endereço:
+      <input type="text" id="endereco" name="endereco" [(ngModel)]="tripulante.Endereco">
+    </label>
+
+    <label class="label2" for="email">
+      Email:
+      <input type="email" id="email" name="email" [(ngModel)]="tripulante.Email">
+    </label>
+
+    <label class="label2" for="idioma">
+      Idioma:
+      <input type="text" id="idioma" name="idioma" [(ngModel)]="tripulante.Idioma">
+    </label>
+
+    <label class="label2" for="data-admissao">
+      Data de Admissão:
+      <input type="date" id="data-admissao" name="data-admissao" [(ngModel)]="tripulante.Admissao">
+    </label>
+
+    <label class="label2" for="base" [(ngModel)]="tripulante.Base.Id">
+      Base Contratual:
+      <select name="base" id="base">
+        <option *ngFor="let base of bases" [ngValue]="base.Id">{{base.Nome}}</option>
+      </select>
+    </label>
+
+    <label class="label2" for="cargo" [(ngModel)]="tripulante.Cargo.Id">
+      Cargo:
+      <select name="cargo" id="cargo">
+        <option value=""></option>
+      </select>
+    </label>
+  </div>
+
+  <div class="template" *ngIf="template === 'experiencia'">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tipo de Aeronave</th>
+          <th>Tipo de Operação</th>
+          <th>Cargo</th>
+          <th>Empresa</th>
+          <th>Data de Início</th>
+          <th>Data de Fim</th>
+          <th>Total de Horas</th>
+          <th>Total de Horas IFR</th>
+          <th>Total de Horas Noturno</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exp of tripulante.Experiencia">
+          <td>{{exp.TipoDeAeronave}}</td>
+          <td>{{exp.TipoDeOperacao}}</td>
+          <td>{{exp.Cargo}}</td>
+          <td>{{exp.Empresa}}</td>
+          <td>{{exp.DataDeInicio | date: 'dd/MM/yyyy'}}</td>
+          <td></td>
+          <td>{{exp.TotalDeHoras}}</td>
+          <td>{{exp.TotalDeHorasIFR}}</td>
+          <td>{{exp.TotalDeHorasNoturno}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="template" *ngIf="template === 'expecializacao'">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Tipo de Operação</th>
+          <th>Carga Horaria</th>
+          <th>Empresa</th>
+          <th>Data de Início</th>
+          <th>Data de Fim</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exp of tripulante.Especializacoes">
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="template" *ngIf="template === 'informacoes-academicas'">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Instituição</th>
+          <th>Data de Início</th>
+          <th>Data de Fim</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let exp of tripulante.InformacoesAcademicas">
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+          <td>{{exp}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="template" *ngIf="template === 'cursos-treinamentos-geral'">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Instituição</th>
+          <th>Ano</th>
+          <th>Carga Horária</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let geral of tripulante.RelativoFuncaoGeral">
+          <td>{{geral.Curso}}</td>
+          <td>{{geral.Instituicao}}</td>
+          <td>{{geral.Ano}}</td>
+          <td>{{geral.CargaHoraria}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="template" *ngIf="template === 'cursos-treinamentos-emar'">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Instituição</th>
+          <th>Inicial</th>
+          <th>Data de Fim</th>
+          <th>Validade</th>
+          <th>Carga Horária</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let geral of tripulante.RelativoFuncaoEmpresa">
+          <td>{{geral.Curso}}</td>
+          <td>{{geral.Instituicao}}</td>
+          <td>
+            <input type="checkbox" name="inicial" [(ngModel)]="geral.Inicial" style="display: inline;">
+          </td>
+          <td>{{geral.DataDeFim}}</td>
+          <td>{{geral.Validade}}</td>
+          <td>{{geral.CargaHoraria}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

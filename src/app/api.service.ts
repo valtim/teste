@@ -184,7 +184,11 @@ export class ApiService {
     return this.http.get(this.url + 'api/escalaporemail/' + data, this.httpOptions).toPromise();
   }
 
-  getNTripulante(): Promise<any> {
+  getNTripulanteLista(): Promise<any> {
     return this.http.get(this.url + 'api/ntripulante', this.httpOptions).toPromise();
+  }
+
+  getNTripulante(id: string): Promise<any> {
+    return this.http.get(this.url + 'api/ntripulante/' + id, this.httpOptions).toPromise();
   }
 }

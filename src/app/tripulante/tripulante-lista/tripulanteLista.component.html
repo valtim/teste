@@ -54,7 +54,11 @@
         <td>
           <input type="checkbox" name="excluir" id="" style="display: inherit;" [(ngModel)]="tripulante.excluir">
         </td>
-        <td>{{tripulante.Trato}}</td>
+        <td>
+          <a routerLink="/tripulante/{{tripulante.Id}}" style="text-decoration: underline; color:black; ">
+            {{tripulante.Trato}}
+          </a>
+        </td>
         <td>{{tripulante.CodigoANAC}}</td>
         <td>{{tripulante.NomeCompleto}}</td>
         <td>{{tripulante.UltimoPeso}}</td>

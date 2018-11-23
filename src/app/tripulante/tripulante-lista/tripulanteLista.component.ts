@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
-import { ApiService } from '../api.service';
+import { AppComponent } from '../../app.component';
+import { ApiService } from '../../api.service';
 
 @Component({
   selector: 'app-tripulante',
-  templateUrl: './tripulante.component.html',
-  styleUrls: ['./tripulante.component.css']
+  templateUrl: './tripulanteLista.component.html',
+  styleUrls: ['./tripulanteLista.component.css']
 })
-export class TripulanteComponent implements OnInit {
+export class TripulanteListaComponent implements OnInit {
 
   constructor(private app: AppComponent, private api: ApiService) {
     this.app.setTitle('Tripulante');
@@ -20,7 +20,7 @@ export class TripulanteComponent implements OnInit {
   anac = '';
 
   ngOnInit() {
-    this.api.getNTripulante().then(response => {
+    this.api.getNTripulanteLista().then(response => {
       this.tripulantesFilter = this.tripulantes = response;
     });
   }
