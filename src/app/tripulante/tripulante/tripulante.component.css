@@ -39,7 +39,7 @@
 .nav-tabs>li>div>b.active:focus,
 .nav-tabs>li>div>b.active:hover {
   cursor: default;
-  background-color: #fff;
+  background-color: #e0e0e0;
   border: 1px solid #ddd;
   border-bottom-color: rgb(221, 221, 221);
   border-bottom-color: transparent;
@@ -53,6 +53,7 @@
   border-radius: 4px 4px 0 0;
   text-decoration: none;
   color: #555;
+  cursor: pointer;
 }
 
 .nav-tabs>li>div>b {
@@ -80,6 +81,11 @@
 .nav-tabs>li {
   float: left;
   margin-bottom: -1px;
+}
+
+input,
+select {
+  width: 120px;
 }
 
 .nav>li {

@@ -1,4 +1,6 @@
 <app-loading *ngIf="loading"></app-loading>
+<app-menssage></app-menssage>
+
 <div class="content">
   <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -88,6 +90,7 @@
     <label class="label2" for="base">
       Base Contratual:
       <select name="base" id="base" [(ngModel)]="tripulante.Base.Id">
+        <option value="">---</option>
         <option *ngFor="let base of bases" value="{{base.Id}}">{{base.Nome}}</option>
       </select>
     </label>
@@ -98,6 +101,32 @@
         <option value=""></option>
       </select>
     </label>
+
+    <table class="table" style="margin-top: 15px">
+      <thead>
+        <tr>
+          <th>Tipo de Operação</th>
+          <th>Data de Início</th>
+          <th>Data de Fim</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let operacao of tripulante.Operacao">
+          <td>
+            <select name="tipoOperacao" [compareWith]="compareFn" [(ngModel)]="operacao.TipoDeOperacao">
+              <option value="">---</option>
+              <option *ngFor="let tipoOperacao of tipoOperacoes" [ngValue]="tipoOperacao">{{tipoOperacao.Nome}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="date" name="data-inicio" [(ngModel)]="operacao.DataDeInicio">
+          </td>
+          <td>
+            <input type="date" name="data-fim" [(ngModel)]="operacao.DataDeFim">
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="template" *ngIf="template === 'experiencia'">
@@ -118,15 +147,33 @@
 
       <tbody>
         <tr *ngFor="let exp of tripulante.Experiencia">
-          <td>{{exp.TipoDeAeronave}}</td>
-          <td>{{exp.TipoDeOperacao}}</td>
+          <td>
+            <select name="tipo-operacao" [(ngModel)]="exp.TipoDeAeronave.Id">
+              <option value="">---</option>
+              <option *ngFor="let aeronave of tipoAeronaveis" value="{{aeronave.Id}}">{{aeronave.Nome}}</option>
+            </select>
+          </td>
+          <td>
+            <select name="tipo-operacao" [(ngModel)]="exp.TipoDeOperacao.Id">
+              <option value="">---</option>
+              <option *ngFor="let operacao of tipoOperacoes" value="{{operacao.Id}}">{{operacao.Nome}}</option>
+            </select>
+          </td>
           <td>{{exp.Cargo}}</td>
           <td>{{exp.Empresa}}</td>
-          <td>{{exp.DataDeInicio | date: 'dd/MM/yyyy'}}</td>
+          <td>
+            <input type="date" name="data-inicio" [(ngModel)]="exp.DataDeInicio">
+          </td>
           <td></td>
-          <td>{{exp.TotalDeHoras}}</td>
-          <td>{{exp.TotalDeHorasIFR}}</td>
-          <td>{{exp.TotalDeHorasNoturno}}</td>
+          <td>
+            <input type="number" min="0" step="0.1" name="totalDeHoras" [(ngModel)]="exp.TotalDeHoras">
+          </td>
+          <td>
+            <input type="number" min="0" step="0.1" name="totalDeHorasIFR" [(ngModel)]="exp.TotalDeHorasIFR">
+          </td>
+          <td>
+            <input type="number" min="0" step="0.1" name="totalDeHorasNoturno" [(ngModel)]="exp.TotalDeHorasNoturno">
+          </td>
         </tr>
       </tbody>
     </table>
@@ -193,8 +240,12 @@
         <tr *ngFor="let geral of tripulante.RelativoFuncaoGeral">
           <td>{{geral.Curso}}</td>
           <td>{{geral.Instituicao}}</td>
-          <td>{{geral.Ano}}</td>
-          <td>{{geral.CargaHoraria}}</td>
+          <td>
+            <input type="number" name="ano" min="0" [(ngModel)]="geral.Ano">
+          </td>
+          <td>
+            <input type="number" name="cargaHoraria" min="0" [(ngModel)]="geral.CargaHoraria">
+          </td>
         </tr>
       </tbody>
     </table>
@@ -216,13 +267,21 @@
       <tbody>
         <tr *ngFor="let geral of tripulante.RelativoFuncaoEmpresa">
           <td>{{geral.Curso}}</td>
-          <td>{{geral.Instituicao}}</td>
+          <td>
+            <input type="text" name="instituicao" [(ngModel)]="geral.Instituicao">
+          </td>
           <td>
             <input type="checkbox" name="inicial" [(ngModel)]="geral.Inicial" style="display: inline;">
           </td>
-          <td>{{geral.DataDeFim}}</td>
-          <td>{{geral.Validade}}</td>
-          <td>{{geral.CargaHoraria}}</td>
+          <td>
+            <input type="date" name="dataFim" [(ngModel)]="geral.DataDeFim">
+          </td>
+          <td>
+            <input type="date" name="validade" [(ngModel)]="geral.Validade">
+          </td>
+          <td>
+            <input type="number" name="cagaHoraria" [(ngModel)]="geral.CargaHoraria">
+          </td>
         </tr>
       </tbody>
     </table>

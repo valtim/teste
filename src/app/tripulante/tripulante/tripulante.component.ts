@@ -15,6 +15,8 @@ export class TripulanteComponent implements OnInit {
   bases: [{ Id: '', Nome: '' }];
   template: string;
   cargos: [{ Id: '', Nome: '' }];
+  tipoOperacoes: Array<any>;
+  tipoAeronaveis: Array<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,24 +30,59 @@ export class TripulanteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.template = 'dados-pessoais';
+    // this.template = 'dados-pessoais';
+    this.template = 'experiencia';
     this.loading = true;
     this.api.getBase().then((resp) => {
       this.bases = resp;
     });
+    this.tipoOperacoes = this.api.getTipoDeOperacoes();
+    console.log(this.tipoOperacoes);
+    this.tipoAeronaveis = this.api.getPrefixos().map((prefixo) => {
+      return prefixo.TipoDeAeronave;
+    });
+    console.log(this.tipoAeronaveis);
     this.api.getNTripulante(this.route.snapshot.paramMap.get('id')).then((resp) => {
       this.tripulante = resp;
       this.tripulante.Nascimento = this.tripulante.Nascimento.split('T')[0];
       this.tripulante.Admissao = this.tripulante.Admissao.split('T')[0];
+      this.tripulante.Operacao.map((operacao) => {
+        operacao.DataDeInicio = operacao.DataDeInicio.split('T')[0];
+        operacao.DataDeFim = operacao.DataDeFim.split('T')[0];
+        return operacao;
+      });
+
+      this.tripulante.Experiencia.map((experiencia) => {
+        experiencia.DataDeInicio = experiencia.DataDeInicio.split('T')[0];
+        return experiencia;
+      });
+
+      this.tripulante.RelativoFuncaoEmpresa = this.tripulante.RelativoFuncaoEmpresa.map((empresa) => {
+        empresa.DataDeFim = empresa.DataDeFim.split('T')[0];
+        empresa.Validade = empresa.Validade.split('T')[0];
+        return empresa;
+      });
+
       console.log(this.tripulante);
       this.app.setTitle('Tripulante - ' + this.tripulante.Trato);
+      this.loading = false;
+    }).catch((error) => {
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: error.error.Message,
+        message: error.error.ExceptionMessage
+      };
       this.loading = false;
     });
   }
 
   onClickTabs(name: string) {
     this.template = name;
-    console.log(this.template);
+  }
+
+  compareFn(obj1: any, obj2: any): boolean {
+    return obj1 && obj2 ? obj1.Id === obj2.Id : obj1 === obj2;
   }
 }
 
