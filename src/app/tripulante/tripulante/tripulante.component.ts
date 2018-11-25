@@ -35,19 +35,18 @@ export class TripulanteComponent implements OnInit {
     // this.template = 'experiencia';
     this.loading = true;
     this.api.getListaTripulante().then((response) => {
-      console.log('Lista: ', response);
       this.bases = response.Base;
       this.cargos = response.Cargo;
       this.tipoOperacoes = response.TipoDeOperacao;
       this.tipoAeronaveis = response.TipoDeAeronave;
       this.cursos = response.Curso;
     }).catch((error) => {
-      // this.api.message = {
-      //   show: true,
-      //   type: 'error',
-      //   title: error.error.Message,
-      //   message: error.error.ExceptionMessage
-      // };
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: error.error.Message,
+        message: error.error.ExceptionMessage
+      };
       this.loading = false;
     });
 
@@ -103,16 +102,32 @@ export class TripulanteComponent implements OnInit {
         return empresa;
       });
 
+      this.tripulante.Especializacoes = this.tripulante.Especializacoes.map((espec) => {
+        if (espec.DataDeInicio) {
+          espec.DataDeInicio = espec.DataDeInicio.split('T')[0];
+        }
+
+        if (espec.DataDeFim) {
+          espec.DataDeFim = espec.DataDeFim.split('T')[0];
+        }
+
+        if (!espec.TipoDeOperacao) {
+          espec.TipoDeOperacao = { Id: '' };
+        }
+
+        return espec;
+      });
+
       console.log(this.tripulante);
       this.app.setTitle('Tripulante - ' + this.tripulante.Trato);
       this.loading = false;
     }).catch((error) => {
-      // this.api.message = {
-      //   show: true,
-      //   type: 'error',
-      //   title: error.error.Message,
-      //   message: error.error.ExceptionMessage
-      // };
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: error.error.Message,
+        message: error.error.ExceptionMessage
+      };
       this.loading = false;
     });
   }

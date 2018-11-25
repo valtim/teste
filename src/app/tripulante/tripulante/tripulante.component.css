@@ -15,6 +15,10 @@
   width: 100%;
 }
 
+.dados-pessoas>.table {
+  min-width: 40%;
+}
+
 .template {
   width: 100%;
   overflow: auto;

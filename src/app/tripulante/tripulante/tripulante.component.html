@@ -205,11 +205,26 @@
 
       <tbody>
         <tr *ngFor="let exp of tripulante.Especializacoes">
-          <td>{{exp}}</td>
-          <td>{{exp}}</td>
-          <td>{{exp}}</td>
-          <td>{{exp}}</td>
-          <td>{{exp}}</td>
+          <td>
+            <select name="tipoOperacao" [(ngModel)]="exp.TipoDeOperacao.Id">
+              <option value="">---</option>
+              <option *ngFor="let tipoOperacao of tipoOperacoes" value="{{tipoOperacao.Id}}">
+                {{tipoOperacao.Nome}}
+              </option>
+            </select>
+          </td>
+          <td>
+            <input type="number" name="cargaHoraria" [(ngModel)]="exp.CargaHoraria">
+          </td>
+          <td>
+            <input type="text" name="empresa" [(ngModel)]="exp.Empresa">
+          </td>
+          <td>
+            <input type="date" name="dataInicio" [(ngModel)]="exp.DataDeInicio">
+          </td>
+          <td>
+            <input type="date" name="dataFim" [(ngModel)]="exp.DataDeFim">
+          </td>
         </tr>
       </tbody>
     </table>
