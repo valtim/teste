@@ -33,15 +33,24 @@ export class TripulanteComponent implements OnInit {
     // this.template = 'dados-pessoais';
     this.template = 'experiencia';
     this.loading = true;
-    this.api.getBase().then((resp) => {
-      this.bases = resp;
+    this.api.getListaTripulante().then((response) => {
+      console.log('Lista: ', response);
+      this.bases = response.Base;
+      this.cargos = response.Cargo;
+      this.tipoOperacoes = response.TipoDeOperacao;
+      this.tipoAeronaveis = response.TipoDeAeronave;
+      this.loading = false;
+    }).catch((error) => {
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: error.error.Message,
+        message: error.error.ExceptionMessage
+      };
+      this.loading = false;
     });
-    this.tipoOperacoes = this.api.getTipoDeOperacoes();
-    console.log(this.tipoOperacoes);
-    this.tipoAeronaveis = this.api.getPrefixos().map((prefixo) => {
-      return prefixo.TipoDeAeronave;
-    });
-    console.log(this.tipoAeronaveis);
+
+    this.loading = true;
     this.api.getNTripulante(this.route.snapshot.paramMap.get('id')).then((resp) => {
       this.tripulante = resp;
       this.tripulante.Nascimento = this.tripulante.Nascimento.split('T')[0];
