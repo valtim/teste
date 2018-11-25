@@ -176,6 +176,10 @@ export class ApiService {
     return this.http.get(this.url + 'api/base', this.httpOptions).toPromise();
   }
 
+  getListaEscalaPrevista(): Promise<any> {
+    return this.http.get(this.url + 'api/listas/escala-prevista', this.httpOptions).toPromise();
+  }
+
   getPermission(): any {
     return this.permission;
   }

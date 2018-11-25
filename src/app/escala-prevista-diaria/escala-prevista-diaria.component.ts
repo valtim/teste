@@ -27,11 +27,20 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
     };
     this.dataEscalaTrabalho = new Date().toISOString().split('T')[0];
     this.loading = true;
-    this.prefixos = this.api.getPrefixos();
-    this.clientes = this.api.getClientes();
-    this.tripulantes = this.api.getTripulantes();
-    this.api.getBase().then(response => {
-      this.bases = response;
+    this.api.getListaEscalaPrevista().then((response) => {
+      this.prefixos = response.Prefixo;
+      this.clientes = response.Cliente;
+      this.tripulantes = response.Tripulante;
+      this.bases = response.Base;
+      this.loading = false;
+    }).catch((error) => {
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: error.error.Message,
+        message: error.error.ExceptionMessage
+      };
+      this.loading = false;
     });
     this.onChangeDate();
   }
@@ -64,11 +73,8 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         this.api.message = {
           show: true,
           title: error.error.Message,
-          message: '',
-          type: 'error',
-          callBack: () => {
-            console.log('Copiar a ultima escala');
-          }
+          message: error.error.ExceptionMessage,
+          type: 'error'
         };
         console.log('Error: ', error);
         this.loading = false;
