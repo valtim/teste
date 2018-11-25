@@ -31,7 +31,7 @@
     </li>
   </ul>
 
-  <div class="template" *ngIf="template === 'dados-pessoais'">
+  <div class="dados-pessoas" *ngIf="template === 'dados-pessoais'">
     <label class="label1" for="nome-completo">
       Nome Completo:
       <input type="text" id="nome-completo" name="nome-completo" [(ngModel)]="tripulante.NomeCompleto">
@@ -98,7 +98,8 @@
     <label class="label2" for="cargo">
       Cargo:
       <select name="cargo" id="cargo" [(ngModel)]="tripulante.Cargo.Id">
-        <option value=""></option>
+        <option value="">---</option>
+        <option *ngFor="let cargo of cargos" value="{{cargo.Id}}">{{cargo.Nome}}</option>
       </select>
     </label>
 
@@ -159,12 +160,23 @@
               <option *ngFor="let operacao of tipoOperacoes" value="{{operacao.Id}}">{{operacao.Nome}}</option>
             </select>
           </td>
-          <td>{{exp.Cargo}}</td>
-          <td>{{exp.Empresa}}</td>
+          <td>
+            <select name="tipo-operacao" [(ngModel)]="exp.Cargo.Id">
+              <option value="">---</option>
+              <option *ngFor="let cargo of cargos" value="{{cargo.Id}}">{{cargo.Nome}}</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" name="empresa" [(ngModel)]="exp.Empresa">
+          </td>
           <td>
             <input type="date" name="data-inicio" [(ngModel)]="exp.DataDeInicio">
           </td>
-          <td></td>
+
+          <td>
+            <input type="date" name="data-fim" [(ngModel)]="exp.DataDeFim">
+          </td>
+
           <td>
             <input type="number" min="0" step="0.1" name="totalDeHoras" [(ngModel)]="exp.TotalDeHoras">
           </td>
@@ -266,7 +278,12 @@
 
       <tbody>
         <tr *ngFor="let geral of tripulante.RelativoFuncaoEmpresa">
-          <td>{{geral.Curso}}</td>
+          <td>
+            <select name="curso" [(ngModel)]="geral.Curso.Id">
+              <option value="">---</option>
+              <option *ngFor="let curso of cursos" value="{{curso.Id}}">{{curso.Nome}}</option>
+            </select>
+          </td>
           <td>
             <input type="text" name="instituicao" [(ngModel)]="geral.Instituicao">
           </td>

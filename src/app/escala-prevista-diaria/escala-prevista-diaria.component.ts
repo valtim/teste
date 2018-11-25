@@ -120,7 +120,6 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         callBack: () => {
           this.loading = true;
           this.api.postEscala(this.escala).then(response => {
-            console.log('OK: ', response);
             this.loading = false;
           }).catch((error) => {
             this.api.message = {
@@ -180,7 +179,12 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   }
 
   escalasAtivas() {
-    return this.escala.Escalas.filter(trabalho => trabalho.Ativo);
+    return this.escala.Escalas.filter(trabalho => trabalho.Ativo).map((trabalho) => {
+      if (!trabalho.Prefixo) {
+        trabalho.Prefixo = { Id: '', TipoDeAeronave: { Id: '' } };
+      }
+      return trabalho;
+    });
   }
 
   enviarEmail() {

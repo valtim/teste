@@ -23,10 +23,11 @@
     </button>
   </div>
   <button class="btn btn-success" (click)="newEscala()">Nova Escala</button>
-
-  <p style="width: 90%;" *ngIf="escala.Data">
-    Trabalhando no dia: {{escala.Data | date: 'dd/MM/yyyy'}}
-  </p>
+</div>
+<p style="margin-left: 20px;" *ngIf="escala.Data">
+  Trabalhando no dia: {{escala.Data | date: 'dd/MM/yyyy'}}
+</p>
+<div class="tabela-escala">
   <table class="table trabalhos">
     <thead>
       <tr>
@@ -100,27 +101,26 @@
       </tr>
     </tbody>
   </table>
+</div>
 
-  <div class="info">
+<div class="content info">
 
-    <div class="coordenadorObs">
-      <label for="observacao">
-        Observações:
-        <textarea name="observacao" id="observacao" cols="65" [(ngModel)]="escala.Comentario"></textarea>
-      </label>
-
-      <label for="coordenador">
-        Coordenador:
-        <input type="text" name="coordenador" id="coordenador" [(ngModel)]="escala.Coordenador">
-      </label>
-    </div>
-
-    <label for="listaDistribuicao">
-      Lista de Distribuição:
-      <textarea name="listaDistribuicao" id="listaDistribuicao" [(ngModel)]="escala.ListaDeEmails"></textarea>
-      <button class="btn btn-email" (click)="enviarEmail()">Enviar E-mail</button>
+  <div class="coordenadorObs">
+    <label for="observacao">
+      Observações:
+      <textarea name="observacao" id="observacao" cols="65" [(ngModel)]="escala.Comentario"></textarea>
     </label>
 
+    <label for="coordenador">
+      Coordenador:
+      <input type="text" name="coordenador" id="coordenador" [(ngModel)]="escala.Coordenador">
+    </label>
   </div>
+
+  <label for="listaDistribuicao">
+    Lista de Distribuição:
+    <textarea name="listaDistribuicao" id="listaDistribuicao" [(ngModel)]="escala.ListaDeEmails"></textarea>
+    <button class="btn btn-email" (click)="enviarEmail()">Enviar E-mail</button>
+  </label>
 
 </div>

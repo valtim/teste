@@ -4,14 +4,25 @@
   align-items: stretch;
   flex-flow: row wrap;
   justify-content: space-around;
+  padding: 0 25px;
 }
 
-.template {
+.dados-pessoas {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  width: 90%;
+  width: 100%;
+}
+
+.template {
+  width: 100%;
+  overflow: auto;
+}
+
+.table {
+  margin: 0 auto;
+  margin-bottom: 30px;
 }
 
 .label1 {
@@ -83,9 +94,12 @@
   margin-bottom: -1px;
 }
 
-input,
-select {
-  width: 120px;
+input[type="number"] {
+  width: 70px;
+}
+
+option {
+  text-align: center;
 }
 
 .nav>li {

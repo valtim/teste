@@ -17,6 +17,7 @@ export class TripulanteComponent implements OnInit {
   cargos: [{ Id: '', Nome: '' }];
   tipoOperacoes: Array<any>;
   tipoAeronaveis: Array<any>;
+  cursos: Array<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +40,7 @@ export class TripulanteComponent implements OnInit {
       this.cargos = response.Cargo;
       this.tipoOperacoes = response.TipoDeOperacao;
       this.tipoAeronaveis = response.TipoDeAeronave;
-      this.loading = false;
+      this.cursos = response.Curso;
     }).catch((error) => {
       this.api.message = {
         show: true,
@@ -50,7 +51,6 @@ export class TripulanteComponent implements OnInit {
       this.loading = false;
     });
 
-    this.loading = true;
     this.api.getNTripulante(this.route.snapshot.paramMap.get('id')).then((resp) => {
       this.tripulante = resp;
       this.tripulante.Nascimento = this.tripulante.Nascimento.split('T')[0];
