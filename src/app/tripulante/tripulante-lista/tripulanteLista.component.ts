@@ -18,10 +18,12 @@ export class TripulanteListaComponent implements OnInit {
   nome = '';
   trato = '';
   anac = '';
+  loading = true;
 
   ngOnInit() {
     this.api.getNTripulanteLista().then(response => {
       this.tripulantesFilter = this.tripulantes = response;
+      this.loading = false;
     });
   }
 

@@ -115,6 +115,10 @@ export class TripulanteComponent implements OnInit {
           espec.TipoDeOperacao = { Id: '' };
         }
 
+        if (!espec.Empresa) {
+          espec.Empresa = '';
+        }
+
         return espec;
       });
 
