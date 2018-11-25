@@ -147,44 +147,44 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let exp of tripulante.Experiencia">
+        <tr *ngFor="let experiencia of tripulante.Experiencia">
           <td>
-            <select name="tipo-operacao" [(ngModel)]="exp.TipoDeAeronave.Id">
+            <select name="tipo-aeronave" [(ngModel)]="experiencia.TipoDeAeronave.Id">
               <option value="">---</option>
               <option *ngFor="let aeronave of tipoAeronaveis" value="{{aeronave.Id}}">{{aeronave.Nome}}</option>
             </select>
           </td>
           <td>
-            <select name="tipo-operacao" [(ngModel)]="exp.TipoDeOperacao.Id">
+            <select name="tipo-operacao" [(ngModel)]="experiencia.TipoDeOperacao.Id">
               <option value="">---</option>
               <option *ngFor="let operacao of tipoOperacoes" value="{{operacao.Id}}">{{operacao.Nome}}</option>
             </select>
           </td>
           <td>
-            <select name="tipo-operacao" [(ngModel)]="exp.Cargo.Id">
+            <select name="tipo-cargo" [(ngModel)]="experiencia.Cargo.Id">
               <option value="">---</option>
               <option *ngFor="let cargo of cargos" value="{{cargo.Id}}">{{cargo.Nome}}</option>
             </select>
           </td>
           <td>
-            <input type="text" name="empresa" [(ngModel)]="exp.Empresa">
+            <input type="text" name="empresa" [(ngModel)]="experiencia.Empresa">
           </td>
           <td>
-            <input type="date" name="data-inicio" [(ngModel)]="exp.DataDeInicio">
-          </td>
-
-          <td>
-            <input type="date" name="data-fim" [(ngModel)]="exp.DataDeFim">
+            <input type="date" name="data-inicio" [(ngModel)]="experiencia.DataDeInicio">
           </td>
 
           <td>
-            <input type="number" min="0" step="0.1" name="totalDeHoras" [(ngModel)]="exp.TotalDeHoras">
+            <input type="date" name="data-fim" [(ngModel)]="experiencia.DataDeFim">
+          </td>
+
+          <td>
+            <input type="number" min="0" step="0.1" name="totalDeHoras" [(ngModel)]="experiencia.TotalDeHoras">
           </td>
           <td>
-            <input type="number" min="0" step="0.1" name="totalDeHorasIFR" [(ngModel)]="exp.TotalDeHorasIFR">
+            <input type="number" min="0" step="0.1" name="totalDeHorasIFR" [(ngModel)]="experiencia.TotalDeHorasIFR">
           </td>
           <td>
-            <input type="number" min="0" step="0.1" name="totalDeHorasNoturno" [(ngModel)]="exp.TotalDeHorasNoturno">
+            <input type="number" min="0" step="0.1" name="totalDeHorasNoturno" [(ngModel)]="experiencia.TotalDeHorasNoturno">
           </td>
         </tr>
       </tbody>

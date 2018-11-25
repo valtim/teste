@@ -31,8 +31,8 @@ export class TripulanteComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.template = 'dados-pessoais';
-    this.template = 'experiencia';
+    this.template = 'dados-pessoais';
+    // this.template = 'experiencia';
     this.loading = true;
     this.api.getListaTripulante().then((response) => {
       console.log('Lista: ', response);
@@ -42,12 +42,12 @@ export class TripulanteComponent implements OnInit {
       this.tipoAeronaveis = response.TipoDeAeronave;
       this.cursos = response.Curso;
     }).catch((error) => {
-      this.api.message = {
-        show: true,
-        type: 'error',
-        title: error.error.Message,
-        message: error.error.ExceptionMessage
-      };
+      // this.api.message = {
+      //   show: true,
+      //   type: 'error',
+      //   title: error.error.Message,
+      //   message: error.error.ExceptionMessage
+      // };
       this.loading = false;
     });
 
@@ -55,20 +55,51 @@ export class TripulanteComponent implements OnInit {
       this.tripulante = resp;
       this.tripulante.Nascimento = this.tripulante.Nascimento.split('T')[0];
       this.tripulante.Admissao = this.tripulante.Admissao.split('T')[0];
-      this.tripulante.Operacao.map((operacao) => {
-        operacao.DataDeInicio = operacao.DataDeInicio.split('T')[0];
-        operacao.DataDeFim = operacao.DataDeFim.split('T')[0];
+
+      this.tripulante.Operacao = this.tripulante.Operacao.map((operacao) => {
+
+        if (operacao.DataDeInicio) {
+          operacao.DataDeInicio = operacao.DataDeInicio.split('T')[0];
+        }
+
+        if (operacao.DataDeFim) {
+          operacao.DataDeFim = operacao.DataDeFim.split('T')[0];
+        }
         return operacao;
       });
 
-      this.tripulante.Experiencia.map((experiencia) => {
-        experiencia.DataDeInicio = experiencia.DataDeInicio.split('T')[0];
+      this.tripulante.Experiencia = this.tripulante.Experiencia.map((experiencia) => {
+        if (experiencia.DataDeInicio) {
+          experiencia.DataDeInicio = experiencia.DataDeInicio.split('T')[0];
+        }
+
+        if (experiencia.DataDeFim) {
+          experiencia.DataDeFim = experiencia.DataDeFim.split('T')[0];
+        }
+
+        if (!experiencia.TipoDeAeronave) {
+          experiencia.TipoDeAeronave = { Id: '' };
+        }
+
+        if (!experiencia.TipoDeOperacao) {
+          experiencia.TipoDeOperacao = { Id: '' };
+        }
+
+        if (!experiencia.Cargo) {
+          experiencia.Cargo = { Id: '' };
+        }
+
         return experiencia;
       });
 
       this.tripulante.RelativoFuncaoEmpresa = this.tripulante.RelativoFuncaoEmpresa.map((empresa) => {
-        empresa.DataDeFim = empresa.DataDeFim.split('T')[0];
-        empresa.Validade = empresa.Validade.split('T')[0];
+        if (empresa.DataDeFim) {
+          empresa.DataDeFim = empresa.DataDeFim.split('T')[0];
+        }
+
+        if (empresa.Validade) {
+          empresa.Validade = empresa.Validade.split('T')[0];
+        }
         return empresa;
       });
 
@@ -76,12 +107,12 @@ export class TripulanteComponent implements OnInit {
       this.app.setTitle('Tripulante - ' + this.tripulante.Trato);
       this.loading = false;
     }).catch((error) => {
-      this.api.message = {
-        show: true,
-        type: 'error',
-        title: error.error.Message,
-        message: error.error.ExceptionMessage
-      };
+      // this.api.message = {
+      //   show: true,
+      //   type: 'error',
+      //   title: error.error.Message,
+      //   message: error.error.ExceptionMessage
+      // };
       this.loading = false;
     });
   }

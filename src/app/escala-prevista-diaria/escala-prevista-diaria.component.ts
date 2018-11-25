@@ -181,7 +181,7 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
   escalasAtivas() {
     return this.escala.Escalas.filter(trabalho => trabalho.Ativo).map((trabalho) => {
       if (!trabalho.Prefixo) {
-        trabalho.Prefixo = { Id: '', TipoDeAeronave: { Id: '' } };
+        trabalho.Prefixo = { Id: '', TipoDeAeronave: { Id: '', NumeroDeTripulantes: 2 } };
       }
       return trabalho;
     });
