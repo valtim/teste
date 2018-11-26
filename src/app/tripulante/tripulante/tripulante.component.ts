@@ -56,6 +56,9 @@ export class TripulanteComponent implements OnInit {
       this.tripulante.Admissao = this.tripulante.Admissao.split('T')[0];
 
       this.tripulante.Operacao = this.tripulante.Operacao.map((operacao) => {
+        if (typeof operacao.Ativo === 'undefined') {
+          operacao.Ativo = true;
+        }
 
         if (operacao.DataDeInicio) {
           operacao.DataDeInicio = operacao.DataDeInicio.split('T')[0];
@@ -99,6 +102,11 @@ export class TripulanteComponent implements OnInit {
         if (empresa.Validade) {
           empresa.Validade = empresa.Validade.split('T')[0];
         }
+
+        if (typeof empresa.Ativo === 'undefined') {
+          empresa.Ativo = true;
+        }
+
         return empresa;
       });
 
@@ -119,10 +127,37 @@ export class TripulanteComponent implements OnInit {
           espec.Empresa = '';
         }
 
+        if (typeof espec.Ativo === 'undefined') {
+          espec.Ativo = true;
+        }
+
         return espec;
       });
 
-      console.log(this.tripulante);
+      this.tripulante.InformacoesAcademicas = this.tripulante.InformacoesAcademicas
+        .map((academica) => {
+          if (academica.DataDeFim) {
+            academica.DataDeFim = academica.DataDeFim.split('T')[0];
+          }
+
+          if (academica.DataDeInicio) {
+            academica.DataDeInicio = academica.DataDeInicio.split('T')[0];
+          }
+
+          if (typeof academica.Ativo === 'undefined') {
+            academica.Ativo = true;
+          }
+
+          return academica;
+        });
+
+      this.tripulante.RelativoFuncaoGeral = this.tripulante.RelativoFuncaoGeral.map((geral) => {
+        if (typeof geral.Ativo === 'undefined') {
+          geral.Ativo = true;
+        }
+        return geral;
+      });
+
       this.app.setTitle('Tripulante - ' + this.tripulante.Trato);
       this.loading = false;
     }).catch((error) => {
@@ -138,6 +173,88 @@ export class TripulanteComponent implements OnInit {
 
   onClickTabs(name: string) {
     this.template = name;
+  }
+
+  onClickNovaOperacao() {
+    this.tripulante.Operacao.unshift({
+      Ativo: true,
+      DataDeFim: '',
+      DataDeInicio: '',
+      TipoDeOperacao: { Id: '' }
+    });
+  }
+
+  onClickNovaExperiencia() {
+    this.tripulante.Experiencia.unshift({
+      Ativo: true,
+      Atualizacao: new Date(),
+      Cargo: { Id: '' },
+      Id: '',
+      Empresa: '',
+      TipoDeAeronave: { Id: '' },
+      TipoDeOperacao: { Id: '' },
+      TotalDeHoras: 0,
+      TotalDeHorasIFR: 0,
+      TotalDeHorasNoturno: 0
+    });
+  }
+
+  onClickNovaEspecializacao() {
+    this.tripulante.Especializacoes.unshift({
+      Ativo: true,
+      CargaHoraria: 0,
+      DataDeFim: '',
+      DataDeInicio: '',
+      Empresa: '',
+      TipoDeOperacao: { Id: '' }
+    });
+  }
+
+  onClickNovaInformacaoAcademica() {
+    this.tripulante.InformacoesAcademicas.unshift({
+      Ativo: true,
+      Instituicao: '',
+      Curso: '',
+      DataDeFim: '',
+      DataDeInicio: ''
+    });
+  }
+
+  onClickNovoRelativoFuncaoEmpresa() {
+    this.tripulante.RelativoFuncaoEmpresa.unshift({
+      Ativo: true,
+      CargaHoraria: 0,
+      Curso: { Id: '' },
+      DataDeFim: '',
+      Inicial: false,
+      Validade: ''
+    });
+  }
+
+  onClickNovoRelativoFuncaoGeral() {
+    this.tripulante.RelativoFuncaoGeral.unshift({
+      Ano: 0,
+      Ativo: true,
+      CargaHoraria: 0,
+      Curso: '',
+      Instituicao: ''
+    });
+  }
+
+  onClickDelete(obj) {
+    obj.Ativo = false;
+  }
+
+  filterObjAtivo(obj: Array<any>) {
+    if (obj) {
+      return obj.filter(o => o.Ativo);
+    } else {
+      return [];
+    }
+  }
+
+  onClickSave() {
+    console.log(this.tripulante);
   }
 
   compareFn(obj1: any, obj2: any): boolean {

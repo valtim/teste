@@ -110,3 +110,27 @@ option {
   position: relative;
   display: block;
 }
+
+.sucess {
+  background-color: #1fce45;
+  font-weight: bold;
+  width: 40px;
+  height: 35px;
+}
+
+.error {
+  background-color: #e5bfb9;
+  width: 40px;
+  height: 35px;
+  line-height: 0;
+}
+
+
+#salvar {
+  position: fixed;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+  z-index: 2;
+}
