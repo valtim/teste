@@ -21,8 +21,13 @@ export class TripulanteListaComponent implements OnInit {
   loading = true;
 
   ngOnInit() {
+    this.tripulantesFilter = this.tripulantes = [];
     this.api.getNTripulanteLista().then(response => {
       this.tripulantesFilter = this.tripulantes = response;
+      this.tripulantesFilter = this.tripulantesFilter.map(tripulante => {
+        tripulante.Excluir = !tripulante.Ativo;
+        return tripulante;
+      });
       this.loading = false;
     });
   }
@@ -38,8 +43,37 @@ export class TripulanteListaComponent implements OnInit {
     });
   }
 
+  private listaTripulantesParaExcluir() {
+    return this.tripulantesFilter.filter(tripulante => tripulante.Excluir);
+  }
+
+  enableBtnSave(): boolean {
+    return this.listaTripulantesParaExcluir().length > 0;
+  }
+
   saveTripulante() {
-    console.log(this.tripulantesFilter);
+    const nomes = [];
+    const tripulantesParaEscluir = this.listaTripulantesParaExcluir().map((tripu) => {
+      tripu.Ativo = !tripu.Excluir;
+      return tripu;
+    });
+    this.listaTripulantesParaExcluir().forEach((tripulante) => {
+      nomes.push(tripulante.Trato);
+    });
+    this.api.message = {
+      show: true,
+      type: 'alert',
+      title: 'Tem certeza?',
+      message: 'Você deseja deletar o(s) tripulante(s): ' + nomes.join(', '),
+      callBack() {
+        this.api.postNTripulantes(tripulantesParaEscluir)
+          .then((response) => {
+            console.log(response);
+          }).catch((erro) => {
+            console.log(erro);
+          });
+      }
+    };
   }
 
 }

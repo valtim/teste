@@ -254,7 +254,21 @@ export class TripulanteComponent implements OnInit {
   }
 
   onClickSave() {
-    console.log(this.tripulante);
+
+    this.api.message = {
+      show: true,
+      type: 'alert',
+      title: 'Salvar',
+      message: 'Você deseja salvar as alteração feitas?',
+      callBack() {
+        this.api.postNTripulante(this.tripulante)
+          .then((response) => {
+            console.log(response);
+          }).catch((erro) => {
+            console.log(erro);
+          });
+      }
+    };
   }
 
   compareFn(obj1: any, obj2: any): boolean {

@@ -196,6 +196,16 @@ export class ApiService {
     return this.http.get(this.url + 'api/ntripulante/' + id, this.httpOptions).toPromise();
   }
 
+  postNTripulante(tripulante: any): Promise<any> {
+    return this.http.post(this.url + 'api/ntripulante', tripulante, this.httpOptions)
+      .toPromise();
+  }
+
+  postNTripulantes(tripulantes: Array<any>): Promise<any> {
+    return this.http.post(this.url + 'api/ntripulantes', tripulantes, this.httpOptions)
+      .toPromise();
+  }
+
   getListaTripulante(): Promise<any> {
     return this.http.get(this.url + 'api/listas/tripulante', this.httpOptions).toPromise();
   }
