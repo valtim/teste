@@ -1,0 +1,125 @@
+<div class="content">
+  <div class="search">
+    <label for="nome">
+      Nome:
+      <input type="text" name="nome" id="nome" [(ngModel)]="search.Nome">
+    </label>
+
+    <label for="icao">
+      ICAO:
+      <input type="text" name="icao" id="icao" [(ngModel)]="search.ICAO">
+    </label>
+
+    <label for="tipo">
+      Tipo:
+      <select name="tipo" id="tipo" [(ngModel)]="search.Tipo">
+        <option value="">---</option>
+        <option value="Aeroporto">Aeroporto</option>
+        <option value="unidadeMaritima">Unidade Maritima</option>
+      </select>
+    </label>
+
+    <button class="btn btn-search">
+      <img alt="Search" src="assets/icons/search.svg">
+    </button>
+
+    <button class="btn btn-new">
+      +
+    </button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>NomeICAO</th>
+        <th>Tipo de Localidade</th>
+        <th>Latitude</th>
+        <th>-</th>
+        <th>Longitude</th>
+        <th>-</th>
+        <th>Altitude Pressão</th>
+        <th>Resistência</th>
+        <th>Altura</th>
+        <th>Classe</th>
+        <th>Atualização</th>
+        <th>Frequencia Rádio</th>
+        <th>Max ACFT</th>
+        <th>Declinação Magnetica</th>
+        <th>Favoritar</th>
+        <th>Revisado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>101A</td>
+        <td>101A</td>
+        <td>Aeroporta</td>
+        <td>05°20'08''</td>
+        <td>S</td>
+        <td>066°43'43''</td>
+        <td>W</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td>11/04/2018 21:48</td>
+        <td></td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <input type="checkbox" name="favorito" style="display: inherit;">
+        </td>
+        <td>
+          <input type="checkbox" name="revisado" style="display: inherit;">
+        </td>
+      </tr>
+      <tr>
+        <td>101A</td>
+        <td>101A</td>
+        <td>Aeroporta</td>
+        <td>05°20'08''</td>
+        <td>S</td>
+        <td>066°43'43''</td>
+        <td>W</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td>11/04/2018 21:48</td>
+        <td></td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <input type="checkbox" name="favorito" style="display: inherit;">
+        </td>
+        <td>
+          <input type="checkbox" name="revisado" style="display: inherit;">
+        </td>
+      </tr>
+      <tr>
+        <td>101A</td>
+        <td>101A</td>
+        <td>Aeroporta</td>
+        <td>05°20'08''</td>
+        <td>S</td>
+        <td>066°43'43''</td>
+        <td>W</td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td></td>
+        <td>11/04/2018 21:48</td>
+        <td></td>
+        <td>0</td>
+        <td>0</td>
+        <td>
+          <input type="checkbox" name="favorito" style="display: inherit;">
+        </td>
+        <td>
+          <input type="checkbox" name="revisado" style="display: inherit;">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

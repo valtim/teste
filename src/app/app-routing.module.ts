@@ -12,6 +12,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
+import { LocalidadeComponent } from './localidade/localidade.component';
 
 
 const routes: Routes = [
@@ -69,6 +70,11 @@ const routes: Routes = [
   {
     path: 'tripulante/:id',
     component: TripulanteComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'localidade',
+    component: LocalidadeComponent,
     canActivate: [AuthGuardService]
   },
 ];

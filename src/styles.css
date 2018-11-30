@@ -61,7 +61,8 @@ app-biblioteca,
 app-papeleta,
 app-pagamento,
 app-tripulante,
-app-escala-prevista-diaria {
+app-escala-prevista-diaria,
+app-localizacao {
   width: 100%;
 }
 

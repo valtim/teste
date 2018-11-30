@@ -19,6 +19,7 @@ import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-p
 import { MenssageComponent } from './menssage/menssage.component';
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
+import { LocalidadeComponent } from './localidade/localidade.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { TripulanteComponent } from './tripulante/tripulante/tripulante.componen
     EscalaPrevistaDiariaComponent,
     MenssageComponent,
     TripulanteListaComponent,
-    TripulanteComponent
+    TripulanteComponent,
+    LocalidadeComponent
   ],
   imports: [
     BrowserModule,
