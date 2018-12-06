@@ -217,4 +217,8 @@ export class ApiService {
   getListaLocalidade(): Promise<any> {
     return this.http.get(this.url + 'api/listas/localidade', this.httpOptions).toPromise();
   }
+
+  postLocalidade(localidades: Array<any>): Promise<any> {
+    return this.http.post(this.url + 'api/localidade', localidades, this.httpOptions).toPromise();
+  }
 }

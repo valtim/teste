@@ -38,7 +38,9 @@ export class LocalidadeComponent implements OnInit {
   }
 
   onSendLocalidade() {
-    console.log(this.localidades[0]);
+    this.api.postLocalidade(this.originalLocalidades).then((response) => {
+      console.log(response);
+    });
   }
 
   onSearchLocalidade() {
