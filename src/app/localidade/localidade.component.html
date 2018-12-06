@@ -1,4 +1,25 @@
 <div class="content">
+
+  <div class="search">
+    <label class="radio" for="grau">
+      <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
+        value="GMS">
+      Gruas, minutos e segundos
+    </label>
+
+    <label class="radio" for="decimalMinuto">
+      <input type="radio" id="decimalMinuto" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
+        value="DM">
+      Decimal de Minutos
+    </label>
+
+    <label class="radio" for="decimalGrau">
+      <input type="radio" id="decimalGrau" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
+        value="DG">
+      Decimal de Graus
+    </label>
+  </div>
+
   <div class="search">
     <label for="nome">
       Nome:
@@ -14,12 +35,11 @@
       Tipo:
       <select name="tipo" id="tipo" [(ngModel)]="search.Tipo">
         <option value="">---</option>
-        <option value="Aeroporto">Aeroporto</option>
-        <option value="unidadeMaritima">Unidade Maritima</option>
+        <option *ngFor="let tipolocal of listaLocalidade" value="{{tipolocal.Id}}">{{tipolocal.Nome}}</option>
       </select>
     </label>
 
-    <button class="btn btn-search">
+    <button class="btn btn-search" (click)="onSearchLocalidade()">
       <img alt="Search" src="assets/icons/search.svg">
     </button>
 
@@ -31,6 +51,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Excluir</th>
         <th>Nome</th>
         <th>NomeICAO</th>
         <th>Tipo de Localidade</th>
@@ -51,73 +72,53 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>101A</td>
-        <td>101A</td>
-        <td>Aeroporta</td>
-        <td>05°20'08''</td>
-        <td>S</td>
-        <td>066°43'43''</td>
-        <td>W</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td></td>
-        <td>11/04/2018 21:48</td>
-        <td></td>
-        <td>0</td>
-        <td>0</td>
+      <tr *ngFor="let localidade of localidades" [ngClass]="{'excluir': !localidade.Ativo}">
         <td>
-          <input type="checkbox" name="favorito" style="display: inherit;">
+          <input type="checkbox" name="excluir" (change)="onRemoveLocalidade(localidade)">
         </td>
         <td>
-          <input type="checkbox" name="revisado" style="display: inherit;">
-        </td>
-      </tr>
-      <tr>
-        <td>101A</td>
-        <td>101A</td>
-        <td>Aeroporta</td>
-        <td>05°20'08''</td>
-        <td>S</td>
-        <td>066°43'43''</td>
-        <td>W</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td></td>
-        <td>11/04/2018 21:48</td>
-        <td></td>
-        <td>0</td>
-        <td>0</td>
-        <td>
-          <input type="checkbox" name="favorito" style="display: inherit;">
+          <input type="text" name="nome" [(ngModel)]="localidade.Nome">
         </td>
         <td>
-          <input type="checkbox" name="revisado" style="display: inherit;">
-        </td>
-      </tr>
-      <tr>
-        <td>101A</td>
-        <td>101A</td>
-        <td>Aeroporta</td>
-        <td>05°20'08''</td>
-        <td>S</td>
-        <td>066°43'43''</td>
-        <td>W</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td></td>
-        <td>11/04/2018 21:48</td>
-        <td></td>
-        <td>0</td>
-        <td>0</td>
-        <td>
-          <input type="checkbox" name="favorito" style="display: inherit;">
+          <input type="text" name="nome" [(ngModel)]="localidade.NomeICAO">
         </td>
         <td>
-          <input type="checkbox" name="revisado" style="display: inherit;">
+          <select name="tipoLocalidade" [(ngModel)]="localidade.TipoDeLocalidade.Id">
+            <option value="">---</option>
+            <option *ngFor="let tipolocal of listaLocalidade" value="{{tipolocal.Id}}">{{tipolocal.Nome}}</option>
+          </select>
+        </td>
+        <td>{{localidade.LatitudeStr}}</td>
+        <td>{{localidade.LatitudeH}}</td>
+        <td>{{localidade.LongitudeStr}}</td>
+        <td>{{localidade.LongitudeH}}</td>
+        <td>
+          <input type="number" name="altitude" min="0" step="0.1" [(ngModel)]="localidade.AltitudePressao">
+        </td>
+        <td>
+          <input type="number" name="resistencia" min="0" step="0.1" [(ngModel)]="localidade.ResistenciaDoPiso">
+        </td>
+        <td>
+          <input type="number" name="altura" min="0" step="0.1" [(ngModel)]="localidade.AlturaDoHeliponto">
+        </td>
+        <td>
+          <input type="number" name="classe" min="0" step="0.1" [(ngModel)]="localidade.Classe">
+        </td>
+        <td>{{localidade.Atualizacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td>
+          <input type="number" name="frequencia" min="0" step="0.1" [(ngModel)]="localidade.FrequenciaNavegacao">
+        </td>
+        <td>
+          <input type="number" name="diametro" min="0" step="0.1" [(ngModel)]="localidade.DiametroAreaDePouso">
+        </td>
+        <td>
+          <input type="number" name="declinacao" min="0" step="0.1" [(ngModel)]="localidade.DeclinacaoMagnetica">
+        </td>
+        <td>
+          <input type="checkbox" name="favorito" style="display: inherit;" [(ngModel)]="localidade.Favorita">
+        </td>
+        <td>
+          <input type="checkbox" name="revisado" style="display: inherit;" [(ngModel)]="localidade.Revisado">
         </td>
       </tr>
     </tbody>

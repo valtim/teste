@@ -26,9 +26,9 @@
 
 .excluir {
   background-color: #e5bfb9;
-  width: 40px;
+  /* width: 40px;
   height: 35px;
-  line-height: 0;
+  line-height: 0; */
 }
 
 .btn-search {
@@ -45,4 +45,18 @@
   font-weight: bold;
   width: 40px;
   height: 35px;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+}
+
+.radio>input {
+  margin-right: 10px;
+}
+
+td>input[type='text'],
+td>input[type='number'] {
+  width: 75px;
 }

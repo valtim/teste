@@ -209,4 +209,12 @@ export class ApiService {
   getListaTripulante(): Promise<any> {
     return this.http.get(this.url + 'api/listas/tripulante', this.httpOptions).toPromise();
   }
+
+  getLocalidade(formatoLocalidade: string): Promise<any> {
+    return this.http.get(this.url + 'api/localidade/' + formatoLocalidade, this.httpOptions).toPromise();
+  }
+
+  getListaLocalidade(): Promise<any> {
+    return this.http.get(this.url + 'api/listas/localidade', this.httpOptions).toPromise();
+  }
 }
