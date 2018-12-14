@@ -86,13 +86,13 @@
           <input type="checkbox" name="excluir" (change)="onRemoveLocalidade(localidade)">
         </td>
         <td>
-          <input type="text" name="nome" [(ngModel)]="localidade.Nome">
+          <input type="text" (change)="onChangeLocalidade(localidade)" name="nome" [(ngModel)]="localidade.Nome">
         </td>
         <td>
-          <input type="text" name="nome" [(ngModel)]="localidade.NomeICAO">
+          <input type="text" (change)="onChangeLocalidade(localidade)" name="nomeICAO" [(ngModel)]="localidade.NomeICAO">
         </td>
         <td>
-          <select name="tipoLocalidade" [(ngModel)]="localidade.TipoDeLocalidade.Id">
+          <select (change)="onChangeLocalidade(localidade)" name="tipoLocalidade" [(ngModel)]="localidade.TipoDeLocalidade.Id">
             <option value="">---</option>
             <option *ngFor="let tipolocal of listaLocalidade" value="{{tipolocal.Id}}">{{tipolocal.Nome}}</option>
           </select>
@@ -102,32 +102,39 @@
         <td>{{localidade.LongitudeStr}}</td>
         <td>{{localidade.LongitudeH}}</td>
         <td>
-          <input type="number" name="altitude" min="0" step="0.1" [(ngModel)]="localidade.AltitudePressao">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="altitude" min="0" step="0.100"
+            [(ngModel)]="localidade.AltitudePressao">
         </td>
         <td>
-          <input type="number" name="resistencia" min="0" step="0.1" [(ngModel)]="localidade.ResistenciaDoPiso">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="resistencia" min="0" step="0.100"
+            [(ngModel)]="localidade.ResistenciaDoPiso">
         </td>
         <td>
-          <input type="number" name="altura" min="0" step="0.1" [(ngModel)]="localidade.AlturaDoHeliponto">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="altura" min="0" step="0.100" [(ngModel)]="localidade.AlturaDoHeliponto">
         </td>
         <td>
-          <input type="number" name="classe" min="0" step="0.1" [(ngModel)]="localidade.Classe">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="classe" min="0" step="0.100" [(ngModel)]="localidade.Classe">
         </td>
         <td>{{localidade.Atualizacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
         <td>
-          <input type="number" name="frequencia" min="0" step="0.1" [(ngModel)]="localidade.FrequenciaNavegacao">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="frequencia" min="0" step="0.100"
+            [(ngModel)]="localidade.FrequenciaNavegacao">
         </td>
         <td>
-          <input type="number" name="diametro" min="0" step="0.1" [(ngModel)]="localidade.DiametroAreaDePouso">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="diametro" min="0" step="0.100"
+            [(ngModel)]="localidade.DiametroAreaDePouso">
         </td>
         <td>
-          <input type="number" name="declinacao" min="0" step="0.1" [(ngModel)]="localidade.DeclinacaoMagnetica">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="declinacao" min="0" step="0.100"
+            [(ngModel)]="localidade.DeclinacaoMagnetica">
         </td>
         <td>
-          <input type="checkbox" name="favorito" style="display: inherit;" [(ngModel)]="localidade.Favorita">
+          <input type="checkbox" (change)="onChangeLocalidade(localidade)" name="favorito" style="display: inherit;"
+            [(ngModel)]="localidade.Favorita">
         </td>
         <td>
-          <input type="checkbox" name="revisado" style="display: inherit;" [(ngModel)]="localidade.Revisado">
+          <input type="checkbox" (change)="onChangeLocalidade(localidade)" name="revisado" style="display: inherit;"
+            [(ngModel)]="localidade.Revisado">
         </td>
       </tr>
     </tbody>

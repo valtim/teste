@@ -9,15 +9,16 @@ import { ApiService } from '../api.service';
 })
 export class LocalidadeComponent implements OnInit {
 
-  search = {
+  private search = {
     Nome: '',
     ICAO: '',
     Tipo: ''
   };
-  formatoLocalidade = 'GMS';
-  listaLocalidade = [];
-  localidades = [];
-  originalLocalidades = [];
+  private formatoLocalidade = 'GMS';
+  private listaLocalidade = [];
+  private localidades = [];
+  private originalLocalidades = [];
+  private localidadesAlteradas = [];
   constructor(private app: AppComponent, private api: ApiService) { }
 
   ngOnInit() {
@@ -38,9 +39,19 @@ export class LocalidadeComponent implements OnInit {
   }
 
   onSendLocalidade() {
-    this.api.postLocalidade(this.originalLocalidades).then((response) => {
+    this.api.postLocalidade(this.localidadesAlteradas).then((response) => {
       console.log(response);
+      this.localidadesAlteradas = [];
     });
+  }
+
+  onChangeLocalidade(localidade: any) {
+    const exist = this.localidadesAlteradas.filter(alterado => alterado.Id === localidade.Id);
+    if (exist.length > 0) {
+      const index = this.localidadesAlteradas.indexOf(exist[0]);
+      this.localidadesAlteradas.splice(index, 1);
+    }
+    this.localidadesAlteradas.push(localidade);
   }
 
   onSearchLocalidade() {
