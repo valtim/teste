@@ -1,3 +1,4 @@
+<app-loading *ngIf="loading"></app-loading>
 <div class="content">
   <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="onSendLocalidade()">
     <g>
@@ -97,9 +98,15 @@
             <option *ngFor="let tipolocal of listaLocalidade" value="{{tipolocal.Id}}">{{tipolocal.Nome}}</option>
           </select>
         </td>
-        <td>{{localidade.LatitudeStr}}</td>
+        <td>
+          <input type="text" name="latitude" appMaskLatitudeLongitude formatoLocalidade="{{formatoLocalidade}}"
+            maxlength="10" [(ngModel)]="localidade.LatitudeStr">
+        </td>
         <td>{{localidade.LatitudeH}}</td>
-        <td>{{localidade.LongitudeStr}}</td>
+        <td>
+          <input type="text" name="longitude" appMaskLatitudeLongitude formatoLocalidade="{{formatoLocalidade}}"
+            maxlength="10" [(ngModel)]="localidade.LongitudeStr">
+        </td>
         <td>{{localidade.LongitudeH}}</td>
         <td>
           <input type="number" (change)="onChangeLocalidade(localidade)" name="altitude" min="0" step="0.100"

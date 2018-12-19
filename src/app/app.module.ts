@@ -20,6 +20,7 @@ import { MenssageComponent } from './menssage/menssage.component';
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
 import { LocalidadeComponent } from './localidade/localidade.component';
+import { MaskLatitudeLongitudeDirective } from './directive/mask-latitude-longitude.directive';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LocalidadeComponent } from './localidade/localidade.component';
     MenssageComponent,
     TripulanteListaComponent,
     TripulanteComponent,
-    LocalidadeComponent
+    LocalidadeComponent,
+    MaskLatitudeLongitudeDirective
   ],
   imports: [
     BrowserModule,

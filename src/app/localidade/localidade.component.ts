@@ -19,6 +19,7 @@ export class LocalidadeComponent implements OnInit {
   private localidades = [];
   private originalLocalidades = [];
   private localidadesAlteradas = [];
+  private loading = true;
   constructor(private app: AppComponent, private api: ApiService) { }
 
   ngOnInit() {
@@ -28,19 +29,20 @@ export class LocalidadeComponent implements OnInit {
     });
     this.api.getLocalidade(this.formatoLocalidade).then((result) => {
       this.originalLocalidades = this.localidades = result;
-      console.log(result);
+      this.loading = false;
     });
   }
 
   onChangeFormato() {
+    this.loading = true;
     this.api.getLocalidade(this.formatoLocalidade).then((result) => {
       this.localidades = result;
+      this.loading = false;
     });
   }
 
   onSendLocalidade() {
     this.api.postLocalidade(this.localidadesAlteradas).then((response) => {
-      console.log(response);
       this.localidadesAlteradas = [];
     });
   }
@@ -64,7 +66,7 @@ export class LocalidadeComponent implements OnInit {
     });
   }
 
-  onRemoveLocalidade(localidade) {
+  onRemoveLocalidade(localidade: any) {
     localidade.Ativo = !localidade.Ativo;
   }
 }
