@@ -15,6 +15,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '/';
+    //this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('token')) {
       this.httpOptions = {
