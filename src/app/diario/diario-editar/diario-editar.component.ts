@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DiarioService } from '../diario.service';
 import { ApiService } from '../../api.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-diario-editar',
@@ -11,6 +12,7 @@ import { ApiService } from '../../api.service';
 export class DiarioEditarComponent implements OnInit {
 
   constructor(
+    private app: AppComponent,
     private route: Router,
     private diario: DiarioService,
     private api: ApiService) { }
@@ -31,6 +33,8 @@ export class DiarioEditarComponent implements OnInit {
     if (!this.diario.diario) {
       this.route.navigate(['/relatorio-voo']);
     }
+
+    this.app.setVoltar('/relatorio-voo');
 
     this.dataDiario = this.diario.diario;
 

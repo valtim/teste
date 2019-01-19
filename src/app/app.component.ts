@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 export class AppComponent {
 
   public title: string;
+  public voltar: string;
 
   constructor(private router: Router, private _location: Location) {
   }
@@ -18,14 +19,23 @@ export class AppComponent {
     this.title = title;
   }
 
+  setVoltar(voltar: string) {
+    this.voltar = voltar;
+  }
+
   backClicked() {
-    if (this._location.path() === '/relatorio-voo/editar' || this._location.path() === '/relatorio-voo/novo') {
-      this.router.navigate(['/relatorio-voo']);
-    }
-    if (this._location.path().includes('/tripulante/')) {
-      this.router.navigate(['/tripulantes']);
+    if (this.voltar) {
+      this.router.navigate([this.voltar]);
     } else {
-      this.router.navigate(['/home']);
+      if (this._location.path() === '/relatorio-voo/editar' ||
+        this._location.path() === '/relatorio-voo/novo') {
+        this.router.navigate(['/relatorio-voo']);
+      }
+      if (this._location.path().includes('/tripulante/')) {
+        this.router.navigate(['/tripulantes']);
+      } else {
+        this.router.navigate(['/home']);
+      }
     }
   }
 }
