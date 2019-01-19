@@ -15,7 +15,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '/';
-    //this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
+    // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('token')) {
       this.httpOptions = {
@@ -92,8 +92,9 @@ export class ApiService {
     }
   }
 
-  getTripulantes(): any {
-    return JSON.parse(localStorage.getItem('Tripulante'));
+  getTripulantes(): Promise<any> {
+    return this.http.get(this.url + `api/quadro-de-tripulantes`, this.httpOptions)
+      .toPromise();
   }
 
   getAbastecedoras(): any {
@@ -211,8 +212,12 @@ export class ApiService {
     return this.http.get(this.url + 'api/listas/tripulante', this.httpOptions).toPromise();
   }
 
-  getLocalidade(formatoLocalidade: string): Promise<any> {
-    return this.http.get(this.url + 'api/localidade/' + formatoLocalidade, this.httpOptions).toPromise();
+  getLocalidade(tipo: string, perPage: number, currentPage: number, search: string): Promise<any> {
+    if (search) {
+      return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}/${search}`, this.httpOptions).toPromise();
+    } else {
+      return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}`, this.httpOptions).toPromise();
+    }
   }
 
   getListaLocalidade(): Promise<any> {

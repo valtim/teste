@@ -14,7 +14,7 @@
     <label class="radio" for="grau">
       <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
         value="GMS">
-      Gruas, minutos e segundos
+      Graus, Minutos e Segundos
     </label>
 
     <label class="radio" for="decimalMinuto">
@@ -146,4 +146,6 @@
       </tr>
     </tbody>
   </table>
+
+  <app-paginacao></app-paginacao>
 </div>
