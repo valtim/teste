@@ -14,6 +14,19 @@
   z-index: 5;
 }
 
+.btn-search {
+  background-color: #84c4ff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-search>img {
+  width: 80%;
+  height: 80%;
+}
+
 .search {
   margin-bottom: 15px;
   padding-bottom: 15px;

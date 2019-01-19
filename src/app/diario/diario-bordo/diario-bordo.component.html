@@ -8,10 +8,13 @@
             l0.08,0.08l11.293,11.293l21.02,21.02l12.15-12.15c2.383-2.625,3.791-6.117,3.791-9.929C448,86.504,446.592,82.975,444.213,80.312z"></path>
     </g>
   </svg>
-  <div class="search">
+  <form action="" class="search" (submit)="onChangeDate()">
     <label for="">Data: </label>
-    <input type="date" name="data" [(ngModel)]="dataSearch" (change)="onChangeDate()">
-  </div>
+    <input type="date" name="data" [(ngModel)]="dataSearch">
+    <button class="btn btn-search">
+      <img _ngcontent-c8="" alt="Search" src="assets/icons/search.svg">
+    </button>
+  </form>
 
   <div class="result">
     <div *ngFor="let diario of diarios; index as i; first as isFirst" (click)="onClickDiario(diario)">
