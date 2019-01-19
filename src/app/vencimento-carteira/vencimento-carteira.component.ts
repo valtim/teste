@@ -20,7 +20,7 @@ export class VencimentoCarteiraComponent implements OnInit {
   public vencimentoListToSave = [];
 
   ngOnInit() {
-    this.app.setTitle('Controle de Vencimento');
+    this.app.setTitle('Quadro de Tripulantes');
     this.tripulantes = this.api.getTripulantes();
     if (!localStorage.getItem('Certificado')) {
       this.api.getCertificado().then(result => {
@@ -141,51 +141,6 @@ export class VencimentoCarteiraComponent implements OnInit {
         } else {
           target.querySelector('.ultimo-voo').style.display = 'none';
         }
-      }
-    } else {
-      const cell = target;
-      const vencimento = this.getVencimento(cell.dataset.tripulanteId, cell.dataset.vencimentoId);
-      let fp = cell._flatpickr;
-      if (!fp) {
-        fp = (flatpickr(cell, {
-          onChange: (selectedDates, dateStr, instance) => {
-            cell.innerText = this.formatData(`${dateStr}T00:00:00`);
-            vencimento.DataDeVencimento = `${dateStr}T00:00:00`;
-            vencimento.NaoControlado = false;
-            const existVencimentoToSave = !this.vencimentoListToSave || !this.vencimentoListToSave.filter((venc) => {
-              return venc.Id === vencimento.Id;
-            })[0];
-            if (existVencimentoToSave) {
-              this.vencimentoListToSave.push(vencimento);
-              document.getElementById('salvar').style.fill = '#157dfb';
-            }
-          },
-          onOpen: (selectedDates, dateStr, instance) => {
-            if (!instance.calendarContainer.querySelector('button')) {
-              const btn = document.createElement('button');
-              btn.innerText = 'Cancelar';
-              btn.className = 'cancelar';
-              btn.onclick = () => {
-                vencimento.NaoControlado = true;
-                vencimento.DataDeVencimento = null;
-                cell.style.backgroundColor = '';
-                cell.innerText = 'n/a';
-                const existVencimentoToSave = !this.vencimentoListToSave || !this.vencimentoListToSave.filter((venc) => {
-                  return venc.Id === vencimento.Id;
-                })[0];
-                if (existVencimentoToSave) {
-                  this.vencimentoListToSave.push(vencimento);
-                  document.getElementById('salvar').style.fill = '#157dfb';
-                }
-                instance.close();
-              };
-              instance.calendarContainer.appendChild(btn);
-            }
-          },
-          disableMobile: true
-        }) as any).toggle();
-      } else {
-        fp.open();
       }
     }
   }
