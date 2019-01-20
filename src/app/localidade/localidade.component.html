@@ -12,19 +12,18 @@
 
   <div class="search">
     <label class="radio" for="grau">
-      <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
-        value="GMS">
+      <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="tipoLocalidade" (change)="onChangeFormato()" value="GMS">
       Graus, Minutos e Segundos
     </label>
 
     <label class="radio" for="decimalMinuto">
-      <input type="radio" id="decimalMinuto" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
+      <input type="radio" id="decimalMinuto" name="tipoSearch" [(ngModel)]="tipoLocalidade" (change)="onChangeFormato()"
         value="DM">
       Decimal de Minutos
     </label>
 
     <label class="radio" for="decimalGrau">
-      <input type="radio" id="decimalGrau" name="tipoSearch" [(ngModel)]="formatoLocalidade" (change)="onChangeFormato()"
+      <input type="radio" id="decimalGrau" name="tipoSearch" [(ngModel)]="tipoLocalidade" (change)="onChangeFormato()"
         value="DG">
       Decimal de Graus
     </label>
@@ -87,13 +86,13 @@
           <input type="checkbox" name="excluir" (change)="onRemoveLocalidade(localidade)">
         </td>
         <td>
-          <input type="text" (change)="onChangeLocalidade(localidade)" name="nome" [(ngModel)]="localidade.Nome">
+          <input type="text" name="nome" [(ngModel)]="localidade.Nome">
         </td>
         <td>
-          <input type="text" (change)="onChangeLocalidade(localidade)" name="nomeICAO" [(ngModel)]="localidade.NomeICAO">
+          <input type="text" name="nomeICAO" [(ngModel)]="localidade.NomeICAO">
         </td>
         <td>
-          <select (change)="onChangeLocalidade(localidade)" name="tipoLocalidade" [(ngModel)]="localidade.TipoDeLocalidade.Id">
+          <select name="tipoLocalidade" [(ngModel)]="localidade.TipoDeLocalidade.Id">
             <option value="">---</option>
             <option *ngFor="let tipolocal of listaLocalidade" value="{{tipolocal.Id}}">{{tipolocal.Nome}}</option>
           </select>
@@ -147,5 +146,5 @@
     </tbody>
   </table>
 
-  <app-paginacao></app-paginacao>
+  <app-paginacao [perPage]="perPage" [currentPage]="currentPage" [total]="total" (changePage)="onChangePage($event)"></app-paginacao>
 </div>

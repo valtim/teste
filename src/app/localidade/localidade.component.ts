@@ -14,10 +14,13 @@ export class LocalidadeComponent implements OnInit {
     ICAO: '',
     Tipo: ''
   };
-  private formatoLocalidade = 'GMS';
+  private query = '';
+  private tipoLocalidade = 'GMS';
   private listaLocalidade = [];
+  private perPage = 10;
+  private currentPage = 1;
+  private total = 0;
   private localidades = [];
-  private originalLocalidades = [];
   private localidadesAlteradas = [];
   private loading = true;
   constructor(private app: AppComponent, private api: ApiService) { }
@@ -27,24 +30,19 @@ export class LocalidadeComponent implements OnInit {
     this.api.getListaLocalidade().then((result) => {
       this.listaLocalidade = result.TipoDeLocalidade;
     });
-    this.api.getLocalidade(this.formatoLocalidade).then((result) => {
-      this.originalLocalidades = this.localidades = result;
-      this.loading = false;
-    });
+    this.getLocalidade();
   }
 
-  onChangeFormato() {
+  private getLocalidade() {
     this.loading = true;
-    this.api.getLocalidade(this.formatoLocalidade).then((result) => {
-      this.localidades = result;
-      this.loading = false;
-    });
-  }
-
-  onSendLocalidade() {
-    this.api.postLocalidade(this.localidadesAlteradas).then((response) => {
-      this.localidadesAlteradas = [];
-    });
+    this.api.getLocalidade(this.tipoLocalidade, this.perPage, this.currentPage, this.query)
+      .then((result) => {
+        this.localidades = result.Registros;
+        this.currentPage = result.Pagina;
+        this.perPage = result.TamanhoDaPagina;
+        this.total = result.Total;
+        this.loading = false;
+      });
   }
 
   onChangeLocalidade(localidade: any) {
@@ -56,17 +54,43 @@ export class LocalidadeComponent implements OnInit {
     this.localidadesAlteradas.push(localidade);
   }
 
-  onSearchLocalidade() {
-    this.localidades = this.originalLocalidades.filter((localidade) => {
-      return localidade.Nome.includes(this.search.Nome);
-    }).filter((localidade) => {
-      return localidade.NomeICAO.includes(this.search.ICAO);
-    }).filter((localidade) => {
-      return localidade.TipoDeLocalidade.Id.includes(this.search.Tipo);
+  onChangeFormato() {
+    this.getLocalidade();
+  }
+
+  onChangePage(page: any) {
+    console.log(page);
+    if (this.perPage !== parseInt(page.perPage, 10)) {
+      this.currentPage = 1;
+      this.perPage = parseInt(page.perPage, 10);
+    } else {
+      this.currentPage = page.currentPage;
+    }
+    this.getLocalidade();
+  }
+
+  onSendLocalidade() {
+    this.api.postLocalidade(this.localidadesAlteradas).then((response) => {
+      this.localidadesAlteradas = [];
     });
+  }
+
+  onSearchLocalidade() {
+    if (this.search.Nome) {
+      this.query += `/NOME="${this.search.Nome}"`;
+    }
+    if (this.search.ICAO) {
+      this.query += `/ICAO="${this.search.ICAO}"`;
+    }
+    if (this.search.Tipo) {
+      this.query += `/Tipo.Id="${this.search.Tipo}"`;
+    }
+
+    this.getLocalidade();
   }
 
   onRemoveLocalidade(localidade: any) {
     localidade.Ativo = !localidade.Ativo;
+    this.onChangeLocalidade(localidade);
   }
 }

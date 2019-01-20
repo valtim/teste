@@ -21,20 +21,20 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   ngOnInit() {
     this.app.setTitle('Quadro de Tripulantes');
-    this.tripulantes = this.api.getTripulantes();
-    if (!localStorage.getItem('Certificado')) {
-      this.api.getCertificado().then(result => {
-        localStorage.setItem('Certificado', JSON.stringify(result));
-        this.montarCertificados(result);
-      });
-    } else {
-      this.montarCertificados(JSON.parse(localStorage.getItem('Certificado')));
-    }
-    this.api.getVencimento().then(result => {
-      this.vencimentos = result;
-      this.loading = false;
+    this.api.getTripulantes().then(result => {
+      console.log('result: ', result);
+      this.tripulantes = result.Tripulantes;
+      this.vencimentos = result.Vencimentos;
+      this.montarCertificados(result.Certificados);
       this.montarDatas();
+      this.loading = false;
     });
+
+    // this.api.getVencimento().then(result => {
+    //   this.vencimentos = result;
+    //   this.loading = false;
+    //   this.montarDatas();
+    // });
   }
 
   montarCertificados(certificados: Array<any>) {

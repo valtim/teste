@@ -213,11 +213,7 @@ export class ApiService {
   }
 
   getLocalidade(tipo: string, perPage: number, currentPage: number, search: string): Promise<any> {
-    if (search) {
-      return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}/${search}`, this.httpOptions).toPromise();
-    } else {
-      return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}`, this.httpOptions).toPromise();
-    }
+    return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`, this.httpOptions).toPromise();
   }
 
   getListaLocalidade(): Promise<any> {
