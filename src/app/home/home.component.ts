@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { AutorizacaoService } from '../autorizacao.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,11 @@ export class HomeComponent implements OnInit {
 
   private loading: boolean;
 
-  constructor(private app: AppComponent, private api: ApiService, private router: Router) { }
+  constructor(
+    private app: AppComponent,
+    private api: ApiService,
+    private router: Router,
+    private autorizacao: AutorizacaoService) { }
 
   async ngOnInit() {
     this.app.setTitle('Sol');
@@ -22,6 +27,10 @@ export class HomeComponent implements OnInit {
     }
     this.api.getListas(() => { });
     this.loading = false;
+  }
+
+  isEnable(name: string) {
+    return !this.autorizacao.Rotas.includes(name);
   }
 
   logoff(): void {

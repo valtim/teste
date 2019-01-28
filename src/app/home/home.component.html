@@ -1,36 +1,36 @@
 <app-loading *ngIf="loading"></app-loading>
 <div class="home">
-  <a routerLink="/publicacao">
+  <a *ngIf="isEnable('publicacao')" routerLink="/publicacao">
     Gerenciar Publicações
   </a>
   <div>
     Minhas Publicações
   </div>
-  <a routerLink="/relatorio-voo">
+  <a *ngIf="isEnable('relatorio-voo')" routerLink="/relatorio-voo">
     Relatório de Voo
   </a>
-  <a routerLink="/vencimento-carteira">
+  <a *ngIf="isEnable('vencimento-carteira')" routerLink="/vencimento-carteira">
     Quadro de Tripulantes
   </a>
-  <a routerLink="/papeleta">
+  <a *ngIf="isEnable('papeleta')" routerLink="/papeleta">
     Papeleta
   </a>
-  <a routerLink="/relatorio-pagamento">
+  <a *ngIf="isEnable('relatorio-pagamento')" routerLink="/relatorio-pagamento">
     Relatório de Pagamento
   </a>
   <div>
     Relatório de Experiencia
   </div>
-  <a routerLink="/tripulantes">
+  <a *ngIf="isEnable('tripulantes')" routerLink="/tripulantes">
     Tripulante
   </a>
   <div>
     Escala Diária
   </div>
-  <a routerLink="/localidade">
+  <a *ngIf="isEnable('localidade')" routerLink="/localidade">
     Localidade
   </a>
-  <a routerLink="/escala-prevista">
+  <a *ngIf="isEnable('escala-prevista')" routerLink="/escala-prevista">
     Escala Prevista Diária
   </a>
   <hr style="width: 95%;border: 1px solid #bfbfbf;">

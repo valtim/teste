@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api.service';
+import { AutorizacaoService } from '../autorizacao.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate {
 
-  constructor(private router: Router, private api: ApiService) { }
+  constructor(private router: Router, private api: ApiService, private autorizacao: AutorizacaoService) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -18,10 +19,11 @@ export class AuthGuardService implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    // console.log(this.api.getPermission());
+    if (!this.autorizacao.Token || this.autorizacao.Rotas.includes(url.split('/')[1])) {
+      this.api.error = 'Você não tem permissão.';
+      this.router.navigate(['']);
+      return false;
+    }
     if (localStorage.getItem('token')) { return true; }
-    this.api.error = 'Você não tem permissão.';
-    this.router.navigate(['']);
-    return false;
   }
 }

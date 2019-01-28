@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AutorizacaoService } from './autorizacao.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ApiService {
   error: string;
   message: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.sistemasol.com.br/' : '/';
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
@@ -36,16 +37,18 @@ export class ApiService {
   }
 
   async postLogin(username: string, password: string): Promise<any> {
-    return this.http.post(this.url + 'api/login', { 'username': username, 'password': password })
+    return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password })
       .toPromise()
-      .then((result: string) => {
-        this.updateToken(result);
+      .then((result: any) => {
+        this.autorizacao.Token = result.Token;
+        this.autorizacao.Rotas = result.Rotas;
+        this.updateToken();
       })
       .catch();
   }
 
-  private updateToken(token: string): void {
-    localStorage.setItem('token', token);
+  private updateToken(): void {
+    localStorage.setItem('token', this.autorizacao.Token);
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -55,7 +58,7 @@ export class ApiService {
   }
 
   getDiarioByDate(date: string): Promise<any> {
-    return this.http.get(this.url + 'api/novodiario/' + date, this.httpOptions)
+    return this.http.get(this.url + 'api/relatorio-de-voo/list/' + date, this.httpOptions)
       .toPromise();
   }
 
