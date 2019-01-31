@@ -22,6 +22,8 @@ import { TripulanteComponent } from './tripulante/tripulante/tripulante.componen
 import { LocalidadeComponent } from './localidade/localidade.component';
 import { MaskLatitudeLongitudeDirective } from './directive/mask-latitude-longitude.directive';
 import { PaginacaoComponent } from './paginacao/paginacao.component';
+import { BlocoComponent } from './bloco/bloco.component';
+import { NumeroMaskDirective } from './directive/numero-mask.directive';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { PaginacaoComponent } from './paginacao/paginacao.component';
     TripulanteComponent,
     LocalidadeComponent,
     MaskLatitudeLongitudeDirective,
-    PaginacaoComponent
+    NumeroMaskDirective,
+    PaginacaoComponent,
+    BlocoComponent
   ],
   imports: [
     BrowserModule,

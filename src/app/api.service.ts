@@ -226,4 +226,8 @@ export class ApiService {
   postLocalidade(localidades: Array<any>): Promise<any> {
     return this.http.post(this.url + 'api/localidade', localidades, this.httpOptions).toPromise();
   }
+
+  getListaBloco(): Promise<any> {
+    return this.http.get(this.url + 'api/bloco', this.httpOptions).toPromise();
+  }
 }

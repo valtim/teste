@@ -1,0 +1,31 @@
+.content {
+  display: flex;
+  margin-top: 55px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0 25px;
+}
+
+.table td,
+.table th {
+  text-align: center;
+}
+
+.table td input[type='checkbox'] {
+  margin: 0 auto;
+}
+
+#salvar {
+  position: fixed;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+  z-index: 2;
+}
+
+input.ng-invalid,
+select.ng-invalid {
+  border: 1px solid #ff5555;
+}

@@ -21,10 +21,10 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.app.setTitle('Sol');
-    if (!this.api.getPermission()) {
-      this.loading = true;
-      this.api.getMenuPermission();
-    }
+    // if (!this.api.getPermission()) {
+    //   this.loading = true;
+    //   this.api.getMenuPermission();
+    // }
     this.api.getListas(() => { });
     this.loading = false;
   }

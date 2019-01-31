@@ -13,7 +13,7 @@ import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-p
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
 import { LocalidadeComponent } from './localidade/localidade.component';
-
+import { BlocoComponent } from './bloco/bloco.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -76,6 +76,11 @@ const routes: Routes = [
     path: 'localidade',
     component: LocalidadeComponent,
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'bloco',
+    component: BlocoComponent,
+    // canActivate: [AuthGuardService]
   },
 ];
 

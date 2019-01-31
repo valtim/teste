@@ -62,7 +62,8 @@ app-papeleta,
 app-pagamento,
 app-tripulante,
 app-escala-prevista-diaria,
-app-localizacao {
+app-localizacao,
+app-bloco {
   width: 100%;
 }
 
