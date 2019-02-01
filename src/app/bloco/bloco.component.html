@@ -11,10 +11,7 @@
   </svg>
 
   <div style="display: flex">
-    <input type="text" placeholder="Número" style="border-radius: 4px 0 0 4px;">
-    <button style="border: 1px solid #ccc;border-radius: 0 4px 4px 0;border-left: none;" (click)="saveBloco()">
-      Seach
-    </button>
+    <input type="text" placeholder="Número" [(ngModel)]="searchNumero">
   </div>
   <button (click)="onClickAddBloco()">+</button>
 </div>
@@ -33,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let bloco of blocos; index as i; first as isFirst">
+      <tr *ngFor="let bloco of blocos | searchfilter: 'Numero' : searchNumero; index as i; first as isFirst">
         <td>
           <input type="checkbox" name="Deletar{{i}}" id="" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
         </td>

@@ -13,6 +13,7 @@ export class BlocoComponent implements OnInit {
   private loading = true;
   private prefixos = [];
   private saveBlocoList = [];
+  private searchNumero = '';
   private numeroMask = [/\d/, /\d/, /\d/, '/', /[A-Z]/, /[A-Z]/, /[A-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
   private folhaMask = [/\d/, /\d/, /\d/, /\d/];
 

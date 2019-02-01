@@ -23,6 +23,7 @@ import { TripulanteComponent } from './tripulante/tripulante/tripulante.componen
 import { LocalidadeComponent } from './localidade/localidade.component';
 import { PaginacaoComponent } from './paginacao/paginacao.component';
 import { BlocoComponent } from './bloco/bloco.component';
+import { SearchFilterPipe } from './pipe/SearchFilterPipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { BlocoComponent } from './bloco/bloco.component';
     TripulanteComponent,
     LocalidadeComponent,
     PaginacaoComponent,
-    BlocoComponent
+    BlocoComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule,
