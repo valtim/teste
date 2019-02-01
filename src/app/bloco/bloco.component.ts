@@ -13,6 +13,8 @@ export class BlocoComponent implements OnInit {
   private loading = true;
   private prefixos = [];
   private saveBlocoList = [];
+  private numeroMask = [/\d/, /\d/, /\d/, '/', /[A-Z]/, /[A-Z]/, /[A-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
+  private folhaMask = [/\d/, /\d/, /\d/, /\d/];
 
   constructor(private app: AppComponent, private api: ApiService) { }
 
@@ -63,27 +65,5 @@ export class BlocoComponent implements OnInit {
   onSaveClick() {
     console.log('submit');
   }
-
-  // filtroNumero(index: number) {
-  //   const value = this.blocos[index].Numero as string;
-  //   if (value.length > 2) {
-  //     let regex = /\d{3}/;
-  //     let result = regex.exec(value)[0];
-  //     console.log('result 1', result);
-  //     result += '/';
-  //     if (value.length > 6) {
-  //       regex = /\d{3}\/\w{3}/;
-  //       result += regex.exec(value)[0];
-  //       console.log('result 2', result);
-  //       result += '/';
-  //       if (value.length > 11) {
-  //         regex = /\d{3}\/\w{3}\/\d{4}/;
-  //         result += regex.exec(value)[0];
-  //         console.log('result 3', result);
-  //       }
-  //     }
-  //     this.blocos[index].Numero = result;
-  //   }
-  // }
 
 }

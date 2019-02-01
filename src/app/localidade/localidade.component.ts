@@ -23,6 +23,8 @@ export class LocalidadeComponent implements OnInit {
   private localidades = [];
   private localidadesAlteradas = [];
   private loading = true;
+  private longitudeMask = [/\d/, /\d/, '°', /\d/, /\d/, '\'', /\d/, /\d/, '"'];
+
   constructor(private app: AppComponent, private api: ApiService) { }
 
   ngOnInit() {

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -20,10 +21,8 @@ import { MenssageComponent } from './menssage/menssage.component';
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
 import { LocalidadeComponent } from './localidade/localidade.component';
-import { MaskLatitudeLongitudeDirective } from './directive/mask-latitude-longitude.directive';
 import { PaginacaoComponent } from './paginacao/paginacao.component';
 import { BlocoComponent } from './bloco/bloco.component';
-import { NumeroMaskDirective } from './directive/numero-mask.directive';
 
 @NgModule({
   declarations: [
@@ -43,8 +42,6 @@ import { NumeroMaskDirective } from './directive/numero-mask.directive';
     TripulanteListaComponent,
     TripulanteComponent,
     LocalidadeComponent,
-    MaskLatitudeLongitudeDirective,
-    NumeroMaskDirective,
     PaginacaoComponent,
     BlocoComponent
   ],
@@ -52,6 +49,7 @@ import { NumeroMaskDirective } from './directive/numero-mask.directive';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    TextMaskModule,
     HttpClientModule
   ],
   providers: [],

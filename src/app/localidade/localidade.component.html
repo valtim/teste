@@ -98,13 +98,11 @@
           </select>
         </td>
         <td>
-          <input type="text" name="latitude" appMaskLatitudeLongitude formatoLocalidade="{{formatoLocalidade}}"
-            maxlength="10" [(ngModel)]="localidade.LatitudeStr">
+          <input type="text" name="latitude" maxlength="10" [(ngModel)]="localidade.LatitudeStr" [textMask]="{mask: longitudeMask}">
         </td>
         <td>{{localidade.LatitudeH}}</td>
         <td>
-          <input type="text" name="longitude" appMaskLatitudeLongitude formatoLocalidade="{{formatoLocalidade}}"
-            maxlength="10" [(ngModel)]="localidade.LongitudeStr">
+          <input type="text" name="longitude" maxlength="10" [(ngModel)]="localidade.LongitudeStr" [textMask]="{mask: longitudeMask}">
         </td>
         <td>{{localidade.LongitudeH}}</td>
         <td>

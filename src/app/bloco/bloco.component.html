@@ -20,50 +20,47 @@
 </div>
 
 <div class="content" style="margin-top: 15px">
-  <form action="" (submit)="saveBloco()">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Deletar</th>
-          <th>Prefixo</th>
-          <th>Número</th>
-          <th>Folha Inicial</th>
-          <th>Folha Final</th>
-          <th>Fechado</th>
-          <th>Atualizado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let bloco of blocos; index as i; first as isFirst">
-          <td>
-            <input type="checkbox" name="Deletar{{i}}" id="" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
-          </td>
-          <td>
-            <select name="prefixo{{i}}" id="prefixo" [(ngModel)]="bloco.Prefixo.Id" (change)="editBloco(bloco)"
-              required>
-              <option *ngFor="let prefixo of prefixos" [value]="prefixo.Id">{{prefixo.PrefixoCompleto}}</option>
-            </select>
-          </td>
-          <td>
-            <input type="text" name="numero{{i}}" id="numero" [(ngModel)]="bloco.Numero" (change)="editBloco(bloco)"
-              required (keyup)="filtroNumero(i)">
-          </td>
-          <td>
-            <input type="text" name="folhaInicial{{i}}" id="folhaInicial" [(ngModel)]="bloco.FolhaInicial" (change)="editBloco(bloco)"
-              required>
-          </td>
-          <td>
-            <input type="number" name="folhaFinal{{i}}" id="folhaFinal" [(ngModel)]="bloco.FolhaFinal" (change)="editBloco(bloco)"
-              required>
-          </td>
-          <td>
-            <input type="checkbox" name="fechado{{i}}" id="fechado" [(ngModel)]="bloco.Fechado" (change)="editBloco(bloco)">
-          </td>
-          <td>
-            {{bloco.Atualizacao | date: 'dd/MM/yyyy'}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Deletar</th>
+        <th>Prefixo</th>
+        <th>Número</th>
+        <th>Folha Inicial</th>
+        <th>Folha Final</th>
+        <th>Fechado</th>
+        <th>Atualizado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bloco of blocos; index as i; first as isFirst">
+        <td>
+          <input type="checkbox" name="Deletar{{i}}" id="" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
+        </td>
+        <td>
+          <select name="prefixo{{i}}" id="prefixo" [(ngModel)]="bloco.Prefixo.Id" (change)="editBloco(bloco)" required>
+            <option *ngFor="let prefixo of prefixos" [value]="prefixo.Id">{{prefixo.PrefixoCompleto}}</option>
+          </select>
+        </td>
+        <td>
+          <input type="text" name="numero{{i}}" id="numero" [(ngModel)]="bloco.Numero" (change)="editBloco(bloco)"
+            required [textMask]="{mask: numeroMask}">
+        </td>
+        <td>
+          <input type="text" name="folhaInicial{{i}}" id="folhaInicial" [(ngModel)]="bloco.FolhaInicial" (change)="editBloco(bloco)"
+            required [textMask]="{mask: folhaMask}">
+        </td>
+        <td>
+          <input type="text" name="folhaFinal{{i}}" id="folhaFinal" [(ngModel)]="bloco.FolhaFinal" (change)="editBloco(bloco)"
+            required [textMask]="{mask: folhaMask}">
+        </td>
+        <td>
+          <input type="checkbox" name="fechado{{i}}" id="fechado" [(ngModel)]="bloco.Fechado" (change)="editBloco(bloco)">
+        </td>
+        <td>
+          {{bloco.Atualizacao | date: 'dd/MM/yyyy'}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
