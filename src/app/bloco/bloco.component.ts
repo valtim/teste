@@ -14,8 +14,8 @@ export class BlocoComponent implements OnInit {
   private prefixos = [];
   private saveBlocoList = [];
   private searchNumero = '';
-  private numeroMask = [/\d/, /\d/, /\d/, '/', /[A-Z]/, /[A-Z]/, /[A-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
   private folhaMask = [/\d/, /\d/, /\d/, /\d/];
+  private numeroMask = [/\d/, /\d/, /\d/, '/', /[A-Z]/, /[A-Z]/, /[A-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(private app: AppComponent, private api: ApiService) { }
 
@@ -23,7 +23,7 @@ export class BlocoComponent implements OnInit {
     this.app.setTitle('Bloco');
     this.prefixos = this.api.getPrefixos();
     this.api.getListaBloco().then(result => {
-      this.blocos = result;
+      this.blocos = result.filter(r => r.Ativo);
       this.loading = false;
     });
   }
@@ -59,12 +59,36 @@ export class BlocoComponent implements OnInit {
     this.saveBlocoList.push(bloco);
   }
 
-  saveBloco() {
-    console.log(this.saveBlocoList);
-  }
-
   onSaveClick() {
-    console.log('submit');
+    if (this.saveBlocoList.length) {
+
+      const callBack = () => {
+        this.api.postBlocoList(this.saveBlocoList).then(result => {
+          this.saveBlocoList = [];
+          this.api.message = {
+            show: true,
+            type: 'success',
+            title: '',
+            message: 'Alteração realizadas com sucesso.'
+          };
+        }).catch((erro) => {
+          this.api.message = {
+            show: true,
+            type: 'error',
+            title: 'Errr',
+            message: erro
+          };
+        });
+      };
+
+      this.api.message = {
+        show: true,
+        type: 'alert',
+        title: 'Tem certeza?',
+        message: 'Você deseja salvar as alterações?',
+        callBack: callBack
+      };
+    }
   }
 
 }

@@ -230,4 +230,8 @@ export class ApiService {
   getListaBloco(): Promise<any> {
     return this.http.get(this.url + 'api/bloco', this.httpOptions).toPromise();
   }
+
+  postBlocoList(bloco: Array<any>): Promise<any> {
+    return this.http.post(this.url + 'api/bloco', bloco, this.httpOptions).toPromise();
+  }
 }

@@ -1,4 +1,6 @@
 <app-loading *ngIf="loading"></app-loading>
+<app-menssage></app-menssage>
+
 <div class="content" style="width: 60%;margin: 60px auto 0 auto;">
   <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="onSaveClick()">
     <g>
@@ -32,7 +34,7 @@
     <tbody>
       <tr *ngFor="let bloco of blocos | searchfilter: 'Numero' : searchNumero; index as i; first as isFirst">
         <td>
-          <input type="checkbox" name="Deletar{{i}}" id="" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
+          <input type="checkbox" name="Deletar{{i}}" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
         </td>
         <td>
           <select name="prefixo{{i}}" id="prefixo" [(ngModel)]="bloco.Prefixo.Id" (change)="editBloco(bloco)" required>
