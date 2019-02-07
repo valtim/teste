@@ -24,6 +24,7 @@ import { LocalidadeComponent } from './localidade/localidade.component';
 import { PaginacaoComponent } from './paginacao/paginacao.component';
 import { BlocoComponent } from './bloco/bloco.component';
 import { SearchFilterPipe } from './pipe/SearchFilterPipe';
+import { CertificadoComponent } from './certificado/certificado.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SearchFilterPipe } from './pipe/SearchFilterPipe';
     LocalidadeComponent,
     PaginacaoComponent,
     BlocoComponent,
-    SearchFilterPipe
+    SearchFilterPipe,
+    CertificadoComponent
   ],
   imports: [
     BrowserModule,

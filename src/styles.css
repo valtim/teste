@@ -63,7 +63,8 @@ app-pagamento,
 app-tripulante,
 app-escala-prevista-diaria,
 app-localizacao,
-app-bloco {
+app-bloco,
+app-certificado {
   width: 100%;
 }
 

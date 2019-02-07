@@ -14,6 +14,7 @@ import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulan
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
 import { LocalidadeComponent } from './localidade/localidade.component';
 import { BlocoComponent } from './bloco/bloco.component';
+import { CertificadoComponent } from './certificado/certificado.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -80,6 +81,11 @@ const routes: Routes = [
   {
     path: 'bloco',
     component: BlocoComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'certificado',
+    component: CertificadoComponent,
     // canActivate: [AuthGuardService]
   },
 ];

@@ -243,4 +243,9 @@ export class ApiService {
   postBlocoList(bloco: Array<any>): Promise<any> {
     return this.http.post(this.url + 'api/bloco', bloco, this.httpOptions).toPromise();
   }
+
+  postUploadEscel(descricao: string, arquivos: FileList): Promise<any> {
+    const data = { Descricao: descricao, ArquivoExcel: arquivos[0] };
+    return this.http.post(`${this.url}api/excel/upload`, data, this.httpOptions).toPromise();
+  }
 }
