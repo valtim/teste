@@ -13,7 +13,7 @@ export class BlocoComponent implements OnInit {
   private loading = true;
   private prefixos = [];
   private saveBlocoList = [];
-  private searchNumero = '';
+  private prefixoSearch = '';
   private folhaMask = [/\d/, /\d/, /\d/, /\d/];
   private numeroMask = [/\d/, /\d/, /\d/, '/', /[a-zA-Z]/, /[a-zA-Z]/, /[a-zA-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
 
@@ -23,6 +23,14 @@ export class BlocoComponent implements OnInit {
     this.app.setTitle('Bloco');
     this.prefixos = this.api.getPrefixos();
     this.api.getListaBloco().then(result => {
+      this.blocos = result.filter(r => r.Ativo);
+      this.loading = false;
+    });
+  }
+
+  onSearchByPrefixo() {
+    this.loading = true;
+    this.api.getListaBlocoByPrefixo(this.prefixoSearch).then(result => {
       this.blocos = result.filter(r => r.Ativo);
       this.loading = false;
     });

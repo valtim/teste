@@ -13,7 +13,12 @@
   </svg>
 
   <div style="display: flex">
-    <input type="text" placeholder="Número" [(ngModel)]="searchNumero">
+    <select name="prefixoSearch" id="prefixoSearch" [(ngModel)]="prefixoSearch" (change)="onSearchByPrefixo()">
+      <option value="">Prefixo</option>
+      <option *ngFor="let prefixo of prefixos" [value]="prefixo.Id">
+        {{prefixo.PrefixoCompleto}}
+      </option>
+    </select>
   </div>
   <button (click)="onClickAddBloco()">+</button>
 </div>
@@ -32,7 +37,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let bloco of blocos | searchfilter: 'Numero' : searchNumero; index as i; first as isFirst">
+      <tr *ngFor="let bloco of blocos; index as i; first as isFirst">
         <td>
           <input type="checkbox" name="Deletar{{i}}" [(ngModel)]="bloco.Deletar" (change)="editBloco(bloco)">
         </td>

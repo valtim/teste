@@ -62,6 +62,11 @@ export class ApiService {
       .toPromise();
   }
 
+  getDiarioById(id: string): Promise<any> {
+    return this.http.get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
+      .toPromise();
+  }
+
   getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
     return this.http.get(this.url + `api/novodiario/${id}/${month}/${year}`, this.httpOptions)
       .toPromise();
@@ -229,6 +234,10 @@ export class ApiService {
 
   getListaBloco(): Promise<any> {
     return this.http.get(this.url + 'api/bloco', this.httpOptions).toPromise();
+  }
+
+  getListaBlocoByPrefixo(idPrefixo): Promise<any> {
+    return this.http.get(`${this.url}api/bloco/${idPrefixo}`, this.httpOptions).toPromise();
   }
 
   postBlocoList(bloco: Array<any>): Promise<any> {
