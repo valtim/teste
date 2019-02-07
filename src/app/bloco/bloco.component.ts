@@ -15,7 +15,7 @@ export class BlocoComponent implements OnInit {
   private saveBlocoList = [];
   private searchNumero = '';
   private folhaMask = [/\d/, /\d/, /\d/, /\d/];
-  private numeroMask = [/\d/, /\d/, /\d/, '/', /[A-Z]/, /[A-Z]/, /[A-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
+  private numeroMask = [/\d/, /\d/, /\d/, '/', /[a-zA-Z]/, /[a-zA-Z]/, /[a-zA-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(private app: AppComponent, private api: ApiService) { }
 
@@ -49,6 +49,8 @@ export class BlocoComponent implements OnInit {
       return prefixo.Id === bloco.Prefixo.Id;
     })[0];
 
+    bloco.Numero = bloco.Numero.toUpperCase();
+
     const existBloco = this.saveBlocoList.filter((saveBloco) => {
       return saveBloco.Id === bloco.Id;
     })[0];
@@ -56,12 +58,14 @@ export class BlocoComponent implements OnInit {
     if (existBloco) {
       this.saveBlocoList.splice(existBloco, 1);
     }
-    this.saveBlocoList.push(bloco);
+
+    if (bloco.Numero && bloco.Prefixo && bloco.FolhaInicial && bloco.FolhaFinal) {
+      this.saveBlocoList.push(bloco);
+    }
   }
 
   onSaveClick() {
     if (this.saveBlocoList.length) {
-
       const callBack = () => {
         this.api.postBlocoList(this.saveBlocoList).then(result => {
           this.saveBlocoList = [];
