@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   }
 
   isEnable(name: string) {
-    return !this.autorizacao.Rotas.includes(name);
+    return !this.autorizacao.getRotas().includes(name);
   }
 
   logoff(): void {
@@ -44,7 +44,8 @@ export class HomeComponent implements OnInit {
       localStorage.removeItem('TipoDeOperacao');
       localStorage.removeItem('TipoDeProcedimento');
       localStorage.removeItem('Tripulante');
-      localStorage.removeItem('token');
+      localStorage.removeItem('Token');
+      localStorage.removeItem('Rotas');
       localStorage.removeItem('Certificado');
       this.loading = false;
       this.router.navigate(['/']);

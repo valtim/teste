@@ -25,7 +25,14 @@ export class CertificadoComponent implements OnInit {
 
   onSaveClick() {
     if (this.descricao && this.arquivos) {
-      this.api.postUploadEscel(this.descricao, this.arquivos);
+      this.api.postUploadEscel(this.descricao, this.arquivos).then(result => {
+        this.api.message = {
+          show: true,
+          type: 'success',
+          title: 'Certificado',
+          message: 'Upload do arquivo realizadas com sucesso.'
+        };
+      });
     }
   }
 

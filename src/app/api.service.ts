@@ -40,15 +40,15 @@ export class ApiService {
     return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password })
       .toPromise()
       .then((result: any) => {
-        this.autorizacao.Token = result.Token;
-        this.autorizacao.Rotas = result.Rotas;
+        this.autorizacao.setToken(result.Token);
+        this.autorizacao.setRotas(result.Rotas);
         this.updateToken();
       })
       .catch();
   }
 
   private updateToken(): void {
-    localStorage.setItem('token', this.autorizacao.Token);
+    localStorage.setItem('token', this.autorizacao.getToken());
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
