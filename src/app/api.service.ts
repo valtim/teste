@@ -236,7 +236,7 @@ export class ApiService {
     return this.http.get(this.url + 'api/bloco', this.httpOptions).toPromise();
   }
 
-  getListaBlocoByPrefixo(idPrefixo): Promise<any> {
+  getListaBlocoByPrefixo(idPrefixo: string): Promise<any> {
     return this.http.get(`${this.url}api/bloco/${idPrefixo}`, this.httpOptions).toPromise();
   }
 

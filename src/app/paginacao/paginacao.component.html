@@ -6,7 +6,7 @@
     <option value="25">25</option>
   </select>
 
-  <form #pageForm="ngForm" (ngSubmit)="changePaginacao()">
+  <form #pageForm="ngForm" (change)="changePaginacao()">
     <input type="number" min="1" [max]="lastPage" name="currentPage" [(ngModel)]="currentPage" required>
   </form>
   de
