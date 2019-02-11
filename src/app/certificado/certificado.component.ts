@@ -32,6 +32,13 @@ export class CertificadoComponent implements OnInit {
           title: 'Certificado',
           message: 'Upload do arquivo realizadas com sucesso.'
         };
+      }).catch(error => {
+        this.api.message = {
+          show: true,
+          type: 'error',
+          title: 'Certificado',
+          message: 'Ocorreu um problema, tente novamente mais tarde. Se o problemas percistir, entre em contato com o suporte tecnico.'
+        };
       });
     }
   }

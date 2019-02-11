@@ -245,7 +245,15 @@ export class ApiService {
   }
 
   postUploadEscel(descricao: string, arquivos: FileList): Promise<any> {
-    const data = { Descricao: descricao, ArquivoExcel: arquivos[0] };
-    return this.http.post(`${this.url}api/excel/upload`, data, this.httpOptions).toPromise();
+    const data = new FormData();
+    data.append('Descricao', descricao);
+    data.append('ArquivoExcel', arquivos[0]);
+    const option = {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
+        'token': localStorage.getItem('token')
+      })
+    };
+    return this.http.post(`${this.url}api/excel/upload`, data, option).toPromise();
   }
 }
