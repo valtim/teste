@@ -49,7 +49,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'relatorio-voo/editar',
+    path: 'relatorio-voo/:id',
     component: DiarioEditarComponent,
     canActivate: [AuthGuardService]
   },
