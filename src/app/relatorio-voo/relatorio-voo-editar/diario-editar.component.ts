@@ -55,23 +55,29 @@ export class DiarioEditarComponent implements OnInit {
   constructor(private app: AppComponent, private route: Router,
     private diario: DiarioService, private api: ApiService, private activatedRoute: ActivatedRoute) {
 
-    this.prefixos = this.api.getPrefixos();
-    this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
-    this.abastecedoras = this.api.getAbastecedoras();
-    this.api.getTripulantes().then(result => {
-      this.tripulantes = result.Tripulantes;
-    });
-    this.funcaoBordos = this.api.getFuncaoBordos();
-    this.clientes = this.api.getClientes();
-    this.naturezas = this.api.getNaturezas();
-
     if (this.activatedRoute.snapshot.paramMap.get('id')) {
       this.api.getDiarioById(this.activatedRoute.snapshot.paramMap.get('id')).then(result => {
         this.blocos = result.Blocos;
         this.dataDiario = result.Diario;
+        this.tripulantes = result.Tripulante;
+        this.prefixos = result.Prefixo;
+        this.tipoDeOperacoes = result.TipoDeOperacao;
+        this.abastecedoras = result.Abastecedora;
+        this.clientes = result.Cliente;
+        this.naturezas = result.Natureza;
+        this.funcaoBordos = result.FuncaoBordo;
         this.formatarDiario();
       });
     } else {
+      this.prefixos = this.api.getPrefixos();
+      this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
+      this.abastecedoras = this.api.getAbastecedoras();
+      this.api.getTripulantes().then(result => {
+        this.tripulantes = result.Tripulantes;
+      });
+      this.funcaoBordos = this.api.getFuncaoBordos();
+      this.clientes = this.api.getClientes();
+      this.naturezas = this.api.getNaturezas();
       this.dataDiario.DataDoDiario = this.diario.dataSearch;
       this.dataDiario.Linhas = this.createLinhas();
       this.dataDiario.Procedimentos = this.createProcedimentos();
