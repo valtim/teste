@@ -335,9 +335,10 @@
           <td>{{linha.QuantidadeAbastecida}}</td>
           <td>{{linha.NotaDeAbastecimento}}</td>
           <td>
-            <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
+              [(ngModel)]="linha.Abastecedora.Id">
               <option value="">Abastecedora</option>
-              <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Nome}}">{{abastecedora.Nome}}</option>
+              <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Id}}">{{abastecedora.Nome}}</option>
             </select>
           </td>
         </tr>
