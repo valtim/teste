@@ -46,7 +46,7 @@ export class DiarioEditarComponent implements OnInit {
   private loading = true;
   private nDiarios: any;
   private tipoDeOperacoes: any;
-  private abastecedoras: any;
+  private abastecedoras = [];
   private tripulantes: any;
   private funcaoBordos: any;
   private clientes: any;
@@ -117,6 +117,26 @@ export class DiarioEditarComponent implements OnInit {
       this.totalLinha(index);
       this.VFR(index);
       this.Diurno(index);
+      if (!this.dataDiario.Linhas[index].Abastecedora) {
+        this.dataDiario.Linhas[index].Abastecedora = {
+          Id: ''
+        };
+      }
+      if (!this.dataDiario.Linhas[index].FuncaoTrip1) {
+        this.dataDiario.Linhas[index].FuncaoTrip1 = {
+          Id: ''
+        };
+      }
+      if (!this.dataDiario.Linhas[index].FuncaoTrip2) {
+        this.dataDiario.Linhas[index].FuncaoTrip2 = {
+          Id: ''
+        };
+      }
+      if (!this.dataDiario.Linhas[index].TipoDeOperacao) {
+        this.dataDiario.Linhas[index].TipoDeOperacao = {
+          Id: ''
+        };
+      }
       if (!this.dataDiario.Linhas[index].Cliente) {
         this.dataDiario.Linhas[index].Cliente = {
           Id: ''

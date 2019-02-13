@@ -294,9 +294,9 @@
             </select>
           </td>
           <td>
-            <select name="funcao1" id="funcao1" [(ngModel)]="linha.Comandante.CargoStr" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <select name="funcao1" id="funcao1" [(ngModel)]="linha.FuncaoTrip1.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
               <option value="">Função 1</option>
-              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Nome}}">{{funcao.Nome}}</option>
+              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
             </select>
           </td>
           <td>
@@ -306,9 +306,9 @@
             </select>
           </td>
           <td>
-            <select name="funcao2" id="funcao2" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <select name="funcao2" id="funcao2" [(ngModel)]="linha.FuncaoTrip2.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
               <option value="">Função 2</option>
-              <option *ngFor="let funcao of funcaoBordos" value="{{funcao}}">{{funcao.Nome}}</option>
+              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
             </select>
           </td>
           <td>
@@ -324,9 +324,9 @@
             </select>
           </td>
           <td>
-            <select name="tipoOperacao" id="tipoOperacao" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <select name="tipoOperacao" id="tipoOperacao" [(ngModel)]="linha.TipoDeOperacao.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
               <option value="">Tipo de Operação</option>
-              <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Nome}}">{{tipoDeOperacao.Nome}}</option>
+              <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Id}}">{{tipoDeOperacao.Nome}}</option>
             </select>
           </td>
           <td>{{linha.FuelDec}}</td>
