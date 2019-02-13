@@ -1,6 +1,5 @@
 <app-loading *ngIf="loading"></app-loading>
 <app-menssage></app-menssage>
-
 <div class="content">
 
   <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" *ngIf="enableBtnSave()" (click)="saveTripulante()">
@@ -33,7 +32,7 @@
       <img src="assets/icons/search.svg" alt="Search">
     </button>
 
-    <button class="btn btn-new">
+    <button class="btn btn-new" (click)="novoTripulante()">
       +
     </button>
   </div>

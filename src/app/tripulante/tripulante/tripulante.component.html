@@ -113,7 +113,17 @@
       </select>
     </label>
 
-    <table class="table" style="margin-top: 15px">
+    <label class="label2" for="base">
+      Peso (Lb):
+      <input type="number" name="peso" min="0" step=".01" [(ngModel)]="tripulante.UltimoPeso" (change)="changePesoLb()">
+    </label>
+
+    <label class="label2" for="cargo">
+      Peso (Kg):
+      <input type="number" name="peso" min="0" step=".01" [(ngModel)]="pesoKg" (change)="changePesoKg()">
+    </label>
+
+    <table class="table" style="margin-top: 15px;">
       <thead>
         <tr>
           <th>Tipo de Operação</th>

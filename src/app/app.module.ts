@@ -25,6 +25,7 @@ import { PaginacaoComponent } from './paginacao/paginacao.component';
 import { BlocoComponent } from './bloco/bloco.component';
 import { SearchFilterPipe } from './pipe/SearchFilterPipe';
 import { CertificadoComponent } from './certificado/certificado.component';
+import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CertificadoComponent } from './certificado/certificado.component';
     PaginacaoComponent,
     BlocoComponent,
     SearchFilterPipe,
-    CertificadoComponent
+    CertificadoComponent,
+    NovoTripulanteComponent
   ],
   imports: [
     BrowserModule,

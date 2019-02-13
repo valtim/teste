@@ -15,6 +15,7 @@ import { TripulanteComponent } from './tripulante/tripulante/tripulante.componen
 import { LocalidadeComponent } from './localidade/localidade.component';
 import { BlocoComponent } from './bloco/bloco.component';
 import { CertificadoComponent } from './certificado/certificado.component';
+import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -66,6 +67,11 @@ const routes: Routes = [
   {
     path: 'tripulantes',
     component: TripulanteListaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'tripulante/novo',
+    component: NovoTripulanteComponent,
     canActivate: [AuthGuardService]
   },
   {

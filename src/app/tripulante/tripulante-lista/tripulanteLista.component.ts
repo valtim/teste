@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { ApiService } from '../../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tripulante',
@@ -9,16 +10,17 @@ import { ApiService } from '../../api.service';
 })
 export class TripulanteListaComponent implements OnInit {
 
-  constructor(private app: AppComponent, private api: ApiService) {
+  constructor(private app: AppComponent, private api: ApiService, private route: Router) {
     this.app.setTitle('Tripulante');
+    this.app.setVoltar('/home');
   }
 
-  tripulantes: Array<any>;
-  tripulantesFilter: Array<any>;
-  nome = '';
-  trato = '';
-  anac = '';
-  loading = true;
+  private tripulantes: Array<any>;
+  private tripulantesFilter: Array<any>;
+  private nome = '';
+  private trato = '';
+  private anac = '';
+  private loading = true;
 
   ngOnInit() {
     this.tripulantesFilter = this.tripulantes = [];
@@ -74,6 +76,10 @@ export class TripulanteListaComponent implements OnInit {
           });
       }
     };
+  }
+
+  novoTripulante() {
+    this.route.navigate(['/tripulante/novo']);
   }
 
 }

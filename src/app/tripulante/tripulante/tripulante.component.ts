@@ -10,14 +10,15 @@ import { ApiService } from 'src/app/api.service';
 })
 export class TripulanteComponent implements OnInit {
 
-  tripulante: any;
-  loading: boolean;
-  bases: [{ Id: '', Nome: '' }];
-  template: string;
-  cargos: [{ Id: '', Nome: '' }];
-  tipoOperacoes: Array<any>;
-  tipoAeronaveis: Array<any>;
-  cursos: Array<any>;
+  private tripulante: any;
+  private loading: boolean;
+  private bases: [{ Id: '', Nome: '' }];
+  private template: string;
+  private cargos: [{ Id: '', Nome: '' }];
+  private tipoOperacoes: Array<any>;
+  private tipoAeronaveis: Array<any>;
+  private cursos: Array<any>;
+  private pesoKg: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +55,8 @@ export class TripulanteComponent implements OnInit {
       this.tripulante = resp;
       this.tripulante.Nascimento = this.tripulante.Nascimento.split('T')[0];
       this.tripulante.Admissao = this.tripulante.Admissao.split('T')[0];
+
+      this.pesoKg = parseFloat((this.tripulante.UltimoPeso / 2.20462).toFixed(2));
 
       this.tripulante.Operacao = this.tripulante.Operacao.map((operacao) => {
         if (typeof operacao.Ativo === 'undefined') {
@@ -169,6 +172,14 @@ export class TripulanteComponent implements OnInit {
       };
       this.loading = false;
     });
+  }
+
+  changePesoKg() {
+    this.tripulante.UltimoPeso = parseFloat((this.pesoKg * 2.20462).toFixed(2));
+  }
+
+  changePesoLb() {
+    this.pesoKg = parseFloat((this.tripulante.UltimoPeso / 2.20462).toFixed(2));
   }
 
   onClickTabs(name: string) {
