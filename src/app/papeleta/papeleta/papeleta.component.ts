@@ -10,24 +10,18 @@ import { AppComponent } from '../../app.component';
 export class PapeletaComponent implements OnInit {
 
   constructor(private api: ApiService, private app: AppComponent) { }
-  public tripulantes;
-  public diario: any;
-  public loading = true;
+  private tripulantes = [];
+  private diario: any;
+  private loading = true;
   private yearMonth: string;
   private dataDoDia: string;
 
   ngOnInit(): void {
     this.app.setTitle('Papeleta');
-    if (!this.tripulantes) {
-      this.tripulantes = this.api.getTripulantes();
+    this.api.getTripulantes().then(response => {
+      this.tripulantes = response.Tripulantes;
       this.loading = false;
-    }
-    if (!localStorage.getItem('Tripulante')) {
-      this.api.getListas(() => {
-        this.tripulantes = this.api.getTripulantes();
-        this.loading = false;
-      });
-    }
+    });
   }
 
   showPapeleta(id: string) {
