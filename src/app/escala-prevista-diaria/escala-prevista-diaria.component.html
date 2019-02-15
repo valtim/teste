@@ -61,15 +61,17 @@
           </select>
         </td>
         <td>
-          <select name="comandate" [(ngModel)]="trabalho.Escalas[0].Tripulante.Id">
+          <select name="comandate" [(ngModel)]="trabalho.Escalas[0].Tripulante.Id" (change)="onChangeTripulante()">
             <option value="">---</option>
             <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td>
-          <select name="oficial" [(ngModel)]="trabalho.Escalas[1].Tripulante.Id" *ngIf="trabalho.Prefixo.TipoDeAeronave.NumeroDeTripulantes === 2">
+          <select name="oficial" [(ngModel)]="trabalho.Escalas[1].Tripulante.Id" *ngIf="trabalho.Prefixo.TipoDeAeronave.NumeroDeTripulantes === 2"
+            (change)="onChangeTripulante()">
             <option value="">---</option>
-            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
+            <option *ngFor=" let
+            tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td>

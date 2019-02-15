@@ -142,6 +142,47 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
     escala.LimiteDeRefeicao = hora + ':' + m + ':' + s;
   }
 
+  onChangeTripulante() {
+    let tripulante1 = null;
+    let tripulante2 = null;
+    this.escala.Escalas.forEach(escala => {
+      tripulante1 = this.tripulantes.filter(trip => {
+        return trip.Id === escala.Escalas[0].Tripulante.Id;
+      })[0];
+
+      tripulante2 = this.tripulantes.filter(trip => {
+        return trip.Id === escala.Escalas[1].Tripulante.Id;
+      })[0];
+    });
+
+    if (tripulante1 && tripulante2) {
+      if (this.idade(tripulante1.Nascimento) + this.idade(tripulante2.Nascimento) >= 120) {
+        this.api.message = {
+          show: true,
+          type: 'alert',
+          title: 'Atenção com os tripulantes',
+          message: 'Idades dos tripulantes maior que 120 anos.'
+        };
+      }
+      if (this.idade(tripulante1.Nascimento) >= 65) {
+        this.api.message = {
+          show: true,
+          type: 'alert',
+          title: 'Atenção com os tripulantes',
+          message: `Idades do tripulante ${tripulante1.Trato} supera 65 anos.`
+        };
+      }
+      if (this.idade(tripulante2.Nascimento) >= 65) {
+        this.api.message = {
+          show: true,
+          type: 'alert',
+          title: 'Atenção com os tripulantes',
+          message: `Idades do tripulante ${tripulante2.Trato} supera 65 anos.`
+        };
+      }
+    }
+  }
+
   newEscala() {
     const novaEscala = {
       novo: true,
@@ -203,5 +244,19 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
         this.api.message.message = error.error.ExceptionMessage;
       });
     };
+  }
+
+  idade(dataNascimento: string): number {
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    let anos = hoje.getFullYear() - nascimento.getFullYear();
+    if (hoje.getMonth() > nascimento.getMonth()) {
+      anos++;
+    } else if (hoje.getMonth() === nascimento.getMonth()) {
+      if (hoje.getDay() >= nascimento.getDay()) {
+        anos++;
+      }
+    }
+    return anos;
   }
 }
