@@ -265,19 +265,31 @@ export class TripulanteComponent implements OnInit {
   }
 
   onClickSave() {
-
+    const API = this.api;
+    const tripulante = this.tripulante;
     this.api.message = {
       show: true,
       type: 'alert',
       title: 'Salvar',
       message: 'Você deseja salvar as alteração feitas?',
       callBack() {
-        this.api.postNTripulante(this.tripulante)
-          .then((response) => {
-            console.log(response);
-          }).catch((erro) => {
-            console.log(erro);
-          });
+        API.postNTripulante(tripulante).then((response) => {
+          console.log(response);
+          this.api.message = {
+            show: true,
+            type: 'success',
+            title: 'Sucesso',
+            message: 'As alterações foram salvas com sucesso.'
+          };
+        }).catch((erro) => {
+          console.log(erro);
+          this.api.message = {
+            show: true,
+            type: 'error',
+            title: 'Erro',
+            message: erro
+          };
+        });
       }
     };
   }

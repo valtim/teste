@@ -80,6 +80,26 @@ export class NovoTripulanteComponent implements OnInit {
   }
 
   saveTripulante() {
-    console.log(this.tripulante);
+    const API = this.api;
+    const tripulante = this.tripulante;
+    this.api.message = {
+      show: true,
+      type: 'alert',
+      title: 'Salvar',
+      message: 'Você deseja salvar as alteração feitas?',
+      callBack() {
+        API.postNTripulante(tripulante).then((response) => {
+          console.log(response);
+          this.api.message = {
+            show: true,
+            type: 'success',
+            title: 'Sucesso',
+            message: 'As alterações foram salvas com sucesso.'
+          };
+        }).catch((erro) => {
+          console.log(erro);
+        });
+      }
+    };
   }
 }
