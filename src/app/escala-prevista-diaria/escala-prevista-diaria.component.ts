@@ -142,18 +142,18 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
     escala.LimiteDeRefeicao = hora + ':' + m + ':' + s;
   }
 
-  onChangeTripulante() {
+  onChangeTripulante(index: number) {
     let tripulante1 = null;
     let tripulante2 = null;
-    this.escala.Escalas.forEach(escala => {
-      tripulante1 = this.tripulantes.filter(trip => {
-        return trip.Id === escala.Escalas[0].Tripulante.Id;
-      })[0];
+    const trabalho = this.escalasAtivas()[index];
 
-      tripulante2 = this.tripulantes.filter(trip => {
-        return trip.Id === escala.Escalas[1].Tripulante.Id;
-      })[0];
-    });
+    tripulante1 = this.tripulantes.filter(trip => {
+      return trip.Id === trabalho.Escalas[0].Tripulante.Id;
+    })[0];
+
+    tripulante2 = this.tripulantes.filter(trip => {
+      return trip.Id === trabalho.Escalas[1].Tripulante.Id;
+    })[0];
 
     if (tripulante1 && tripulante2) {
       if (this.idade(tripulante1.Nascimento) + this.idade(tripulante2.Nascimento) >= 120) {

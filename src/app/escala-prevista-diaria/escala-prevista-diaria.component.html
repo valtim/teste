@@ -44,7 +44,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let trabalho of escalasAtivas()">
+      <tr *ngFor="let trabalho of escalasAtivas(); index as i">
         <td>
           {{trabalho.Prefixo.TipoDeAeronave.Nome}}
           <label for="disponivel" style="display: flex;align-items: center;">
@@ -61,14 +61,14 @@
           </select>
         </td>
         <td>
-          <select name="comandate" [(ngModel)]="trabalho.Escalas[0].Tripulante.Id" (change)="onChangeTripulante()">
+          <select name="comandate" [(ngModel)]="trabalho.Escalas[0].Tripulante.Id" (change)="onChangeTripulante(i)">
             <option value="">---</option>
             <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
           </select>
         </td>
         <td>
           <select name="oficial" [(ngModel)]="trabalho.Escalas[1].Tripulante.Id" *ngIf="trabalho.Prefixo.TipoDeAeronave.NumeroDeTripulantes === 2"
-            (change)="onChangeTripulante()">
+            (change)="onChangeTripulante(i)">
             <option value="">---</option>
             <option *ngFor=" let
             tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
