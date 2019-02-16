@@ -224,6 +224,18 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
       if (!trabalho.Prefixo) {
         trabalho.Prefixo = { Id: '', TipoDeAeronave: { Id: '', NumeroDeTripulantes: 2 } };
       }
+
+      if (!trabalho.Escalas[0]) {
+        trabalho.Escalas[0] = {
+          Tripulante: { Id: '' }
+        };
+      }
+
+      if (!trabalho.Escalas[1]) {
+        trabalho.Escalas[1] = {
+          Tripulante: { Id: '' }
+        };
+      }
       return trabalho;
     });
   }
