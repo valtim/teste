@@ -371,6 +371,14 @@ export class DiarioEditarComponent implements OnInit {
     }
     return resultProcedimentos;
   }
+  copyToDown(name: string, value: any, index: number) {
+    if (name.indexOf('.') !== -1) {
+      const nomes = name.split('.');
+      this.dataDiario.Linhas[index + 1][nomes[0]][nomes[1]] = value;
+    } else {
+      this.dataDiario.Linhas[index + 1][name] = value;
+    }
+  }
 
   createLinhas(): Array<Linha> {
     const resultLinhas: Array<Linha> = [];

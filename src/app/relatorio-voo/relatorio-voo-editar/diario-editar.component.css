@@ -56,6 +56,17 @@ table {
   text-align: center;
 }
 
+.copy-value {
+  height: 35px;
+  margin: 0 5px;
+  border: 1px solid #cccccc;
+  padding: 5px;
+}
+
+.copy-value>img {
+  height: 100%;
+}
+
 table,
 tr,
 td {

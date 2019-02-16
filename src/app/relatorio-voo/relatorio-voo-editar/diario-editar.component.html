@@ -288,46 +288,81 @@
             <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Tripulante 1</option>
-              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Tripulante 1</option>
+                <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('Comandante.Id', linha.Comandante.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="funcao1" id="funcao1" [(ngModel)]="linha.FuncaoTrip1.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Função 1</option>
-              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="funcao1" id="funcao1" [(ngModel)]="linha.FuncaoTrip1.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Função 1</option>
+                <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('FuncaoTrip1.Id', linha.FuncaoTrip1.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="tripulante2" id="tripulante2" [(ngModel)]="linha.PrimeiroOficial.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Tripulante 2</option>
-              <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="tripulante2" id="tripulante2" [(ngModel)]="linha.PrimeiroOficial.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Tripulante 2</option>
+                <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('PrimeiroOficial.Id', linha.PrimeiroOficial.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="funcao2" id="funcao2" [(ngModel)]="linha.FuncaoTrip2.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Função 2</option>
-              <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="funcao2" id="funcao2" [(ngModel)]="linha.FuncaoTrip2.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Função 2</option>
+                <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('FuncaoTrip2.Id', linha.FuncaoTrip2.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Natureza</option>
-              <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Natureza</option>
+                <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('Natureza', linha.Natureza, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Cliente</option>
-              <option *ngFor="let cliente of clientes" value="{{cliente.Id}}">{{cliente.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Cliente</option>
+                <option *ngFor="let cliente of clientes" value="{{cliente.Id}}">{{cliente.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('Cliente.Id', linha.Cliente.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>
-            <select name="tipoOperacao" id="tipoOperacao" [(ngModel)]="linha.TipoDeOperacao.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
-              <option value="">Tipo de Operação</option>
-              <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Id}}">{{tipoDeOperacao.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="tipoOperacao" id="tipoOperacao" [(ngModel)]="linha.TipoDeOperacao.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+                <option value="">Tipo de Operação</option>
+                <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Id}}">{{tipoDeOperacao.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('TipoDeOperacao.Id', linha.TipoDeOperacao.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
           <td>{{linha.FuelDec}}</td>
           <td>{{linha.FuelPou}}</td>
@@ -335,11 +370,16 @@
           <td>{{linha.QuantidadeAbastecida}}</td>
           <td>{{linha.NotaDeAbastecimento}}</td>
           <td>
-            <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
-              [(ngModel)]="linha.Abastecedora.Id">
-              <option value="">Abastecedora</option>
-              <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Id}}">{{abastecedora.Nome}}</option>
-            </select>
+            <div style="display: flex;">
+              <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
+                [(ngModel)]="linha.Abastecedora.Id">
+                <option value="">Abastecedora</option>
+                <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Id}}">{{abastecedora.Nome}}</option>
+              </select>
+              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('Abastecedora.Id', linha.Abastecedora.Id, i)">
+                <img src="/src/assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
+              </button>
+            </div>
           </td>
         </tr>
         <tr style="background: #c6c6c6;height: 30px;font-weight: bold;">
