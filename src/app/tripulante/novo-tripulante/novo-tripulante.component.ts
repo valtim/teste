@@ -90,7 +90,7 @@ export class NovoTripulanteComponent implements OnInit {
       callBack() {
         API.postNTripulante(tripulante).then((response) => {
           console.log(response);
-          this.api.message = {
+          API.message = {
             show: true,
             type: 'success',
             title: 'Sucesso',
