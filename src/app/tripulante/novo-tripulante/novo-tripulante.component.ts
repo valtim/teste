@@ -89,7 +89,6 @@ export class NovoTripulanteComponent implements OnInit {
       message: 'Você deseja salvar as alteração feitas?',
       callBack() {
         API.postNTripulante(tripulante).then((response) => {
-          console.log(response);
           API.message = {
             show: true,
             type: 'success',
@@ -97,7 +96,12 @@ export class NovoTripulanteComponent implements OnInit {
             message: 'As alterações foram salvas com sucesso.'
           };
         }).catch((erro) => {
-          console.log(erro);
+          API.message = {
+            show: true,
+            type: 'error',
+            title: 'Erro',
+            message: erro.error.Message
+          };
         });
       }
     };
