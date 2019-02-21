@@ -275,7 +275,7 @@ export class TripulanteComponent implements OnInit {
       callBack() {
         API.postNTripulante(tripulante).then((response) => {
           console.log(response);
-          this.api.message = {
+          API.message = {
             show: true,
             type: 'success',
             title: 'Sucesso',
@@ -283,11 +283,11 @@ export class TripulanteComponent implements OnInit {
           };
         }).catch((erro) => {
           console.log(erro);
-          this.api.message = {
+          API.message = {
             show: true,
             type: 'error',
             title: 'Erro',
-            message: erro
+            message: erro.error.Message
           };
         });
       }
