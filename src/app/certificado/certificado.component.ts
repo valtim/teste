@@ -9,8 +9,8 @@ import { ApiService } from '../api.service';
 })
 export class CertificadoComponent implements OnInit {
 
-  private arquivos: FileList;
-  private descricao: string;
+  public arquivos: FileList;
+  public descricao: string;
 
   constructor(private app: AppComponent, private api: ApiService) {
     this.app.setTitle('Certificado');

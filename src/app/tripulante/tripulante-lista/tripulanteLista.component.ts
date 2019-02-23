@@ -15,12 +15,12 @@ export class TripulanteListaComponent implements OnInit {
     this.app.setVoltar('/home');
   }
 
-  private tripulantes: Array<any>;
-  private tripulantesFilter: Array<any>;
-  private nome = '';
-  private trato = '';
-  private anac = '';
-  private loading = true;
+  public tripulantes: Array<any>;
+  public tripulantesFilter: Array<any>;
+  public nome = '';
+  public trato = '';
+  public anac = '';
+  public loading = true;
 
   ngOnInit() {
     this.tripulantesFilter = this.tripulantes = [];

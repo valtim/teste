@@ -12,7 +12,7 @@ import { Diario, Linha, Procedimento } from '../model';
 })
 export class DiarioEditarComponent implements OnInit {
 
-  private dataDiario: Diario = {
+  public dataDiario: Diario = {
     Id: '',
     Ativo: true,
     Linhas: [],
@@ -41,16 +41,16 @@ export class DiarioEditarComponent implements OnInit {
     Refeicao3: '',
     Refeicao4: ''
   };
-  private prefixos: any;
-  private blocos: any;
-  private loading = true;
-  private nDiarios: any;
-  private tipoDeOperacoes: any;
-  private abastecedoras = [];
-  private tripulantes: any;
-  private funcaoBordos: any;
-  private clientes: any;
-  private naturezas: any;
+  public prefixos: any;
+  public blocos: any;
+  public loading = true;
+  public nDiarios: any;
+  public tipoDeOperacoes: any;
+  public abastecedoras = [];
+  public tripulantes: any;
+  public funcaoBordos: any;
+  public clientes: any;
+  public naturezas: any;
 
   constructor(private app: AppComponent, private route: Router,
     private diario: DiarioService, private api: ApiService, private activatedRoute: ActivatedRoute) {

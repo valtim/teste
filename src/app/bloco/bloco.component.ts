@@ -9,13 +9,13 @@ import { ApiService } from '../api.service';
 })
 export class BlocoComponent implements OnInit {
 
-  private blocos = [];
-  private loading = true;
-  private prefixos = [];
-  private saveBlocoList = [];
-  private prefixoSearch = '';
-  private folhaMask = [/\d/, /\d/, /\d/, /\d/];
-  private numeroMask = [/\d/, /\d/, /\d/, '/', /[a-zA-Z]/, /[a-zA-Z]/, /[a-zA-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
+  public blocos = [];
+  public loading = true;
+  public prefixos = [];
+  public saveBlocoList = [];
+  public prefixoSearch = '';
+  public folhaMask = [/\d/, /\d/, /\d/, /\d/];
+  public numeroMask = [/\d/, /\d/, /\d/, '/', /[a-zA-Z]/, /[a-zA-Z]/, /[a-zA-Z]/, '/', /\d/, /\d/, /\d/, /\d/];
 
   constructor(private app: AppComponent, private api: ApiService) { }
 

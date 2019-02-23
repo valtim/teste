@@ -11,7 +11,7 @@ import { AutorizacaoService } from '../autorizacao.service';
 })
 export class HomeComponent implements OnInit {
 
-  private loading: boolean;
+  public loading: boolean;
 
   constructor(
     private app: AppComponent,

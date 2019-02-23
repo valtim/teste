@@ -10,15 +10,15 @@ import { ApiService } from 'src/app/api.service';
 })
 export class TripulanteComponent implements OnInit {
 
-  private tripulante: any;
-  private loading: boolean;
-  private bases: [{ Id: '', Nome: '' }];
-  private template: string;
-  private cargos: [{ Id: '', Nome: '' }];
-  private tipoOperacoes: Array<any>;
-  private tipoAeronaveis: Array<any>;
-  private cursos: Array<any>;
-  private pesoKg: number;
+  public tripulante: any;
+  public loading: boolean;
+  public bases: [{ Id: '', Nome: '' }];
+  public template: string;
+  public cargos: [{ Id: '', Nome: '' }];
+  public tipoOperacoes: Array<any>;
+  public tipoAeronaveis: Array<any>;
+  public cursos: Array<any>;
+  public pesoKg: number;
 
   constructor(
     private route: ActivatedRoute,

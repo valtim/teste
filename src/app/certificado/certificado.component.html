@@ -16,6 +16,6 @@
     <label for="descricao">Descrição</label>
     <textarea name="descricao" id="descricao" [(ngModel)]="descricao" cols="30" rows="10"></textarea>
 
-    <input type="file" name="arquivo" [(ngModel)]="arquivo" accept=".xls,.xlsx,.ods" (change)="selectedFile($event)">
+    <input type="file" name="arquivo" accept=".xls,.xlsx,.ods" (change)="selectedFile($event)">
   </form>
 </div>

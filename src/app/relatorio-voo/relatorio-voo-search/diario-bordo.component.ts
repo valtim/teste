@@ -21,7 +21,7 @@ export class DiarioBordoComponent implements OnInit {
 
   public loading = true;
   public diarios: Diario;
-  private dataSearch: string;
+  public dataSearch: string;
 
   ngOnInit() {
     this.appComponent.setTitle('Relatório de Voo');

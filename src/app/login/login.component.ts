@@ -9,7 +9,7 @@ import { ApiService } from '../api.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private api: ApiService) { }
+  constructor(private router: Router, public api: ApiService) { }
   public username: string;
   public password: string;
   public loading = false;

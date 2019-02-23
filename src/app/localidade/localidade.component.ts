@@ -9,21 +9,21 @@ import { ApiService } from '../api.service';
 })
 export class LocalidadeComponent implements OnInit {
 
-  private search = {
+  public search = {
     Nome: '',
     ICAO: '',
     Tipo: ''
   };
-  private query = '';
-  private tipoLocalidade = 'GMS';
-  private listaLocalidade = [];
-  private perPage = 10;
-  private currentPage = 1;
-  private total = 0;
-  private localidades = [];
-  private localidadesAlteradas = [];
-  private loading = true;
-  private longitudeMask = [/\d/, /\d/, '°', /\d/, /\d/, '\'', /\d/, /\d/, '"'];
+  public query = '';
+  public tipoLocalidade = 'GMS';
+  public listaLocalidade = [];
+  public perPage = 10;
+  public currentPage = 1;
+  public total = 0;
+  public localidades = [];
+  public localidadesAlteradas = [];
+  public loading = true;
+  public longitudeMask = [/\d/, /\d/, '°', /\d/, /\d/, '\'', /\d/, /\d/, '"'];
 
   constructor(private app: AppComponent, private api: ApiService) { }
 

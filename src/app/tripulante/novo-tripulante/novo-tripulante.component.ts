@@ -9,7 +9,7 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class NovoTripulanteComponent implements OnInit {
 
-  private tripulante = {
+  public tripulante = {
     NomeCompleto: '',
     CodigoANAC: '',
     Trato: '',
@@ -30,11 +30,11 @@ export class NovoTripulanteComponent implements OnInit {
     UltimoPeso: 0,
     Operacao: []
   };
-  private pesoKg = 0;
-  private tipoOperacoes = [];
-  private cargos = [];
-  private bases = [];
-  private loading = true;
+  public pesoKg = 0;
+  public tipoOperacoes = [];
+  public cargos = [];
+  public bases = [];
+  public loading = true;
 
   constructor(private api: ApiService, private app: AppComponent) {
     this.app.setTitle('Novo Tripulante');

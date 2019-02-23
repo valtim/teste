@@ -10,11 +10,11 @@ import { AppComponent } from '../../app.component';
 export class PapeletaComponent implements OnInit {
 
   constructor(private api: ApiService, private app: AppComponent) { }
-  private tripulantes = [];
-  private diario: any;
-  private loading = true;
-  private yearMonth: string;
-  private dataDoDia: string;
+  public tripulantes = [];
+  public diario: any;
+  public loading = true;
+  public yearMonth: string;
+  public dataDoDia: string;
 
   ngOnInit(): void {
     this.app.setTitle('Papeleta');

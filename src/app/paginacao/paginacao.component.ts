@@ -9,19 +9,19 @@ import { FormControl, Validators, FormBuilder } from '@angular/forms';
 export class PaginacaoComponent implements OnInit, OnChanges {
 
   @Input('perPage')
-  private perPage: number;
+  public perPage: number;
 
   @Input('currentPage')
-  private currentPage: number;
+  public currentPage: number;
 
   @Input('total')
-  private total: number;
+  public total: number;
 
   @Output() changePage = new EventEmitter<object>();
 
-  private pages: Array<number> = [];
-  private lastPage: number;
-  private pageForm;
+  public pages: Array<number> = [];
+  public lastPage: number;
+  public pageForm;
 
   constructor() { }
 

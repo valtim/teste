@@ -12,7 +12,7 @@ export class AppComponent {
   public title: string;
   public voltar: string;
 
-  constructor(private router: Router, private _location: Location) {
+  constructor(public router: Router, public _location: Location) {
   }
 
   setTitle(title: string) {
