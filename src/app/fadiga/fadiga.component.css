@@ -1,0 +1,38 @@
+.content {
+  display: flex;
+  margin-top: 55px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0 25px;
+}
+
+.search {
+  display: flex;
+  width: 90%;
+  margin: 15px 0;
+  justify-content: center;
+  align-items: end;
+}
+
+.search>* {
+  margin: 0 20px;
+}
+
+#salvar {
+  position: fixed;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+  z-index: 2;
+}
+
+.btn-search {
+  background-color: #84c4ff;
+  line-height: initial;
+}
+
+.btn-search>img {
+  width: 70%;
+}

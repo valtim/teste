@@ -264,4 +264,8 @@ export class ApiService {
   postUsuario(usuarioList: Array<any>): Promise<any> {
     return this.http.post(`${this.url}api/controledeacesso`, usuarioList).toPromise();
   }
+
+  getGerenciaFadiga(data: string): Promise<any> {
+    return this.http.get(`${this.url}api/GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
+  }
 }

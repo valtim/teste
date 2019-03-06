@@ -28,6 +28,7 @@ import { CertificadoComponent } from './certificado/certificado.component';
 import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
 import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
+import { FadigaComponent } from './fadiga/fadiga.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UsuarioComponent } from './usuario/usuario/usuario.component';
     CertificadoComponent,
     NovoTripulanteComponent,
     UsuarioListaComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    FadigaComponent
   ],
   imports: [
     BrowserModule,

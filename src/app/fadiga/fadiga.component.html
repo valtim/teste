@@ -1,0 +1,29 @@
+<app-loading *ngIf="loading"></app-loading>
+
+<div class="content">
+  <div class="search">
+    <input type="date" name="data" [(ngModel)]="data">
+    <button class="btn btn-search" (click)="searchFadiga()">
+      <img src="assets/icons/search.svg" alt="Search">
+    </button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nível</th>
+        <th>Pontos</th>
+        <th>Trato</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor">
+        <td>{{fadiga.Nivel}}</td>
+        <td>{{fadiga.Pontos}}</td>
+        <td>{{fadiga.Trato}}</td>
+        <td>{{fadiga.Status}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

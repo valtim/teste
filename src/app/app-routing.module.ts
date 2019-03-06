@@ -18,6 +18,7 @@ import { CertificadoComponent } from './certificado/certificado.component';
 import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
 import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
+import { FadigaComponent } from './fadiga/fadiga.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -109,6 +110,11 @@ const routes: Routes = [
   {
     path: 'usuario/novo',
     component: UsuarioComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'fadiga',
+    component: FadigaComponent,
     // canActivate: [AuthGuardService]
   },
 ];

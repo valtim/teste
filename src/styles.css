@@ -67,7 +67,8 @@ app-bloco,
 app-certificado,
 app-novo-tripulante,
 app-usuario-lista,
-app-usuario {
+app-usuario,
+app-fadiga {
   width: 100%;
 }
 
