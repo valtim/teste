@@ -16,6 +16,8 @@ import { LocalidadeComponent } from './localidade/localidade.component';
 import { BlocoComponent } from './bloco/bloco.component';
 import { CertificadoComponent } from './certificado/certificado.component';
 import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
+import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
+import { UsuarioComponent } from './usuario/usuario/usuario.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -92,6 +94,21 @@ const routes: Routes = [
   {
     path: 'certificado',
     component: CertificadoComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'usuario',
+    component: UsuarioListaComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'usuario/:id',
+    component: UsuarioComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'usuario/novo',
+    component: UsuarioComponent,
     // canActivate: [AuthGuardService]
   },
 ];

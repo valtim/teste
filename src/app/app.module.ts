@@ -26,6 +26,8 @@ import { BlocoComponent } from './bloco/bloco.component';
 import { SearchFilterPipe } from './pipe/SearchFilterPipe';
 import { CertificadoComponent } from './certificado/certificado.component';
 import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripulante.component';
+import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
+import { UsuarioComponent } from './usuario/usuario/usuario.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripu
     BlocoComponent,
     SearchFilterPipe,
     CertificadoComponent,
-    NovoTripulanteComponent
+    NovoTripulanteComponent,
+    UsuarioListaComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,

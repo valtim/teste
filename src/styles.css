@@ -65,7 +65,9 @@ app-escala-prevista-diaria,
 app-localizacao,
 app-bloco,
 app-certificado,
-app-novo-tripulante {
+app-novo-tripulante,
+app-usuario-lista,
+app-usuario {
   width: 100%;
 }
 

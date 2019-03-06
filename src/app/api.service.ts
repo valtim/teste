@@ -256,4 +256,12 @@ export class ApiService {
     };
     return this.http.post(`${this.url}api/excel/upload`, data, option).toPromise();
   }
+
+  getUsuario(): Promise<any> {
+    return this.http.get(`${this.url}api/controledeacesso`).toPromise();
+  }
+
+  postUsuario(usuarioList: Array<any>): Promise<any> {
+    return this.http.post(`${this.url}api/controledeacesso`, usuarioList).toPromise();
+  }
 }
