@@ -53,7 +53,6 @@ export class UsuarioComponent implements OnInit {
   }
 
   addRemoreAcesso(event: any) {
-    console.log(event);
     if (event.target.checked) {
       this.usuario.PerfisHabilitados.push({
         Id: event.target.value
@@ -70,6 +69,10 @@ export class UsuarioComponent implements OnInit {
   }
 
   saveUsuario() {
+    if (!this.usuario.Tripulante.Id) {
+      this.usuario.Tripulante = null;
+    }
+
     this.loading = true;
     this.api.postUsuario([this.usuario]).then((response) => {
       this.api.message = {
