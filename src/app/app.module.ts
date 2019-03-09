@@ -29,6 +29,7 @@ import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripu
 import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { FadigaComponent } from './fadiga/fadiga.component';
+import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { FadigaComponent } from './fadiga/fadiga.component';
     NovoTripulanteComponent,
     UsuarioListaComponent,
     UsuarioComponent,
-    FadigaComponent
+    FadigaComponent,
+    EscalaTrabalhoComponent
   ],
   imports: [
     BrowserModule,

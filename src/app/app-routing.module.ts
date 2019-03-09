@@ -19,6 +19,8 @@ import { NovoTripulanteComponent } from './tripulante/novo-tripulante/novo-tripu
 import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { FadigaComponent } from './fadiga/fadiga.component';
+import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
+import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -115,6 +117,16 @@ const routes: Routes = [
   {
     path: 'fadiga',
     component: FadigaComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'escala-trabalho',
+    component: EscalaTrabalhoComponent,
+    // canActivate: [AuthGuardService]
+  },
+  {
+    path: 'troca-senha',
+    component: TrocaSenhaComponent,
     // canActivate: [AuthGuardService]
   },
 ];

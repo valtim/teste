@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
       this.api.postLogin(this.username, this.password)
         .then(() => {
           this.loading = false;
+          this.api.username = this.username;
           this.router.navigate(['home']);
         })
         .catch((error) => {

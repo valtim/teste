@@ -1,0 +1,8 @@
+.content {
+  display: flex;
+  margin-top: 55px;
+  align-items: stretch;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0 25px;
+}

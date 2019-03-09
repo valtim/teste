@@ -13,6 +13,7 @@ export class ApiService {
   private permission;
   error: string;
   message: any;
+  username: string;
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.fastapi.com.br/' : '/';
@@ -267,5 +268,17 @@ export class ApiService {
 
   getGerenciaFadiga(data: string): Promise<any> {
     return this.http.get(`${this.url}api/GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
+  }
+
+  getEscalaRealizada(data: string) {
+    return this.http.get(`${this.url}api/escalarealizada/${data}`, this.httpOptions).toPromise();
+  }
+
+  postEscalaRealizada(escala: Array<any>): Promise<any> {
+    return this.http.post(`${this.url}api/escalarealizada`, escala, this.httpOptions).toPromise();
+  }
+
+  postTrocaSenha(usuario: any): Promise<any> {
+    return this.http.post(`${this.url}api/trocasenha`, usuario, this.httpOptions).toPromise();
   }
 }
