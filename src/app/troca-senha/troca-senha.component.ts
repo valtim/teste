@@ -9,25 +9,40 @@ import { AppComponent } from '../app.component';
 })
 export class TrocaSenhaComponent implements OnInit {
 
-  public username: string;
-  public senhaAntiga: string;
-  public senhaNova: string;
+  public user = {
+    Username: '',
+    Password: '',
+    NewPassword: ''
+  };
+  public loading = false;
 
   constructor(private api: ApiService, private app: AppComponent) { }
 
   ngOnInit() {
     this.app.setTitle('Trocar Senha');
-    this.username = this.api.username;
+    this.user.Username = this.api.username;
   }
 
   saveNewPassword() {
-    const user = {
-      Username: this.username,
-      Password: this.senhaAntiga,
-      NewPassword: this.senhaNova
-    };
-    this.api.postTrocaSenha(user).then((response) => {
-
+    this.loading = true;
+    this.api.postTrocaSenha(this.user).then((response) => {
+      this.api.message = {
+        show: true,
+        type: 'success',
+        title: 'Sucesso',
+        message: 'Sua senha foi alterada com sucesso.'
+      };
+      this.loading = false;
+    }).catch((error) => {
+      if (error.status === 403) {
+        this.api.message = {
+          show: true,
+          type: 'error',
+          title: 'Senha incorreta',
+          message: 'Verifique sua antiga senha, ela não está correta.'
+        };
+      }
+      this.loading = false;
     });
   }
 

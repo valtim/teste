@@ -2,7 +2,17 @@
   display: flex;
   margin-top: 55px;
   align-items: stretch;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   justify-content: space-around;
   padding: 0 25px;
+}
+
+.form {
+  margin: 15px auto 0 auto;
+}
+
+.btn-new {
+  background-color: #1fce45;
+  font-weight: bold;
+  width: 250px;
 }
