@@ -18,10 +18,10 @@
   <a *ngIf="isEnable('tripulantes')" routerLink="/tripulantes">
     Tripulante
   </a>
-  <a routerLink="/usuario">
+  <a *ngIf="isEnable('usuario')" routerLink="/usuario">
     Usuário
   </a>
-  <a routerLink="/bloco">
+  <a *ngIf="isEnable('bloco')" routerLink="/bloco">
     Bloco
   </a>
   <a *ngIf="isEnable('localidade')" routerLink="/localidade">
@@ -30,13 +30,13 @@
   <a *ngIf="isEnable('escala-prevista')" routerLink="/escala-prevista">
     Escala Prevista Diária
   </a>
-  <a routerLink="/certificado">
+  <a *ngIf="isEnable('certificado')" routerLink="/certificado">
     Certificado
   </a>
-  <a routerLink="/fadiga">
+  <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
     Fadiga
   </a>
-  <a routerLink="/escala-trabalho">
+  <a *ngIf="isEnable('escala-trabalho')" routerLink="/escala-trabalho">
     Escala Trabalho Realizado
   </a>
   <hr style="width: 95%;border: 1px solid #bfbfbf;">

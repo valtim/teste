@@ -92,42 +92,42 @@ const routes: Routes = [
   {
     path: 'bloco',
     component: BlocoComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'certificado',
     component: CertificadoComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'usuario',
     component: UsuarioListaComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'usuario/:id',
     component: UsuarioComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'usuario/novo',
     component: UsuarioComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'fadiga',
     component: FadigaComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'escala-trabalho',
     component: EscalaTrabalhoComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'troca-senha',
     component: TrocaSenhaComponent,
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService]
   },
 ];
 
