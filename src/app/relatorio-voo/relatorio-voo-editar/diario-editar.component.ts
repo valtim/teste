@@ -278,12 +278,13 @@ export class DiarioEditarComponent implements OnInit {
 
   salvarDario() {
     this.refatorarDataDiario();
-    console.log(this.dataDiario);
     this.loading = true;
     this.api.postDiarioVoo(this.dataDiario).then(() => {
       this.loading = false;
+      this.formatarDiario();
     }).catch(() => {
       this.loading = false;
+      this.formatarDiario();
     });
   }
 
@@ -301,6 +302,22 @@ export class DiarioEditarComponent implements OnInit {
       this.dataDiario.Trip4 = null;
     }
     for (let index = 0; index < this.dataDiario.Linhas.length; index++) {
+      if (this.dataDiario.Linhas[index].Abastecedora.Id === '') {
+        this.dataDiario.Linhas[index].Abastecedora = null;
+      }
+
+      if (this.dataDiario.Linhas[index].TipoDeOperacao.Id === '') {
+        this.dataDiario.Linhas[index].TipoDeOperacao = null;
+      }
+
+      if (this.dataDiario.Linhas[index].FuncaoTrip1.Id === '') {
+        this.dataDiario.Linhas[index].FuncaoTrip1 = null;
+      }
+
+      if (this.dataDiario.Linhas[index].FuncaoTrip2.Id === '') {
+        this.dataDiario.Linhas[index].FuncaoTrip2 = null;
+      }
+
       if (this.dataDiario.Linhas[index].Comandante.Id === '') {
         this.dataDiario.Linhas[index].Comandante = null;
       }
