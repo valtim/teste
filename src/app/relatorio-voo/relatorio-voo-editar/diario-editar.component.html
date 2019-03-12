@@ -367,7 +367,9 @@
           <td>{{linha.FuelDec}}</td>
           <td>{{linha.FuelPou}}</td>
           <td>{{linha.ConsumoDeCombustivel}}</td>
-          <td>{{linha.QuantidadeAbastecida}}</td>
+          <td>
+            <input type="number" name="QuantidadeAbastecida" [(ngModel)]="linha.QuantidadeAbastecida" min="0">
+          </td>
           <td>{{linha.NotaDeAbastecimento}}</td>
           <td>
             <div style="display: flex;">
