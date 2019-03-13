@@ -11,6 +11,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Informação</th>
         <th>Nível</th>
         <th>Pontos</th>
         <th>Trato</th>
@@ -19,6 +20,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor">
+        <td>
+          <button *ngIf="fadiga.Id" id="{{fadiga.Id}}" (click)="tratamentoFadiga($event)">i</button>
+        </td>
         <td>{{fadiga.Nivel}}</td>
         <td>{{fadiga.Pontos}}</td>
         <td>{{fadiga.Trato}}</td>
@@ -26,4 +30,65 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div [ngClass]="{'info': info, 'info-hide': !info}">
+  <div class="info-content">
+    <div>
+      <button class="btn btn-info" [ngClass]="{'btn-select' : pesquisa}" (click)="pesquisa = true">Pesquisa</button>
+      <button class="btn btn-info" [ngClass]="{'btn-select' : !pesquisa}" (click)="pesquisa = false">Tratamento</button>
+    </div>
+    <div class="pesquisa" *ngIf="infoTratamentoFadiga.Pesquisa && pesquisa">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Pergunta</th>
+            <th>Resposta</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pergunta of infoTratamentoFadiga.Pesquisa.Respostas">
+            <td>{{getPergunta(pergunta.Pergunta.Id)}}</td>
+            <td>{{pergunta.Valor}}</td>
+            <td>
+              <img *ngIf="getPergunta(pergunta.Pergunta.Id).indexOf('/') > 0" style="width: 30px" src="../../assets/icons/emoticon{{pergunta.Valor}}.svg"
+                alt="emoticon">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar</button>
+    </div>
+    <div class="pesquisa" *ngIf="infoTratamentoFadiga.Pesquisa && !pesquisa">
+      <form action="" class="form">
+        <div style="width: 100%; display: flex;justify-content: space-around;">
+          <label for="liberado" style="display: flex">
+            Sim: <input type="radio" id="liberado" name="liberado" value="1">
+          </label>
+
+          <label for="liberado" style="display: flex">
+            Não: <input type="radio" id="liberado" name="liberado" value="1">
+          </label>
+        </div>
+
+        <label for="medidas" style="margin-top: 20px">Medidas Tomadas:</label>
+        <textarea name="" id="" style="height: 65px;"></textarea>
+
+        <button class="btn btn-send">Enviar</button>
+        <button class="btn btn-error" (click)="closeTratamentoFadiga()">Cancelar</button>
+      </form>
+
+      <hr style="margin-top: 20px">
+
+      Histórico:
+      <div *ngFor="let historico of infoTratamentoFadiga.Evento.Avaliacoes">
+        Data: {{historico.Data | date: 'dd/MM/yyyy'}}<br>
+        Responsável: {{historico.Responsavel ? historico.Responsavel.Trato : ''}}<br>
+        Liberado: {{historico.Liberado ? 'Sim' : 'Não'}}<br>
+        Texto: {{historico.Texto}}<br>
+        <hr>
+      </div>
+    </div>
+  </div>
 </div>

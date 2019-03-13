@@ -49,11 +49,11 @@ export class ApiService {
   }
 
   private updateToken(): void {
-    localStorage.setItem('token', this.autorizacao.getToken());
+    localStorage.setItem('Token', this.autorizacao.getToken());
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('Token')
       })
     };
   }
@@ -252,7 +252,7 @@ export class ApiService {
     const option = {
       headers: new HttpHeaders({
         // 'Content-Type': 'multipart/form-data',
-        'token': localStorage.getItem('token')
+        'token': localStorage.getItem('Token')
       })
     };
     return this.http.post(`${this.url}api/excel/upload`, data, option).toPromise();
@@ -280,5 +280,9 @@ export class ApiService {
 
   postTrocaSenha(usuario: any): Promise<any> {
     return this.http.post(`${this.url}api/trocasenha`, usuario, this.httpOptions).toPromise();
+  }
+
+  getTratamentoFadiga(id: string): Promise<any> {
+    return this.http.get(`${this.url}/api/TratamentoDaFadiga/${id}`, this.httpOptions).toPromise();
   }
 }

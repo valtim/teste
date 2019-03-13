@@ -12,6 +12,11 @@ export class FadigaComponent implements OnInit {
   public loading = false;
   public data: string;
   public fadigas = [];
+  public infoTratamentoFadiga = {
+    Perguntas: []
+  };
+  public info = false;
+  public pesquisa = true;
 
   constructor(private app: AppComponent, private api: ApiService) { }
 
@@ -29,5 +34,31 @@ export class FadigaComponent implements OnInit {
     }).catch(error => {
       this.loading = false;
     });
+  }
+
+  tratamentoFadiga(e) {
+    this.loading = true;
+    this.api.getTratamentoFadiga(e.target.id).then((response) => {
+      console.log('response: ', response);
+      this.infoTratamentoFadiga = response;
+      this.info = true;
+      this.loading = false;
+    });
+  }
+
+  getPergunta(id: string): string {
+    if (this.infoTratamentoFadiga.Perguntas.length && id) {
+      const Pergunta = this.infoTratamentoFadiga.Perguntas.filter(pergunta => pergunta.Id === id)[0];
+
+      if (Pergunta.Texto) {
+        return Pergunta.Texto;
+      } else {
+        return `${Pergunta.OpcaoMenor} / ${Pergunta.OpcaoMaior}`;
+      }
+    }
+  }
+
+  closeTratamentoFadiga() {
+    this.info = false;
   }
 }

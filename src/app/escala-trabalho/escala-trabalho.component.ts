@@ -23,7 +23,12 @@ export class EscalaTrabalhoComponent implements OnInit {
     this.api.getNTripulanteLista().then((response: any) => {
       this.tripulantes = response;
     }).catch(error => {
-      console.log(error);
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'Erro',
+        message: error.error.Message
+      };
     });
     this.getEscalaRealizada();
   }
@@ -41,7 +46,12 @@ export class EscalaTrabalhoComponent implements OnInit {
       });
       this.loading = false;
     }).catch(error => {
-      console.log(error);
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'Erro',
+        message: error.error.Message
+      };
       this.loading = false;
     });
   }
@@ -134,10 +144,23 @@ export class EscalaTrabalhoComponent implements OnInit {
   }
 
   save() {
-    this.api.postEscalaRealizada(this.saveEscala).then((result) => {
-      this.saveEscala = [];
-      console.log(result);
-    });
+    if (this.saveEscala.length) {
+      this.api.postEscalaRealizada(this.saveEscala).then((result) => {
+        this.api.message = {
+          show: true,
+          type: 'success',
+          title: 'Sucesso',
+          message: 'Alteração realizadas com sucesso.'
+        };
+      }).catch((error) => {
+        this.api.message = {
+          show: true,
+          type: 'error',
+          title: 'Erro',
+          message: error.error.Message
+        };
+      });
+    }
   }
 
 }
