@@ -13,7 +13,14 @@ export class FadigaComponent implements OnInit {
   public data: string;
   public fadigas = [];
   public infoTratamentoFadiga = {
-    Perguntas: []
+    Perguntas: [],
+    Evento: {
+      Pesquisa: { Id: '' }
+    }
+  };
+  public tratamento = {
+    Texto: '',
+    Liberado: null
   };
   public info = false;
   public pesquisa = true;
@@ -60,5 +67,16 @@ export class FadigaComponent implements OnInit {
 
   closeTratamentoFadiga() {
     this.info = false;
+  }
+
+  postTratamentoFadiga() {
+    if (this.infoTratamentoFadiga.Evento.Pesquisa.Id && this.tratamento.Texto) {
+      this.loading = true;
+      this.api.postTratamentoFadiga(this.infoTratamentoFadiga.Evento.Pesquisa.Id, this.tratamento).then(response => {
+        this.loading = false;
+        this.tratamento.Texto = '';
+        this.tratamento.Liberado = '';
+      });
+    }
   }
 }

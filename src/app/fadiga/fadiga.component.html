@@ -64,18 +64,18 @@
       <form action="" class="form">
         <div style="width: 100%; display: flex;justify-content: space-around;">
           <label for="liberado" style="display: flex">
-            Sim: <input type="radio" id="liberado" name="liberado" value="1">
+            Sim: <input type="radio" id="liberado" name="Liberado" value="1" [(ngModel)]="tratamento.Liberado">
           </label>
 
           <label for="liberado" style="display: flex">
-            Não: <input type="radio" id="liberado" name="liberado" value="1">
+            Não: <input type="radio" id="liberado" name="Liberado" value="0" [(ngModel)]="tratamento.Liberado">
           </label>
         </div>
 
         <label for="medidas" style="margin-top: 20px">Medidas Tomadas:</label>
-        <textarea name="" id="" style="height: 65px;"></textarea>
+        <textarea name="Texto" id="" style="height: 65px;" [(ngModel)]="tratamento.Texto"></textarea>
 
-        <button class="btn btn-send">Enviar</button>
+        <button class="btn btn-send" (click)="postTratamentoFadiga()">Enviar</button>
         <button class="btn btn-error" (click)="closeTratamentoFadiga()">Cancelar</button>
       </form>
 
