@@ -16,7 +16,8 @@ export class FadigaComponent implements OnInit {
     Perguntas: [],
     Evento: {
       Pesquisa: { Id: '' }
-    }
+    },
+    Pesquisa: {}
   };
   public tratamento = {
     Texto: '',
