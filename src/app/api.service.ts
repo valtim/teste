@@ -289,4 +289,8 @@ export class ApiService {
   postTratamentoFadiga(id: string, tratamento: any) {
     return this.http.post(`${this.url}/api/TratamentoDaFadiga/${id}`, tratamento, this.httpOptions).toPromise();
   }
+
+  getTipoPergunta() {
+    return this.http.get(`${this.url}/api/TipoDePergunta`, this.httpOptions).toPromise();
+  }
 }

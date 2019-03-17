@@ -70,7 +70,8 @@ app-usuario-lista,
 app-usuario,
 app-fadiga,
 app-escala-trabalho,
-app-troca-senha {
+app-troca-senha,
+app-tipo-pergunta-list {
   width: 100%;
 }
 

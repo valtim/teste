@@ -30,6 +30,7 @@ import { UsuarioListaComponent } from './usuario/usuario-lista/usuario-lista.com
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { FadigaComponent } from './fadiga/fadiga.component';
 import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
+import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.compo
     UsuarioListaComponent,
     UsuarioComponent,
     FadigaComponent,
-    EscalaTrabalhoComponent
+    EscalaTrabalhoComponent,
+    TipoPerguntaListComponent
   ],
   imports: [
     BrowserModule,
