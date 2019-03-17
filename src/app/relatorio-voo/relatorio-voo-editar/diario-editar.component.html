@@ -370,7 +370,9 @@
           <td>
             <input type="number" name="QuantidadeAbastecida" [(ngModel)]="linha.QuantidadeAbastecida" min="0">
           </td>
-          <td>{{linha.NotaDeAbastecimento}}</td>
+          <td>
+            <input type="number" name="NotaDeAbastecimento" [(ngModel)]="linha.NotaDeAbastecimento" min="0">
+          </td>
           <td>
             <div style="display: flex;">
               <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
