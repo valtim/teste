@@ -58,7 +58,7 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar</button>
+      <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button>
     </div>
     <div class="pesquisa" *ngIf="infoTratamentoFadiga.Pesquisa && !pesquisa">
       <form action="" class="form">
@@ -76,17 +76,17 @@
         <textarea name="Texto" id="" style="height: 65px;" [(ngModel)]="tratamento.Texto"></textarea>
 
         <button class="btn btn-send" (click)="postTratamentoFadiga()">Enviar</button>
-        <button class="btn btn-error" (click)="closeTratamentoFadiga()">Cancelar</button>
+        <button class="btn btn-error" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button>
       </form>
 
       <hr style="margin-top: 20px">
 
       Histórico:
       <div *ngFor="let historico of infoTratamentoFadiga.Evento.Avaliacoes">
-        Data: {{historico.Data | date: 'dd/MM/yyyy'}}<br>
-        Responsável: {{historico.Responsavel ? historico.Responsavel.Trato : ''}}<br>
-        Liberado: {{historico.Liberado ? 'Sim' : 'Não'}}<br>
-        Texto: {{historico.Texto}}<br>
+        <b>Data:</b> {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}<br>
+        <b>Responsável:</b> {{historico.Responsavel ? historico.Responsavel.Trato : ''}}<br>
+        <b>Liberado:</b> {{historico.Liberado ? 'Sim' : 'Não'}}<br>
+        <b>Texto:</b> {{historico.Texto}}<br>
         <hr>
       </div>
     </div>

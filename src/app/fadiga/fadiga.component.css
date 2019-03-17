@@ -51,11 +51,12 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
+  z-index: 4;
 }
 
 .info-content {
   width: 600px;
-  max-height: 400px;
+  max-height: calc(100% - 60px);
   background: white;
   border-radius: 5px;
   box-shadow: 0px 0px 5px #666;
