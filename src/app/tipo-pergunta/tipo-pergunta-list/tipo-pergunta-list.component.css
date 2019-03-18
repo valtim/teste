@@ -6,3 +6,16 @@
   justify-content: space-around;
   padding: 0 25px;
 }
+
+.btn-success {
+  background-color: #1fce45;
+}
+
+#salvar {
+  position: fixed;
+  top: 5px;
+  right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+  z-index: 2;
+}

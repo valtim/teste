@@ -293,4 +293,8 @@ export class ApiService {
   getTipoPergunta() {
     return this.http.get(`${this.url}/api/TipoDePergunta`, this.httpOptions).toPromise();
   }
+
+  postTipoPergunta(perguntas: any) {
+    return this.http.post(`${this.url}/api/TipoDePergunta`, perguntas, this.httpOptions).toPromise();
+  }
 }
