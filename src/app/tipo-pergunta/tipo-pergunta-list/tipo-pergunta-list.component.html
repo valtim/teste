@@ -1,4 +1,5 @@
 <app-loading *ngIf="loading"></app-loading>
+<app-menssage></app-menssage>
 <br>
 <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="savarPerguntas()">
   <g>
@@ -19,6 +20,7 @@
         <th>Deletar</th>
         <th>Nome</th>
         <th>Descrição</th>
+        <th>Página</th>
       </tr>
     </thead>
     <tbody>
@@ -26,17 +28,14 @@
         <td>
           <input type="checkbox" name="deletar" id="{{pergunta.Id}}" style="margin: 0 auto;" (change)="deleteThis($event)">
         </td>
-        <td *ngIf="pergunta.Id">
-          {{pergunta.Nome}}
-        </td>
-        <td *ngIf="!pergunta.Id">
+        <td>
           <input type="text" name="Nome" [(ngModel)]="pergunta.Nome">
         </td>
-        <td *ngIf="pergunta.Id">
-          {{pergunta.Descricao}}
-        </td>
-        <td *ngIf="!pergunta.Id">
+        <td>
           <input type="text" name="Descricao" [(ngModel)]="pergunta.Descricao" style="width: calc(100% - 2em);">
+        </td>
+        <td>
+          <input type="number" name="Pagina" [(ngModel)]="pergunta.Pagina" min="0">
         </td>
       </tr>
     </tbody>

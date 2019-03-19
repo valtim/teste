@@ -18,6 +18,10 @@ export class TipoPerguntaListComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
+    this.getTipoPergunta();
+  }
+
+  getTipoPergunta() {
     this.api.getTipoPergunta().then((response: any) => {
       this.perguntas = response;
       this.loading = false;
@@ -43,11 +47,22 @@ export class TipoPerguntaListComponent implements OnInit {
   savarPerguntas() {
     this.loading = true;
     this.api.postTipoPergunta(this.perguntas).then(response => {
-      console.log(response);
       this.loading = false;
+      this.api.message = {
+        show: true,
+        type: 'success',
+        title: 'Sucesso',
+        message: 'Alteração realizadas com sucesso.',
+        callBack: this.getTipoPergunta()
+      };
     }).catch(error => {
-      console.log(error);
       this.loading = false;
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'Erro',
+        message: error
+      };
     });
   }
 }

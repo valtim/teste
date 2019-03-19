@@ -87,7 +87,7 @@ export class BlocoComponent implements OnInit {
           this.api.message = {
             show: true,
             type: 'error',
-            title: 'Errr',
+            title: 'Erro',
             message: erro
           };
         });
