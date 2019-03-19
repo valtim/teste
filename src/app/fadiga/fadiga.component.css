@@ -75,6 +75,7 @@
 }
 
 .table {
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -95,4 +96,9 @@
 .btn-error {
   background-color: #f99;
   margin-top: 20px
+}
+
+.back-alternative {
+  background-color: #d1d1d1cc;
+  padding: 5px;
 }

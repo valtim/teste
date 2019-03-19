@@ -38,29 +38,32 @@
       <button class="btn btn-info" [ngClass]="{'btn-select' : pesquisa}" (click)="pesquisa = true">Pesquisa</button>
       <button class="btn btn-info" [ngClass]="{'btn-select' : !pesquisa}" (click)="pesquisa = false">Tratamento</button>
     </div>
-    <div class="pesquisa" *ngIf="infoTratamentoFadiga.Pesquisa && pesquisa">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Pergunta</th>
-            <th>Resposta</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let pergunta of infoTratamentoFadiga.Pesquisa.Respostas">
-            <td>{{getPergunta(pergunta.Pergunta.Id)}}</td>
-            <td>{{pergunta.Valor}}</td>
-            <td>
-              <img *ngIf="getPergunta(pergunta.Pergunta.Id).indexOf('/') > 0" style="width: 30px" src="../../assets/icons/emoticon{{pergunta.Valor}}.svg"
-                alt="emoticon">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="pesquisa" *ngIf="pesquisa">
+      <div *ngFor="let info of infoPesquisa">
+        <h3>{{info.Titulo}}</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Pergunta</th>
+              <th>Resposta</th>
+              <th *ngIf="info.Perguntas[0].Pergunta.indexOf('/') > 0"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let perg of info.Perguntas">
+              <td>{{perg.Pergunta}}</td>
+              <td>{{perg.Resposta}}</td>
+              <td *ngIf="perg.Pergunta.indexOf('/') > 0">
+                <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px" src="../../assets/icons/emoticon{{perg.Resposta}}.svg"
+                  alt="emoticon">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button>
     </div>
-    <div class="pesquisa" *ngIf="infoTratamentoFadiga.Pesquisa && !pesquisa">
+    <div class="pesquisa" *ngIf="!pesquisa">
       <form action="" class="form">
         <div style="width: 100%; display: flex;justify-content: space-around;">
           <label for="liberado" style="display: flex">
@@ -82,7 +85,7 @@
       <hr style="margin-top: 20px">
 
       Histórico:
-      <div *ngFor="let historico of infoTratamentoFadiga.Evento.Avaliacoes">
+      <div *ngFor="let historico of historicos; index as i" [ngClass]="{'back-alternative': i % 2 === 0}">
         <b>Data:</b> {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}<br>
         <b>Responsável:</b> {{historico.Responsavel ? historico.Responsavel.Trato : ''}}<br>
         <b>Liberado:</b> {{historico.Liberado ? 'Sim' : 'Não'}}<br>

@@ -12,13 +12,9 @@ export class FadigaComponent implements OnInit {
   public loading = false;
   public data: string;
   public fadigas = [];
-  public infoTratamentoFadiga = {
-    Perguntas: [],
-    Evento: {
-      Pesquisa: { Id: '' }
-    },
-    Pesquisa: {}
-  };
+  public infoPesquisa = [];
+  public historicos = [];
+  private idPesquisa = '';
   public tratamento = {
     Texto: '',
     Liberado: null
@@ -47,23 +43,12 @@ export class FadigaComponent implements OnInit {
   tratamentoFadiga(e) {
     this.loading = true;
     this.api.getTratamentoFadiga(e.target.id).then((response) => {
-      console.log('response: ', response);
-      this.infoTratamentoFadiga = response;
+      this.infoPesquisa = response.Resultado;
+      this.historicos = response.Evento.Avaliacoes;
+      this.idPesquisa = response.Evento.Pesquisa.Id;
       this.info = true;
       this.loading = false;
     });
-  }
-
-  getPergunta(id: string): string {
-    if (this.infoTratamentoFadiga.Perguntas.length && id) {
-      const Pergunta = this.infoTratamentoFadiga.Perguntas.filter(pergunta => pergunta.Id === id)[0];
-
-      if (Pergunta.Texto) {
-        return Pergunta.Texto;
-      } else {
-        return `${Pergunta.OpcaoMenor} / ${Pergunta.OpcaoMaior}`;
-      }
-    }
   }
 
   closeTratamentoFadiga() {
@@ -71,9 +56,9 @@ export class FadigaComponent implements OnInit {
   }
 
   postTratamentoFadiga() {
-    if (this.infoTratamentoFadiga.Evento.Pesquisa.Id && this.tratamento.Texto) {
+    if (this.idPesquisa && this.tratamento.Texto) {
       this.loading = true;
-      this.api.postTratamentoFadiga(this.infoTratamentoFadiga.Evento.Pesquisa.Id, this.tratamento).then(response => {
+      this.api.postTratamentoFadiga(this.idPesquisa, this.tratamento).then(response => {
         this.loading = false;
         this.tratamento.Texto = '';
         this.tratamento.Liberado = '';
