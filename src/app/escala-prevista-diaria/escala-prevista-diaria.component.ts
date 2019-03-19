@@ -85,10 +85,12 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
     return matricula1 && matricula2 ? matricula1.Id === matricula2.Id : matricula1 === matricula2;
   }
 
-  private montarEscala(responseEscala) {
+  private montarEscala(responseEscala: any) {
     this.escala = responseEscala;
-    this.escala.Escalas.forEach(escala => {
-      escala.Escalas.forEach(trip => {
+    console.log(this.escala);
+    console.log(this.escala.Escalas);
+    this.escala.Escalas.forEach((escala: any) => {
+      escala.Escalas.forEach((trip: any) => {
         if (!trip.Tripulante) {
           trip.Tripulante = { Id: '', Trato: '' };
         }
@@ -270,5 +272,24 @@ export class EscalaPrevistaDiariaComponent implements OnInit {
       }
     }
     return anos;
+  }
+
+  changePosition(index: number, cimaBaixo: boolean) {
+    if (cimaBaixo) {
+      this.arrayMove(this.escala.Escalas, index, index - 1);
+    } else {
+      this.arrayMove(this.escala.Escalas, index, index + 1);
+    }
+  }
+
+  arrayMove(arr: Array<any>, old_index: number, new_index: number) {
+    if (new_index >= arr.length) {
+      let k = new_index - arr.length + 1;
+      while (k--) {
+        arr.push(undefined);
+      }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr;
   }
 }

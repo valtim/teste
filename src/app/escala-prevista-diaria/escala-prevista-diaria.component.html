@@ -31,6 +31,7 @@
   <table class="table trabalhos">
     <thead>
       <tr>
+        <th>Ordem</th>
         <th>Tipo</th>
         <th>Matrícula</th>
         <th>Comandante</th>
@@ -45,6 +46,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let trabalho of escalasAtivas(); index as i">
+        <td>
+          <button *ngIf="i != 0" (click)="changePosition(i, true)">
+            <img src="../../assets/icons/chevrons.svg" alt="up">
+          </button>
+          <button *ngIf="i != escala.Escalas.length - 1" (click)="changePosition(i, false)">
+            <img src="../../assets/icons/chevrons.svg" alt="down" style="transform: rotate(180deg);">
+          </button>
+        </td>
         <td>
           {{trabalho.Prefixo.TipoDeAeronave.Nome}}
           <label for="disponivel" style="display: flex;align-items: center;">
