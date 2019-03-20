@@ -13,7 +13,7 @@ export class TipoPerguntaListComponent implements OnInit {
   public loading = false;
 
   constructor(private app: AppComponent, private api: ApiService) {
-    this.app.setTitle('Perguntas');
+    this.app.setTitle('Tipo de Pergunta');
   }
 
   ngOnInit() {
