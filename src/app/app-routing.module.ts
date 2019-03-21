@@ -22,6 +22,7 @@ import { FadigaComponent } from './fadiga/fadiga.component';
 import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
+import { PerguntaComponent } from './pergunta/pergunta.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -133,6 +134,11 @@ const routes: Routes = [
   {
     path: 'tipo-pergunta',
     component: TipoPerguntaListComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'pergunta',
+    component: PerguntaComponent,
     canActivate: [AuthGuardService]
   },
 ];

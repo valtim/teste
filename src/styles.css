@@ -55,23 +55,7 @@ app-loading {
   width: 100%;
 }
 
-app-diario-bordo,
-app-diario-editar,
-app-biblioteca,
-app-papeleta,
-app-pagamento,
-app-tripulante,
-app-escala-prevista-diaria,
-app-localizacao,
-app-bloco,
-app-certificado,
-app-novo-tripulante,
-app-usuario-lista,
-app-usuario,
-app-fadiga,
-app-escala-trabalho,
-app-troca-senha,
-app-tipo-pergunta-list {
+router-outlet+* {
   width: 100%;
 }
 
