@@ -14,3 +14,9 @@
   fill: #157dfb;
   z-index: 2;
 }
+
+.btn-success {
+  margin-top: 5px;
+  margin-bottom: -15px;
+  background-color: #1fce45;
+}

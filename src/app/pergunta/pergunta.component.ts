@@ -20,7 +20,8 @@ export class PerguntaComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.api.getPergunta().then((response: any) => {
-      this.perguntas = response;
+      this.perguntas = response.Lista;
+      this.tipoPerguntas = response.TipoDePergunta;
       this.loading = false;
     });
   }
@@ -34,6 +35,13 @@ export class PerguntaComponent implements OnInit {
       Configuracao: '',
       Ativo: true
     });
+  }
+
+  deletePergunta(e: any) {
+    const pergunta = this.perguntas.filter((p) => {
+      return p.Id === e.target.id;
+    })[0];
+    pergunta.Ativo = !e.target.checked;
   }
 
 }

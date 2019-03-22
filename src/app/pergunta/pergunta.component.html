@@ -27,11 +27,15 @@
     <tbody>
       <tr *ngFor="let pergunta of perguntas">
         <td>
-          <input type="checkbox" name="delete" id="{{pergunta.Id}}">
+          <input type="checkbox" name="delete" id="{{pergunta.Id}}" style="margin: 0 auto;"
+            (change)="deletePergunta($event)">
         </td>
         <td>
-          <select name="tipoPergunta">
+          <select name="tipoPergunta" [(ngModel)]="pergunta.TipoPergunta.Id">
             <option value="">Tipo de Pergunta</option>
+            <option *ngFor="let tipoPergunta of tipoPerguntas" value="{{tipoPergunta.Id}}">
+              {{tipoPergunta.Nome}}
+            </option>
           </select>
         </td>
         <td>
