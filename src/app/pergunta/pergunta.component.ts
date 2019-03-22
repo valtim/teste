@@ -44,4 +44,12 @@ export class PerguntaComponent implements OnInit {
     pergunta.Ativo = !e.target.checked;
   }
 
+  savarPerguntas() {
+    this.loading = true;
+    this.api.postPergunta(this.perguntas).then(response => {
+      console.log(response);
+      this.loading = false;
+    });
+  }
+
 }

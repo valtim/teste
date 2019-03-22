@@ -301,4 +301,8 @@ export class ApiService {
   getPergunta() {
     return this.http.get(`${this.url}api/Pergunta`, this.httpOptions).toPromise();
   }
+
+  postPergunta(perguntas: any) {
+    return this.http.post(`${this.url}api/Pergunta`, perguntas, this.httpOptions).toPromise();
+  }
 }
