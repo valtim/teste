@@ -53,8 +53,43 @@
             <tr *ngFor="let perg of info.Perguntas">
               <td>{{perg.Pergunta}}</td>
               <td>{{perg.Resposta}}</td>
-              <td *ngIf="perg.Pergunta.indexOf('/') > 0">
-                <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px" src="../../assets/icons/emoticon{{perg.Resposta}}.svg"
+              <td *ngIf="info.Pagina === 2">
+                <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px"
+                  src="../../assets/icons/emoticon{{perg.Resposta}}.svg" alt="emoticon">
+              </td>
+              <td *ngIf="info.Pagina === 3">
+                <svg *ngIf="perg.Resposta === 1" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="161 108.5 92 92"
+                  width="30" height="30">
+                  <g>
+                    <circle vector-effect="non-scaling-stroke" cx="207" cy="154.5" r="46" fill="#f2bf38" />
+                    <ellipse vector-effect="non-scaling-stroke" cx="196.99999999999986" cy="145.25" rx="3" ry="7.75"
+                      fill="rgb(0,0,0)" />
+                    <path d=" M 183.5 165.5 Q 205.5 177.5 230.5 165.5" fill="none" vector-effect="non-scaling-stroke"
+                      stroke-width="2" stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square"
+                      stroke-miterlimit="3" />
+                    <ellipse vector-effect="non-scaling-stroke" cx="216.99999999999991" cy="145.25" rx="3" ry="7.75"
+                      fill="rgb(0,0,0)" />
+                  </g>
+                </svg>
+
+                <svg *ngIf="perg.Resposta === 2" xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="284 108.5 92 92"
+                  width="30" height="30">
+                  <g>
+                    <circle vector-effect="non-scaling-stroke" cx="330" cy="154.5" r="46" fill="#f2bf38" />
+                    <line x1="310" y1="169.5" x2="350" y2="169.5" vector-effect="non-scaling-stroke" stroke-width="2"
+                      stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3" />
+                    <ellipse vector-effect="non-scaling-stroke" cx="319.99999999999994" cy="145.25" rx="3" ry="7.75"
+                      fill="rgb(0,0,0)" />
+                    <ellipse vector-effect="non-scaling-stroke" cx="339.99999999999994" cy="145.25" rx="3" ry="7.75"
+                      fill="rgb(0,0,0)" />
+                  </g>
+                </svg>
+
+                <img *ngIf="perg.Resposta === 3" style="width: 30px" src="../../assets/icons/quaseDormindo.svg"
+                  alt="emoticon">
+                <img *ngIf="perg.Resposta === 4" style="width: 30px" src="../../assets/icons/dormindo.svg"
                   alt="emoticon">
               </td>
             </tr>
