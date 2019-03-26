@@ -12,7 +12,7 @@
 <div class="content">
   <button class="btn btn-success" (click)="addPergunta()">+ Adicionar</button>
 </div>
-<div class="content">
+<div class="mount-tabela">
   <table class="table">
     <thead>
       <tr>
@@ -50,6 +50,35 @@
         <td>
           <input type="text" name="opcaoMenor" [(ngModel)]="pergunta.Configuracao">
         </td>
+        <td>
+          <button class="btn" (click)="opcoes(pergunta.Id)">Opções</button>
+        </td>
       </tr>
   </table>
+</div>
+<div id="opcoes" *ngIf="showOpcao">
+  <div class="box">
+    <button class="btn btn-success" (click)="addOpcao()">+ Adicionar</button>
+    <hr>
+    <p *ngIf="opcoeList.length === 0"> Nenhuma Opção Cadastrada </p>
+    <table class="table" *ngIf="opcoeList.length > 0">
+      <thead>
+        <tr>
+          <th>Valor</th>
+          <th>Texto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let opcao of opcoeList">
+          <td>
+            <input type="text" name="texto" value="{{opcao.Texto}}">
+          </td>
+          <td>
+            <input type="number" name="valor" value="{{opcao.Valor}}">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-erro" (click)="closeOpcao()">Fechar</button>
+  </div>
 </div>

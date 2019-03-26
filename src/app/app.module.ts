@@ -32,6 +32,7 @@ import { FadigaComponent } from './fadiga/fadiga.component';
 import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
 import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
 import { PerguntaComponent } from './pergunta/pergunta.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { PerguntaComponent } from './pergunta/pergunta.component';
     FadigaComponent,
     EscalaTrabalhoComponent,
     TipoPerguntaListComponent,
-    PerguntaComponent
+    PerguntaComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

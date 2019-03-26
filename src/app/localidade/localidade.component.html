@@ -12,7 +12,8 @@
 
   <div class="search">
     <label class="radio" for="grau">
-      <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="tipoLocalidade" (change)="onChangeFormato()" value="GMS">
+      <input type="radio" id="grau" name="tipoSearch" [(ngModel)]="tipoLocalidade" (change)="onChangeFormato()"
+        value="GMS">
       Graus, Minutos e Segundos
     </label>
 
@@ -56,7 +57,6 @@
       +
     </button>
   </div>
-
   <table class="table">
     <thead>
       <tr>
@@ -98,11 +98,13 @@
           </select>
         </td>
         <td>
-          <input type="text" name="latitude" maxlength="10" [(ngModel)]="localidade.LatitudeStr" [textMask]="{mask: longitudeMask}">
+          <input type="text" name="latitude" maxlength="10" [(ngModel)]="localidade.LatitudeStr"
+            [textMask]="{mask: longitudeMask}">
         </td>
         <td>{{localidade.LatitudeH}}</td>
         <td>
-          <input type="text" name="longitude" maxlength="10" [(ngModel)]="localidade.LongitudeStr" [textMask]="{mask: longitudeMask}">
+          <input type="text" name="longitude" maxlength="10" [(ngModel)]="localidade.LongitudeStr"
+            [textMask]="{mask: longitudeMask}">
         </td>
         <td>{{localidade.LongitudeH}}</td>
         <td>
@@ -114,10 +116,12 @@
             [(ngModel)]="localidade.ResistenciaDoPiso">
         </td>
         <td>
-          <input type="number" (change)="onChangeLocalidade(localidade)" name="altura" min="0" step="0.100" [(ngModel)]="localidade.AlturaDoHeliponto">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="altura" min="0" step="0.100"
+            [(ngModel)]="localidade.AlturaDoHeliponto">
         </td>
         <td>
-          <input type="number" (change)="onChangeLocalidade(localidade)" name="classe" min="0" step="0.100" [(ngModel)]="localidade.Classe">
+          <input type="number" (change)="onChangeLocalidade(localidade)" name="classe" min="0" step="0.100"
+            [(ngModel)]="localidade.Classe">
         </td>
         <td>{{localidade.Atualizacao | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
         <td>
@@ -144,5 +148,6 @@
     </tbody>
   </table>
 
-  <app-paginacao [perPage]="perPage" [currentPage]="currentPage" [total]="total" (changePage)="onChangePage($event)"></app-paginacao>
+  <app-paginacao [perPage]="perPage" [currentPage]="currentPage" [total]="total" (changePage)="onChangePage($event)">
+  </app-paginacao>
 </div>

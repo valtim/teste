@@ -12,6 +12,8 @@ export class PerguntaComponent implements OnInit {
   public loading = false;
   public tipoPerguntas = [];
   public perguntas = [];
+  public showOpcao = false;
+  public opcoeList = [];
 
   constructor(private api: ApiService, private app: AppComponent) {
     this.app.setTitle('Pergunta');
@@ -47,8 +49,40 @@ export class PerguntaComponent implements OnInit {
   savarPerguntas() {
     this.loading = true;
     this.api.postPergunta(this.perguntas).then(response => {
-      console.log(response);
       this.loading = false;
+    });
+  }
+
+  opcoes(id: string) {
+    const pergunta = this.perguntas.filter((p: any) => {
+      return p.Id === id;
+    })[0];
+    this.opcoeList = pergunta.Opcoes;
+    this.showOpcao = true;
+  }
+
+  closeOpcao() {
+    let removeOpcoes = [];
+    this.opcoeList.forEach(opcao => {
+      if (!opcao.Texto.trim()) {
+        removeOpcoes.push(opcao);
+      }
+    });
+
+    removeOpcoes.forEach(remove => {
+      this.opcoeList.splice(remove, 1);
+    });
+
+    removeOpcoes = [];
+    this.showOpcao = false;
+  }
+
+  addOpcao() {
+    this.opcoeList.push({
+      Ativo: true,
+      OrdemDeExibicao: this.opcoeList.length + 1,
+      Texto: '',
+      Valor: 0
     });
   }
 

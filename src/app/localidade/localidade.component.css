@@ -1,18 +1,23 @@
 .content {
-  display: flex;
   margin-top: 55px;
-  align-items: stretch;
-  flex-flow: row wrap;
-  justify-content: space-around;
-  padding: 0 25px;
 }
 
 .search {
   display: flex;
-  width: 90%;
+  width: 100%;
   margin: 15px 0;
   justify-content: space-around;
-  align-items: end;
+  align-items: center;
+}
+
+.table {
+  margin: 0 30px;
+}
+
+app-paginacao {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
 }
 
 #salvar {
