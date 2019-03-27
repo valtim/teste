@@ -20,23 +20,24 @@
       </b>
     </li>
     <li class="nav-item">
-      <b class="nav-link" (click)="onClickTabs('experiencia')" [ngClass]="{'active': template === 'experiencia'}" href="#">Experiência</b>
+      <b class="nav-link" (click)="onClickTabs('experiencia')" [ngClass]="{'active': template === 'experiencia'}"
+        href="#">Experiência</b>
     </li>
     <li class="nav-item">
       <b class="nav-link" (click)="onClickTabs('especializacao')" [ngClass]="{'active': template === 'especializacao'}"
         href="#">Especialização</b>
     </li>
     <li class="nav-item">
-      <b class="nav-link" (click)="onClickTabs('informacoes-academicas')" [ngClass]="{'active': template === 'informacoes-academicas'}"
-        href="#">Informações Acadêmicas</b>
+      <b class="nav-link" (click)="onClickTabs('informacoes-academicas')"
+        [ngClass]="{'active': template === 'informacoes-academicas'}" href="#">Informações Acadêmicas</b>
     </li>
     <li class="nav-item">
       Cursos e Treinamentos Relativos a Função
       <div style="display: flex;justify-content: space-around;">
-        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-geral')" [ngClass]="{'active': template === 'cursos-treinamentos-geral'}"
-          href="#">GERAL</b>
-        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-emar')" [ngClass]="{'active': template === 'cursos-treinamentos-emar'}"
-          href="#">EMAR</b>
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-geral')"
+          [ngClass]="{'active': template === 'cursos-treinamentos-geral'}" href="#">GERAL</b>
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-emar')"
+          [ngClass]="{'active': template === 'cursos-treinamentos-emar'}" href="#">EMPRESA</b>
       </div>
     </li>
   </ul>
@@ -217,7 +218,8 @@
             <input type="number" min="0" step="0.1" name="totalDeHorasIFR" [(ngModel)]="experiencia.TotalDeHorasIFR">
           </td>
           <td>
-            <input type="number" min="0" step="0.1" name="totalDeHorasNoturno" [(ngModel)]="experiencia.TotalDeHorasNoturno">
+            <input type="number" min="0" step="0.1" name="totalDeHorasNoturno"
+              [(ngModel)]="experiencia.TotalDeHorasNoturno">
           </td>
           <td>
             <button class="btn error" (click)="onClickDelete(experiencia)">
@@ -322,7 +324,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Curso</th>
+          <th>Nome</th>
           <th>Instituição</th>
           <th>Ano</th>
           <th>Carga Horária</th>
@@ -337,7 +339,7 @@
       <tbody>
         <tr *ngFor="let geral of filterObjAtivo(tripulante.RelativoFuncaoGeral)">
           <td>
-            <input type="text" name="curso" [(ngModel)]="geral.Curso">
+            <input type="text" name="curso" [(ngModel)]="geral.Nome">
           </td>
           <td>
             <input type="text" name="instituicao" [(ngModel)]="geral.Instituicao">
@@ -362,7 +364,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Curso</th>
+          <th>Certificado</th>
           <th>Instituição</th>
           <th>Inicial</th>
           <th>Data de Fim</th>
@@ -379,7 +381,7 @@
       <tbody>
         <tr *ngFor="let emar of filterObjAtivo(tripulante.RelativoFuncaoEmpresa)">
           <td>
-            <select name="curso" [(ngModel)]="emar.Curso.Id">
+            <select name="curso" [(ngModel)]="emar.Certificado.Id">
               <option value="">---</option>
               <option *ngFor="let curso of cursos" value="{{curso.Id}}">{{curso.Nome}}</option>
             </select>
