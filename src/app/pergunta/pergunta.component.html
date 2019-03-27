@@ -71,10 +71,10 @@
       <tbody>
         <tr *ngFor="let opcao of opcoeList">
           <td>
-            <input type="text" name="texto" value="{{opcao.Texto}}">
+            <input type="text" name="texto" [(ngModel)]="opcao.Texto">
           </td>
           <td>
-            <input type="number" name="valor" value="{{opcao.Valor}}">
+            <input type="number" name="valor" [(ngModel)]="opcao.Valor">
           </td>
         </tr>
       </tbody>
