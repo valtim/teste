@@ -30,7 +30,9 @@ export class PerguntaComponent implements OnInit {
 
   addPergunta() {
     this.perguntas.unshift({
-      tipodepergunta: '',
+      TipoPergunta: {
+        Id: ''
+      },
       Texto: '',
       OpcaoMenor: '',
       OpcaoMaior: '',
