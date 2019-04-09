@@ -51,6 +51,9 @@ export class PerguntaComponent implements OnInit {
   savarPerguntas() {
     this.loading = true;
     this.api.postPergunta(this.perguntas).then(response => {
+      this.perguntas = this.perguntas.filter((pergunta: any) => {
+        return pergunta.Ativo;
+      });
       this.loading = false;
     });
   }
