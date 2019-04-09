@@ -16,37 +16,42 @@
   </h3>
   <div class="form">
     <label for="data">Data</label>
-    <input type="date" name="data" id="data" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null" [(ngModel)]="dataDiario.DataDoDiario">
+    <input type="date" name="data" id="data" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
+      [(ngModel)]="dataDiario.DataDoDiario">
   </div>
   <div class="form">
     <label for="prefixo">Prefixo</label>
-    <select id="prefixo" name="prefixo" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null" [(ngModel)]="dataDiario.Prefixo.Id"
-      (change)="getBlocos()">
+    <select id="prefixo" name="prefixo" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
+      [(ngModel)]="dataDiario.Prefixo.Id" (change)="getBlocos()">
       <option value="">Prefixo</option>
       <option *ngFor="let prefixo of prefixos" value="{{prefixo.Id}}">{{prefixo.PrefixoCompleto}}</option>
     </select>
   </div>
   <div class="form">
     <label for="nDiario">Nº Diário</label>
-    <select id="nDiario" name="nDiario" [(ngModel)]="dataDiario.NumeroDoDiario" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <select id="nDiario" name="nDiario" [(ngModel)]="dataDiario.NumeroDoDiario"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
       <option value="">Nº Diário</option>
       <option *ngFor="let bloco of blocos" value="{{bloco.Numero}}">{{bloco.Numero}}</option>
     </select>
   </div>
   <div class="form">
     <label for="nFolhaDiario">Folha Diário</label>
-    <select id="nFolhaDiario" name="nFolhaDiario" [(ngModel)]="dataDiario.NumeroDaFolha" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <select id="nFolhaDiario" name="nFolhaDiario" [(ngModel)]="dataDiario.NumeroDaFolha"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
       <option value="">Folha Diário</option>
       <option *ngFor="let folha of folhaDiario()" value="{{folha}}">{{folha}}</option>
     </select>
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
     <label for="fechar">Fechar</label>
-    <input type="checkbox" name="fechar" id="fechar" [(ngModel)]="dataDiario.Fechado" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="checkbox" name="fechar" id="fechar" [(ngModel)]="dataDiario.Fechado"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
     <label for="cancelar">Cancelar</label>
-    <input type="checkbox" name="cancelar" id="cancelar" [(ngModel)]="dataDiario.Cancelada" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="checkbox" name="cancelar" id="cancelar" [(ngModel)]="dataDiario.Cancelada"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 </div>
 
@@ -54,7 +59,8 @@
   <h3>Base</h3>
   <div class="form form-3">
     <label for="base">Base</label>
-    <input type="text" name="base" id="base" [(ngModel)]="dataDiario.BaseDeOperacao" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="text" name="base" id="base" [(ngModel)]="dataDiario.BaseDeOperacao"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 </div>
 
@@ -113,28 +119,36 @@
         <td *ngIf="i === 2">Deco. Onshore</td>
         <td *ngIf="i === 3">Pouso Onshore</td>
         <td>
-          <input id="decoffp1d" [(ngModel)]="procedimento.Diurno1p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp1d" [(ngModel)]="procedimento.Diurno1p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp1n" [(ngModel)]="procedimento.Noturno1p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp1n" [(ngModel)]="procedimento.Noturno1p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp2d" [(ngModel)]="procedimento.Diurno2p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp2d" [(ngModel)]="procedimento.Diurno2p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp2n" [(ngModel)]="procedimento.Noturno2p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp2n" [(ngModel)]="procedimento.Noturno2p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp3d" [(ngModel)]="procedimento.Diurno3p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp3d" [(ngModel)]="procedimento.Diurno3p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp3n" [(ngModel)]="procedimento.Noturno3p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp3n" [(ngModel)]="procedimento.Noturno3p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp4d" [(ngModel)]="procedimento.Diurno4p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp4d" [(ngModel)]="procedimento.Diurno4p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
         <td>
-          <input id="decoffp4n" [(ngModel)]="procedimento.Noturno4p" min="0" max="100" type="tel" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+          <input id="decoffp4n" [(ngModel)]="procedimento.Noturno4p" min="0" max="100" type="tel"
+            [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
         </td>
       </tr>
     </table>
@@ -158,42 +172,50 @@
 
   <div class="form">
     <label for="oat">OAT</label>
-    <input type="tel" minlength="4" maxlength="4" name="oat" id="oat" [(ngModel)]="dataDiario.OAT" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="oat" id="oat" [(ngModel)]="dataDiario.OAT"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="q">Q (%)</label>
-    <input type="tel" minlength="4" maxlength="4" name="q" id="q" [(ngModel)]="dataDiario.Q" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="q" id="q" [(ngModel)]="dataDiario.Q"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="n11">N1 #1</label>
-    <input type="tel" minlength="4" maxlength="4" name="n11" id="n11" [(ngModel)]="dataDiario.N1_1" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="n11" id="n11" [(ngModel)]="dataDiario.N1_1"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="n12">N1 #2</label>
-    <input type="tel" minlength="4" maxlength="4" name="n12" id="n12" [(ngModel)]="dataDiario.N1_2" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="n12" id="n12" [(ngModel)]="dataDiario.N1_2"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="t51">T5 #1</label>
-    <input type="tel" minlength="4" maxlength="4" name="t51" id="t51" [(ngModel)]="dataDiario.T5_1" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="t51" id="t51" [(ngModel)]="dataDiario.T5_1"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="t52">T5 #2</label>
-    <input type="tel" minlength="4" maxlength="4" name="t52" id="t52" [(ngModel)]="dataDiario.T5_2" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="t52" id="t52" [(ngModel)]="dataDiario.T5_2"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="rpm">RPM</label>
-    <input type="tel" minlength="4" maxlength="4" name="rpm" id="rpm" [(ngModel)]="dataDiario.RPM" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="rpm" id="rpm" [(ngModel)]="dataDiario.RPM"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 
   <div class="form">
     <label for="tgt">TGT</label>
-    <input type="tel" minlength="4" maxlength="4" name="tgt" id="tgt" [(ngModel)]="dataDiario.TGT" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+    <input type="tel" minlength="4" maxlength="4" name="tgt" id="tgt" [(ngModel)]="dataDiario.TGT"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
 </div>
 
@@ -240,56 +262,73 @@
         <tr *ngFor="let linha of dataDiario.Linhas; index as i">
           <td>{{i+1}}</td>
           <td>
-            <input type="text" [(ngModel)]="linha.OrigemDeclarada" name="de" id="de" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="text" [(ngModel)]="linha.OrigemDeclarada" name="de" id="de"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="text" [(ngModel)]="linha.DestinoDeclarado" name="para" id="para" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="text" [(ngModel)]="linha.DestinoDeclarado" name="para" id="para"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Partida" id="Partida" [(ngModel)]="linha.Partida" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Partida" id="Partida" [(ngModel)]="linha.Partida"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Decolagem" id="Decolagem" [(ngModel)]="linha.Decolagem" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Decolagem" id="Decolagem" [(ngModel)]="linha.Decolagem"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Pouso" id="Pouso" [(ngModel)]="linha.Pouso" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Pouso" id="Pouso" [(ngModel)]="linha.Pouso"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Corte" id="Corte" [(ngModel)]="linha.Corte" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Corte" id="Corte" [(ngModel)]="linha.Corte"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Diurno" id="Diurno" value="{{Diurno(i)}}" readonly [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Diurno" id="Diurno" value="{{Diurno(i)}}" readonly
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="Noturno" id="Noturno" [(ngModel)]="linha.Noturno" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="Noturno" id="Noturno" [(ngModel)]="linha.Noturno"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="IFRC" id="IFRC" [(ngModel)]="linha.IFRC" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="IFRC" id="IFRC" [(ngModel)]="linha.IFRC"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="IFRR" id="IFRR" [(ngModel)]="linha.IFRR" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="IFRR" id="IFRR" [(ngModel)]="linha.IFRR"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="vfr" id="vfr" value="{{VFR(i)}}" readonly [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="vfr" id="vfr" value="{{VFR(i)}}" readonly
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="time" name="total" id="total" value="{{totalLinha(i)}}" readonly [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="time" name="total" id="total" value="{{totalLinha(i)}}" readonly
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="number" min="0" name="Pousos" id="Pousos" [(ngModel)]="linha.Pousos" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="number" min="0" name="Pousos" id="Pousos" [(ngModel)]="linha.Pousos"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="number" min="0" name="Ciclos" id="Ciclos" [(ngModel)]="linha.Ciclos" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="number" min="0" name="Ciclos" id="Ciclos" [(ngModel)]="linha.Ciclos"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="number" min="0" name="Pax" id="Pax" [(ngModel)]="linha.Pax" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="number" min="0" name="Pax" id="Pax" [(ngModel)]="linha.Pax"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
-            <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+            <input type="number" min="0" name="Carga" id="Carga" [(ngModel)]="linha.Carga"
+              [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
           </td>
           <td>
             <div style="display: flex;">
-              <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="tripulante1" id="tripulante1" [(ngModel)]="linha.Comandante.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Tripulante 1</option>
                 <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
               </select>
@@ -300,40 +339,47 @@
           </td>
           <td>
             <div style="display: flex;">
-              <select name="funcao1" id="funcao1" [(ngModel)]="linha.FuncaoTrip1.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="funcao1" id="funcao1" [(ngModel)]="linha.FuncaoTrip1.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Função 1</option>
                 <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
               </select>
-              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('FuncaoTrip1.Id', linha.FuncaoTrip1.Id, i)">
+              <button *ngIf="i<7" class="btn copy-value"
+                (click)="copyToDown('FuncaoTrip1.Id', linha.FuncaoTrip1.Id, i)">
                 <img src="assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
               </button>
             </div>
           </td>
           <td>
             <div style="display: flex;">
-              <select name="tripulante2" id="tripulante2" [(ngModel)]="linha.PrimeiroOficial.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="tripulante2" id="tripulante2" [(ngModel)]="linha.PrimeiroOficial.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Tripulante 2</option>
                 <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">{{tripulante.Trato}}</option>
               </select>
-              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('PrimeiroOficial.Id', linha.PrimeiroOficial.Id, i)">
+              <button *ngIf="i<7" class="btn copy-value"
+                (click)="copyToDown('PrimeiroOficial.Id', linha.PrimeiroOficial.Id, i)">
                 <img src="assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
               </button>
             </div>
           </td>
           <td>
             <div style="display: flex;">
-              <select name="funcao2" id="funcao2" [(ngModel)]="linha.FuncaoTrip2.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="funcao2" id="funcao2" [(ngModel)]="linha.FuncaoTrip2.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Função 2</option>
                 <option *ngFor="let funcao of funcaoBordos" value="{{funcao.Id}}">{{funcao.Nome}}</option>
               </select>
-              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('FuncaoTrip2.Id', linha.FuncaoTrip2.Id, i)">
+              <button *ngIf="i<7" class="btn copy-value"
+                (click)="copyToDown('FuncaoTrip2.Id', linha.FuncaoTrip2.Id, i)">
                 <img src="assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
               </button>
             </div>
           </td>
           <td>
             <div style="display: flex;">
-              <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="natureza" id="natureza" [(ngModel)]="linha.Natureza"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Natureza</option>
                 <option *ngFor="let natureza of naturezas" value="{{natureza.Id}}">{{natureza.Nome}}</option>
               </select>
@@ -344,7 +390,8 @@
           </td>
           <td>
             <div style="display: flex;">
-              <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="cliente" id="cliente" [(ngModel)]="linha.Cliente.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Cliente</option>
                 <option *ngFor="let cliente of clientes" value="{{cliente.Id}}">{{cliente.Nome}}</option>
               </select>
@@ -355,18 +402,25 @@
           </td>
           <td>
             <div style="display: flex;">
-              <select name="tipoOperacao" id="tipoOperacao" [(ngModel)]="linha.TipoDeOperacao.Id" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
+              <select name="tipoOperacao" id="tipoOperacao" [(ngModel)]="linha.TipoDeOperacao.Id"
+                [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
                 <option value="">Tipo de Operação</option>
-                <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Id}}">{{tipoDeOperacao.Nome}}</option>
+                <option *ngFor="let tipoDeOperacao of tipoDeOperacoes" value="{{tipoDeOperacao.Id}}">
+                  {{tipoDeOperacao.Nome}}</option>
               </select>
-              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('TipoDeOperacao.Id', linha.TipoDeOperacao.Id, i)">
+              <button *ngIf="i<7" class="btn copy-value"
+                (click)="copyToDown('TipoDeOperacao.Id', linha.TipoDeOperacao.Id, i)">
                 <img src="assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
               </button>
             </div>
           </td>
-          <td>{{linha.FuelDec}}</td>
-          <td>{{linha.FuelPou}}</td>
-          <td>{{linha.ConsumoDeCombustivel}}</td>
+          <td>
+            <input type="number" name="FuelPou" min="0" [(ngModel)]="linha.FuelDec">
+          </td>
+          <td>
+            <input type="number" name="FuelPou" min="0" [(ngModel)]="linha.FuelPou">
+          </td>
+          <td>{{linha.FuelDec - linha.FuelPou}}</td>
           <td>
             <input type="number" name="QuantidadeAbastecida" [(ngModel)]="linha.QuantidadeAbastecida" min="0">
           </td>
@@ -378,9 +432,11 @@
               <select name="abastecedora" id="abastecedora" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"
                 [(ngModel)]="linha.Abastecedora.Id">
                 <option value="">Abastecedora</option>
-                <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Id}}">{{abastecedora.Nome}}</option>
+                <option *ngFor="let abastecedora of abastecedoras" value="{{abastecedora.Id}}">{{abastecedora.Nome}}
+                </option>
               </select>
-              <button *ngIf="i<7" class="btn copy-value" (click)="copyToDown('Abastecedora.Id', linha.Abastecedora.Id, i)">
+              <button *ngIf="i<7" class="btn copy-value"
+                (click)="copyToDown('Abastecedora.Id', linha.Abastecedora.Id, i)">
                 <img src="assets/icons/curve-down-arrow.svg" alt="Copiar para a linha de baixo">
               </button>
             </div>
@@ -417,6 +473,7 @@
 
   <div class="form" style="margin: 15px 0">
     <label for="Ocorrencias">Ocorrências</label>
-    <textarea [(ngModel)]="dataDiario.Ocorrencias" name="Ocorrencias" cols="100" rows="35" [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"></textarea>
+    <textarea [(ngModel)]="dataDiario.Ocorrencias" name="Ocorrencias" cols="100" rows="35"
+      [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null"></textarea>
   </div>
 </div>
