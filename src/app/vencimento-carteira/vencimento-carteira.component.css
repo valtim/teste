@@ -25,10 +25,6 @@
   margin: 0;
 }
 
-#cursos {
-  display: flex;
-}
-
 #cursos tbody tr td {
   white-space: nowrap;
   cursor: pointer;
@@ -46,12 +42,11 @@
   margin: 0 15px;
   margin-bottom: 20px;
   font-size: 13px;
-  /* white-space: nowrap; */
 }
 
-.table-response {
-  display: flex;
-  flex-wrap: nowrap;
+.table-response table {
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .table tbody tr:nth-child(2n) {

@@ -61,6 +61,12 @@ router-outlet+* {
   margin-left: 50px;
 }
 
+app-vencimento-carteira {
+  width: auto;
+  margin-left: 50px;
+  white-space: nowrap;
+}
+
 app-loading {
   z-index: 9999;
   background-color: #50505080;
