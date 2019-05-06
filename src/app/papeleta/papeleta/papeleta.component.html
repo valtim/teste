@@ -1,17 +1,17 @@
 <app-loading *ngIf="loading"></app-loading>
 <div class="content">
-  <div style="width: 100%;display: flex;justify-content: center; margin-bottom: 15px;">
+  <div class="no-print">
     <input class="no-print" type="month" name="data" placeholder="YYYY-MM" [(ngModel)]="yearMonth">
   </div>
 
-  <table class="no-print">
+  <table class="no-print  nomes">
     <tr *ngFor="let tripulante of tripulantes; index as i; first as isFirst" (click)="showPapeleta(tripulante.Id)">
       <td>{{tripulante.CodigoANAC}}</td>
       <td>{{tripulante.NomeCompleto}}</td>
     </tr>
   </table>
 
-  <table *ngIf="diario">
+  <table *ngIf="diario" class="teste123">
     <tr>
       <th class="border" colspan="9"><img src="assets/img/emar.jpg"></th>
       <th class="border" colspan="6">
@@ -95,6 +95,9 @@
     </tr>
     <tr>
       <td class="assinatura" colspan="18">Nome e Assinatura do Recebedor</td>
+    </tr>
+    <tr>
+      <td class="assinatura" colspan="18">&nbsp;</td>
     </tr>
   </table>
 

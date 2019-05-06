@@ -1,24 +1,16 @@
-.content {
-  display: flex;
-  margin-top: 55px;
-  align-items: stretch;
-  flex-flow: row wrap;
-  justify-content: space-around;
+table {
 }
 
-table {
-  border-collapse: collapse;
-  text-align: center;
-  margin-bottom: 15px;
+img{
+  height: 36px;
+}
+
+.border {
+  border: 1px solid #d8d8d8;
 }
 
 table tr td,
 table tr th {
-  border: 1px solid #d8d8d8;
-  padding: 10px;
-}
-
-.border {
   border: 1px solid #d8d8d8;
 }
 
@@ -26,18 +18,56 @@ table tr:nth-child(2n) {
   background-color: #ececec;
 }
 
-.tabela-clone {
-  display: none;
+@media screen{
+
+  .content {
+    margin-top: 55px;
+  }
+
+  .nomes{
+   width:30%;
+      float:left;
+  }
+
+  .teste123 {
+      font-size: 10px;
+      float:left;
+      width:70%; 
+      text-align: center;
+      height: 100%;
+      border-collapse: collapse;
+      float: left;
+  }
+
+  .tabela-clone {
+    display: none;
+  }
+
 }
 
-@media (max-width: 580px) {
-  table {
-    width: 90%;
-  }
-}
+
 
 @media print {
-  .tabela-clone {
-    display: block;
+  .tabela-clone {         
+      font-size: 6px;
+      float:left;
+      width:50%; 
+      text-align: center;
+      height: 100%;
+      border-collapse: collapse;
+      float: left;
+  }
+
+  .teste123 {
+      font-size: 6px;
+      float:left;
+      width:50%; 
+      text-align: center;
+      height: 100%;
+      border-collapse: collapse;
+      float: left;
+  }
+  .no-print{
+display:none;
   }
 }
