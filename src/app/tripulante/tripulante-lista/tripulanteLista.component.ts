@@ -23,16 +23,21 @@ export class TripulanteListaComponent implements OnInit {
   public loading = true;
 
   ngOnInit() {
-    this.tripulantesFilter = this.tripulantes = [];
-    this.api.getNTripulanteLista().then(response => {
-      this.tripulantesFilter = this.tripulantes = response;
-      this.tripulantesFilter = this.tripulantesFilter.map(tripulante => {
-        tripulante.Excluir = !tripulante.Ativo;
-        return tripulante;
-      });
-      this.loading = false;
-    });
+    this.buscarTodos();
   }
+
+
+buscarTodos(){
+  this.tripulantesFilter = this.tripulantes = [];
+  this.api.getNTripulanteLista().then(response => {
+    this.tripulantesFilter = this.tripulantes = response;
+    this.tripulantesFilter = this.tripulantesFilter.map(tripulante => {
+      tripulante.Excluir = !tripulante.Ativo;
+      return tripulante;
+    });
+    this.loading = false;
+  });
+}
 
   search() {
     this.tripulantes = this.tripulantesFilter.filter((trip) => {
@@ -67,10 +72,11 @@ export class TripulanteListaComponent implements OnInit {
       type: 'alert',
       title: 'Tem certeza?',
       message: 'Você deseja deletar o(s) tripulante(s): ' + nomes.join(', '),
-      callBack() {
+      callBack: () => {
         this.api.postNTripulantes(tripulantesParaEscluir)
           .then((response) => {
             console.log(response);
+            this.buscarTodos();
           }).catch((erro) => {
             console.log(erro);
           });
