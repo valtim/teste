@@ -39,7 +39,8 @@ export class DiarioEditarComponent implements OnInit {
     Refeicao1: '',
     Refeicao2: '',
     Refeicao3: '',
-    Refeicao4: ''
+    Refeicao4: '',
+    Ocorrencias: ''
   };
   public prefixos: any;
   public blocos: any;
@@ -51,6 +52,7 @@ export class DiarioEditarComponent implements OnInit {
   public funcaoBordos: any;
   public clientes: any;
   public naturezas: any;
+  public cancelar: boolean;
 
   constructor(private app: AppComponent, private route: Router,
     private diario: DiarioService, private api: ApiService, private activatedRoute: ActivatedRoute) {
@@ -87,6 +89,7 @@ export class DiarioEditarComponent implements OnInit {
 
   ngOnInit() {
     this.app.setVoltar('/relatorio-voo');
+    this.permiteCancelar();
   }
 
   formatarDiario() {
@@ -388,6 +391,14 @@ export class DiarioEditarComponent implements OnInit {
     }
     return resultProcedimentos;
   }
+
+  permiteCancelar() {
+    this.cancelar = (this.dataDiario.Trip1.Id !== ''  || this.dataDiario.Trip2.Id !== ''
+    || this.dataDiario.Trip3.Id !== '' || this.dataDiario.Trip4.Id !== '')
+    && this.dataDiario.Ocorrencias !== '';
+    this.cancelar = this.cancelar && this.dataDiario.PermiteAlteracao;
+  }
+
   copyToDown(name: string, value: any, index: number) {
     if (name.indexOf('.') !== -1) {
       const nomes = name.split('.');

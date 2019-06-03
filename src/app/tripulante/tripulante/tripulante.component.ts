@@ -236,6 +236,7 @@ export class TripulanteComponent implements OnInit {
       Ativo: true,
       CargaHoraria: 0,
       Curso: { Id: '' },
+      Certificado: { Id: '' },
       DataDeFim: '',
       Inicial: false,
       Validade: ''
