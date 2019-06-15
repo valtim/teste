@@ -77,6 +77,9 @@ export class DiarioEditarComponent implements OnInit {
       this.api.getTripulantes().then(result => {
         this.tripulantes = result.Tripulantes;
       });
+      this.api.getListaBloco().then(response => {
+        this.blocos = response;
+      });
       this.funcaoBordos = this.api.getFuncaoBordos();
       this.clientes = this.api.getClientes();
       this.naturezas = this.api.getNaturezas();
