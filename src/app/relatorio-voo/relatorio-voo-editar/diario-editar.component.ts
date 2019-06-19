@@ -288,9 +288,21 @@ export class DiarioEditarComponent implements OnInit {
     this.api.postDiarioVoo(this.dataDiario).then(() => {
       this.loading = false;
       this.formatarDiario();
+      this.api.message = {
+        show: true,
+        type: 'success',
+        title: 'Sucesso',
+        message: 'Diário Salvo com Sucesso.'
+      };
     }).catch(() => {
       this.loading = false;
       this.formatarDiario();
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'Erro',
+        message: 'Problemas ao salvar o diário.'
+      };
     });
   }
 
