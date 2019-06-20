@@ -414,6 +414,15 @@ export class DiarioEditarComponent implements OnInit {
     this.cancelar = this.cancelar && this.dataDiario.PermiteAlteracao;
   }
 
+  calcelarClick() {
+    this.api.message = {
+      show: true,
+      type: 'error',
+      title: 'Ateção',
+      message: 'Para cancelar um relatório de voo é necessário preencher um TRIPULANTE e as OCORRÊNCIAS'
+    };
+  }
+
   copyToDown(name: string, value: any, index: number) {
     if (name.indexOf('.') !== -1) {
       const nomes = name.split('.');

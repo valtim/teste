@@ -50,7 +50,7 @@
       [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
-    <label for="cancelar">Cancelar</label>
+    <label for="cancelar" (click)="calcelarClick()">Cancelar</label>
     <input type="checkbox" name="cancelar" id="cancelar" [(ngModel)]="dataDiario.Cancelada"
       [attr.disabled]="!cancelar ? '' : null">
   </div>
