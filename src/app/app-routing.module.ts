@@ -23,6 +23,7 @@ import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.compo
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
 import { PerguntaComponent } from './pergunta/pergunta.component';
+import { RelatorioVooPeriudoComponent } from './relatorio-voo/relatorio-voo-periudo/relatorio-voo-periudo.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -55,6 +56,11 @@ const routes: Routes = [
     path: 'relatorio-voo/novo',
     component: DiarioEditarComponent,
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'relatorio-voo-periudo',
+    component: RelatorioVooPeriudoComponent,
+    // canActivate: [AuthGuardService]
   },
   {
     path: 'relatorio-voo/:id',

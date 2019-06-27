@@ -1,0 +1,57 @@
+<app-loading *ngIf="loading"></app-loading>
+<div class="home">
+  <div class="content">
+    <div class="prefixo">
+      <select [(ngModel)]="plataforma" name="plataforma" multiple>
+        <option *ngFor="let prefixo of prefixos"
+          value="{{prefixo.PrefixoCompleto}}">
+          {{prefixo.PrefixoCompleto}}
+        </option>
+      </select>
+    </div>
+    <div class="datas">
+      <label for="dataInicio" style="margin-bottom: 10px">
+        Data de Início
+        <input type="date" name="dataInicio" id="dataInicio" style="margin-left: 10px" [(ngModel)]="dataInicio">
+      </label>
+      <label for="dataInicio">
+        Data de Fim
+        <input type="date" name="dataInicio" id="dataInicio" style="margin-left: 10px" [(ngModel)]="dataFim">
+      </label>
+    </div>
+    <div class="fechadoBtn">
+      <label for="fechado">
+        Fechado
+        <input type="checkbox" name="fechado" id="fechado" [(ngModel)]="fechado">
+      </label>
+
+      <button class="btn btn-search" (click)="pesquisar()">
+        <img alt="Search" src="assets/icons/search.svg">
+      </button>
+    </div>
+  </div>
+  <div>
+    <table class="table">
+      <thead>
+        <th>Fechado</th>
+        <th>Cancelado</th>
+        <th>Prefixo</th>
+        <th>Número do Diário</th>
+        <th>Número da Folha</th>
+        <th>Data do diário</th>
+        <th>Tipo 1</th>
+        <th>Tipo 2</th>
+      </thead>
+      <tr *ngFor="let relatorio of relatorios">
+        <td>{{relatorio.PermitirAlteracao}}</td>
+        <td>{{relatorio.Cancelada}}</td>
+        <td>{{relatorio.Prefixo.PrefixoCompleto}}</td>
+        <td></td>
+        <td></td>
+        <td>{{relatorio.DataDoDiario | date:'dd/MM/yyyy'}}</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>

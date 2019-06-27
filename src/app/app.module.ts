@@ -33,6 +33,7 @@ import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.compo
 import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
 import { PerguntaComponent } from './pergunta/pergunta.component';
 import { MenuComponent } from './menu/menu.component';
+import { RelatorioVooPeriudoComponent } from './relatorio-voo/relatorio-voo-periudo/relatorio-voo-periudo.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { MenuComponent } from './menu/menu.component';
     EscalaTrabalhoComponent,
     TipoPerguntaListComponent,
     PerguntaComponent,
-    MenuComponent
+    MenuComponent,
+    RelatorioVooPeriudoComponent
   ],
   imports: [
     BrowserModule,
