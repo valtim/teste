@@ -59,7 +59,7 @@ export class ApiService {
   }
 
   getDiarioByDate(date: string): Promise<any> {
-    return this.http.get(this.url + 'api/relatorio-de-voo/list/' + date, this.httpOptions)
+    return this.http.get(`${this.url}api/relatorio-de-voo/list/${date}`, this.httpOptions)
       .toPromise();
   }
 
@@ -69,12 +69,12 @@ export class ApiService {
   }
 
   getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
-    return this.http.get(this.url + `api/novodiario/${id}/${month}/${year}`, this.httpOptions)
+    return this.http.get(`${this.url}api/novodiario/${id}/${month}/${year}`, this.httpOptions)
       .toPromise();
   }
 
   getPagamento(data: string): Promise<any> {
-    return this.http.get(this.url + `api/relatorio/pagamento/${data}`, this.httpOptions)
+    return this.http.get(`${this.url}api/relatorio/pagamento/${data}`, this.httpOptions)
       .toPromise();
   }
 
@@ -102,7 +102,7 @@ export class ApiService {
   }
 
   getTripulantes(): Promise<any> {
-    return this.http.get(this.url + `api/quadro-de-tripulantes`, this.httpOptions)
+    return this.http.get(`${this.url}api/quadro-de-tripulantes`, this.httpOptions)
       .toPromise();
   }
 
@@ -131,37 +131,37 @@ export class ApiService {
   }
 
   getBloco(IdPrefixo: string): Promise<any> {
-    return this.http.get(this.url + `api/bloco/${IdPrefixo}`, this.httpOptions)
+    return this.http.get(`${this.url}api/bloco/${IdPrefixo}`, this.httpOptions)
       .toPromise();
   }
 
   getCertificado(): Promise<any> {
-    return this.http.get(this.url + 'api/certificado', this.httpOptions)
+    return this.http.get(`${this.url}api/certificado`, this.httpOptions)
       .toPromise();
   }
 
   getVencimento(): Promise<any> {
-    return this.http.get(this.url + 'api/vencimento', this.httpOptions)
+    return this.http.get(`${this.url}api/vencimento`, this.httpOptions)
       .toPromise();
   }
 
   postVencimento(vencimentoList: Array<any>): Promise<any> {
-    return this.http.post(this.url + 'api/vencimento', vencimentoList, this.httpOptions)
+    return this.http.post(`${this.url}api/vencimento`, vencimentoList, this.httpOptions)
       .toPromise();
   }
 
   postDiarioVoo(diarioVoo: any): Promise<any> {
-    return this.http.post(this.url + 'api/novodiario', diarioVoo, this.httpOptions)
+    return this.http.post(`${this.url}api/novodiario`, diarioVoo, this.httpOptions)
       .toPromise();
   }
 
   getLogoff(): Promise<any> {
-    return this.http.get(this.url + 'api/exit', this.httpOptions)
+    return this.http.get(`${this.url}api/exit`, this.httpOptions)
       .toPromise();
   }
 
   getMenuPermission() {
-    this.http.get(this.url + 'api/menu', this.httpOptions)
+    this.http.get(`${this.url}api/menu`, this.httpOptions)
       .toPromise()
       .then((response) => {
         this.permission = response;
@@ -169,26 +169,26 @@ export class ApiService {
   }
 
   getEscala(dataEscala: string): Promise<any> {
-    return this.http.get(this.url + 'api/novaescala/' + dataEscala, this.httpOptions)
+    return this.http.get(`${this.url}api/novaescala/${dataEscala}`, this.httpOptions)
       .toPromise();
   }
 
   getUltimaEscala(): Promise<any> {
-    return this.http.get(this.url + 'api/ultimaescala', this.httpOptions)
+    return this.http.get(`${this.url}api/ultimaescala`, this.httpOptions)
       .toPromise();
   }
 
   postEscala(escala: any): Promise<any> {
-    return this.http.post(this.url + 'api/novaescala', escala, this.httpOptions)
+    return this.http.post(`${this.url}api/novaescala`, escala, this.httpOptions)
       .toPromise();
   }
 
   getBase(): Promise<any> {
-    return this.http.get(this.url + 'api/base', this.httpOptions).toPromise();
+    return this.http.get(`${this.url}api/base`, this.httpOptions).toPromise();
   }
 
   getListaEscalaPrevista(): Promise<any> {
-    return this.http.get(this.url + 'api/listas/escala-prevista', this.httpOptions).toPromise();
+    return this.http.get(`${this.url}api/listas/escala-prevista`, this.httpOptions).toPromise();
   }
 
   getPermission(): any {

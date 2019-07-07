@@ -260,7 +260,7 @@ export class DiarioEditarComponent implements OnInit {
 
   getBlocos() {
     const prefixo = this.prefixos.filter((element: any) => {
-      return element.PrefixoCompleto === this.dataDiario.Prefixo.PrefixoCompleto;
+      return element.Id === this.dataDiario.Prefixo.Id;
     })[0];
     this.api.getBloco(prefixo.Id).then(result => {
       this.blocos = result;
