@@ -38,6 +38,12 @@ export class RelatorioVooPeriudoComponent implements OnInit {
       this.loading = false;
     }).catch(error => {
       this.loading = false;
+      this.api.message = {
+        show: true,
+        type: 'error',
+        title: 'Erro',
+        message: 'Problemas no servidor.'
+      };
     });
   }
 
