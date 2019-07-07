@@ -24,8 +24,18 @@ label {
 }
 
 .table {
-  width: 100%;
-  margin: 0 auto;
+  width: 95%;
+  margin: 20px auto;
+}
+
+#novo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 25px;
+  cursor: pointer;
+  fill: #157dfb;
+  z-index: 5;
 }
 
 input {
