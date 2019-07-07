@@ -26,7 +26,7 @@ export class RelatorioVooPeriudoComponent implements OnInit {
   public relatorios: Array<any>;
 
   ngOnInit() {
-    this.appComponent.setTitle('Relatório de Voo por Períudo');
+    this.appComponent.setTitle('Relatório de Voo por Período');
     this.prefixos = this.api.getPrefixos();
     this.loading = false;
   }
@@ -35,10 +35,8 @@ export class RelatorioVooPeriudoComponent implements OnInit {
     this.loading = true;
     this.api.getRelatorioVooPesquisa(this.fechado, this.dataInicio, this.dataFim, this.plataforma.join(',')).then((result: any) => {
       this.relatorios = result;
-      console.log(result);
       this.loading = false;
     }).catch(error => {
-      console.log(error);
       this.loading = false;
     });
   }

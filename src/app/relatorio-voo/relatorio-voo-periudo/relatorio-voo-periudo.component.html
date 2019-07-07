@@ -39,18 +39,18 @@
         <th>Número do Diário</th>
         <th>Número da Folha</th>
         <th>Data do diário</th>
-        <th>Tipo 1</th>
-        <th>Tipo 2</th>
+        <th>Tripulante 1</th>
+        <th>Tripulante 2</th>
       </thead>
       <tr *ngFor="let relatorio of relatorios">
-        <td>{{relatorio.PermitirAlteracao}}</td>
+        <td>{{relatorio.Fechado}}</td>
         <td>{{relatorio.Cancelada}}</td>
         <td>{{relatorio.Prefixo.PrefixoCompleto}}</td>
-        <td></td>
-        <td></td>
+        <td>{{relatorio.NumeroDoDiario}}</td>
+        <td>{{relatorio.NumeroDaFolha}}</td>
         <td>{{relatorio.DataDoDiario | date:'dd/MM/yyyy'}}</td>
-        <td></td>
-        <td></td>
+        <td>{{relatorio.Trip1.Trato}}</td>
+        <td>{{relatorio.Trip2.Trato}}</td>
       </tr>
     </table>
   </div>
