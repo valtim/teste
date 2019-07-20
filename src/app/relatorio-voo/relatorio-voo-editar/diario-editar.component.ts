@@ -468,7 +468,7 @@ export class DiarioEditarComponent implements OnInit {
         FuncaoTrip1: {},
         FuncaoTrip2: {},
         IFRC: this.formatTime(null),
-        Id: '',
+        Id: this.newGuid(),
         IFRR: this.formatTime(null),
         NascerDoSol: new Date(),
         Natureza: {},
