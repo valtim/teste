@@ -426,12 +426,16 @@ export class DiarioEditarComponent implements OnInit {
   }
 
   calcelarClick() {
-    this.api.message = {
-      show: true,
-      type: 'error',
-      title: 'Ateção',
-      message: 'Para cancelar um relatório de voo é necessário preencher um TRIPULANTE e as OCORRÊNCIAS'
-    };
+    if ((!this.dataDiario.Trip1.Id
+      || !this.dataDiario.Trip2.Id || !this.dataDiario.Trip3.Id
+      || !this.dataDiario.Trip4.Id) && !this.dataDiario.Ocorrencias) {
+        this.api.message = {
+          show: true,
+          type: 'error',
+          title: 'Ateção',
+          message: 'Para cancelar um relatório de voo é necessário preencher um TRIPULANTE e as OCORRÊNCIAS'
+        };
+    }
   }
 
   copyToDown(name: string, value: any, index: number) {
