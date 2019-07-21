@@ -306,7 +306,7 @@ export class ApiService {
     return this.http.post(`${this.url}api/Pergunta`, perguntas, this.httpOptions).toPromise();
   }
 
-  getRelatorioVooPesquisa(fechado: boolean, dataInicio: Date, dataFim: Date, plataforma: string) {
+  getRelatorioVooPesquisa(fechado: boolean, dataInicio: string, dataFim: string, plataforma: string) {
     return this.http.get(`${this.url}/api/diarios/pesquisar/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
     this.httpOptions).toPromise();
   }
