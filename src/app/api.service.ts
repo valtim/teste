@@ -17,7 +17,7 @@ export class ApiService {
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
     this.url = window.location.host === 'localhost:4200' ? 'https://teste.fastapi.com.br/' : '/';
-    // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
+     this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('token')) {
       this.httpOptions = {
@@ -65,6 +65,13 @@ export class ApiService {
 
   getDiarioById(id: string): Promise<any> {
     return this.http.get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
+      .toPromise();
+  }
+
+
+  getDiarioNovo(): Promise<any> {
+    console.log('arqui');
+    return this.http.get(`${this.url}api/relatorio-de-voo/getnovo`, this.httpOptions)
       .toPromise();
   }
 

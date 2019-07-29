@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DiarioService } from '../diario.service';
 import { ApiService } from '../../api.service';
@@ -57,6 +57,8 @@ export class DiarioEditarComponent implements OnInit {
   constructor(private app: AppComponent, private route: Router,
     private diario: DiarioService, private api: ApiService, private activatedRoute: ActivatedRoute) {
 
+ console.log(this.activatedRoute.snapshot);
+
     if (this.activatedRoute.snapshot.paramMap.get('id')) {
       this.api.getDiarioById(this.activatedRoute.snapshot.paramMap.get('id')).then(result => {
         this.blocos = result.Blocos;
@@ -71,7 +73,7 @@ export class DiarioEditarComponent implements OnInit {
         this.formatarDiario();
       });
     } else {
-      this.dataDiario.Id = this.newGuid();
+           this.dataDiario.Id = this.newGuid();
       this.prefixos = this.api.getPrefixos();
       this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
       this.abastecedoras = this.api.getAbastecedoras();
@@ -107,7 +109,8 @@ export class DiarioEditarComponent implements OnInit {
   }
 
   formatarDiario() {
-    if (this.dataDiario.Prefixo.Id) {
+
+    if (this.dataDiario.Prefixo) {
       this.api.getBloco(this.dataDiario.Prefixo.Id).then(result => {
         this.blocos = result;
       });
@@ -355,6 +358,12 @@ export class DiarioEditarComponent implements OnInit {
       }
       if (this.dataDiario.Linhas[index].Cliente.Id === '') {
         this.dataDiario.Linhas[index].Cliente = null;
+      }
+      if (this.dataDiario.Linhas[index].Origem.Id === '') {
+        this.dataDiario.Linhas[index].Origem = null;
+      }
+      if (this.dataDiario.Linhas[index].Destino.Id === '') {
+        this.dataDiario.Linhas[index].Destino = null;
       }
     }
   }

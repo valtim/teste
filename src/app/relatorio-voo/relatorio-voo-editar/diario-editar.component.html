@@ -33,7 +33,7 @@
     <select id="nDiario" name="nDiario" [(ngModel)]="dataDiario.NumeroDoDiario"
       [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
       <option value="">Nº Diário</option>
-      <option *ngFor="let bloco of blocos" value="{{bloco.Numero}}">{{bloco.Numero}}</option>
+      <!--<option *ngFor="let bloco of blocos" value="{{bloco.Numero}}">{{bloco.Numero}}</option>-->
     </select>
   </div>
   <div class="form">
@@ -41,7 +41,7 @@
     <select id="nFolhaDiario" name="nFolhaDiario" [(ngModel)]="dataDiario.NumeroDaFolha"
       [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
       <option value="">Folha Diário</option>
-      <option *ngFor="let folha of folhaDiario()" value="{{folha}}">{{folha}}</option>
+      <!--<option *ngFor="let folha of folhaDiario()" value="{{folha}}">{{folha}}</option>-->
     </select>
   </div>
   <div class="form" style="justify-content: center;line-height: 25px;">
