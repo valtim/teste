@@ -1,19 +1,28 @@
-import { Component } from '@angular/core';
+import { ApiService } from 'src/app/api.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  constructor(public router: Router, public _location: Location, public api: ApiService) {
+  }
+
+  ngOnInit(): void {
+    //throw new Error("Method not implemented.");
+    
+    //this.loading = false;
+  }
 
   public title: string;
   public voltar: string;
 
-  constructor(public router: Router, public _location: Location) {
-  }
 
   setTitle(title: string) {
     this.title = title;

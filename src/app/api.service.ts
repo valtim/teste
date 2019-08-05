@@ -16,7 +16,7 @@ export class ApiService {
   username: string;
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
-    this.url = window.location.host === 'localhost:4200' ? 'https://teste.fastapi.com.br/' : '/';
+    this.url = window.location.host === 'localhost:4200' ? 'https://emar.fastapi.com.br/' : '/';
      this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('token')) {
@@ -85,6 +85,12 @@ export class ApiService {
       .toPromise();
   }
 
+  getListasPMS(): Promise<any> {
+    console.log('site');
+    return this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
+      .toPromise();
+  }
+/*
   getListas(callback: Function): void {
     if (
       !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
@@ -106,6 +112,13 @@ export class ApiService {
         })
         .catch();
     }
+  }
+  */
+  
+
+  getClienteLogado(): Promise<any> {
+    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions)
+      .toPromise();
   }
 
   getTripulantes(): Promise<any> {

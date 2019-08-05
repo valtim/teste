@@ -1,109 +1,118 @@
 <div id="lateral" class="no-print">
   <div id="menu">
+    <div *ngIf="menuOperacoes">
+      <h3 class="link-titulo">Operações</h3>
+      <ul class="box">
+        <li>
+          <a *ngIf="isEnable('relatorio-voo')" routerLink="/relatorio-voo">
+            Relatório de Voo
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('relatorio-voo-periodo')" routerLink="/relatorio-voo-periodo">
+            Relatório de Voo por Período
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('vencimento-carteira')" routerLink="/vencimento-carteira">
+            Quadro de Tripulantes
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('papeleta')" routerLink="/papeleta">
+            Papeleta
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('relatorio-pagamento')" routerLink="/relatorio-pagamento">
+            Relatório de Pagamento
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    <h3 class="link-titulo">Operações</h3>
-    <ul class="box">
-      <li>
-        <a *ngIf="isEnable('relatorio-voo')" routerLink="/relatorio-voo">
-          Relatório de Voo
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('relatorio-voo-periodo')" routerLink="/relatorio-voo-periodo">
-          Relatório de Voo por Período
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('vencimento-carteira')" routerLink="/vencimento-carteira">
-          Quadro de Tripulantes
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('papeleta')" routerLink="/papeleta">
-          Papeleta
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('relatorio-pagamento')" routerLink="/relatorio-pagamento">
-          Relatório de Pagamento
-        </a>
-      </li>
-    </ul>
+    <div *ngIf="menuEscalas">
+      <h3 class="link-titulo">Escala</h3>
+      <ul class="box">
+        <li>
+          <a *ngIf="isEnable('escala-prevista')" routerLink="/escala-prevista">
+            Escala Prevista Diária
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('escala-trabalho')" routerLink="/escala-trabalho">
+            Escala Trabalho Realizado
+          </a>
+        </li>
+        <!-- mais links -->
+      </ul>
+    </div>
 
-    <h3 class="link-titulo">Escala</h3>
-    <ul class="box">
-      <li>
-        <a *ngIf="isEnable('escala-prevista')" routerLink="/escala-prevista">
-          Escala Prevista Diária
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('escala-trabalho')" routerLink="/escala-trabalho">
-          Escala Trabalho Realizado
-        </a>
-      </li>
-      <!-- mais links -->
-    </ul>
+    <div *ngIf="menuCadastrosBasicos">
+      <h3 class="link-titulo">Cadastros Básicos</h3>
+      <ul class="box">
+        <li>
+          <a *ngIf="isEnable('tripulantes')" routerLink="/tripulantes">
+            Tripulante
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('usuario')" routerLink="/usuario">
+            Usuário
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('bloco')" routerLink="/bloco">
+            Bloco
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('localidade')" routerLink="/localidade">
+            Localidade
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('certificado')" routerLink="/certificado">
+            Certificado
+          </a>
+        </li>
+        <!-- mais links -->
+      </ul>
+    </div>
 
-    <h3 class="link-titulo">Cadastros Básicos</h3>
-    <ul class="box">
-      <li>
-        <a *ngIf="isEnable('tripulantes')" routerLink="/tripulantes">
-          Tripulante
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('usuario')" routerLink="/usuario">
-          Usuário
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('bloco')" routerLink="/bloco">
-          Bloco
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('localidade')" routerLink="/localidade">
-          Localidade
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('certificado')" routerLink="/certificado">
-          Certificado
-        </a>
-      </li>
-      <!-- mais links -->
-    </ul>
+    <div *ngIf="menuFadiga">
+      <h3 class="link-titulo">Fadiga</h3>
+      <ul class="box">
+        <li>
+          <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
+            Fadiga
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
+            Tipo de Pergunta
+          </a>
+        </li>
+        <li>
+          <a *ngIf="isEnable('pergunta')" routerLink="/pergunta">
+            Pergunta
+          </a>
+        </li>
+      </ul>
+    </div>
 
-    <h3 class="link-titulo">Fadiga</h3>
-    <ul class="box">
-      <li>
-        <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
-          Fadiga
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
-          Tipo de Pergunta
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('pergunta')" routerLink="/pergunta">
-          Pergunta
-        </a>
-      </li>
-    </ul>
-
-    <h3 class="link-titulo">Ferramentas</h3>
-    <ul class="box">
-      <li>
-        <a routerLink="/troca-senha">
-          Trocar Senha
-        </a>
-      </li>
-      <li><a href="#">Logoff</a></li>
-      <!-- mais links -->
-    </ul>
+    <div *ngIf="menuFerramentas">
+      <h3 class="link-titulo">Ferramentas</h3>
+      <ul class="box">
+        <li>
+          <a routerLink="/troca-senha">
+            Trocar Senha
+          </a>
+        </li>
+        <li><a href="#">Logoff</a></li>
+        <!-- mais links -->
+      </ul>
+    </div>
 
   </div> <!-- /#menu -->
 </div> <!-- /#lateral -->

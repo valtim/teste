@@ -34,6 +34,7 @@ import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/ti
 import { PerguntaComponent } from './pergunta/pergunta.component';
 import { MenuComponent } from './menu/menu.component';
 import { RelatorioVooPeriodoComponent } from './relatorio-voo/relatorio-voo-periodo/relatorio-voo-periodo.component';
+import { ControleDePendenciasComponent } from './controle-de-pendencias/controle-de-pendencias.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { RelatorioVooPeriodoComponent } from './relatorio-voo/relatorio-voo-peri
     TipoPerguntaListComponent,
     PerguntaComponent,
     MenuComponent,
-    RelatorioVooPeriodoComponent
+    RelatorioVooPeriodoComponent,
+    ControleDePendenciasComponent
   ],
   imports: [
     BrowserModule,

@@ -359,12 +359,7 @@ export class DiarioEditarComponent implements OnInit {
       if (this.dataDiario.Linhas[index].Cliente.Id === '') {
         this.dataDiario.Linhas[index].Cliente = null;
       }
-      if (this.dataDiario.Linhas[index].Origem.Id === '') {
-        this.dataDiario.Linhas[index].Origem = null;
-      }
-      if (this.dataDiario.Linhas[index].Destino.Id === '') {
-        this.dataDiario.Linhas[index].Destino = null;
-      }
+
     }
   }
 
