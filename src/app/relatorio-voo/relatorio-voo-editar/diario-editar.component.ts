@@ -71,7 +71,7 @@ export class DiarioEditarComponent implements OnInit {
         this.formatarDiario();
       });
     } else {
-      this.dataDiario.Id = this.newGuid();
+      this.dataDiario.Id = this.api.newGuid();
       this.prefixos = this.api.getPrefixos();
       this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
       this.abastecedoras = this.api.getAbastecedoras();
@@ -94,16 +94,6 @@ export class DiarioEditarComponent implements OnInit {
   ngOnInit() {
     this.app.setVoltar('/relatorio-voo');
     this.permiteCancelar();
-  }
-
-  newGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      // tslint:disable-next-line:no-bitwise
-      const r = Math.random() * 16 | 0,
-      // tslint:disable-next-line:no-bitwise
-      v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
   }
 
   formatarDiario() {
@@ -472,7 +462,7 @@ export class DiarioEditarComponent implements OnInit {
         FuncaoTrip1: {},
         FuncaoTrip2: {},
         IFRC: this.formatTime(null),
-        Id: this.newGuid(),
+        Id: this.api.newGuid(),
         IFRR: this.formatTime(null),
         NascerDoSol: new Date(),
         Natureza: {},
