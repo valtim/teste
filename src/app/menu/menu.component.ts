@@ -12,16 +12,42 @@ export class MenuComponent implements OnInit {
 
   public loading: boolean;
 
+  public menuOperacoes : boolean = false;
+  public menuEscalas : boolean = false;
+  public menuCadastrosBasicos : boolean = false;
+  public menuFadiga : boolean = false;
+  public menuFerramentas : boolean = true;
+
   constructor(
     private autorizacao: AutorizacaoService,
     private api: ApiService,
     private router: Router) { }
 
   ngOnInit() {
+    this.api.getListasPMS()
+      .then(result => {         
+          localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
+          localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
+          localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
+          localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
+          localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
+          localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
+          localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
+          localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
+          console.log('ok');
+          this.checarMenu();
+       });
+  }
+
+  checarMenu(){
+    this.menuOperacoes = this.isEnable('relatorio-voo') || this.isEnable('relatorio-voo-periodo') || this.isEnable('vencimento-carteira') || this.isEnable('papeleta') || this.isEnable('relatorio-pagamento');
+    this.menuEscalas = this.isEnable('escala-prevista') || this.isEnable('escala-trabalho');
+    this.menuCadastrosBasicos = this.isEnable('tripulantes') || this.isEnable('usuario') || this.isEnable('bloco') || this.isEnable('localidade') || this.isEnable('certificado');
+    this.menuFadiga = this.isEnable('fadiga') || this.isEnable('tipo-pergunta') || this.isEnable('pergunta');
   }
 
   isEnable(name: string) {
-    return !this.autorizacao.getRotas().includes(name);
+    return this.autorizacao.getRotas().includes(name);
   }
 
   logoff(): void {

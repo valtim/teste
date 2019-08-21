@@ -10,6 +10,8 @@ import { AutorizacaoService } from '../autorizacao.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  public urlLogo : string;
+  public exibir : boolean = false;
 
   public loading: boolean;
 
@@ -20,13 +22,15 @@ export class HomeComponent implements OnInit {
     private autorizacao: AutorizacaoService) { }
 
   async ngOnInit() {
-    this.app.setTitle('Sol');
+    this.app.setTitle('SOL Sistemas');
     // if (!this.api.getPermission()) {
     //   this.loading = true;
     //   this.api.getMenuPermission();
     // }
-    this.api.getListas(() => { });
-    this.loading = false;
+    this.api.getClienteLogado().then(result => {      
+      this.urlLogo = `assets/img/${result}.png`;
+      this.exibir = true;
+    });
   }
 
   isEnable(name: string) {

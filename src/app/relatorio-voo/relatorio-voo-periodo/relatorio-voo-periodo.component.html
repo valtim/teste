@@ -56,8 +56,8 @@
         <td>{{relatorio.NumeroDoDiario}}</td>
         <td>{{relatorio.NumeroDaFolha}}</td>
         <td>{{relatorio.DataDoDiario | date:'dd/MM/yyyy'}}</td>
-        <td>{{relatorio.Trip1.Trato}}</td>
-        <td>{{relatorio.Trip2.Trato}}</td>
+        <td>{{(relatorio.Trip1 == null) ? '' :  relatorio.Trip1.Trato}}</td>
+        <td>{{(relatorio.Trip2 == null) ? '' :  relatorio.Trip2.Trato}}</td>
         <td>{{relatorio.Fechado ? 'Sim' : 'Não'}}</td>
         <td>{{relatorio.Cancelada ? 'Sim' : 'Não'}}</td>
       </tr>
