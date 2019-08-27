@@ -74,6 +74,7 @@ export class DiarioEditarComponent implements OnInit {
         this.loading = false;
       });
     } else {
+<<<<<<< HEAD
       this.api.getDiarioNovo().then(result => {
         this.blocos = result.Blocos;
         this.dataDiario = result.Diario;
@@ -86,6 +87,17 @@ export class DiarioEditarComponent implements OnInit {
         this.funcaoBordos = result.FuncaoBordo;
         this.formatarDiario();
         this.loading = false;
+=======
+      this.dataDiario.Id = this.api.newGuid();
+      this.prefixos = this.api.getPrefixos();
+      this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
+      this.abastecedoras = this.api.getAbastecedoras();
+      this.api.getTripulantes().then(result => {
+        this.tripulantes = result.Tripulantes;
+      });
+      this.api.getListaBloco().then(response => {
+        this.blocos = response;
+>>>>>>> 1baf181c2cbfe3ca8548ccf7648cf4db69f82d60
       });
       
 
@@ -112,16 +124,6 @@ export class DiarioEditarComponent implements OnInit {
   ngOnInit() {
     this.app.setVoltar('/relatorio-voo');
     this.permiteCancelar();
-  }
-
-  newGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      // tslint:disable-next-line:no-bitwise
-      const r = Math.random() * 16 | 0,
-      // tslint:disable-next-line:no-bitwise
-      v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
   }
 
   formatarDiario() {
@@ -493,7 +495,7 @@ export class DiarioEditarComponent implements OnInit {
         FuncaoTrip1: {},
         FuncaoTrip2: {},
         IFRC: this.formatTime(null),
-        Id: this.newGuid(),
+        Id: this.api.newGuid(),
         IFRR: this.formatTime(null),
         NascerDoSol: new Date(),
         Natureza: {},
