@@ -49,6 +49,11 @@ export class RelatorioVooPeriodoComponent implements OnInit {
     }
   }
 
+
+  onClickDiario(diario: any) {
+    this.router.navigate([`/relatorio-voo/${diario.Id}`]);
+  }
+  
   novoRelatorioVoo() {
     this.router.navigate(['/relatorio-voo/novo']);
   }

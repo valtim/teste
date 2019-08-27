@@ -71,25 +71,41 @@ export class DiarioEditarComponent implements OnInit {
         this.naturezas = result.Natureza;
         this.funcaoBordos = result.FuncaoBordo;
         this.formatarDiario();
+        this.loading = false;
       });
     } else {
-           this.dataDiario.Id = this.newGuid();
-      this.prefixos = this.api.getPrefixos();
-      this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
-      this.abastecedoras = this.api.getAbastecedoras();
-      this.api.getTripulantes().then(result => {
-        this.tripulantes = result.Tripulantes;
+      this.api.getDiarioNovo().then(result => {
+        this.blocos = result.Blocos;
+        this.dataDiario = result.Diario;
+        this.tripulantes = result.Tripulante;
+        this.prefixos = result.Prefixo;
+        this.tipoDeOperacoes = result.TipoDeOperacao;
+        this.abastecedoras = result.Abastecedora;
+        this.clientes = result.Cliente;
+        this.naturezas = result.Natureza;
+        this.funcaoBordos = result.FuncaoBordo;
+        this.formatarDiario();
+        this.loading = false;
       });
-      this.api.getListaBloco().then(response => {
-        this.blocos = response;
-      });
-      this.funcaoBordos = this.api.getFuncaoBordos();
-      this.clientes = this.api.getClientes();
-      this.naturezas = this.api.getNaturezas();
-      this.dataDiario.DataDoDiario = this.diario.dataSearch;
-      this.dataDiario.Linhas = this.createLinhas();
-      this.dataDiario.Procedimentos = this.createProcedimentos();
-      this.loading = false;
+      
+
+      //      this.dataDiario.Id = this.newGuid();
+      // this.prefixos = this.api.getPrefixos();
+      // this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
+      // this.abastecedoras = this.api.getAbastecedoras();
+      // this.api.getTripulantes().then(result => {
+      //   this.tripulantes = result.Tripulantes;
+      // });
+      // this.api.getListaBloco().then(response => {
+      //   this.blocos = response;
+      // });
+      // this.funcaoBordos = this.api.getFuncaoBordos();
+      // this.clientes = this.api.getClientes();
+      // this.naturezas = this.api.getNaturezas();
+      // this.dataDiario.DataDoDiario = this.diario.dataSearch;
+      // this.dataDiario.Linhas = this.createLinhas();
+      // this.dataDiario.Procedimentos = this.createProcedimentos();
+      //this.loading = false;
     }
   }
 
@@ -111,7 +127,7 @@ export class DiarioEditarComponent implements OnInit {
   formatarDiario() {
 
     if (this.dataDiario.Prefixo) {
-      this.api.getBloco(this.dataDiario.Prefixo.Id).then(result => {
+      this.api.getListaBlocoByPrefixo(this.dataDiario.Prefixo.Id).then(result => {
         this.blocos = result;
       });
     } else {
@@ -276,7 +292,8 @@ export class DiarioEditarComponent implements OnInit {
     const prefixo = this.prefixos.filter((element: any) => {
       return element.Id === this.dataDiario.Prefixo.Id;
     })[0];
-    this.api.getBloco(prefixo.Id).then(result => {
+    this.api.getListaBlocoByPrefixo(prefixo.Id).then(result => {
+      this.dataDiario.NumeroDoDiario = '';
       this.blocos = result;
     });
   }

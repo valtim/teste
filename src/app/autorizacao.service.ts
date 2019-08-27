@@ -6,17 +6,17 @@ import { Injectable } from '@angular/core';
 
 export class AutorizacaoService {
 
-  private Token: string;
+  private Authorization: string;
   private Rotas: string[];
 
   constructor() {
-    this.Token = localStorage.getItem('Token');
+    this.Authorization = localStorage.getItem('Authorization');
     this.Rotas = JSON.parse(localStorage.getItem('Rotas'));
   }
 
-  setToken(token: string) {
-    this.Token = token;
-    localStorage.setItem('Token', token);
+  setAuthorization(Authorization: string) {
+    this.Authorization = Authorization;
+    localStorage.setItem('Authorization', Authorization);
   }
 
   setRotas(rotas: Array<string>) {
@@ -24,8 +24,8 @@ export class AutorizacaoService {
     localStorage.setItem('Rotas', JSON.stringify(rotas));
   }
 
-  getToken() {
-    return this.Token;
+  getAuthorization() {
+    return this.Authorization;
   }
 
   getRotas() {

@@ -19,11 +19,11 @@ export class ApiService {
     this.url = window.location.host === 'localhost:4200' ? 'https://emar.fastapi.com.br/' : '/';
      this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
-    if (localStorage.getItem('token')) {
+    if (localStorage.getItem('Authorization')) {
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'token': localStorage.getItem('token')
+          'Authorization': localStorage.getItem('Authorization')
         })
       };
     }
@@ -41,19 +41,19 @@ export class ApiService {
     return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password })
       .toPromise()
       .then((result: any) => {
-        this.autorizacao.setToken(result.Token);
+        this.autorizacao.setAuthorization(result.Authorization);
         this.autorizacao.setRotas(result.Rotas);
-        this.updateToken();
+        this.updateAuthorization();
       })
       .catch();
   }
 
-  private updateToken(): void {
-    localStorage.setItem('Token', this.autorizacao.getToken());
+  private updateAuthorization(): void {
+    localStorage.setItem('Authorization', this.autorizacao.getAuthorization());
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'token': localStorage.getItem('Token')
+        'Authorization': localStorage.getItem('Authorization')
       })
     };
   }
@@ -150,11 +150,6 @@ export class ApiService {
     return JSON.parse(localStorage.getItem('TipoDeOperacao'));
   }
 
-  getBloco(IdPrefixo: string): Promise<any> {
-    return this.http.get(`${this.url}api/bloco/${IdPrefixo}`, this.httpOptions)
-      .toPromise();
-  }
-
   getCertificado(): Promise<any> {
     return this.http.get(`${this.url}api/certificado`, this.httpOptions)
       .toPromise();
@@ -175,10 +170,6 @@ export class ApiService {
       .toPromise();
   }
 
-  getLogoff(): Promise<any> {
-    return this.http.get(`${this.url}api/exit`, this.httpOptions)
-      .toPromise();
-  }
 
   getMenuPermission() {
     this.http.get(`${this.url}api/menu`, this.httpOptions)
@@ -272,7 +263,7 @@ export class ApiService {
     const option = {
       headers: new HttpHeaders({
         // 'Content-Type': 'multipart/form-data',
-        'token': localStorage.getItem('Token')
+        'Authorization': localStorage.getItem('Authorization')
       })
     };
     return this.http.post(`${this.url}api/excel/upload`, data, option).toPromise();

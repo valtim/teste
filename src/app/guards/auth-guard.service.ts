@@ -19,11 +19,11 @@ export class AuthGuardService implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (!this.autorizacao.getToken() || !this.autorizacao.getRotas().includes(url.split('/')[1])) {
+    if (!this.autorizacao.getAuthorization() || !this.autorizacao.getRotas().includes(url.split('/')[1])) {
       this.api.error = 'Você não tem permissão.';
       this.router.navigate(['']);
       return false;
     }
-    if (localStorage.getItem('Token')) { return true; }
+    if (localStorage.getItem('Authorization')) { return true; }
   }
 }

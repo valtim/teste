@@ -51,7 +51,7 @@
         <th>Fechado</th>
         <th>Cancelado</th>
       </thead>
-      <tr *ngFor="let relatorio of relatorios">
+      <tr *ngFor="let relatorio of relatorios" (click)="onClickDiario(relatorio)" style="cursor:hand">
         <td>{{relatorio.Prefixo.PrefixoCompleto}}</td>
         <td>{{relatorio.NumeroDoDiario}}</td>
         <td>{{relatorio.NumeroDaFolha}}</td>

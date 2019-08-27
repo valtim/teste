@@ -52,21 +52,21 @@ export class MenuComponent implements OnInit {
 
   logoff(): void {
     this.loading = true;
-    this.api.getLogoff().then((result) => {
-      localStorage.removeItem('Abastecedora');
-      localStorage.removeItem('Cliente');
-      localStorage.removeItem('FuncaoBordo');
-      localStorage.removeItem('Natureza');
-      localStorage.removeItem('Prefixo');
-      localStorage.removeItem('TipoDeOperacao');
-      localStorage.removeItem('TipoDeProcedimento');
-      localStorage.removeItem('Tripulante');
-      localStorage.removeItem('Token');
-      localStorage.removeItem('Rotas');
-      localStorage.removeItem('Certificado');
+    localStorage.clear();
+
+      // localStorage.removeItem('Abastecedora');
+      // localStorage.removeItem('Cliente');
+      // localStorage.removeItem('FuncaoBordo');
+      // localStorage.removeItem('Natureza');
+      // localStorage.removeItem('Prefixo');
+      // localStorage.removeItem('TipoDeOperacao');
+      // localStorage.removeItem('TipoDeProcedimento');
+      // localStorage.removeItem('Tripulante');
+      // localStorage.removeItem('Authorization');
+      // localStorage.removeItem('Rotas');
+      // localStorage.removeItem('Certificado');
       this.loading = false;
       this.router.navigate(['/']);
-    });
   }
 
 }
