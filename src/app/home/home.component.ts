@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
     //   this.api.getMenuPermission();
     // }
     this.api.getClienteLogado().then(result => {      
-      this.urlLogo = `assets/img/${result}.png`;
+      this.urlLogo = `assets/img/${result.toLowerCase()}.png`;
       this.exibir = true;
     });
   }

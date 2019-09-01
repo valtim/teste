@@ -13,7 +13,7 @@
     <div class="prefixo">
       <select [(ngModel)]="plataforma" name="plataforma" multiple>
         <option *ngFor="let prefixo of prefixos"
-          value="{{prefixo.PrefixoCompleto}}">
+          value="{{prefixo.PrefixoCompleto}}" selected="{{true}}">
           {{prefixo.PrefixoCompleto}}
         </option>
       </select>

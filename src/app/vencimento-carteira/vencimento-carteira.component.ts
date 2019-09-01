@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppComponent } from '../app.component';
+import { Router } from '@angular/router';
 import flatpickr from 'flatpickr';
 
 @Component({
@@ -10,7 +11,9 @@ import flatpickr from 'flatpickr';
 })
 export class VencimentoCarteiraComponent implements OnInit {
 
-  constructor(private api: ApiService, private app: AppComponent) { }
+  constructor(private api: ApiService
+    , private app: AppComponent
+    , private router: Router) { }
 
   public tripulantes: any;
   public certificados: any;
@@ -35,6 +38,19 @@ export class VencimentoCarteiraComponent implements OnInit {
     //   this.loading = false;
     //   this.montarDatas();
     // });
+  }
+
+  
+  onClickDiario(diario: any) {
+
+    let texto = diario.NumeroDoDiario.split("/").join("-");
+
+let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
+
+
+    this.router.navigate([]).then(result => {  window.open(link, '_blank'); });
+
+    //this.router.navigate([`/relatorio-voo/${texto}/${diario.NumeroDaFolha}`]);
   }
 
   montarCertificados(certificados: Array<any>) {

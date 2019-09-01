@@ -59,6 +59,23 @@ export class DiarioEditarComponent implements OnInit {
 
  console.log(this.activatedRoute.snapshot);
 
+
+ if (this.activatedRoute.snapshot.paramMap.get('folha')) {
+  this.api.getDiarioByFolha(this.activatedRoute.snapshot.paramMap.get('diario'), this.activatedRoute.snapshot.paramMap.get('folha')).then(result => {
+    this.blocos = result.Blocos;
+    this.dataDiario = result.Diario;
+    this.tripulantes = result.Tripulante;
+    this.prefixos = result.Prefixo;
+    this.tipoDeOperacoes = result.TipoDeOperacao;
+    this.abastecedoras = result.Abastecedora;
+    this.clientes = result.Cliente;
+    this.naturezas = result.Natureza;
+    this.funcaoBordos = result.FuncaoBordo;
+    this.formatarDiario();
+    this.loading = false;
+  });
+return;
+}
     if (this.activatedRoute.snapshot.paramMap.get('id')) {
       this.api.getDiarioById(this.activatedRoute.snapshot.paramMap.get('id')).then(result => {
         this.blocos = result.Blocos;
@@ -74,7 +91,7 @@ export class DiarioEditarComponent implements OnInit {
         this.loading = false;
       });
     } else {
-<<<<<<< HEAD
+
       this.api.getDiarioNovo().then(result => {
         this.blocos = result.Blocos;
         this.dataDiario = result.Diario;
@@ -87,37 +104,8 @@ export class DiarioEditarComponent implements OnInit {
         this.funcaoBordos = result.FuncaoBordo;
         this.formatarDiario();
         this.loading = false;
-=======
-      this.dataDiario.Id = this.api.newGuid();
-      this.prefixos = this.api.getPrefixos();
-      this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
-      this.abastecedoras = this.api.getAbastecedoras();
-      this.api.getTripulantes().then(result => {
-        this.tripulantes = result.Tripulantes;
       });
-      this.api.getListaBloco().then(response => {
-        this.blocos = response;
->>>>>>> 1baf181c2cbfe3ca8548ccf7648cf4db69f82d60
-      });
-      
 
-      //      this.dataDiario.Id = this.newGuid();
-      // this.prefixos = this.api.getPrefixos();
-      // this.tipoDeOperacoes = this.api.getTipoDeOperacoes();
-      // this.abastecedoras = this.api.getAbastecedoras();
-      // this.api.getTripulantes().then(result => {
-      //   this.tripulantes = result.Tripulantes;
-      // });
-      // this.api.getListaBloco().then(response => {
-      //   this.blocos = response;
-      // });
-      // this.funcaoBordos = this.api.getFuncaoBordos();
-      // this.clientes = this.api.getClientes();
-      // this.naturezas = this.api.getNaturezas();
-      // this.dataDiario.DataDoDiario = this.diario.dataSearch;
-      // this.dataDiario.Linhas = this.createLinhas();
-      // this.dataDiario.Procedimentos = this.createProcedimentos();
-      //this.loading = false;
     }
   }
 

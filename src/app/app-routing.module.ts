@@ -68,6 +68,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
+    path: 'relatorio-voo/:diario/:folha',
+    component: DiarioEditarComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'vencimento-carteira',
     component: VencimentoCarteiraComponent,
     canActivate: [AuthGuardService]

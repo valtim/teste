@@ -78,6 +78,11 @@ export class ApiService {
       .toPromise();
   }
 
+  getDiarioByFolha(diario: string, folha: string): Promise<any> {
+    return this.http.get(`${this.url}api/relatorio-de-voo/get/${diario}/${folha}`, this.httpOptions)
+      .toPromise();
+  }
+
 
   getDiarioNovo(): Promise<any> {
     console.log('arqui');
@@ -328,7 +333,7 @@ export class ApiService {
   }
 
   getRelatorioVooPesquisa(fechado: boolean, dataInicio: string, dataFim: string, plataforma: string) {
-    return this.http.get(`${this.url}/api/diarios/pesquisar/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
+    return this.http.get(`${this.url}api/diarios/pesquisar/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
     this.httpOptions).toPromise();
   }
 }

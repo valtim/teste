@@ -94,6 +94,7 @@
             <div *ngIf="ultimosVoos[tripulante.Id + title.Id].Voo.length">
               <div class="ultimo-voo">
                 <ng-template ngFor let-voo [ngForOf]="ultimosVoos[tripulante.Id + title.Id].Voo" let-i="index">
+                  <div (click)="onClickDiario(voo)">
                   Data do Voo: {{voo.Data}}<br>
                   Prefixo: {{voo.Prefixo}}<br>
                   Numero do DB: {{voo.NumeroDoDiario}}<br>
@@ -102,6 +103,7 @@
                   <br *ngIf="i !== ultimosVoos[tripulante.Id+title.Id].Voo.length - 1">
                   <hr *ngIf="i !== ultimosVoos[tripulante.Id+title.Id].Voo.length - 1">
                   <br *ngIf="i !== ultimosVoos[tripulante.Id+title.Id].Voo.length - 1">
+                </div>
                 </ng-template>
               </div>
             </div>
