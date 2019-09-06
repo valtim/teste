@@ -1,16 +1,15 @@
+#salvar {
+  position: fixed;
+  right: 5px;
+  cursor: pointer;
+  z-index: 5;
+  top: 5px;
+}
+
 .legenda .flex-row {
   display: flex;
   flex-direction: row;
   margin: 5px 0;
-}
-
-.header-table {
-  margin: 55px 0 15px 15px;
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  min-width: 100%;
 }
 
 .legenda .color {
@@ -19,62 +18,23 @@
   margin: 0 15px;
 }
 
-#trato {
-  position: sticky;
-  left: 25px;
-  margin: 0;
+.table-response{
+  margin-top : 40px;
 }
 
-#cursos tbody tr td {
-  white-space: nowrap;
-  cursor: pointer;
+.table-response table {
+  display: inline-block;  
+}
+
+#trato {
+  position: sticky;
+  left: 65px;
+  top: 300px;
+  margin: 0;
 }
 
 #trato.table>tbody {
   background-color: #FFFFFF;
-}
-
-.table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  empty-cells: show;
-  border: 1px solid #cbcbcb;
-  margin: 0 15px;
-  margin-bottom: 20px;
-  font-size: 13px;
-}
-
-.table-response table {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.table tbody tr:nth-child(2n) {
-  background-color: #f2f2f2;
-}
-
-.table thead tr td {
-  background-color: #002060;
-  color: #FFFFFF;
-  font-weight: bold;
-  text-align: center;
-  vertical-align: middle;
-  height: 70px;
-}
-
-.table td,
-.table th {
-  text-align: center;
-  border: 1px solid #cbcbcb;
-  margin: 0;
-  overflow: visible;
-  padding: 0.5em 1em;
-  height: 20px;
-}
-
-#pessoas {
-  margin-left: 25px;
-  white-space: nowrap;
 }
 
 .ultimo-voo {
@@ -83,12 +43,4 @@
   padding: 25px;
   border-radius: 5px;
   display: none;
-}
-
-#salvar {
-  position: fixed;
-  top: 5px;
-  right: 25px;
-  cursor: pointer;
-  z-index: 2;
 }

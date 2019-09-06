@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ApiService } from '../api.service';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
-import flatpickr from 'flatpickr';
 
 @Component({
   selector: 'app-vencimento-carteira',
@@ -22,8 +21,12 @@ export class VencimentoCarteiraComponent implements OnInit {
   public ultimosVoos: any;
   public vencimentoListToSave = [];
 
+
+  static readonly DATE_FMT = 'dd/MMM/yyyy';
+
   ngOnInit() {
-    this.app.setTitle('Quadro de Tripulantes');
+
+    this.app.setTitle('FOR-OPE-011 - Quadro de Tripulantes');
     this.api.getTripulantes().then(result => {
       console.log('result: ', result);
       this.tripulantes = result.Tripulantes;
@@ -76,6 +79,7 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     this.certificados = novoCertificados;
   }
 
+  
 
   montarDatas() {
     const data = {};
@@ -100,14 +104,6 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     this.ultimosVoos = data;
   }
 
-  formatData(data: string) {
-    const result = new Date(data);
-    const months = ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'];
-    const month = months[result.getMonth()];
-    const days = result.getDate() < 10 ? '0' + result.getDate() : result.getDate();
-    return `${days} - ${month} - ${result.getFullYear()}`;
-  }
-
   getDataVencimento(IdTripulante: string, IdCertificado: string, Grupo: string): string {
     if (!this.vencimentos) {
       return '';
@@ -126,8 +122,9 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
         return `${vencimento.UltimosVoos.length} Ocorrência(s)`;
       }
     }
-
-    return this.formatData(vencimento.DataDeVencimento);
+    //return vencimento.DataDeVencimento;
+    
+    return vencimento.DataDeVencimento;
   }
 
   getVencimento(IdTripulante: string, IdCertificado: string) {
@@ -140,6 +137,9 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
   }
 
   showPopUp({ target }) {
+
+    this.someTudo();
+
     if (target.offsetParent && target.offsetParent.id === 'Experiência') {
       const div = Array.from(document.getElementById('Experiência').querySelectorAll('.ultimo-voo'))
         .filter((divUltimo: HTMLElement) => {
@@ -161,6 +161,7 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     }
   }
 
+  
   diffDaysDate(data1: Date, data2: Date): number {
     const timeDiff = data1.getTime() - data2.getTime();
     const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -200,16 +201,29 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     }
   }
 
+
+  someTudo(){
+    Array.from(document.querySelectorAll('.ultimo-voo')).forEach(function (divUltimo: HTMLElement) {
+      divUltimo.style.display = 'none';
+    })
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickout(event) {
+    if ( event.target.tagName != 'TD' )
+      this.someTudo();
+    
+  }
+
   exportExcel() {
     const html = document.querySelector('.table-response');
     const result = html.cloneNode(true) as HTMLElement;
-    Array.from(result.querySelector('#cursos').querySelectorAll('td.flatpickr-input')).forEach(function (element: HTMLElement) {
-      element.removeChild(element.lastChild);
-      element.innerHTML = element.innerText;
-    });
-    Array.from(result.querySelector('#cursos').lastElementChild.querySelector('tbody').querySelectorAll('td')).forEach(function (element) {
-      element.removeChild(element.lastChild);
-      element.innerHTML = element.innerText;
+    // Array.from(result.querySelector('#cursos').querySelectorAll('td.flatpickr-input')).forEach(function (element: HTMLElement) {
+    //   element.removeChild(element.lastChild);
+    //   element.innerHTML = element.innerText;
+    // });
+    Array.from(result.querySelectorAll('.ultimo-voo')).forEach(function (element) {
+      element.remove();
     });
     const tabela = result.querySelectorAll('table')[0];
     Array.from(result.querySelectorAll('table')).forEach(function (element, index) {

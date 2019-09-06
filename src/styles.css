@@ -57,14 +57,13 @@ app-loading {
 }
 
 router-outlet+* {
-  width: calc(100% - 50px);
-  margin-left: 50px;
+  /* width: calc(100% - 50px); */
+  width : 100%;
 }
 
 app-vencimento-carteira {
   width: auto;
   margin-left: 50px;
-  white-space: nowrap;
 }
 
 app-loading {

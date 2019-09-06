@@ -20,6 +20,15 @@
       </b>
     </li>
     <li class="nav-item">
+      Cursos e Treinamentos Relativos a Função
+      <div style="display: flex;justify-content: space-around;">
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-emar')"
+          [ngClass]="{'active': template === 'cursos-treinamentos-emar'}" href="#">EMPRESA</b>
+        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-geral')"
+          [ngClass]="{'active': template === 'cursos-treinamentos-geral'}" href="#">GERAL</b>
+      </div>
+    </li>
+    <li class="nav-item">
       <b class="nav-link" (click)="onClickTabs('experiencia')" [ngClass]="{'active': template === 'experiencia'}"
         href="#">Experiência</b>
     </li>
@@ -30,15 +39,6 @@
     <li class="nav-item">
       <b class="nav-link" (click)="onClickTabs('informacoes-academicas')"
         [ngClass]="{'active': template === 'informacoes-academicas'}" href="#">Informações Acadêmicas</b>
-    </li>
-    <li class="nav-item">
-      Cursos e Treinamentos Relativos a Função
-      <div style="display: flex;justify-content: space-around;">
-        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-geral')"
-          [ngClass]="{'active': template === 'cursos-treinamentos-geral'}" href="#">GERAL</b>
-        <b class="nav-link" (click)="onClickTabs('cursos-treinamentos-emar')"
-          [ngClass]="{'active': template === 'cursos-treinamentos-emar'}" href="#">EMPRESA</b>
-      </div>
     </li>
   </ul>
 

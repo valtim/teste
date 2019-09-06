@@ -34,6 +34,24 @@ export class HomeComponent implements OnInit {
   }
 
   isEnable(name: string) {
-    return !this.autorizacao.getRotas().includes(name);
+    return this.autorizacao.getRotas().includes(name);
+  }
+  logoff(): void {
+    this.loading = true;
+    localStorage.clear();
+
+      // localStorage.removeItem('Abastecedora');
+      // localStorage.removeItem('Cliente');
+      // localStorage.removeItem('FuncaoBordo');
+      // localStorage.removeItem('Natureza');
+      // localStorage.removeItem('Prefixo');
+      // localStorage.removeItem('TipoDeOperacao');
+      // localStorage.removeItem('TipoDeProcedimento');
+      // localStorage.removeItem('Tripulante');
+      // localStorage.removeItem('Authorization');
+      // localStorage.removeItem('Rotas');
+      // localStorage.removeItem('Certificado');
+      this.loading = false;
+      this.router.navigate(['/']);
   }
 }

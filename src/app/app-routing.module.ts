@@ -83,7 +83,7 @@ const routes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'tripulantes',
+    path: 'tripulante',
     component: TripulanteListaComponent,
     canActivate: [AuthGuardService]
   },

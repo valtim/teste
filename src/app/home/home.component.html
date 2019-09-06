@@ -2,3 +2,110 @@
 <div class="home" *ngIf="exibir">
   <img [src]="urlLogo" [alt]="clienteLogado">
 </div>
+
+<div id="menu">
+
+<ul>
+  <li>
+      <a *ngIf="isEnable('relatorio-voo')" routerLink="/relatorio-voo">
+        Relatório de Voo
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('relatorio-voo-periodo')" routerLink="/relatorio-voo-periodo">
+        Relatório de Voo por Período
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('vencimento-carteira')" routerLink="/vencimento-carteira">
+        Quadro de Tripulantes
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('papeleta')" routerLink="/papeleta">
+        Papeleta
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('relatorio-pagamento')" routerLink="/relatorio-pagamento">
+        Relatório de Pagamento
+      </a>
+    </li>
+</ul>
+          
+<ul>
+  <li>
+    <a *ngIf="isEnable('escala-prevista')" routerLink="/escala-prevista">
+      Escala Prevista Diária
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('escala-trabalho')" routerLink="/escala-trabalho">
+      Escala Trabalho Realizado
+    </a>
+  </li>
+  <!-- mais links -->
+</ul>
+
+  
+
+<ul>
+  <li>
+    <a *ngIf="isEnable('tripulante')" routerLink="/tripulante">
+      Tripulante
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('usuario')" routerLink="/usuario">
+      Usuário
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('bloco')" routerLink="/bloco">
+      Bloco
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('localidade')" routerLink="/localidade">
+      Localidade
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('certificado')" routerLink="/certificado">
+      Certificado
+    </a>
+  </li>
+  <!-- mais links -->
+</ul>
+  
+
+<ul>
+  <li>
+    <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
+      Fadiga
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
+      Tipo de Pergunta
+    </a>
+  </li>
+  <li>
+    <a *ngIf="isEnable('pergunta')" routerLink="/pergunta">
+      Pergunta
+    </a>
+  </li>
+</ul>
+
+<ul>
+  <li>
+    <a routerLink="/troca-senha">
+      Trocar Senha
+    </a>
+  </li>
+  <li><a href="#" (click)="logoff()" >Logoff</a></li>
+  <!-- mais links -->
+</ul>
+        
+
+</div>

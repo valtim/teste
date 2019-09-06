@@ -1,42 +1,13 @@
 <app-loading *ngIf="loading"></app-loading>
 
-<svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="salvarVencimento()">
-  <g>
-    <rect x="248" y="352" width="16" height="96"></rect>
-    <path d="M399.3,183.6c0-1.2,0.2-2.4,0.2-3.6c0-64.3-52.8-116.4-116.8-116.4c-46.1,0-85.8,27.1-104.4,66.3
-  c-8.1-4.1-17.1-6.4-26.8-6.4c-29.6,0-54.1,23.6-58.9,52C57.4,187.6,32,222.2,32,261.8c0,49.7,40.1,90.2,89.6,90.2H182h31h35V205.8
-  l-54.7,54.5l-11.6-11.6l74.5-74.3l74.5,74.3l-11.8,11.6L264,205.8V352h134c45,0,82-37.3,82-82.8C480,223.7,444.5,183.7,399.3,183.6
-  z"></path>
-  </g>
+<svg id="salvar" (click)="exportExcel()" height="32px" width="32px" viewBox="0 0 50 50">
+  <path d="  M32,35c0,0,8.312,0,9.098,0C45.463,35,49,31.463,49,27.099s-3.537-7.902-7.902-7.902c-0.02,0-0.038,0.003-0.058,0.003  c0.061-0.494,0.103-0.994,0.103-1.504c0-6.71-5.439-12.15-12.15-12.15c-5.229,0-9.672,3.309-11.386,7.941  c-1.087-1.089-2.591-1.764-4.251-1.764c-3.319,0-6.009,2.69-6.009,6.008c0,0.085,0.01,0.167,0.013,0.251  C3.695,18.995,1,22.344,1,26.331C1,31.119,4.881,35,9.67,35c0.827,0,8.33,0,8.33,0" fill="none" stroke="#157dfb" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+  <polyline fill="none" points="30,41 25,46 20,41   " stroke="#157dfb" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3"/>
+  <line fill="none" stroke="#157dfb" stroke-linecap="round" stroke-miterlimit="10" stroke-width="3" x1="25" x2="25" y1="26" y2="45.668"/>
 </svg>
 
-<div class="header-table">
-  <img src="../../assets/img/emar.jpg" alt="Logo da Emar Táxi Aéreo">
-  <div class="legenda">
-    <div class="flex-row">
-      <div class="color" style="background-color: #bdd6ee"></div>60 (Dias)
-    </div>
-    <div class="flex-row">
-      <div class="color" style="background-color: #ffff00"></div>30 (Dias)
-    </div>
-    <div class="flex-row">
-      <div class="color" style="background-color: #f7caac"></div>15 (Dias)
-    </div>
-    <div class="flex-row">
-      <div class="color" style="background-color: #ff0000"></div>Vencidos
-    </div>
-  </div>
-  <h1>Quadro de Tripulantes - FOR-OPE-011, Revisão 01, Data: 16/09/2018</h1>
-</div>
+<div class="table-response">    
 
-<div style="display: flex; justify-content: center;">
-  <button style="padding: 10px;background-color: #62b665;border-radius: 5px;border: none;margin-bottom: 15px;text-transform: uppercase;font-size: 15px;"
-    (click)="exportExcel()">
-    Exportar para Excel
-  </button>
-</div>
-
-<div class="table-response">
   <table id="trato" class="table">
     <thead>
       <tr>
@@ -67,17 +38,17 @@
     </thead>
     <tbody>
       <tr *ngFor="let tripulante of tripulantes; index as i; first as isFirst" id="{{tripulante.Id}}">
-        <td>{{tripulante.NomeCompleto}}</td>
+        <td nowrap>{{tripulante.NomeCompleto}}</td>
         <td>{{tripulante.CodigoANAC}}</td>
-        <td>{{tripulante.OperacaoStr}}</td>
-        <td>{{tripulante.CargoStr}}</td>
+        <td nowrap>{{tripulante.OperacaoStr}}</td>
+        <td nowrap>{{tripulante.CargoStr}}</td>
       </tr>
     </tbody>
   </table>
 
-  <div id="cursos" (click)="showPopUp($event)">
+  <!--<div id="cursos" (click)="showPopUp($event)">-->
 
-    <table *ngFor="let certificado of certificados" [attr.id]="certificado.Grupo.split(' ')[0]" class="table">
+    <table *ngFor="let certificado of certificados" [attr.id]="certificado.Grupo.split(' ')[0]" class="table" (click)="showPopUp($event)">
       <thead>
         <tr>
           <td [attr.colspan]="certificado.Titles.length">{{certificado.Grupo}}</td>
@@ -88,14 +59,14 @@
       </thead>
       <tbody *ngIf="ultimosVoos">
         <tr *ngFor="let tripulante of tripulantes">
-          <td *ngFor="let title of certificado.Titles" [attr.data-tripulante-id]="tripulante.Id"
+          <td nowrap *ngFor="let title of certificado.Titles" [attr.data-tripulante-id]="tripulante.Id"
             [attr.data-vencimento-id]="title.Id" [style.background-color]="colorBackgroundVencimento(tripulante.Id, title.Id)">
-            {{ultimosVoos[tripulante.Id + title.Id].Data}}
+            {{ultimosVoos[tripulante.Id + title.Id].Data | formataData}}
             <div *ngIf="ultimosVoos[tripulante.Id + title.Id].Voo.length">
               <div class="ultimo-voo">
                 <ng-template ngFor let-voo [ngForOf]="ultimosVoos[tripulante.Id + title.Id].Voo" let-i="index">
                   <div (click)="onClickDiario(voo)">
-                  Data do Voo: {{voo.Data}}<br>
+                  Data do Voo: {{voo.Data | formataData }}<br>
                   Prefixo: {{voo.Prefixo}}<br>
                   Numero do DB: {{voo.NumeroDoDiario}}<br>
                   Folha do DB: {{voo.NumeroDaFolha}}<br>
@@ -112,5 +83,21 @@
       </tbody>
     </table>
 
-  </div>
+  <!--</div>-->
 </div>
+
+
+<div class="legenda">
+    <div class="flex-row">
+      <div class="color" style="background-color: #bdd6ee"></div>60 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #ffff00"></div>30 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #f7caac"></div>15 (Dias)
+    </div>
+    <div class="flex-row">
+      <div class="color" style="background-color: #ff0000"></div>Vencidos
+    </div>
+  </div>

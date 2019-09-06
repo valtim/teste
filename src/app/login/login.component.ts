@@ -27,7 +27,12 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['home']);
         })
         .catch((error) => {
-          this.api.error = 'Usuário ou senha incorreto';
+
+          switch ( error.status ){
+            case 0 : this.api.error = 'Não foi possível acessar o servidor'; break;
+            case 403 : this.api.error = 'Usuário ou senha incorretos'; break;
+            default : this.api.error = 'Não foi possível acessar o servidor'; break;
+          }          
           this.loading = false;
         });
     } else {

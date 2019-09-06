@@ -32,9 +32,9 @@ import { FadigaComponent } from './fadiga/fadiga.component';
 import { EscalaTrabalhoComponent } from './escala-trabalho/escala-trabalho.component';
 import { TipoPerguntaListComponent } from './tipo-pergunta/tipo-pergunta-list/tipo-pergunta-list.component';
 import { PerguntaComponent } from './pergunta/pergunta.component';
-import { MenuComponent } from './menu/menu.component';
 import { RelatorioVooPeriodoComponent } from './relatorio-voo/relatorio-voo-periodo/relatorio-voo-periodo.component';
 import { ControleDePendenciasComponent } from './controle-de-pendencias/controle-de-pendencias.component';
+import { FormataDataPipe } from './formata-data.pipe';
 
 @NgModule({
   declarations: [
@@ -65,9 +65,9 @@ import { ControleDePendenciasComponent } from './controle-de-pendencias/controle
     EscalaTrabalhoComponent,
     TipoPerguntaListComponent,
     PerguntaComponent,
-    MenuComponent,
     RelatorioVooPeriodoComponent,
-    ControleDePendenciasComponent
+    ControleDePendenciasComponent,
+    FormataDataPipe
   ],
   imports: [
     BrowserModule,
