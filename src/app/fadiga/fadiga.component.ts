@@ -42,7 +42,7 @@ export class FadigaComponent implements OnInit {
 
   tratamentoFadiga(e) {
     this.loading = true;
-    this.api.getTratamentoFadiga(e.target.id).then((response) => {
+    this.api.getTratamentoFadiga(e.target.parentElement.id).then((response) => {
       this.infoPesquisa = response.Resultado;
       this.historicos = response.Evento.Avaliacoes;
       this.idPesquisa = response.Evento.Pesquisa.Id;

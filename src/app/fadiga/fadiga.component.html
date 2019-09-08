@@ -11,7 +11,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th>Informação</th>
         <th>Nível</th>
         <th>Pontos</th>
         <th>Trato</th>
@@ -19,10 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor">
-        <td>
-          <button *ngIf="fadiga.Id" id="{{fadiga.Id}}" (click)="tratamentoFadiga($event)">i</button>
-        </td>
+      <tr id="{{fadiga.Id}}" *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor" (click)="tratamentoFadiga($event)">
         <td>{{fadiga.Nivel}}</td>
         <td>{{fadiga.Pontos}}</td>
         <td>{{fadiga.Trato}}</td>
