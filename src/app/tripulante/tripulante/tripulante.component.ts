@@ -265,15 +265,42 @@ export class TripulanteComponent implements OnInit {
     }
   }
 
+  formatarTripulante() {
+    this.tripulante.Experiencia = this.tripulante.Experiencia.map((experiencia) => {
+      if (!experiencia.TipoDeAeronave.Id) {
+        experiencia.TipoDeAeronave = null;
+      }
+
+      if (!experiencia.TipoDeOperacao.Id) {
+        experiencia.TipoDeOperacao = null;
+      }
+
+      if (!experiencia.Cargo.Id) {
+        experiencia.Cargo = null;
+      }
+
+      return experiencia;
+    });
+
+    this.tripulante.Especializacoes = this.tripulante.Especializacoes.map((espec) => {
+      if (!espec.TipoDeOperacao.Id) {
+        espec.TipoDeOperacao = null;
+      }
+      return espec;
+    });
+  }
+
   onClickSave() {
     const API = this.api;
     const tripulante = this.tripulante;
+    const this_ = this;
     this.api.message = {
       show: true,
       type: 'alert',
       title: 'Salvar',
       message: 'Você deseja salvar as alteração feitas?',
       callBack() {
+        this_.formatarTripulante();
         API.postNTripulante(tripulante).then((response) => {
           console.log(response);
           API.message = {

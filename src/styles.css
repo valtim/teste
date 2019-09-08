@@ -71,6 +71,7 @@ app-loading {
   background-color: #50505080;
   position: fixed;
   top: 0;
+  left: 0;
   height: 100%;
 }
 

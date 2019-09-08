@@ -21,8 +21,7 @@ export class VencimentoCarteiraComponent implements OnInit {
   public ultimosVoos: any;
   public vencimentoListToSave = [];
 
-
-  static readonly DATE_FMT = 'dd/MMM/yyyy';
+  readonly DATE_FMT = 'dd/MMM/yyyy';
 
   ngOnInit() {
 
@@ -43,17 +42,11 @@ export class VencimentoCarteiraComponent implements OnInit {
     // });
   }
 
-  
   onClickDiario(diario: any) {
-
-    let texto = diario.NumeroDoDiario.split("/").join("-");
-
-let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
-
-
+    const texto = diario.NumeroDoDiario.split('/').join('-');
+    const link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     this.router.navigate([]).then(result => {  window.open(link, '_blank'); });
-
-    //this.router.navigate([`/relatorio-voo/${texto}/${diario.NumeroDaFolha}`]);
+    // this.router.navigate([`/relatorio-voo/${texto}/${diario.NumeroDaFolha}`]);
   }
 
   montarCertificados(certificados: Array<any>) {
@@ -78,8 +71,6 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     }
     this.certificados = novoCertificados;
   }
-
-  
 
   montarDatas() {
     const data = {};
@@ -122,8 +113,7 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
         return `${vencimento.UltimosVoos.length} Ocorrência(s)`;
       }
     }
-    //return vencimento.DataDeVencimento;
-    
+    // return vencimento.DataDeVencimento;
     return vencimento.DataDeVencimento;
   }
 
@@ -161,7 +151,6 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
     }
   }
 
-  
   diffDaysDate(data1: Date, data2: Date): number {
     const timeDiff = data1.getTime() - data2.getTime();
     const dayDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
@@ -202,17 +191,17 @@ let link = `/relatorio-voo/${texto}/${diario.NumeroDaFolha}`;
   }
 
 
-  someTudo(){
+  someTudo() {
     Array.from(document.querySelectorAll('.ultimo-voo')).forEach(function (divUltimo: HTMLElement) {
       divUltimo.style.display = 'none';
-    })
+    });
   }
 
   @HostListener('document:click', ['$event'])
   clickout(event) {
-    if ( event.target.tagName != 'TD' )
+    if ( event.target.tagName !== 'TD' ) {
       this.someTudo();
-    
+    }
   }
 
   exportExcel() {
