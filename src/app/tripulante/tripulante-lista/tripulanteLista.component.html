@@ -28,6 +28,11 @@
       <input type="text" id="anac" [(ngModel)]="anac">
     </label>
 
+    <label for="inativo">
+      Inativos:
+      <input type="checkbox" name="inativo" id="inativo" [(ngModel)]="inativo" style="margin: 0 auto;" (change)="changeInativos()">
+    </label>
+
     <button class="btn btn-search" (click)="search()">
       <img src="assets/icons/search.svg" alt="Search">
     </button>

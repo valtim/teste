@@ -20,11 +20,21 @@ export class TripulanteListaComponent implements OnInit {
   public trato = '';
   public anac = '';
   public loading = true;
+  public inativo = false;
 
   ngOnInit() {
     this.buscarTodos();
   }
 
+  changeInativos() {
+    if (this.inativo) {
+      this.tripulantes = this.tripulantesFilter.filter(tripulante => {
+        return tripulante.Ativo;
+      });
+    } else {
+      this.tripulantes = this.tripulantesFilter;
+    }
+  }
 
   buscarTodos() {
     this.tripulantesFilter = this.tripulantes = [];
