@@ -28,11 +28,19 @@ export class LoginComponent implements OnInit {
         })
         .catch((error) => {
 
-          switch ( error.status ){
-            case 0 : this.api.error = 'Não foi possível acessar o servidor'; break;
-            case 403 : this.api.error = 'Usuário ou senha incorretos'; break;
-            default : this.api.error = 'Não foi possível acessar o servidor'; break;
-          }          
+          switch ( error.status ) {
+            case 0:
+              this.api.error = 'Não foi possível acessar o servidor';
+              break;
+
+            case 403:
+              this.api.error = 'Usuário ou senha incorretos';
+              break;
+
+            default:
+              this.api.error = 'Não foi possível acessar o servidor';
+              break;
+          }
           this.loading = false;
         });
     } else {

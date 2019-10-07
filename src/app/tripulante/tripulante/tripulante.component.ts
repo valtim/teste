@@ -266,7 +266,7 @@ export class TripulanteComponent implements OnInit {
   }
 
   formatarTripulante() {
-    this.tripulante.Experiencia = this.tripulante.Experiencia.map((experiencia) => {
+    this.tripulante.Experiencia = this.tripulante.Experiencia.map((experiencia: any) => {
       if (!experiencia.TipoDeAeronave.Id) {
         experiencia.TipoDeAeronave = null;
       }

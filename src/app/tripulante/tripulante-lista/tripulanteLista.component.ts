@@ -27,17 +27,17 @@ export class TripulanteListaComponent implements OnInit {
   }
 
 
-buscarTodos(){
-  this.tripulantesFilter = this.tripulantes = [];
-  this.api.getNTripulanteLista().then(response => {
-    this.tripulantesFilter = this.tripulantes = response;
-    this.tripulantesFilter = this.tripulantesFilter.map(tripulante => {
-      tripulante.Excluir = !tripulante.Ativo;
-      return tripulante;
+  buscarTodos() {
+    this.tripulantesFilter = this.tripulantes = [];
+    this.api.getNTripulanteLista().then(response => {
+      this.tripulantesFilter = this.tripulantes = response;
+      this.tripulantesFilter = this.tripulantesFilter.map(tripulante => {
+        tripulante.Excluir = !tripulante.Ativo;
+        return tripulante;
+      });
+      this.loading = false;
     });
-    this.loading = false;
-  });
-}
+  }
 
   search() {
     this.tripulantes = this.tripulantesFilter.filter((trip) => {
