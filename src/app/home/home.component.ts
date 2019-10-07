@@ -10,8 +10,8 @@ import { AutorizacaoService } from '../autorizacao.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  public urlLogo : string;
-  public exibir : boolean = false;
+  public urlLogo: string;
+  public exibir = false;
 
   public loading: boolean;
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     //   this.loading = true;
     //   this.api.getMenuPermission();
     // }
-    this.api.getClienteLogado().then(result => {      
+    this.api.getClienteLogado().then(result => {
       this.urlLogo = `assets/img/${result.toLowerCase()}.png`;
       this.exibir = true;
     });

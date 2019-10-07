@@ -27,8 +27,6 @@ export class DiarioBordoComponent implements OnInit {
     this.appComponent.setTitle('Relatório de Voo');
     this.dataSearch = this.diario.dataSearch ? this.diario.dataSearch : new Date().toISOString().split('T')[0];
 
-    this.appComponent.setVoltar('');
-
     this.api.getDiarioByDate(this.dataSearch).then((data) => {
       this.diarios = data;
       this.loading = false;

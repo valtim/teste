@@ -38,7 +38,6 @@ export class NovoTripulanteComponent implements OnInit {
 
   constructor(private api: ApiService, private app: AppComponent) {
     this.app.setTitle('Novo Tripulante');
-    this.app.setVoltar('/tripulantes');
   }
 
   ngOnInit() {

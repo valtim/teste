@@ -113,7 +113,6 @@ return;
   }
 
   ngOnInit() {
-    this.app.setVoltar('/relatorio-voo');
     this.permiteCancelar();
   }
 

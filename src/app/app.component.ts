@@ -14,37 +14,19 @@ export class AppComponent implements OnInit {
   constructor(public router: Router, public _location: Location, public api: ApiService) {
   }
 
-  ngOnInit(): void {
-    //throw new Error("Method not implemented.");
-    
-    //this.loading = false;
-  }
-
   public title: string;
   public voltar: string;
 
+  ngOnInit(): void {
+    // throw new Error("Method not implemented.");
+    // this.loading = false;
+  }
 
   setTitle(title: string) {
     this.title = title;
   }
 
-  setVoltar(voltar: string) {
-    this.voltar = voltar;
-  }
-
   backClicked() {
-    if (this.voltar) {
-      this.router.navigate([this.voltar]);
-    } else {
-      if (this._location.path() === '/relatorio-voo/editar' ||
-        this._location.path() === '/relatorio-voo/novo') {
-        this.router.navigate(['/relatorio-voo']);
-      }
-      if (this._location.path().includes('/tripulante/')) {
-        this.router.navigate(['/tripulantes']);
-      } else {
-        this.router.navigate(['/home']);
-      }
-    }
+    this._location.back();
   }
 }

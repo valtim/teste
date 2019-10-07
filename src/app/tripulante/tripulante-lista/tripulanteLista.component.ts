@@ -12,7 +12,6 @@ export class TripulanteListaComponent implements OnInit {
 
   constructor(private app: AppComponent, private api: ApiService, private route: Router) {
     this.app.setTitle('Tripulante');
-    this.app.setVoltar('/home');
   }
 
   public tripulantes: Array<any>;
