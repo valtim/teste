@@ -27,7 +27,6 @@ export class UsuarioComponent implements OnInit {
 
   ngOnInit() {
     this.app.setTitle('Usuário');
-    this.app.setVoltar('usuario');
     this.loading = true;
     if (this.route.snapshot.paramMap.get('id') !== 'novo') {
       this.api.getUsuario().then((response: any) => {

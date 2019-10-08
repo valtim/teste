@@ -28,6 +28,11 @@
       <input type="text" id="anac" [(ngModel)]="anac">
     </label>
 
+    <label for="inativo">
+      Inativos:
+      <input type="checkbox" name="inativo" id="inativo" [(ngModel)]="inativo" style="margin: 0 auto;" (change)="changeInativos()">
+    </label>
+
     <button class="btn btn-search" (click)="search()">
       <img src="assets/icons/search.svg" alt="Search">
     </button>
@@ -58,20 +63,27 @@
         <td>
           <input type="checkbox" name="excluir" id="" style="display: inherit;" [(ngModel)]="tripulante.Excluir">
         </td>
-        <td>
-          <a routerLink="/tripulante/{{tripulante.Id}}" style="text-decoration: underline; color:black; ">
-            {{tripulante.Trato}}
-          </a>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Trato}}
         </td>
-        <td>{{tripulante.CodigoANAC}}</td>
-        <td>{{tripulante.NomeCompleto}}</td>
-        <td>{{tripulante.UltimoPeso}}</td>
-        <td>{{(tripulante.UltimoPeso / 2.2046).toFixed(2)}}</td>
-        <td>{{tripulante.Email}}</td>
-        <td>{{tripulante.Base}}</td>
-        <td>{{tripulante.Operacao}}</td>
-        <td>{{tripulante.Cargo}}</td>
-        <td>{{tripulante.Atualizacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.CodigoANAC}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.NomeCompleto}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.UltimoPeso}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{(tripulante.UltimoPeso / 2.2046).toFixed(2)}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Email}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Base}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Operacao}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Cargo}}</td>
+        <td routerLink="/tripulante/{{tripulante.Id}}" class="mouse-pointer">
+          {{tripulante.Atualizacao | date:'dd/MM/yyyy HH:mm:ss'}}</td>
       </tr>
     </tbody>
   </table>

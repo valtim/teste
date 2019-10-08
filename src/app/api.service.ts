@@ -17,7 +17,7 @@ export class ApiService {
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
     this.url = window.location.host === 'localhost:4200' ? 'https://emar.fastapi.com.br/' : '/';
-    this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
+    // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('Authorization')) {
       this.httpOptions = {

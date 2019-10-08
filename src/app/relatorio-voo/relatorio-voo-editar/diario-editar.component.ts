@@ -62,7 +62,9 @@ export class DiarioEditarComponent implements OnInit {
 
 
  if (this.activatedRoute.snapshot.paramMap.get('folha')) {
-  this.api.getDiarioByFolha(this.activatedRoute.snapshot.paramMap.get('diario'), this.activatedRoute.snapshot.paramMap.get('folha')).then(result => {
+    this.api.getDiarioByFolha(
+      this.activatedRoute.snapshot.paramMap.get('diario'),
+      this.activatedRoute.snapshot.paramMap.get('folha')).then(result => {
     this.blocos = result.Blocos;
     this.dataDiario = result.Diario;
     this.tripulantes = result.Tripulante;
@@ -78,7 +80,8 @@ export class DiarioEditarComponent implements OnInit {
 return;
 }
     if (this.activatedRoute.snapshot.paramMap.get('id')) {
-      this.api.getDiarioById(this.activatedRoute.snapshot.paramMap.get('id')).then(result => {
+        this.api.getDiarioById(
+          this.activatedRoute.snapshot.paramMap.get('id')).then(result => {
         this.blocos = result.Blocos;
         this.dataDiario = result.Diario;
         this.tripulantes = result.Tripulante;
@@ -111,7 +114,6 @@ return;
   }
 
   ngOnInit() {
-    this.app.setVoltar('/relatorio-voo');
     this.permiteCancelar();
   }
 
