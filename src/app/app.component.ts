@@ -27,23 +27,24 @@ export class AppComponent implements OnInit {
   }
 
   backClicked() {
-<<<<<<< HEAD
+    
     if (this.voltar) {
       this.router.navigate([this.voltar]);
       this.voltar = null;
-    } else {
-      if (this._location.path() === '/relatorio-voo/editar' ||
-        this._location.path() === '/relatorio-voo/novo') {
-        this.router.navigate(['/relatorio-voo']);
-      }
-      if (this._location.path().includes('/tripulante/')) {
-        this.router.navigate(['/tripulantes']);
-      } else {
-        this.router.navigate(['/home']);
-      }
+      return;
     }
-=======
+
+    if (this._location.path() === '/relatorio-voo/editar' || this._location.path() === '/relatorio-voo/novo') {
+      this.router.navigate(['/relatorio-voo']);
+      return;
+    }
+    if (this._location.path().includes('/tripulante/')) {
+      this.router.navigate(['/tripulantes']);
+      return;
+    }
+      // } else {
+      //   this.router.navigate(['/home']);
+      // }
     this._location.back();
->>>>>>> 8eb95fa455e3261d96cdc18dfdfcd9d01a3358a2
   }
 }
