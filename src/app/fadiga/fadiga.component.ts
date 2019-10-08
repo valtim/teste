@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ApiService } from '../api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-fadiga',
@@ -9,9 +10,11 @@ import { ApiService } from '../api.service';
 })
 export class FadigaComponent implements OnInit {
 
+  public buscaCompleta = false;
   public loading = false;
   public data: string;
   public fadigas = [];
+  public tripulantes = [];
   public infoPesquisa = [];
   public historicos = [];
   private idPesquisa = '';
@@ -19,22 +22,53 @@ export class FadigaComponent implements OnInit {
     Texto: '',
     Liberado: null
   };
-  public info = false;
-  public pesquisa = true;
 
-  constructor(private app: AppComponent, private api: ApiService) { }
+
+public pesquisa = {
+  dataInicio : new Date().toISOString().split('T')[0],
+  dataFim : new Date().toISOString().split('T')[0],
+  basico : true,
+  data : new Date().toISOString().split('T')[0],
+  Niveis : ['0', '1', '2', '3'],
+  Tripulantes : [],
+};
+
+mudarPesquisa(){
+  this.pesquisa.basico = !this.pesquisa.basico;
+}
+
+  public info = false;
+  // public pesquisa = true;
+
+  
+
+  constructor(
+    private app: AppComponent, 
+    private api: ApiService,    
+    private activatedRoute: ActivatedRoute, 
+    private router: Router) { }
 
   ngOnInit() {
     this.app.setTitle('Fadiga');
     this.data = new Date().toISOString().split('T')[0];
+
+    if ( this.activatedRoute.snapshot.paramMap.get('data') )
+      this.pesquisa.data = this.activatedRoute.snapshot.paramMap.get('data');
     this.searchFadiga();
+
   }
 
   searchFadiga() {
     this.loading = true;
-    this.api.getGerenciaFadiga(this.data).then((response) => {
-      this.fadigas = response;
+    this.api.postGerenciaFadiga(this.pesquisa).then((response) => {
+      this.fadigas = response.grid;
+      this.tripulantes = response.Tripulantes;
       this.loading = false;
+
+
+      this.pesquisa.Tripulantes = this.tripulantes.map(function(v){
+        return v.Id;
+    })
     }).catch(error => {
       this.loading = false;
     });
@@ -55,14 +89,13 @@ export class FadigaComponent implements OnInit {
     this.info = false;
   }
 
-  postTratamentoFadiga() {
-    if (this.idPesquisa && this.tratamento.Texto) {
-      this.loading = true;
-      this.api.postTratamentoFadiga(this.idPesquisa, this.tratamento).then(response => {
-        this.loading = false;
-        this.tratamento.Texto = '';
-        this.tratamento.Liberado = '';
-      });
-    }
+  teste(fadiga){
+
+    if ( !fadiga.Evento)
+      return; 
+
+      this.router.navigate(['/tratamento-da-fadiga/' + fadiga.Id]);
   }
+
+  
 }

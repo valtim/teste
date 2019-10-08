@@ -1,3 +1,4 @@
+import { TratamentoDaFadigaComponent } from './tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -130,6 +131,16 @@ const routes: Routes = [
   {
     path: 'fadiga',
     component: FadigaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'fadiga/:data',
+    component: FadigaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'tratamento-da-fadiga/:id',
+    component: TratamentoDaFadigaComponent,
     canActivate: [AuthGuardService]
   },
   {

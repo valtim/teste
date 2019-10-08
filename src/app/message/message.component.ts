@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 
 @Component({
-  selector: 'app-menssage',
-  templateUrl: './menssage.component.html',
-  styleUrls: ['./menssage.component.css']
+  selector: 'app-message',
+  templateUrl: './message.component.html',
+  styleUrls: ['./message.component.css']
 })
-export class MenssageComponent implements OnInit {
+export class MessageComponent implements OnInit {
 
   constructor(public api: ApiService) { }
 
@@ -23,7 +23,7 @@ export class MenssageComponent implements OnInit {
 
   onClickCancel() {
     this.api.message.show = false;
-    this.api.message.menssage = '';
+    this.api.message.message = '';
     this.api.message.callBack = this.onClickCancel;
   }
 

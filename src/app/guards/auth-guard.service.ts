@@ -20,7 +20,8 @@ export class AuthGuardService implements CanActivate {
 
   checkLogin(url: string): boolean {
     if (!this.autorizacao.getAuthorization() || !this.autorizacao.getRotas().includes(url.split('/')[1])) {
-      this.api.error = 'Você não tem permissão.';
+      localStorage.setItem('beforeLogin', url);
+      this.api.error = 'Você precisa fazer LOGIN para acessar esta página.';
       this.router.navigate(['']);
       return false;
     }

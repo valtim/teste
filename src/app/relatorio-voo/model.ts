@@ -83,6 +83,7 @@ export interface Diario {
   Cancelada: boolean;
   Ocorrencias?: any;
   Validado: boolean;
+  Bloqueado: boolean;
   ComputadoCTM: boolean;
   OAT?: any;
   Q?: any;

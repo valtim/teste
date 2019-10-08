@@ -40,7 +40,8 @@ export class DiarioEditarComponent implements OnInit {
     Refeicao2: '',
     Refeicao3: '',
     Refeicao4: '',
-    Ocorrencias: ''
+    Ocorrencias: '',
+    Bloqueado: false,
   };
   public prefixos: any;
   public blocos: any;
@@ -289,7 +290,7 @@ return;
   }
 
   folhaDiario(): Array<Number> {
-    if (!this.blocos || this.dataDiario.NumeroDoDiario === '') {
+    if (!this.blocos || this.dataDiario.NumeroDoDiario === '' || this.dataDiario.Bloqueado ) {
       return [];
     }
     const bloco = this.blocos.filter((element) => {

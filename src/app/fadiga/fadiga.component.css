@@ -1,4 +1,16 @@
-tbody td{
+.row {
+  display: flex; /* equal height of the children */
+}
+
+.col {
+  flex: 1; /* additionally, equal width */
+  
+  padding: 1em;
+  border: none;
+}
+
+
+.tbody tr{
   cursor: pointer;
 }
 .content {
@@ -10,7 +22,7 @@ tbody td{
   padding: 0 25px;
 }
 
-.search {
+form {
   display: flex;
   width: 90%;
   margin: 15px 0;
@@ -18,8 +30,9 @@ tbody td{
   align-items: end;
 }
 
-.search>* {
-  margin: 0 20px;
+.busca {
+  display:inline;
+  width: 100%;
 }
 
 #salvar {
@@ -77,9 +90,13 @@ tbody td{
   border-bottom: 3px solid #5ca6ff;
 }
 
-.table {
+.tabela-fadiga {
   width: 100%;
   margin: 0 auto;
+}
+
+.tabela-fadiga td{
+  cursor: pointer;
 }
 
 .pesquisa {

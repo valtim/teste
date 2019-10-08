@@ -1,16 +1,57 @@
 <app-loading *ngIf="loading"></app-loading>
 
 <div class="content">
-  <div class="search">
-    <input type="date" name="data" [(ngModel)]="data">
-    <button class="btn btn-search" (click)="searchFadiga()">
-      <img src="assets/icons/search.svg" alt="Search">
-    </button>
+
+  <div class="menu">
+    <button class="btn btn-info" [ngClass]="{'btn-select' : pesquisa.basico}" (click)="pesquisa.basico = true; ">Básica</button>
+    <button class="btn btn-info" [ngClass]="{'btn-select' : !pesquisa.basico}" (click)="pesquisa.basico = false; ">Avançada</button>
   </div>
+
+  <form action="" (submit)="searchFadiga()" autocomplete="off" method="POST" style="margin-top: 50px;">
+    <span class="buscaCompleta" *ngIf="!pesquisa.basico" >
+
+
+        <div class="row">
+          <div class="col">
+              <label for="Tripulantes">Tripulantes</label>
+              <select name="Tripulantes" id="Tripulantes" multiple style="height:300px;" [(ngModel)]="pesquisa.Tripulantes">
+                  <option *ngFor="let tripulante of tripulantes"
+                  value="{{tripulante.Id}}" selected="{{true}}">
+                  {{tripulante.Trato}}
+                </option>
+              </select></div>
+          <div class="col">
+              <label for="dataInicio">Data Inicial</label>
+              <input type="date" name="dataInicio" [(ngModel)]="pesquisa.dataInicio">
+              <label for="dataFim">Data Final</label>
+              <input type="date" name="dataFim" [(ngModel)]="pesquisa.dataFim">
+      
+              <label for="Nivel">Nível</label>
+              <select name="Nivel" id="" multiple [(ngModel)]="pesquisa.Niveis" style="height:100px;">
+                <option value="1" selected>Nivel 1</option>
+                <option value="2" selected>Nivel 2</option>
+                <option value="3" selected>Nivel 3</option>
+                <option value="0" selected>Sem Resposta</option>
+              </select>
+          </div>
+        </div>
+
+
+    </span>
+
+    <span class="busca" *ngIf="pesquisa.basico" >
+      <input type="date" name="data" [(ngModel)]="pesquisa.data">
+    </span>
+
+    <button class="btn btn-search" (click)="searchFadiga()">
+    <img src="assets/icons/search.svg" alt="Search">
+    </button>
+  </form>
 
   <table class="table">
     <thead>
       <tr>
+        <th *ngIf="!pesquisa.basico">Data</th>
         <th>Nível</th>
         <th>Pontos</th>
         <th>Trato</th>
@@ -18,7 +59,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr id="{{fadiga.Id}}" *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor" (click)="tratamentoFadiga($event)">
+      <tr id="{{fadiga.Id}}" *ngFor="let fadiga of fadigas" (click)="teste(fadiga)" [style.background]="fadiga.Cor" [style.cursor]="fadiga.Cursor">
+        <td *ngIf="!pesquisa.basico">{{fadiga.Data | date: 'dd/MM/yyyy'}}</td>
         <td>{{fadiga.Nivel}}</td>
         <td>{{fadiga.Pontos}}</td>
         <td>{{fadiga.Trato}}</td>
@@ -26,103 +68,4 @@
       </tr>
     </tbody>
   </table>
-</div>
-
-<div [ngClass]="{'info': info, 'info-hide': !info}">
-  <div class="info-content">
-    <div>
-      <button class="btn btn-info" [ngClass]="{'btn-select' : pesquisa}" (click)="pesquisa = true">Pesquisa</button>
-      <button class="btn btn-info" [ngClass]="{'btn-select' : !pesquisa}" (click)="pesquisa = false">Tratamento</button>
-    </div>
-    <div class="pesquisa" *ngIf="pesquisa">
-      <div *ngFor="let info of infoPesquisa">
-        <h3>{{info.Titulo}}</h3>
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Pergunta</th>
-              <th>Resposta</th>
-              <th *ngIf="info.Perguntas[0].Pergunta.indexOf('/') > 0"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let perg of info.Perguntas">
-              <td>{{perg.Pergunta}}</td>
-              <td>{{perg.Resposta}}</td>
-              <td *ngIf="info.Pagina === 2">
-                <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px"
-                  src="../../assets/icons/emoticon{{perg.Resposta}}.svg" alt="emoticon">
-              </td>
-              <td *ngIf="info.Pagina === 3">
-                <svg *ngIf="perg.Resposta === 1" xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="161 108.5 92 92"
-                  width="30" height="30">
-                  <g>
-                    <circle vector-effect="non-scaling-stroke" cx="207" cy="154.5" r="46" fill="#f2bf38" />
-                    <ellipse vector-effect="non-scaling-stroke" cx="196.99999999999986" cy="145.25" rx="3" ry="7.75"
-                      fill="rgb(0,0,0)" />
-                    <path d=" M 183.5 165.5 Q 205.5 177.5 230.5 165.5" fill="none" vector-effect="non-scaling-stroke"
-                      stroke-width="2" stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square"
-                      stroke-miterlimit="3" />
-                    <ellipse vector-effect="non-scaling-stroke" cx="216.99999999999991" cy="145.25" rx="3" ry="7.75"
-                      fill="rgb(0,0,0)" />
-                  </g>
-                </svg>
-
-                <svg *ngIf="perg.Resposta === 2" xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="284 108.5 92 92"
-                  width="30" height="30">
-                  <g>
-                    <circle vector-effect="non-scaling-stroke" cx="330" cy="154.5" r="46" fill="#f2bf38" />
-                    <line x1="310" y1="169.5" x2="350" y2="169.5" vector-effect="non-scaling-stroke" stroke-width="2"
-                      stroke="rgb(0,0,0)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3" />
-                    <ellipse vector-effect="non-scaling-stroke" cx="319.99999999999994" cy="145.25" rx="3" ry="7.75"
-                      fill="rgb(0,0,0)" />
-                    <ellipse vector-effect="non-scaling-stroke" cx="339.99999999999994" cy="145.25" rx="3" ry="7.75"
-                      fill="rgb(0,0,0)" />
-                  </g>
-                </svg>
-
-                <img *ngIf="perg.Resposta === 3" style="width: 30px" src="../../assets/icons/quaseDormindo.svg"
-                  alt="emoticon">
-                <img *ngIf="perg.Resposta === 4" style="width: 30px" src="../../assets/icons/dormindo.svg"
-                  alt="emoticon">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button>
-    </div>
-    <div class="pesquisa" *ngIf="!pesquisa">
-      <form action="" class="form">
-        <div style="width: 100%; display: flex;justify-content: space-around;">
-          <label for="liberado" style="display: flex">
-            Sim: <input type="radio" id="liberado" name="Liberado" value="1" [(ngModel)]="tratamento.Liberado">
-          </label>
-
-          <label for="liberado" style="display: flex">
-            Não: <input type="radio" id="liberado" name="Liberado" value="0" [(ngModel)]="tratamento.Liberado">
-          </label>
-        </div>
-
-        <label for="medidas" style="margin-top: 20px">Medidas Tomadas:</label>
-        <textarea name="Texto" id="" style="height: 65px;" [(ngModel)]="tratamento.Texto"></textarea>
-
-        <button class="btn btn-send" (click)="postTratamentoFadiga()">Enviar</button>
-        <button class="btn btn-error" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button>
-      </form>
-
-      <hr style="margin-top: 20px">
-
-      Histórico:
-      <div *ngFor="let historico of historicos; index as i" [ngClass]="{'back-alternative': i % 2 === 0}">
-        <b>Data:</b> {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}<br>
-        <b>Responsável:</b> {{historico.Responsavel ? historico.Responsavel.Trato : ''}}<br>
-        <b>Liberado:</b> {{historico.Liberado ? 'Sim' : 'Não'}}<br>
-        <b>Texto:</b> {{historico.Texto}}<br>
-        <hr>
-      </div>
-    </div>
-  </div>
 </div>

@@ -291,8 +291,12 @@ export class ApiService {
     return this.http.post(`${this.url}api/controledeacesso`, usuarioList).toPromise();
   }
 
-  getGerenciaFadiga(data: string): Promise<any> {
-    return this.http.get(`${this.url}api/GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
+  // getGerenciaFadiga(data: string): Promise<any> {
+  //   return this.http.get(`${this.url}api/GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
+  // }
+
+  postGerenciaFadiga(data: any): Promise<any> {
+    return this.http.post(`${this.url}api/GerenciaDaFadiga`, data, this.httpOptions).toPromise();
   }
 
   getEscalaRealizada(data: string) {
@@ -311,7 +315,7 @@ export class ApiService {
     return this.http.get(`${this.url}api/TratamentoDaFadiga/${id}`, this.httpOptions).toPromise();
   }
 
-  postTratamentoFadiga(id: string, tratamento: any) {
+  postTratamentoFadiga(id: string, tratamento: any): Promise<any> {
     return this.http.post(`${this.url}api/TratamentoDaFadiga/${id}`, tratamento, this.httpOptions).toPromise();
   }
 

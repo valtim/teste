@@ -17,7 +17,7 @@ import { PagamentoComponent } from './pagamento/pagamento/pagamento.component';
 import { TrocaSenhaComponent } from './troca-senha/troca-senha.component';
 import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 import { EscalaPrevistaDiariaComponent } from './escala-prevista-diaria/escala-prevista-diaria.component';
-import { MenssageComponent } from './menssage/menssage.component';
+import { MessageComponent } from './message/message.component';
 import { TripulanteListaComponent } from './tripulante/tripulante-lista/tripulanteLista.component';
 import { TripulanteComponent } from './tripulante/tripulante/tripulante.component';
 import { LocalidadeComponent } from './localidade/localidade.component';
@@ -35,6 +35,7 @@ import { PerguntaComponent } from './pergunta/pergunta.component';
 import { RelatorioVooPeriodoComponent } from './relatorio-voo/relatorio-voo-periodo/relatorio-voo-periodo.component';
 import { ControleDePendenciasComponent } from './controle-de-pendencias/controle-de-pendencias.component';
 import { FormataDataPipe } from './formata-data.pipe';
+import { TratamentoDaFadigaComponent } from './tratamento-da-fadiga/tratamento-da-fadiga.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { FormataDataPipe } from './formata-data.pipe';
     TrocaSenhaComponent,
     VencimentoCarteiraComponent,
     EscalaPrevistaDiariaComponent,
-    MenssageComponent,
+    MessageComponent,
     TripulanteListaComponent,
     TripulanteComponent,
     LocalidadeComponent,
@@ -67,7 +68,8 @@ import { FormataDataPipe } from './formata-data.pipe';
     PerguntaComponent,
     RelatorioVooPeriodoComponent,
     ControleDePendenciasComponent,
-    FormataDataPipe
+    FormataDataPipe,
+    TratamentoDaFadigaComponent,
   ],
   imports: [
     BrowserModule,

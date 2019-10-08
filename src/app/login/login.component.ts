@@ -24,7 +24,21 @@ export class LoginComponent implements OnInit {
         .then(() => {
           this.loading = false;
           this.api.username = this.username;
+          
+
+
+
+          
+
+          if ( localStorage.getItem('beforeLogin') != null ){
+            var url = localStorage.getItem('beforeLogin');
+            localStorage.removeItem('beforeLogin');
+              this.router.navigate([url]);
+              return;
+          }
+
           this.router.navigate(['home']);
+
         })
         .catch((error) => {
 

@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
   backClicked() {
     if (this.voltar) {
       this.router.navigate([this.voltar]);
+      this.voltar = null;
     } else {
       if (this._location.path() === '/relatorio-voo/editar' ||
         this._location.path() === '/relatorio-voo/novo') {

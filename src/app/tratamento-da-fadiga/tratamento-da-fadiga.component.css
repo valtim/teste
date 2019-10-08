@@ -1,0 +1,75 @@
+/* @media (min-width: 1000px) {
+  #menu-tratamento {
+    display:none;
+  }
+} */
+
+.form {
+    display: flex;
+    flex-direction: column;
+  }
+
+
+  .btn-info {
+    border-radius: 0;
+    width: 50%;
+  }
+  
+  .btn-select {
+    background-color: #e8f1fd;
+    border-bottom: 3px solid #5ca6ff;
+  }
+
+.table>td{
+    cursor: pointer;
+  }
+  .content {
+    display: flex;
+    margin-top: 55px;
+    align-items: stretch;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 0 25px;
+  }
+
+  .info-content {
+    width: 600px;
+    max-height: calc(100% - 60px);
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px #666;
+    align-self: center;
+    overflow-y: auto;
+  }
+
+  .btn-info {
+    border-radius: 0;
+    width: 50%;
+  }
+
+  
+.table {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.pesquisa{
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.btn-send {
+  background-color: #157dfb;
+  margin-top: 20px
+}
+
+textarea{
+  width: 90%;
+  height: 65px;
+}
+
+
+input[type=radio] {
+  display: inline;
+}

@@ -1,5 +1,5 @@
 <app-loading *ngIf="loading"></app-loading>
-<app-menssage></app-menssage>
+<app-message></app-message>
 <div class="page">
 
   <svg id="salvar" width="32px" height="32px" viewBox="0 0 512 512" (click)="salvarDario()">
@@ -28,7 +28,18 @@
       <option *ngFor="let prefixo of prefixos" value="{{prefixo.Id}}">{{prefixo.PrefixoCompleto}}</option>
     </select>
   </div>
-  <div class="form">
+
+  
+  <div class="form" *ngIf="dataDiario.Bloqueado">
+    <label for="nDiario">Nº Diário: </label>
+    <span *ngIf="dataDiario.Bloqueado" >{{dataDiario.NumeroDaFolha}}</span>
+  </div>
+
+  <div class="form" *ngIf="dataDiario.Bloqueado">
+    
+  </div>
+
+  <div class="form" *ngIf="!dataDiario.Bloqueado">
     <label for="nDiario">Nº Diário</label>
     <select id="nDiario" name="nDiario" [(ngModel)]="dataDiario.NumeroDoDiario"
       [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
@@ -36,7 +47,7 @@
       <option *ngFor="let bloco of blocos" value="{{bloco.Numero}}">{{bloco.Numero}}</option>
     </select>
   </div>
-  <div class="form">
+  <div class="form" *ngIf="!dataDiario.Bloqueado">    
     <label for="nFolhaDiario">Folha Diário</label>
     <select id="nFolhaDiario" name="nFolhaDiario" [(ngModel)]="dataDiario.NumeroDaFolha"
       [attr.disabled]="!dataDiario.PermiteAlteracao ? '' : null">
