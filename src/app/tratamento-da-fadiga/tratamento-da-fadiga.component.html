@@ -29,6 +29,7 @@
         <h3>{{resposta.Titulo}}</h3> -->
 
     <div *ngIf="!tratamento.Pesquisa.ReporteVoluntario">
+      
       <div *ngFor="let info of tratamento.Resultado">
         <h3>{{info.Titulo}}</h3>
         <table class="table">
@@ -45,10 +46,10 @@
               <td>{{perg.Resposta}}</td>
               <td *ngIf="info.Pagina === 2">
                 <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px"
-                  src="https://img.sistemasol.com.br/emoticon{{perg.Resposta}}.svg" alt="emoticon">
+                  src="/assets/img/emoticon{{perg.Resposta}}.png" alt="emoticon">
               </td>
               <td *ngIf="info.Pagina === 3">
-                  <img style="width: 30px" src="https://img.sistemasol.com.br/sono{{perg.Resposta}}.svg"
+                  <img style="width: 30px" src="/assets/img/sono{{perg.Resposta}}.png"
                   alt="emoticon">
               </td>
             </tr>
@@ -62,11 +63,16 @@
   
   <div class="pesquisa" *ngIf="!exibirPesquisa">
 
-      <div *ngIf=encerrado>
-          <h3>{{liberado ? 'Liberado para escala' : 'Fora da Escala'}}</h3>
-      </div>
+    <div *ngIf=encerrado>
+        <h3>{{liberado ? 'Liberado para escala' : 'Fora da Escala'}}</h3>
+    </div>
 
-    <form action="" class="form" style="margin-top: 50px" *ngIf="!tratamento.Evento.Encerrada" >
+
+<div *ngIf=tratamento.SomenteLeitura>
+  {{tratamento.Status}}
+</div>
+
+    <form action="" class="form" style="margin-top: 50px" *ngIf="!tratamento.Evento.Encerrada && !tratamento.SomenteLeitura" >
       
        <div *ngIf="faseChefe || faseGerente"> 
 
@@ -92,8 +98,11 @@
        
 
        <div *ngIf="faseCoord"> 
-          <label for="txtAvaliador">Comentário:<span class="" *ngIf="resposta.Avaliador.length == 0 ">Preencha o e-mail do Responsável pela escala.</span></label>
-          <input type="text" size="200" name="txtAvaliador" [(ngModel)]="resposta.Avaliador" placeholder="Preencha o e-mail do Responsável pela escala.">
+
+        <div *ngFor="let resp of resposta.ResponsavelEscala" style="display: block;">
+          <input type="checkbox" name="resp" [(ngModel)]="resp.Selected" style="display: inline; vertical-align: middle">
+          <label for="resp" style="display: inline;" >{{resp.Trato}} ({{resp.Email}}) </label>         
+        </div>
           
        </div>
 

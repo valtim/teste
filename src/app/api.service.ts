@@ -17,7 +17,7 @@ export class ApiService {
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
     this.url = window.location.host === 'localhost:4200' ? 'https://emar.fastapi.com.br/' : '/';
-    // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
+    this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
 
     if (localStorage.getItem('Authorization')) {
       this.httpOptions = {
@@ -75,6 +75,11 @@ export class ApiService {
 
   getDiarioById(id: string): Promise<any> {
     return this.http.get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
+      .toPromise();
+  }
+
+  getRDVById(id: string): Promise<any> {
+    return this.http.get(`${this.url}api/rdv/${id}`, this.httpOptions)
       .toPromise();
   }
 
@@ -336,7 +341,7 @@ export class ApiService {
   }
 
   getRelatorioVooPesquisa(fechado: boolean, dataInicio: string, dataFim: string, plataforma: string) {
-    return this.http.get(`${this.url}api/diarios/pesquisar/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
+    return this.http.get(`${this.url}api/RdvPorPeriodo/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
     this.httpOptions).toPromise();
   }
 }

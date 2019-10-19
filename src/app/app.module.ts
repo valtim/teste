@@ -36,6 +36,7 @@ import { RelatorioVooPeriodoComponent } from './relatorio-voo/relatorio-voo-peri
 import { ControleDePendenciasComponent } from './controle-de-pendencias/controle-de-pendencias.component';
 import { FormataDataPipe } from './formata-data.pipe';
 import { TratamentoDaFadigaComponent } from './tratamento-da-fadiga/tratamento-da-fadiga.component';
+import { RelatorioVooBloqueadoComponent } from './relatorio-voo/relatorio-voo-bloqueado/relatorio-voo-bloqueado.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { TratamentoDaFadigaComponent } from './tratamento-da-fadiga/tratamento-d
     ControleDePendenciasComponent,
     FormataDataPipe,
     TratamentoDaFadigaComponent,
+    RelatorioVooBloqueadoComponent,
   ],
   imports: [
     BrowserModule,

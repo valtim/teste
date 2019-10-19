@@ -26,6 +26,10 @@ export class AppComponent implements OnInit {
     this.title = title;
   }
 
+  setVoltar( voltar : string){
+    this.voltar = voltar;
+  }
+
   backClicked() {
     
     if (this.voltar) {
@@ -45,6 +49,8 @@ export class AppComponent implements OnInit {
       // } else {
       //   this.router.navigate(['/home']);
       // }
-    this._location.back();
+    //this._location.back();
+
+    this.router.navigate(['/home']);
   }
 }

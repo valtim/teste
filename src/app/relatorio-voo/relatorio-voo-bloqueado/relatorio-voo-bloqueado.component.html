@@ -1,0 +1,80 @@
+<br><br><br>
+
+<div *ngIf="diario">
+
+  <div>Data: {{diario.DataDoDiario | date: 'dd/MM/yyyy'}}</div>
+  <div>Prefixo: {{diario.Prefixo.PrefixoCompleto}}</div>
+  <div>Numero: {{diario.NumeroDoDiario}}</div>
+
+
+  <div class="table-responsive" style="overflow-x:auto;">
+    <table class="table">
+      <tr>
+        <th>De</th>
+        <th>Para</th>
+        <th>Partida</th>
+        <th>Decolagem</th>
+        <th>Pouso</th>
+        <th>Corte</th>
+        <th>Diurno</th>
+        <th>Noturno</th>
+        <th>IFR Capota</th>
+        <th>IFR Real</th>
+        <th>VFR</th>
+        <th>Total</th>
+        <th>Pousos</th>
+        <th>Ciclos</th>
+        <th>Pax (Número)</th>
+        <th>Carga (Kg)</th>
+        <th>Tripulante 1</th>
+        <th>Função 1</th>
+        <th>Tripulante 2</th>
+        <th>Função 2</th>
+        <th>Natureza</th>
+        <th>Cliente</th>
+        <th>Tipo de Operação</th>
+        <th>Comb. na Decolagem(Lb)</th>
+        <th>Comb. no Pouso(Lb)</th>
+        <th>Consumo de Combustível</th>
+        <th>Comb. Abastecido (Litros)</th>
+        <th>Nota de Abastecimento</th>
+        <th>Abastecedora</th>
+      </tr>
+      <tr *ngFor="let linha of diario.Linhas">
+        <td>{{linha.OrigemDeclarada}}</td>
+        <td>{{linha.DestinoDeclarado}}</td>
+        <td>{{linha.Partida | date: 'HH:mm'}}</td>
+        <td>{{linha.Decolagem | date: 'HH:mm'}}</td>
+        <td>{{linha.Pouso | date: 'HH:mm'}}</td>
+        <td>{{linha.Corte | date: 'HH:mm'}}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>{{linha.IFRC | date: 'HH:mm'}}</td>
+        <td>{{linha.IFRR | date: 'HH:mm'}}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>{{linha.Pousos}}</td>
+        <td>{{linha.Ciclos}}</td>
+        <td>{{linha.Pax}}</td>
+        <td>{{linha.Carga}}</td>
+        <td>{{linha.Comandante.Trato}}</td>
+        <td><span *ngIf="linha.FuncaoTrip1">{{linha.FuncaoTrip1.Nome}}</span></td>
+        <td><span *ngIf="linha.PrimeiroOficial">{{linha.PrimeiroOficial.Trato}}</span></td>
+        <td><span *ngIf="linha.FuncaoTrip2">{{linha.FuncaoTrip2.Nome}}</span></td>
+        <td>{{linha.Natureza}}</td>
+        <td><span *ngIf="linha.Cliente">{{linha.Cliente.Nome}}</span></td>
+        <td><span *ngIf="linha.TipoDeOperacao">{{linha.TipoDeOperacao.Nome}}</span></td>
+        <td>{{linha.FuelDec}}</td>
+        <td>{{linha.FuelPou}}</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </table>
+
+  </div>
+
+</div>
+
+

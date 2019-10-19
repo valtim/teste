@@ -71,7 +71,10 @@ export class RelatorioVooPeriodoComponent implements OnInit {
 
 
   onClickDiario(diario: any) {
-    this.router.navigate([`/relatorio-voo/${diario.Id}`]);
+    if ( diario.Bloqueado )
+      this.router.navigate([`/relatorio-voo-bloqueado/${diario.Id}`]);
+    else
+      this.router.navigate([`/relatorio-voo/${diario.Id}`]);
   }
   
   novoRelatorioVoo() {

@@ -1,3 +1,4 @@
+import { RelatorioVooBloqueadoComponent } from './relatorio-voo/relatorio-voo-bloqueado/relatorio-voo-bloqueado.component';
 import { TratamentoDaFadigaComponent } from './tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -66,6 +67,11 @@ const routes: Routes = [
   {
     path: 'relatorio-voo/:id',
     component: DiarioEditarComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'relatorio-voo-bloqueado/:id',
+    component: RelatorioVooBloqueadoComponent,
     canActivate: [AuthGuardService]
   },
   {

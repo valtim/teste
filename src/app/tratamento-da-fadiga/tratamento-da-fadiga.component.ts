@@ -22,6 +22,8 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public faseChefe : boolean = false;
   public faseGerente : boolean = false;
 
+  //public ResponsavelEscala : any[];
+
   public mobile: boolean = false;
 
   public formOK: boolean = false;
@@ -61,7 +63,7 @@ public comentario : string;
     
     
     if ( this.faseCoord )
-      this.formOK = ( this.resposta.Comentario.length > 0 && this.resposta.Avaliador.length > 0 );
+      this.formOK = ( this.resposta.Comentario.length > 0 && this.resposta.ResponsavelEscala.filter(x=>x.Selected).length > 0 );
 
     if ( this.faseChefe )
       this.formOK = this.resposta.Comentario.length > 0;
@@ -122,7 +124,7 @@ public comentario : string;
       this.faseCoord = this.tratamento.Evento.Avaliacoes.length == 0;
       this.faseChefe = this.tratamento.Evento.Avaliacoes.length == 1;
       this.faseGerente = this.tratamento.Evento.Avaliacoes.length == 2;
-
+      //this.ResponsavelEscala = this.tratamento.ResponsavelEscala;
 
 
 
@@ -130,7 +132,8 @@ public comentario : string;
         Acao : '',
         Comentario : '',
         Liberado : 'false',
-        Avaliador : ''
+        Avaliador : '',
+        ResponsavelEscala : this.tratamento.ResponsavelEscala,
       }
 
       
