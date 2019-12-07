@@ -1,0 +1,84 @@
+<!-- <app-loading *ngIf="loading"></app-loading> -->
+
+<app-titulo titulo="Fadiga"></app-titulo>
+
+<div class="container">
+
+
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'active' : pesquisa.basico}" (click)="pesquisa.basico = true;">Básica</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [ngClass]="{'active' : !pesquisa.basico}" (click)="pesquisa.basico = false;">Avançada</a>
+    </li>
+  </ul>
+
+  <div>
+    <button class="btn btn-warning btn-lg btn-block mt-2 mb-2" [routerLink]="caminho">Enviar e-mail com
+      pendências</button>
+  </div>
+
+  <form action="" (submit)="searchFadiga()" autocomplete="off" method="POST">
+    <span class="buscaCompleta" *ngIf="!pesquisa.basico">
+      <div class="row">
+        <div class="col">
+          <label for="Tripulantes">Tripulantes</label>
+          <select name="Tripulantes" id="Tripulantes" multiple style="height:300px;" [(ngModel)]="pesquisa.Tripulantes">
+            <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}" selected="{{true}}">
+              {{tripulante.Trato}}
+            </option>
+          </select></div>
+        <div class="col">
+          <label for="dataInicio">Data Inicial</label>
+          <input type="date" name="dataInicio" [(ngModel)]="pesquisa.dataInicio">
+          <label for="dataFim">Data Final</label>
+          <input type="date" name="dataFim" [(ngModel)]="pesquisa.dataFim">
+
+          <label for="Nivel">Nível</label>
+          <select name="Nivel" id="" multiple [(ngModel)]="pesquisa.Niveis" style="height:100px;">
+            <option value="1" selected>Nivel 1</option>
+            <option value="2" selected>Nivel 2</option>
+            <option value="3" selected>Nivel 3</option>
+            <option value="0" selected>Sem Resposta</option>
+          </select>
+        </div>
+      </div>
+
+
+    </span>
+
+    <div class="input-group mb-3" *ngIf="pesquisa.basico">
+      <div class="input-group-append">
+        <span class="input-group-text">Data</span>
+      </div>
+      <input type="date" name="data" class="form-control"  [(ngModel)]="pesquisa.data">
+      <button class="btn btn-primary">
+        <span class="oi" data-glyph="magnifying-glass"></span>
+      </button>
+    </div>
+
+  </form>
+
+  <table class="table table-hover table-sm">
+    <thead>
+      <tr>
+        <th *ngIf="!pesquisa.basico">Data</th>
+        <th>Tripulante</th>
+        <th>Status</th>
+        <th>Nível</th>
+        <th>Pontos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr id="{{fadiga.Id}}" *ngFor="let fadiga of fadigas" (click)="teste(fadiga)" [style.background]="fadiga.Cor"
+        [style.cursor]="fadiga.Cursor">
+        <td *ngIf="!pesquisa.basico">{{fadiga.Data | date: 'dd/MM/yyyy'}}</td>
+        <td>{{fadiga.Trato}}</td>
+        <td>{{fadiga.Status}}</td>
+        <td>{{fadiga.Nivel}}</td>
+        <td>{{fadiga.Pontos}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

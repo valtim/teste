@@ -1,9 +1,8 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DiarioService } from '../diario.service';
-import { ApiService } from '../../api.service';
-import { AppComponent } from 'src/app/app.component';
 import { Diario, Linha, Procedimento } from '../model';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-diario-editar',
@@ -55,7 +54,7 @@ export class DiarioEditarComponent implements OnInit {
   public naturezas: any;
   public cancelar: boolean;
 
-  constructor(private app: AppComponent, private route: Router,
+  constructor(private route: Router,
     private diario: DiarioService, private api: ApiService, private activatedRoute: ActivatedRoute) {
 
  console.log(this.activatedRoute.snapshot);

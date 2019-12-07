@@ -1,0 +1,5 @@
+<div class="popup" (mouseup)="exibir = !exibir">{{valorImpresso}}
+    <span class="popuptext" [class.show]="exibir && temPopup" *ngIf="Ocorrencias.Detalhes" >
+        <div *ngFor="let item of Ocorrencias.Detalhes" ><a href="http://tali.do" target="_new">{{item.DataDoDiario | date: 'dd/MM/yyyy'}} {{item.NumeroDoDiario}} {{item.NumeroDaFolha}}</a></div>
+    </span>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { ApiService } from '../api.service';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-localidade',
@@ -25,10 +25,10 @@ export class LocalidadeComponent implements OnInit {
   public loading = true;
   public longitudeMask = [/\d/, /\d/, '°', /\d/, /\d/, '\'', /\d/, /\d/, '"'];
 
-  constructor(private app: AppComponent, private api: ApiService) { }
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
-    this.app.setTitle('Localidade');
+    // this.app.setTitle('Localidade');
     this.api.getListaLocalidade().then((result) => {
       this.listaLocalidade = result.TipoDeLocalidade;
     });

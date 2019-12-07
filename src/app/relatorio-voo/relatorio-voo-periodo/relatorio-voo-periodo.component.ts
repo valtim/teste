@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { Router } from '@angular/router';
 import { DiarioService } from '../diario.service';
-import { ApiService } from '../../api.service';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-relatorio-voo-periodo',
@@ -12,7 +12,7 @@ import { ApiService } from '../../api.service';
 export class RelatorioVooPeriodoComponent implements OnInit {
 
   constructor(
-    private appComponent: AppComponent,
+    // private appComponent: AppComponent,
     private api: ApiService,
     private router: Router,
     private diario: DiarioService) { }
@@ -26,7 +26,7 @@ export class RelatorioVooPeriodoComponent implements OnInit {
   public relatorios: Array<any>;
 
   ngOnInit() {
-    this.appComponent.setTitle('Relatório de Voo por Período');
+    // this.appComponent.setTitle('Relatório de Voo por Período');
     this.prefixos = this.api.getPrefixos();
     this.plataforma = [];
     this.loading = false;

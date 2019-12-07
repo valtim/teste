@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { ApiService } from '../api.service';
+import { ApiService } from 'src/app/shared/api.service';
 import { Router } from '@angular/router';
-import { AutorizacaoService } from '../autorizacao.service';
+import { AutorizacaoService } from '../shared/autorizacao.service';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     private autorizacao: AutorizacaoService) { }
 
   async ngOnInit() {
-    this.app.setTitle('SOL Sistemas');
+    // this.app.setTitle('SOL Sistemas');
     // if (!this.api.getPermission()) {
     //   this.loading = true;
     //   this.api.getMenuPermission();

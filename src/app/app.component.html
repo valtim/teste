@@ -1,16 +1,1 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div class="menu no-print" [ngClass]="{'noShow': router.url === '/'}">
-  <div (click)="backClicked()" *ngIf="router.url !== '/home'">
-    <svg id="voltar" width="40px" viewBox="0 0 512 512">
-      <polygon points="352,128.4 319.7,96 160,256 160,256 160,256 319.7,416 352,383.6 224.7,256"></polygon>
-    </svg>
-  </div>
-
-  {{title}}
-
-<div *ngIf="router.url !== '/home'" style="width: 65px"></div>
-</div>
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
-
+<router-outlet></router-outlet>

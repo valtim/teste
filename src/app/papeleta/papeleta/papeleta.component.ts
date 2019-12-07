@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../api.service';
-import { AppComponent } from '../../app.component';
+import { ApiService } from 'src/app/shared/api.service';
+// import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-papeleta',
@@ -9,7 +9,7 @@ import { AppComponent } from '../../app.component';
 })
 export class PapeletaComponent implements OnInit {
 
-  constructor(private api: ApiService, private app: AppComponent) { }
+  constructor(private api: ApiService) { }
   public tripulantes = [];
   public diario: any;
   public loading = true;
@@ -17,7 +17,7 @@ export class PapeletaComponent implements OnInit {
   public dataDoDia: string;
 
   ngOnInit(): void {
-    this.app.setTitle('Papeleta');
+    // this.app.setTitle('Papeleta');
     this.api.getTripulantes().then(response => {
       this.tripulantes = response.Tripulantes;
       this.loading = false;

@@ -1,0 +1,18 @@
+<app-titulo titulo="Comunicado"></app-titulo>
+
+<div class="container" *ngIf="!exibirMensagem">
+    <h4>Destinatários:</h4>
+    <div>
+        <span class="text-nowrap" *ngFor="let trip of tripulantes"><input type="checkbox" [value]="trip.Trato" [(ngModel)]="trip.Marcado">&nbsp;{{trip.Trato}}
+            [{{trip.Email}}]&emsp;</span>
+    </div>
+
+    <h4>Prezado [tripulante],</h4>
+    <textarea name="" id="" cols="30" rows="10" [(ngModel)]="texto" class="form-control">
+    </textarea>
+    <button value="Enviar Mensagem" (click)="EnviarMensagem()" class="btn btn-lg btn-block btn-primary" [disabled]="loading">Enviar mensagem</button>
+
+</div>
+
+
+<app-confirmacao [mensagem]="mensagem" caminho="/home" *ngIf="exibirMensagem"></app-confirmacao>
