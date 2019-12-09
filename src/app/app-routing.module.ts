@@ -1,3 +1,4 @@
+import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { VencimentoCarteiraComponent } from './reg-trip/vencimento-carteira/vencimento-carteira.component';
 import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
 import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'comunicar-tripulantes/:data',
     component: ComunicarTripulantesComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'tratamento-da-fadiga/:id',
+    component: TratamentoDaFadigaComponent,
     canActivate: [AuthGuardService]
   },
 ];

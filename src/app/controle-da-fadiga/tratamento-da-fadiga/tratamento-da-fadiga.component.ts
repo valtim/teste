@@ -1,6 +1,7 @@
 import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
- import {  ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 // import { AppComponent } from 'src/app/app.component';
 
 @Component({
@@ -11,16 +12,22 @@ import { Component, OnInit } from '@angular/core';
 export class TratamentoDaFadigaComponent implements OnInit {
 
 
+
+  public titulo = "Tratamento";
+
+
+  fg: FormGroup;
+
   public tratamento: any;
   public historicos: any;
-  public loading = false;   
+  public loading = false;
   public exibirPesquisa = true;
-  public liberado : boolean = false;
-  public encerrado : boolean = false;
+  public liberado: boolean = false;
+  public encerrado: boolean = false;
 
-  public faseCoord : boolean = false;
-  public faseChefe : boolean = false;
-  public faseGerente : boolean = false;
+  public faseCoord: boolean = false;
+  public faseChefe: boolean = false;
+  public faseGerente: boolean = false;
 
   //public ResponsavelEscala : any[];
 
@@ -31,60 +38,87 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public resposta: any;
 
   constructor(
-    private activatedRoute: ActivatedRoute
-    , private api: ApiService
-    // , private app: AppComponent
-    , public router: Router
-    ) { }
+    private activatedRoute: ActivatedRoute,
+    private api: ApiService,
+    public router: Router,
+    private fb: FormBuilder,
+  ) { }
 
 
 
-    public id : string;
+  public id: string;
 
 
 
 
-public acao :string;
-public comentario : string;
+  public acao: string;
+  public comentario: string;
 
   ngOnInit() {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.tratamentoFadiga(this.id);
 
-    if (window.innerWidth < 500 ) { // 768px portrait
+    if (window.innerWidth < 500) { // 768px portrait
       this.mobile = true;
     }
 
+
+
   }
+
+  buildForm() {
+
+
+    //let group = {}
+    this.fg = new FormGroup({});
+    this.fg.addControl('Comentario', new FormControl('', Validators.required));
+
+    if (this.faseChefe || this.faseGerente) {
+
+      this.fg.addControl('Liberado', new FormControl('', Validators.required));
+      this.fg.addControl('Acao', new FormControl('', Validators.required));
+
+      this.fg.addControl('Liberado', new FormControl());
+      this.fg.addControl('Acao', new FormControl());
+
+
+
+    }
+
+    if (this.faseGerente) {
+
+      this.fg.patchValue({
+        Liberado: this.resposta.Liberado,
+        Acao: this.resposta.Acao,
+      });
+    }
+
+    if (this.faseCoord)
+      this.fg.addControl('ResponsavelEscala', new FormControl('', Validators.required));
+
+
+
+    // this.fg = this.fb.group({
+    //   Comentario: ['', Validators.required],
+    //   Liberado: ['', Validators.required],
+    //   Acao: ['', Validators.required],
+    //   ResponsavelEscala: ['', Validators.required],
+    //   //ResponsavelEscala: this.fb.array(this.resposta.ResponsavelEscala.map(s => this.fb.control(false)))
+    // })
+
+    //Object.assign(this.fg.value, this.resposta);
+
+    this.loading = false;
+
+  }
+
+
 
 
   postTratamento() {
-    
-    
-    if ( this.faseCoord )
-      this.formOK = ( this.resposta.Comentario.length > 0 && this.resposta.ResponsavelEscala.filter(x=>x.Selected).length > 0 );
 
-    if ( this.faseChefe )
-      this.formOK = this.resposta.Comentario.length > 0;
-
-    if ( this.faseGerente )
-      this.formOK = this.resposta.Comentario.length > 0;
-
-  if (!this.formOK)
-  {
-
-      this.api.message = {
-        show: true,
-        type: 'error',
-        title: 'Alerta',
-        message: 'Preencha os campos Obrigatórios',
-        //callBack: () => { this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0,10)]); }
-      };
-
-      return;
-
-  }
+    this.resposta = Object.assign({}, this.fg.value);
 
 
     this.loading = true;
@@ -92,14 +126,17 @@ public comentario : string;
       this.loading = false;
       // this.app.setTitle('Escala de Trabalho');
       //this.formatarDiario();
-      this.api.message = {
-        show: true,
-        type: 'success',
-        title: 'Sucesso',
-        message: 'Tratamento Salvo com Sucesso.',
-        callBack: () => { this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0,10)]); }
-      };
-      
+      // this.api.message = {
+      //   show: true,
+      //   type: 'success',
+      //   title: 'Sucesso',
+      //   message: 'Tratamento Salvo com Sucesso.',
+      //   callBack: () => { this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0, 10)]); }
+      // };
+
+      alert('Tratamento Salvo com sucesso!');
+      this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0, 10)]);
+
     }).catch(() => {
       this.loading = false;
       //this.formatarDiario();
@@ -116,41 +153,40 @@ public comentario : string;
     this.loading = true;
     this.api.getTratamentoFadiga(id).then((response) => {
       this.tratamento = response;
-      this.loading = false;
-
-      // this.app.setVoltar('/fadiga/' + this.tratamento.Pesquisa.Data.substring(0,10));
-      // this.app.setTitle(this.tratamento.Trato);
-
-      this.faseCoord = this.tratamento.Evento.Avaliacoes.length == 0;
-      this.faseChefe = this.tratamento.Evento.Avaliacoes.length == 1;
-      this.faseGerente = this.tratamento.Evento.Avaliacoes.length == 2;
-      //this.ResponsavelEscala = this.tratamento.ResponsavelEscala;
-
-
+      this.titulo = this.tratamento.Trato;
 
       this.resposta = {
-        Acao : '',
-        Comentario : '',
-        Liberado : 'false',
-        Avaliador : '',
-        ResponsavelEscala : this.tratamento.ResponsavelEscala,
+        Acao: '',
+        Comentario: '',
+        Liberado: 'false',
+        Avaliador: '',
+        ResponsavelEscala: this.tratamento.ResponsavelEscala,
       }
 
-      
-      //this.formOK = ( this.resposta.Comentario.length >0  && this.resposta.Avaliador.length >0  );
+      if (this.tratamento.Pesquisa.ReporteVoluntario) {
+        this.faseChefe = true;
+        this.buildForm();
+        return;
+      }
 
-      if ( this.tratamento.Evento.Avaliacoes.length == 2)
+      this.faseCoord = this.tratamento.Avaliacoes.length == 0;
+      this.faseChefe = this.tratamento.Avaliacoes.length == 1;
+      this.faseGerente = this.tratamento.Avaliacoes.length == 2;
+
+      if (this.tratamento.Avaliacoes.length == 2)
         this.resposta = {
-          Acao : this.tratamento.Evento.Avaliacoes[0].Acao,
-          Comentario : '',
-          Liberado : this.tratamento.Evento.Avaliacoes[0].Liberado.toString(),
-        }      
+          Acao: this.tratamento.Avaliacoes[0].Acao,
+          Comentario: '',
+          Liberado: this.tratamento.Avaliacoes[0].Liberado.toString(),
+        }
 
-      this.encerrado = this.tratamento.Evento.Encerrada;
-      this.liberado = this.tratamento.Evento.Liberado;
+      this.encerrado = this.tratamento.Encerrada;
+      this.liberado = this.tratamento.Liberado;
+
+      this.buildForm();
     });
   }
 
-  
+
 
 }

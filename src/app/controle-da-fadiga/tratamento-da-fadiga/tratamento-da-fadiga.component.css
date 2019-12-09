@@ -1,10 +1,14 @@
+/* .container{
+  margin-top: 200px;
+} */
+
 /* @media (min-width: 1000px) {
   #menu-tratamento {
     display:none;
   }
 } */
 
-.form {
+/* .form {
     display: flex;
     flex-direction: column;
   }
@@ -72,4 +76,4 @@ textarea{
 
 input[type=radio] {
   display: inline;
-}
+} */

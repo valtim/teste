@@ -1,37 +1,37 @@
+<app-titulo [titulo]="titulo"></app-titulo>
 
-<!-- <app-loading *ngIf="loading"></app-loading> -->
-<!-- <app-message></app-message> -->
+<div class="container" *ngIf="tratamento">
 
-<div class="content" *ngIf="tratamento">
+    <div *ngIf="tratamento.Encerrada">
+        <h3>{{tratamento.Liberado ? 'Liberado para escala' : 'Fora da Escala'}}</h3>
+      </div>
+  
+  
+      <div *ngIf="tratamento.SomenteLeitura">
+        {{tratamento.Status}}
+      </div>
+  
 
-  <div id="menu-tratamento" class="menu">
-    <button class="btn btn-info" [ngClass]="{'btn-select' : exibirPesquisa}" (click)="exibirPesquisa = true">Pesquisa</button>
-    <button class="btn btn-info" [ngClass]="{'btn-select' : !exibirPesquisa}" (click)="exibirPesquisa = false">Tratamento</button>
-  </div>
 
+  <div *ngIf="exibirPesquisa">
+    <div *ngIf="tratamento.Pesquisa.ReporteVoluntario">
+      <h4>Reporte Voluntário</h4>
 
-  <div class="pesquisa" *ngIf="exibirPesquisa">
-    <div *ngIf="tratamento.Pesquisa.ReporteVoluntario">        
-      <h3>Reporte Voluntário</h3>
+      <div *ngIf=encerrado>
+          <h3>{{liberado ? 'Liberado para escala' : 'Fora da Escala'}}</h3>
+        </div>
 
-      <div *ngFor="let info of tratamento.Resultado">
-          <h4>{{info.Titulo}}</h4>
-          <ul>
-          <li *ngFor="let opcao of info.Perguntas[0].Opcoes">{{opcao}}</li>
-          </ul>
-          <h5>{{info.Perguntas[0].Texto}}</h5>
+      <div *ngFor="let info of tratamento.Resultado" class="mb-4">
+        <h6>{{info.Pergunta}}</h6>
+        <span>{{info.Resposta}}</span>
       </div>
 
-          
-          
     </div>
-    <!-- <div *ngFor="let resposta of tratamento.Pesquisa.Respostas">
-        <h3>{{resposta.Titulo}}</h3> -->
 
     <div *ngIf="!tratamento.Pesquisa.ReporteVoluntario">
-      
+
       <div *ngFor="let info of tratamento.Resultado">
-        <h3>{{info.Titulo}}</h3>
+        <h5>{{info.Titulo}}</h5>
         <table class="table">
           <thead>
             <tr>
@@ -49,8 +49,7 @@
                   src="/assets/img/emoticon{{perg.Resposta}}.png" alt="emoticon">
               </td>
               <td *ngIf="info.Pagina === 3">
-                  <img style="width: 30px" src="/assets/img/sono{{perg.Resposta}}.png"
-                  alt="emoticon">
+                <img style="width: 30px" src="/assets/img/sono{{perg.Resposta}}.png" alt="emoticon">
               </td>
             </tr>
           </tbody>
@@ -59,77 +58,88 @@
     </div>
     <!-- <button class="btn btn-error" style="width: 100%" (click)="closeTratamentoFadiga()">Cancelar / Fechar</button> -->
   </div>
-  
-  
-  <div class="pesquisa" *ngIf="!exibirPesquisa">
-
-    <div *ngIf=encerrado>
-        <h3>{{liberado ? 'Liberado para escala' : 'Fora da Escala'}}</h3>
-    </div>
 
 
-<div *ngIf=tratamento.SomenteLeitura>
-  {{tratamento.Status}}
-</div>
-
-    <form action="" class="form" style="margin-top: 50px" *ngIf="!tratamento.Evento.Encerrada && !tratamento.SomenteLeitura" >
-      
-       <div *ngIf="faseChefe || faseGerente"> 
-
-        <label for="txtAcao">Ação:</label>
-        <textarea name="Acao" id="txtAcao" [(ngModel)]="resposta.Acao"></textarea>
+  <div *ngIf="!exibirPesquisa">
 
 
-        <span>
-          Continua na escala:<br/>
 
-          <label for="liberado">
-            Sim: <input type="radio" id="liberado" name="Liberado" value="true" [(ngModel)]="resposta.Liberado">
-          </label>
 
-          <label for="liberado">
-            Não: <input type="radio" id="liberado" name="Liberado" value="false" [(ngModel)]="resposta.Liberado">
-          </label>
+    <div *ngIf="!tratamento.Encerrada && !tratamento.SomenteLeitura">
 
-        </span>
-    
-       </div> 
+    <form [formGroup]="fg">
 
-       
+      <div *ngIf="faseChefe || faseGerente">
 
-       <div *ngIf="faseCoord"> 
-
-        <div *ngFor="let resp of resposta.ResponsavelEscala" style="display: block;">
-          <input type="checkbox" name="resp" [(ngModel)]="resp.Selected" style="display: inline; vertical-align: middle">
-          <label for="resp" style="display: inline;" >{{resp.Trato}} ({{resp.Email}}) </label>         
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Ação:</span>
+          </div>
+          <textarea formControlName="Acao" class="form-control" aria-label="Ação:"></textarea>
         </div>
-          
-       </div>
 
-       
 
-      <label for="txtComentario">Comentário:</label>
-      <textarea name="Comentario" id="txtComentario" [(ngModel)]="resposta.Comentario"></textarea>
 
-       <button class="btn btn-send" (click)="postTratamento()">Enviar</button>
-        
+        <div class="input-group mt-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Continua na Escala</span>
+          </div>
+          <label for="sim">SIM</label><input id="sim" type="radio" value="true" formControlName="Liberado">
+          <label for="nao">NÃO</label><input id="nao" type="radio" value="false" formControlName="Liberado">
+        </div>
+
+
+      </div>
+
+      <div class="input-group mt-2">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Comentário:</span>
+        </div>
+        <textarea formControlName="Comentario" class="form-control" aria-label="Comentário:"></textarea>
+      </div>
+
+      <div *ngIf="resposta && faseCoord">
+        <div *ngFor="let resp of resposta.ResponsavelEscala; let i = index">
+          <input type="radio" [id]="i" formControlName="ResponsavelEscala" [value]="resp.Email" />
+          <label [for]="i"> {{ resp.Trato}} - {{ resp.Email }} </label>
+        </div>
+      </div>
+
     </form>
 
-
+  </div>
 
     <hr>
 
     <div *ngFor="let historico of tratamento.Avaliacoes; index as i" [ngClass]="{'back-alternative': i % 2 === 0}">
-      <h6>{{historico.Usuario}} em {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}</h6>
+      <h6><b>{{historico.Usuario}}</b> em {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}</h6>
 
-      
-      <h5 *ngIf="historico.Acao"> 
+
+      <h5 *ngIf="historico.Acao">
         <h6>Ação tomada:</h6>{{ historico.Acao}}
       </h5>
       <h6>Comentário:</h6>{{historico.Comentario}}
       <hr>
     </div>
+
+    <!-- <button class="btn btn-info" [ngClass]="{'btn-select' : exibirPesquisa}"
+    (click)="exibirPesquisa = true" *ngIf="!exibirPesquisa">Pesquisa</button>
+  <button class="btn btn-info" [ngClass]="{'btn-select' : !exibirPesquisa}"
+    (click)="exibirPesquisa = false" *ngIf="exibirPesquisa">Tratamento</button> -->
+
+
   </div>
+
+
+  <!-- <pre> {{ fg.value | json }}</pre>
+
+  <pre> {{ fg.valid }}</pre> -->
 
 </div>
 
+
+<nav class="navbar fixed-bottom navbar-light bg-light justify-content-end" *ngIf="!loading" >
+  <button (click)="exibirPesquisa = !exibirPesquisa" class="btn btn-info" *ngIf="!exibirPesquisa">Pesquisa</button>
+  <button (click)="exibirPesquisa = !exibirPesquisa" class="btn btn-info" *ngIf="exibirPesquisa">Tratamento</button>
+  <button (click)="postTratamento()" class="btn btn-success ml-1" [disabled]="!fg.valid" *ngIf="!tratamento.SomenteLeitura" >Salvar</button>
+</nav>
