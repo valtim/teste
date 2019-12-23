@@ -1,0 +1,59 @@
+<form [formGroup]="fg" class="mt-2">
+    <div class="input-group" *ngIf="!completa">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Data</span>
+        </div>
+        <input type="date" class="form-control" formControlName="Data">
+        <div class="input-group-append">
+            <button class="btn btn-primary" (click)="enviarForm()">
+                <span class="oi" data-glyph="magnifying-glass"></span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="row" *ngIf="completa">
+        <div class="col">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Tripulantes</span>
+                </div>
+                <select formControlName="Tripulantes" id="Tripulantes" class="custom-select" size="11" multiple>
+                    <option *ngFor="let tripulante of tripulantes" value="{{tripulante.Id}}">
+                        {{tripulante.Trato}}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Data Inicial</span>
+                </div>
+                <input type="date" class="form-control" formControlName="DataInicial">
+            </div>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Data Final</span>
+                </div>
+                <input type="date" class="form-control" formControlName="DataFinal">
+            </div>
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Níveis</span>
+                </div>
+                <select formControlName="Niveis" id="Niveis" class="custom-select" size="5" multiple>
+                    <option *ngFor="let nivel of niveis" value="{{nivel.Id}}">
+                        {{nivel.Texto}}
+                    </option>
+                </select>
+            </div>
+            <div class="input-group align-items-center">
+                <button class="btn btn-primary btn-block" (click)="enviarForm()">
+                    Pesquisa Avançada&nbsp;<span class="oi" data-glyph="magnifying-glass"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>

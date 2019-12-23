@@ -38,17 +38,17 @@ export class ApiService {
   }
 
   async postLogin(username: string, password: string): Promise<any> {
-    return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password })
-      .toPromise()
-      .then((result: any) => {
-        this.autorizacao.setAuthorization(result.Authorization);
-        this.autorizacao.setRotas(result.Rotas);
-        this.updateAuthorization();
-      })
-      .catch();
+    return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password }, this.httpOptions)
+      .toPromise();
+      // .then((result: any) => {
+      //   this.autorizacao.setAuthorization(result.Authorization);
+        // this.autorizacao.setRotas(result.Rotas);
+        // this.updateAuthorization();
+      // })
+      // .catch();
   }
 
-  private updateAuthorization(): void {
+  public updateAuthorization(): void {
     localStorage.setItem('Authorization', this.autorizacao.getAuthorization());
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -334,6 +334,10 @@ export class ApiService {
     return this.http.get(`${this.url}api/TratamentoDaFadiga/${id}`, this.httpOptions).toPromise();
   }
 
+
+  getTelaGerenciaDaFadiga(): Promise<any> {
+    return this.http.get(`${this.url}api/TelaGerenciaDaFadiga`, this.httpOptions).toPromise();
+  }
   postTratamentoFadiga(id: string, tratamento: any): Promise<any> {
     return this.http.post(`${this.url}api/TratamentoDaFadiga/${id}`, tratamento, this.httpOptions).toPromise();
   }

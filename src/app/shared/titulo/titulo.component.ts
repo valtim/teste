@@ -12,6 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class TituloComponent implements OnInit {
 
   @Input() titulo;
+  @Input() carregando;
 
   Tripulante;
   

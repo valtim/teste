@@ -28,6 +28,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public faseCoord: boolean = false;
   public faseChefe: boolean = false;
   public faseGerente: boolean = false;
+  public faseGSO: boolean = false;
 
   //public ResponsavelEscala : any[];
 
@@ -41,10 +42,12 @@ export class TratamentoDaFadigaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
     public router: Router,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) { }
 
 
+
+  dataString;
 
   public id: string;
 
@@ -79,8 +82,8 @@ export class TratamentoDaFadigaComponent implements OnInit {
       this.fg.addControl('Liberado', new FormControl('', Validators.required));
       this.fg.addControl('Acao', new FormControl('', Validators.required));
 
-      this.fg.addControl('Liberado', new FormControl());
-      this.fg.addControl('Acao', new FormControl());
+      // this.fg.addControl('Liberado', new FormControl());
+      // this.fg.addControl('Acao', new FormControl());
 
 
 
@@ -91,6 +94,15 @@ export class TratamentoDaFadigaComponent implements OnInit {
       this.fg.patchValue({
         Liberado: this.resposta.Liberado,
         Acao: this.resposta.Acao,
+      });
+    }
+
+    if (this.faseGSO) {
+
+      this.fg.addControl('Liberado', new FormControl());
+      this.fg.patchValue({
+        Liberado: this.resposta.Liberado,
+        Comentario: this.resposta.Comentario,
       });
     }
 
@@ -144,7 +156,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
         show: true,
         type: 'error',
         title: 'Erro',
-        message: 'Problemas ao salvar o diário.'
+        message: 'Problemas ao salvar o tratamento.'
       };
     });
   }
@@ -152,8 +164,19 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public tratamentoFadiga(id: string) {
     this.loading = true;
     this.api.getTratamentoFadiga(id).then((response) => {
+      
+      this.dataString = "/fadiga/" + response.Pesquisa.Data.split('T')[0]
       this.tratamento = response;
       this.titulo = this.tratamento.Trato;
+      
+      this.encerrado = this.tratamento.Encerrada;
+      this.liberado = this.tratamento.Liberado;
+
+      if ( this.tratamento.Status == "Apto")
+      {
+        this.loading = false;
+        return;
+      }
 
       this.resposta = {
         Acao: '',
@@ -163,19 +186,26 @@ export class TratamentoDaFadigaComponent implements OnInit {
         ResponsavelEscala: this.tratamento.ResponsavelEscala,
       }
 
-      if (this.tratamento.Pesquisa.ReporteVoluntario) {
-        this.faseChefe = true;
-        this.buildForm();
-        return;
-      }
+      // if (this.tratamento.Pesquisa.ReporteVoluntario) {
+      //   this.faseChefe = true;
+      //   this.buildForm();
+      //   return;
+      // }
 
       this.faseCoord = this.tratamento.Avaliacoes.length == 0;
       this.faseChefe = this.tratamento.Avaliacoes.length == 1;
       this.faseGerente = this.tratamento.Avaliacoes.length == 2;
+      this.faseGSO = this.tratamento.Avaliacoes.length == 3 && this.tratamento.Encerrada == false;
 
       if (this.tratamento.Avaliacoes.length == 2)
         this.resposta = {
           Acao: this.tratamento.Avaliacoes[0].Acao,
+          Comentario: '',
+          Liberado: this.tratamento.Avaliacoes[0].Liberado.toString(),
+        }
+
+        if (this.tratamento.Avaliacoes.length == 3)
+        this.resposta = {
           Comentario: '',
           Liberado: this.tratamento.Avaliacoes[0].Liberado.toString(),
         }

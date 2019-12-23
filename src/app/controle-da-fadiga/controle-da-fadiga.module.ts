@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComunicarTripulantesComponent } from './comunicar-tripulantes/comunicar-tripulantes.component';
+import { PesquisaBasicaComponent } from './pesquisa-basica/pesquisa-basica.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { ComunicarTripulantesComponent } from './comunicar-tripulantes/comunicar
   declarations: [
     TratamentoDaFadigaComponent,
   FadigaComponent,
-  ComunicarTripulantesComponent]
+  ComunicarTripulantesComponent,
+  PesquisaBasicaComponent,]
 })
 export class ControleDaFadigaModule { }

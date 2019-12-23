@@ -60,7 +60,7 @@
   </div>
 
 
-  <div *ngIf="!exibirPesquisa">
+  <div *ngIf="!exibirPesquisa && tratamento.Nivel != 1">
 
 
 
@@ -139,7 +139,8 @@
 
 
 <nav class="navbar fixed-bottom navbar-light bg-light justify-content-end" *ngIf="!loading" >
-  <button (click)="exibirPesquisa = !exibirPesquisa" class="btn btn-info" *ngIf="!exibirPesquisa">Pesquisa</button>
-  <button (click)="exibirPesquisa = !exibirPesquisa" class="btn btn-info" *ngIf="exibirPesquisa">Tratamento</button>
+  <button [routerLink]="dataString" class="btn btn-info">Voltar</button>
+  <button (click)="exibirPesquisa = !exibirPesquisa" class=" ml-1 btn btn-info" *ngIf="!exibirPesquisa">Pesquisa</button>
+  <button (click)="exibirPesquisa = !exibirPesquisa" class=" ml-1 btn btn-info" *ngIf="exibirPesquisa && tratamento.Nivel != 1">Tratamento</button>
   <button (click)="postTratamento()" class="btn btn-success ml-1" [disabled]="!fg.valid" *ngIf="!tratamento.SomenteLeitura" >Salvar</button>
 </nav>

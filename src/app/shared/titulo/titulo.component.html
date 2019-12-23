@@ -1,5 +1,9 @@
 <nav class="navbar navbar-light bg-light fixed-top">
     <a class="navbar-brand" routerLink="/home">{{titulo}}</a>
+    <div class="spinner-border" role="status" *ngIf="carregando" >
+        <span class="sr-only">Loading...</span>
+    </div>
+
     <button type="button" class="btn btn-link" routerLink="/"><span class="oi"
             data-glyph="account-logout">&nbsp;</span>Sair</button>
 </nav>
