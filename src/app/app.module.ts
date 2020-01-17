@@ -11,11 +11,15 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BocaVooComponent } from './relatorios/boca-voo/boca-voo.component';
+import { BocaDiaComponent } from './relatorios/boca-dia/boca-dia.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    BocaVooComponent,
+    BocaDiaComponent,
   ],
   imports: [
     BrowserModule,
