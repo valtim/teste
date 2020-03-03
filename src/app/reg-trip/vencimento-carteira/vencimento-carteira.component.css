@@ -1,6 +1,11 @@
+
+.legenda{
+  display: inline-block;
+}
+
 .tableFixHead {
     max-width: 100vw;
-    max-height: 95vh;
+    max-height: 90vh;
     overflow: scroll;
     margin-top: 60px;
   }
@@ -38,25 +43,3 @@
     left: 0;
     z-index: 2;
   }
-  
-  
-  /* Just to display it nicely: */
-  
-  /* thead th {
-    background: #000;
-    color: #FFF;
-  }
-  
-  tbody th {
-    background: #FFF;
-    border-right: 1px solid #CCC;
-  } */
-  
-  /* table {
-    border-collapse: collapse;
-  }
-  
-  td,
-  th {
-    padding: 0.5em;
-  } */

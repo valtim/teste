@@ -164,16 +164,15 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public tratamentoFadiga(id: string) {
     this.loading = true;
     this.api.getTratamentoFadiga(id).then((response) => {
-      
+
       this.dataString = "/fadiga/" + response.Pesquisa.Data.split('T')[0]
       this.tratamento = response;
       this.titulo = this.tratamento.Trato;
-      
+
       this.encerrado = this.tratamento.Encerrada;
       this.liberado = this.tratamento.Liberado;
 
-      if ( this.tratamento.Status == "Apto")
-      {
+      if (this.tratamento.Status == "Apto") {
         this.loading = false;
         return;
       }
@@ -192,10 +191,18 @@ export class TratamentoDaFadigaComponent implements OnInit {
       //   return;
       // }
 
-      this.faseCoord = this.tratamento.Avaliacoes.length == 0;
+        this.faseCoord = this.tratamento.Avaliacoes.length == 0;
       this.faseChefe = this.tratamento.Avaliacoes.length == 1;
       this.faseGerente = this.tratamento.Avaliacoes.length == 2;
       this.faseGSO = this.tratamento.Avaliacoes.length == 3 && this.tratamento.Encerrada == false;
+
+      if (this.tratamento.Pesquisa.ReporteVoluntario) {
+        this.faseGerente = true;
+        this.faseCoord = false;
+        this.faseChefe = false;
+        this.faseGSO = false;
+      }
+
 
       if (this.tratamento.Avaliacoes.length == 2)
         this.resposta = {
@@ -204,7 +211,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
           Liberado: this.tratamento.Avaliacoes[0].Liberado.toString(),
         }
 
-        if (this.tratamento.Avaliacoes.length == 3)
+      if (this.tratamento.Avaliacoes.length == 3)
         this.resposta = {
           Comentario: '',
           Liberado: this.tratamento.Avaliacoes[0].Liberado.toString(),
@@ -214,6 +221,12 @@ export class TratamentoDaFadigaComponent implements OnInit {
       this.liberado = this.tratamento.Liberado;
 
       this.buildForm();
+    })
+    .catch((error) => {
+        if ( error.status == 403 ){
+          alert('Você não tem acesso para visualizar esta pesquisa');
+          this.router.navigate(['/fadiga']);
+        }
     });
   }
 

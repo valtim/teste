@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComunicarTripulantesComponent } from './comunicar-tripulantes/comunicar-tripulantes.component';
 import { PesquisaBasicaComponent } from './pesquisa-basica/pesquisa-basica.component';
+import { RelatorioFadigaComponent } from './relatorio-fadiga/relatorio-fadiga.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { PesquisaBasicaComponent } from './pesquisa-basica/pesquisa-basica.compo
     TratamentoDaFadigaComponent,
   FadigaComponent,
   ComunicarTripulantesComponent,
-  PesquisaBasicaComponent,]
+  PesquisaBasicaComponent,
+  RelatorioFadigaComponent,]
 })
 export class ControleDaFadigaModule { }

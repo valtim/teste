@@ -122,7 +122,7 @@ export class FadigaComponent implements OnInit {
   }
 
   goTratamento(fadiga) {
-    if (fadiga == "")
+    if (fadiga == "" || fadiga == undefined)
       return;
     this.router.navigate(['/tratamento-da-fadiga/' + fadiga]);
   }

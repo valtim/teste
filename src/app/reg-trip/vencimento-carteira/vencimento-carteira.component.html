@@ -1,4 +1,4 @@
-<app-titulo titulo="Quadro de Tripulantes"></app-titulo>
+<app-titulo titulo="FORM-OPE-006 Quadro de Tripulantes - Revisão 5 - Data: 11 de Janeiro de 2020"></app-titulo>
 
 <div class="tableFixHead" *ngIf="resultado">
   <table class="table table-sm table-hover">
@@ -9,8 +9,18 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of resultado; let i= index">
-        <td *ngFor="let coluna of item | keyvalue: sortNull" class="text-nowrap"><app-ultimas-ocorrencias [Ocorrencias]="coluna.value"></app-ultimas-ocorrencias></td>
+        <td *ngFor="let coluna of item | keyvalue: sortNull" class="text-nowrap">
+          <app-ultimas-ocorrencias [Ocorrencias]="coluna.value"></app-ultimas-ocorrencias>
+        </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+
+  <div class="row text-center font-weight-bold">
+    <div class="col-3" style="background-color: #bdd6ee">60 dias</div>
+    <div class="col-3" style="background-color: #ffff00">30 dias</div>
+    <div class="col-3" style="background-color: #f7caac">15 dias</div>
+    <div class="col-3 text-white" style="background-color: #ff0000">Vencidos</div>
+  </div>

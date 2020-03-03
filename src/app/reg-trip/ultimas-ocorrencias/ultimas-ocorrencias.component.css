@@ -1,3 +1,28 @@
+
+
+  .vencido{
+    background-color: #ff0000;
+    font-weight: bolder;
+    color: #fff;
+    padding: 2px;
+  }
+  .em15dias{
+    background-color: #f7caac;
+    font-weight: bolder;
+    padding: 2px;
+  }
+  .em30dias{
+    background-color: #ffff00;
+    font-weight: bolder;
+    padding: 2px;
+  }
+  .em60dias{
+    background-color: #bdd6ee;
+    font-weight: bolder;
+    padding: 2px;
+  }
+
+
 /* Popup container */
 .popup {
     position: relative;
@@ -8,7 +33,7 @@
   /* The actual popup (appears on top) */
   .popup .popuptext {
     visibility: hidden;
-    width: 160px;
+    width: 300;
     background-color: #555;
     color: #fff;
     text-align: center;
