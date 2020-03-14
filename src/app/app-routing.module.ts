@@ -1,3 +1,4 @@
+import { TripulanteComponent } from './reg-trip/tripulante/tripulante.component';
 import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { VencimentoCarteiraComponent } from './reg-trip/vencimento-carteira/vencimento-carteira.component';
 import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
@@ -38,6 +39,11 @@ const routes: Routes = [
     component: TratamentoDaFadigaComponent,
     canActivate: [AuthGuardService]
   },
+  // {
+  //   path: 'tripulante',
+  //   component: TripulanteComponent,
+  //   canActivate: [AuthGuardService]
+  // },
 ];
 
 @NgModule({

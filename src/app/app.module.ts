@@ -1,3 +1,4 @@
+import { TripulanteComponent } from './reg-trip/tripulante/tripulante.component';
 import { RegTripModule } from './reg-trip/reg-trip.module';
 import { HomeComponent } from './home/home.component';
 import { SegurancaModule } from './seguranca/seguranca.module';
@@ -20,6 +21,7 @@ import { BocaDiaComponent } from './relatorios/boca-dia/boca-dia.component';
     HomeComponent,
     BocaVooComponent,
     BocaDiaComponent,
+    // TripulanteComponent,
   ],
   imports: [
     BrowserModule,
