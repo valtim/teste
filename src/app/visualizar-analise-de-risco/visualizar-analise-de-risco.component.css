@@ -1,0 +1,36 @@
+.azul_clarinho {
+    background-color: #BDD6EE;
+}
+
+.cartao-data {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.cartao {
+    /* border: 1px; */
+    width: 45%;
+    /* height: 100px; */
+    /* line-height: 100px; */
+    /* background-color: grey; */
+    /* margin: 10px; */
+    /* color: white; */
+    /* text-align: center; */
+    /* vertical-align: middle; */
+}
+
+@media screen and (max-width: 480px) {
+    .cartao {
+        /* border: 1px; */
+        width: 100%;
+        /* height: 100px; */
+        /* line-height: 100px; */
+        /* background-color: grey; */
+        /* margin: 10px; */
+        /* color: white; */
+        /* text-align: center; */
+        /* vertical-align: middle; */
+    }
+}

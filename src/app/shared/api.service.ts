@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AutorizacaoService } from './autorizacao.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +22,7 @@ export class ApiService {
       this.httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('Authorization')
+          'Authorization': localStorage.getItem('Authorization'),
         })
       };
     }
@@ -47,6 +46,8 @@ export class ApiService {
       // })
       // .catch();
   }
+
+
 
   public updateAuthorization(): void {
     localStorage.setItem('Authorization', this.autorizacao.getAuthorization());
@@ -361,5 +362,23 @@ export class ApiService {
   getRelatorioVooPesquisa(fechado: boolean, dataInicio: string, dataFim: string, plataforma: string) {
     return this.http.get(`${this.url}api/RdvPorPeriodo/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
     this.httpOptions).toPromise();
+  }
+
+  
+  getTelaConsultaRisco(): Promise<any> {
+    return this.http.get(`${this.url}api/TelaConsultaAvRisco`, this.httpOptions).toPromise();
+  }
+
+
+  postTelaConsultaRisco(filtro:any): Promise<any> {
+    return this.http.post(`${this.url}api/TelaConsultaAvRisco`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  getPaxTransportado(ano: number): Promise<any> {
+    return this.http.get(`${this.url}api/QtdePaxTransportados/${ano}`, this.httpOptions).toPromise();
+  }
+
+  getLogo(cliente:string){
+    return `${this.url}assets/img/${cliente.toLowerCase()}.png`;
   }
 }

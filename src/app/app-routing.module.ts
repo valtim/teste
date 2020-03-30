@@ -1,3 +1,7 @@
+import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
+import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
+import { AnaliseDeRiscoComponent } from './analise-de-risco/analise-de-risco.component';
+import { GraficoComponent } from './grafico/grafico.component';
 import { TripulanteComponent } from './reg-trip/tripulante/tripulante.component';
 import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { VencimentoCarteiraComponent } from './reg-trip/vencimento-carteira/vencimento-carteira.component';
@@ -39,6 +43,31 @@ const routes: Routes = [
     component: TratamentoDaFadigaComponent,
     canActivate: [AuthGuardService]
   },
+  {
+    path: 'grafico',
+    component: GraficoComponent,
+  },
+  {
+    path: 'analise-de-risco',
+    component: AnaliseDeRiscoComponent,
+  },
+  {
+    path: 'visualizar-analise-de-risco/:id',
+    component: AnaliseDeRiscoComponent,
+  },
+  {
+    path: 'documento-impresso',
+    component: DocumentoImpressoComponent,
+  },
+  {
+    path: 'pax-transportados',
+    component: PaxTransportadosComponent,
+  },
+  // {
+  //   path: 'tripulante',
+  //   component: TripulanteComponent,
+  //   canActivate: [AuthGuardService]
+  // },
   // {
   //   path: 'tripulante',
   //   component: TripulanteComponent,

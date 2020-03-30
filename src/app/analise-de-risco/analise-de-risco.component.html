@@ -1,0 +1,80 @@
+<app-titulo [titulo]="titulo"></app-titulo>
+
+<div class="container">
+
+    <div class="row ml-1">
+        <div class="sm-6 lg-4 mr-2">
+
+            <p-listbox [options]="tripulantes" [(ngModel)]="tripulantesSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Tripulantes
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="sm-6 lg-4 mr-2">
+
+            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="sm-12 lg-4 mt-2">
+
+
+            <p-calendar [(ngModel)]="dates" selectionMode="multiple" [readonlyInput]="true" [inline]="true"
+                [locale]="pt"></p-calendar>
+
+        </div>
+    </div>
+    <!-- (click)="handleClick($event)" -->
+    <button pButton type="button" label="Pesquisar" (click)="pesquisar()"></button>
+
+
+
+    <div *ngIf="grid">
+        <table class="table table-hover table-sm table-striped">
+            <thead>
+                <tr>
+                    <th>Data <br>Hora</th>
+                    <!-- <th>ETD</th> -->
+                    <th>Prefixo</th>
+                    <th>PIC <br>SIC</th>
+                    <th>Nota</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of grid;index as i" (click)="showDialog(i)">
+                    <td>{{item.Data}} <br> {{item.ETD}}</td>
+                    <td nowrap>{{item.Prefixo}}</td>
+                    <td>{{item.PIC}} <br> {{item.SIC}}</td>
+                    <td>{{item.NotaFinal}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- <button type="button" (click)="showDialog()">asdasd</button> -->
+
+    <div *ngIf="display">
+
+
+
+        <div *ngFor="let item of grid;index as i">
+
+            <p-dialog [header]="item.Prefixo" [(visible)]="item.Display" [modal]="true" [baseZIndex]="10000">
+                <app-visualizar-analise-de-risco [grupos]="item.Grupos" [analise]="item"></app-visualizar-analise-de-risco>
+            </p-dialog>
+
+        </div>
+
+
+    </div>
+
+</div>

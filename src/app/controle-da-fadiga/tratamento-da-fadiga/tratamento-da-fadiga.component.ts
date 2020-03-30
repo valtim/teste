@@ -1,8 +1,7 @@
-import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-// import { AppComponent } from 'src/app/app.component';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-tratamento-da-fadiga',

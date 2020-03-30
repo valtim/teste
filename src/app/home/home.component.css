@@ -42,7 +42,7 @@ body {margin:0;}
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  margin-top: 50px;
+  margin-top: 0px;
 }
 
 .home div,
