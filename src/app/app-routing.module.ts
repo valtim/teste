@@ -2,9 +2,7 @@ import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-tr
 import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
 import { AnaliseDeRiscoComponent } from './analise-de-risco/analise-de-risco.component';
 import { GraficoComponent } from './grafico/grafico.component';
-import { TripulanteComponent } from './reg-trip/tripulante/tripulante.component';
 import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
-import { VencimentoCarteiraComponent } from './reg-trip/vencimento-carteira/vencimento-carteira.component';
 import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
 import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
 import { HomeComponent } from './home/home.component';
@@ -13,6 +11,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './seguranca/login/login.component';
 import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
 import { AuthGuardService } from './shared/guards/auth-guard.service';
+import { VencimentoCarteiraComponent } from './vencimento-carteira/vencimento-carteira.component';
 
 
 const routes: Routes = [

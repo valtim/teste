@@ -375,7 +375,7 @@ export class ApiService {
   }
 
   getPaxTransportado(ano: number): Promise<any> {
-    return this.http.get(`${this.url}api/QtdePaxTransportados/${ano}`, this.httpOptions).toPromise();
+    return this.http.get(`${this.url}api/RelQtdePaxTransportados/${ano}`, this.httpOptions).toPromise();
   }
 
   getLogo(cliente:string){
