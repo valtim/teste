@@ -1,3 +1,4 @@
+import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
 import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
 import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
 import { AnaliseDeRiscoComponent } from './analise-de-risco/analise-de-risco.component';
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'pax-transportados',
     component: PaxTransportadosComponent,
+  },
+  {
+    path: 'total-de-pousos',
+    component: RelPousoComponent,
   },
   // {
   //   path: 'tripulante',

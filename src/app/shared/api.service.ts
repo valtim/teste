@@ -155,7 +155,7 @@ export class ApiService {
       .toPromise();
   }
 
-  getTripulantes(): Promise<any> {
+  getQuadroDeTripulantes(): Promise<any> {
     return this.http.get(`${this.url}api/quadro-de-tripulantes`, this.httpOptions)
       .toPromise();
   }
@@ -380,5 +380,10 @@ export class ApiService {
 
   getLogo(cliente:string){
     return `${this.url}assets/img/${cliente.toLowerCase()}.png`;
+  }
+
+  
+  postRelPousosPorLocal(filtro:any): Promise<any> {
+    return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 }

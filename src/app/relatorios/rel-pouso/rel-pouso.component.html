@@ -1,13 +1,13 @@
 <h3>Frozen Columns</h3>
-<p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="cars" [scrollable]="true" scrollHeight="200px" frozenWidth="300px">
+<p-table [columns]="colunas" [value]="valores" *ngIf="carregado" scrollHeight="90vh" [scrollable]="true">
     <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
-            <col *ngFor="let col of columns" style="width:300px">
+            <col *ngFor="let col of columns" [style.width]="col.width">
         </colgroup>
     </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns">
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field" > 
                 {{col.header}}
             </th>
         </tr>

@@ -24,15 +24,26 @@ export class VencimentoCarteiraComponent implements OnInit {
   readonly DATE_FMT = 'dd/MMM/yyyy';
 
 
+  scrollableCols : [];
+  frozenCols : [];
+  cars: []
+
+
   sortNull() {}
 
   ngOnInit() {
 
     // this.app.setTitle('FOR-OPE-011 - Quadro de Tripulantes');
-    this.api.getTripulantes().then(result => {
+    this.api.getQuadroDeTripulantes().then(result => {
       console.log('result: ', result);
       this.loading = false;
       this.resultado = result;
+
+      this.cars = result.cars;
+      this.scrollableCols = result.scrollableCols;
+      this.frozenCols = result.frozenCols;
+
+
       // this.tripulantes = result.Tripulantes;
       // this.vencimentos = result.Vencimentos;
       // this.montarCertificados(result.Certificados);

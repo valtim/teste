@@ -12,6 +12,7 @@ import { AutorizacaoService } from '../shared/autorizacao.service';
 export class HomeComponent implements OnInit {
   public urlLogo: string;
   public exibir = false;
+  clienteLogado = "teste";
 
   public loading: boolean;
 

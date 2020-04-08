@@ -32,6 +32,7 @@ import { DocumentoImpressoComponent } from './documento-impresso/documento-impre
 import { CabecalhoImpressaoComponent } from './cabecalho-impressao/cabecalho-impressao.component';
 import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
 import { UltimasOcorrenciasComponent } from './ultimas-ocorrencias/ultimas-ocorrencias.component';
+import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { UltimasOcorrenciasComponent } from './ultimas-ocorrencias/ultimas-ocorr
     PaxTransportadosComponent,
     VencimentoCarteiraComponent,
     UltimasOcorrenciasComponent,
+    RelPousoComponent,
     
   ],
   imports: [
