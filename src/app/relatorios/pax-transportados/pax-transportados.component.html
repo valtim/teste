@@ -1,26 +1,66 @@
-<app-titulo titulo="PAX Transportados"></app-titulo>
+<app-titulo titulo="PAX Transportados" [carregando]="!prefixos"></app-titulo>
 
 <div class="container d-print-none">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Data</span>
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Tripulantes
+                </p-header>
+            </p-listbox>
+
         </div>
-        <select id="ano" class="form-control" (change)="trocaAno($event)">
-            <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
-        </select>
-        <div class="input-group-append">
-            <button class="btn btn-primary" (click)="pesquisarPax()">
-                <span class="oi" data-glyph="magnifying-glass"></span>
-            </button>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
         </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true"
+                    [locale]="locale_pt" showIcon="true"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
+                        [readonlyInput]="true" [locale]="locale_pt" showIcon="true"></p-calendar>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
     </div>
+
 
 </div>
 
-<app-cabecalho-impressao titulo="Passageiros transportados por mês/ano"></app-cabecalho-impressao>
+
+<app-cabecalho-impressao titulo="Passageiros transportados por mês/ano" class="d-print"></app-cabecalho-impressao>
 
 <div *ngIf="dados">
-    <p-table [value]="dados" [responsive]="true">
+    <p-table [columns]="cols" [value]="dados">
         <ng-template pTemplate="header">
             <tr>
                 <th *ngFor="let col of cols">
@@ -30,8 +70,8 @@
         </ng-template>
         <ng-template pTemplate="body" let-car>
             <tr>
-                <td *ngFor="let col of cols">
-                    <span class="ui-column-title">{{col.header}}</span>
+                <td *ngFor="let col of cols" nowrap>
+                    <span class="d-lg-none d-print-none">{{col.header}}</span>
                     {{car[col.field]}}
                 </td>
             </tr>

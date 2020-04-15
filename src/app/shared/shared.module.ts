@@ -1,10 +1,16 @@
-// import { AppModule } from './../app.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormataDataPipe } from './pipe/formata-data.pipe';
 import { ConfirmacaoComponent } from './confirmacao/confirmacao.component';
 import { TituloComponent } from './titulo/titulo.component';
+
+
+
+
+
+
+import { CardModule } from 'primeng/card';
 // import { ListboxModule } from 'primeng/listbox';
 
 @NgModule({
@@ -17,13 +23,13 @@ import { TituloComponent } from './titulo/titulo.component';
   exports: [
     TituloComponent,
     ConfirmacaoComponent,
-    FormataDataPipe
+    FormataDataPipe,
+    CardModule
   ],
   imports: [
     CommonModule,
-    RouterModule,
-    // AppModule,
-    // ListboxModule
+    RouterModule,   
+    CardModule,
   ],
 })
 export class SharedModule { }

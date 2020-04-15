@@ -3,7 +3,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localept from '@angular/common/locales/pt';
+
+
+import { registerLocaleData } from '@angular/common';
+
 
 import { HomeComponent } from './home/home.component';
 import { SegurancaModule } from './seguranca/seguranca.module';
@@ -24,6 +29,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 import { SharedModule } from './shared/shared.module';
@@ -33,6 +39,15 @@ import { CabecalhoImpressaoComponent } from './cabecalho-impressao/cabecalho-imp
 import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
 import { UltimasOcorrenciasComponent } from './ultimas-ocorrencias/ultimas-ocorrencias.component';
 import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
+import { RelConsCombComponent } from './rel-cons-comb/rel-cons-comb.component';
+
+
+
+
+registerLocaleData(localept, 'pt');
+
+// import { MatSliderModule } from '@angular/material/slider';
+// import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -49,7 +64,8 @@ import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
     VencimentoCarteiraComponent,
     UltimasOcorrenciasComponent,
     RelPousoComponent,
-    
+    RelConsCombComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -69,8 +85,13 @@ import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
     DialogModule,
     TableModule,
     AccordionModule,
+    MultiSelectModule,
+    // MatFormFieldModule,
+    // MatSliderModule
   ],
-  providers: [],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

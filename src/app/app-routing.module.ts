@@ -1,3 +1,4 @@
+import { RelConsCombComponent } from './rel-cons-comb/rel-cons-comb.component';
 import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
 import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
 import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'total-de-pousos',
     component: RelPousoComponent,
+  },
+  {
+    path: 'rel-cons-comb',
+    component: RelConsCombComponent,
   },
   // {
   //   path: 'tripulante',

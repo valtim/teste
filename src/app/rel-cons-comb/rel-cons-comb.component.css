@@ -1,0 +1,9 @@
+.input-group-text {
+    width: 60px;
+}
+
+@media print {
+    @page {
+        size: landscape
+    }
+}

@@ -4,16 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {PasswordModule} from 'primeng/password';
 
 
 
 @NgModule({
-  declarations: [LoginComponent,
-  TrocaSenhaComponent],
+  declarations: [
+    LoginComponent,
+    TrocaSenhaComponent],
   imports: [
     CommonModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    
+    
   ],
 })
 export class SegurancaModule { }

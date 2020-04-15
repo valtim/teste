@@ -9,19 +9,55 @@ import { Component, OnInit } from '@angular/core';
 export class RelPousoComponent implements OnInit {
 
   colunas : [];
+  colunasSelecionadas :[];
   valores: [];
+
+  
+  colunasP : [];
+  colunasSelecionadasP :[];
+  valoresP: [];
+
+
+  pt;
+
+  dataInicio: Date;
+  dataFim: Date;
+  
+  
 
   carregado = false;
 
   constructor(private api: ApiService) { }
 
   ngOnInit(): void {
-    this.api.postRelPousosPorLocal({}).then(x=>{
-        this.colunas = x.colunas;
-        this.valores = x.valores;
-        this.carregado = true;
 
-    })
+    const date = new Date();
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+    this.pt = this.api.getLocale('pt');
+
+
+    this.rodarRelatorio();
+
+    
+  }
+
+  rodarRelatorio(){
+    
+    this.carregado = false;
+    this.api.postRelPousosPorLocal({dataInicio : this.dataInicio, dataFim : this.dataFim}).then(x=>{
+      this.colunasSelecionadas = x.decolagens.colunas;
+      this.colunas = x.decolagens.colunas.slice(1, x.decolagens.colunas.length);
+      this.valores = x.decolagens.valores;
+
+      
+      this.colunasSelecionadasP = x.pousos.colunas;
+      this.colunasP = x.pousos.colunas.slice(1, x.pousos.colunas.length);
+      this.valoresP = x.pousos.valores;
+
+      this.carregado = true;
+  })
   }
 
 }

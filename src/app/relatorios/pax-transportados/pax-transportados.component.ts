@@ -9,40 +9,54 @@ import { ApiService } from 'src/app/shared/api.service';
 export class PaxTransportadosComponent implements OnInit {
 
 
-  anos = [];
 
-  anoSelecionado = new Date().getFullYear();
-
-
+  locale_pt;
   dados;
-
   cols;
+
+  dataInicio: Date;
+  dataFim: Date;
+
+  clientesSelecionados;
+  clientes;
+  prefixosSelecionados;
+  prefixos;
+
 
   constructor(private api: ApiService, ) { }
 
-  pesquisarPax() {
-    this.api.getPaxTransportado(this.anoSelecionado).then(x => {
-      this.cols = x.cols;
-      this.dados = x.data;
-    })
+  rodarRelatorio() {
+    this.api.postPaxTransportado(
+      {
+        dataInicio: this.dataInicio,
+        dataFim: this.dataFim,
+        clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
+        prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+      }).then(x => {
+        this.cols = x.cols;
+        this.dados = x.data;
+      })
   }
 
-  trocaAno(e) {
-    this.anoSelecionado = +e.currentTarget.value;
-  }
 
-
-  initAnos() {
-    let anoAtual = new Date().getFullYear();
-    let i = 0;
-    while (anoAtual - i >= 2001) {
-      this.anos.push(anoAtual - i);
-      ++i;
-    }
-  }
   ngOnInit() {
-    this.initAnos();
-    this.pesquisarPax();
+
+
+    this.api.getCombos().then(x => {
+      this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
+      //this.prefixosSelecionados = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
+      this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+      //this.clientesSelecionados = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+    })
+
+    const date = new Date();
+    this.dataInicio = new Date(date.getFullYear(), 0, 1);
+    this.dataFim = new Date(date.getFullYear(), 11, 31);
+    this.locale_pt = this.api.getLocale('pt');
+
+    this.rodarRelatorio();
+
+
   }
 
 }

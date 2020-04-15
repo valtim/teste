@@ -27,6 +27,16 @@
         </a>
       </li>
       <li>
+        <a *ngIf="isEnable('total-de-pousos')" routerLink="/total-de-pousos">
+          Decolagens e Pousos
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isEnable('rel-cons-comb')" routerLink="/rel-cons-comb">
+          Consumo de Combustível
+        </a>
+      </li>
+      <li>
         <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
           Tipo de Pergunta
         </a>
@@ -75,7 +85,7 @@
         </a>
       </li>
       <li><a href="#" (click)="logoff()">Logoff</a></li>
-      <!-- mais links -->
     </ul>
   </p-accordionTab>
 </p-accordion>
+

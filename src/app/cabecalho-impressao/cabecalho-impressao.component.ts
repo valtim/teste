@@ -18,7 +18,7 @@ export class CabecalhoImpressaoComponent implements OnInit {
   @Input() registro;
 
 
-  classe = "col-lg-7 border border-dark";
+  classe = "col-7 border border-dark";
 
   ExibirRevisao;
 
@@ -27,7 +27,7 @@ export class CabecalhoImpressaoComponent implements OnInit {
   ngOnInit() {
     this.ExibirRevisao = this.revisao || this.data || this.registro;
     if ( !this.ExibirRevisao )
-      this.classe = "col-lg-9 border border-dark";
+      this.classe = "col-9 border border-dark";
   }
 
 }

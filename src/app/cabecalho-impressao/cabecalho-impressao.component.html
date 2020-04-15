@@ -1,13 +1,15 @@
-<div class="row">
-    <div class="col-lg-3 d-none d-lg-block border border-dark text-center"><img
-            src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2" width="170px"><br>{{registro}}
-    </div>
-    <div [ngClass]="classe">
-        <div class="card card-body border-0 text-center">
-            <h3>{{titulo}}</h3>
+<div class="d-none d-print-inline">
+    <div class="row">
+        <div class="col-3 border border-dark text-center"><img
+                src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2" width="170px"><br>{{registro}}
         </div>
-    </div>
-    <div *ngIf="ExibirRevisao"  class="col-lg-2 d-none d-lg-block border border-dark" style="vertical-align: middle;">
-        <b>{{form}}</b><br><b>Revisão:</b> {{revisao}}<br><b>Data:</b> {{data}}
+        <div [ngClass]="classe">
+            <div class="card card-body border-0 text-center">
+                <h3>{{titulo}}</h3>
+            </div>
+        </div>
+        <div *ngIf="ExibirRevisao"  class="col-lg-2 d-none d-lg-block border border-dark" style="vertical-align: middle;">
+            <b>{{form}}</b><br><b>Revisão:</b> {{revisao}}<br><b>Data:</b> {{data}}
+        </div>
     </div>
 </div>

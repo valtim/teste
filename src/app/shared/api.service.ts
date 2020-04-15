@@ -7,6 +7,7 @@ import { AutorizacaoService } from './autorizacao.service';
 
 export class ApiService {
 
+
   private httpOptions: any;
   private url: string;
   private permission;
@@ -39,12 +40,12 @@ export class ApiService {
   async postLogin(username: string, password: string): Promise<any> {
     return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password }, this.httpOptions)
       .toPromise();
-      // .then((result: any) => {
-      //   this.autorizacao.setAuthorization(result.Authorization);
-        // this.autorizacao.setRotas(result.Rotas);
-        // this.updateAuthorization();
-      // })
-      // .catch();
+    // .then((result: any) => {
+    //   this.autorizacao.setAuthorization(result.Authorization);
+    // this.autorizacao.setRotas(result.Rotas);
+    // this.updateAuthorization();
+    // })
+    // .catch();
   }
 
 
@@ -79,11 +80,11 @@ export class ApiService {
   // }
 
   newGuid(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       // tslint:disable-next-line:no-bitwise
       const r = Math.random() * 16 | 0,
-      // tslint:disable-next-line:no-bitwise
-      v = c === 'x' ? r : (r & 0x3 | 0x8);
+        // tslint:disable-next-line:no-bitwise
+        v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
   }
@@ -125,30 +126,30 @@ export class ApiService {
     return this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
       .toPromise();
   }
-/*
-  getListas(callback: Function): void {
-    if (
-      !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
-        && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
-        && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
-        && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
-    ) {
-      this.http.get(this.url + 'api/listaspadrao', this.httpOptions).toPromise()
-        .then((result: any) => {
-          localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
-          localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
-          localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
-          localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
-          localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
-          localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
-          localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
-          localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
-          callback();
-        })
-        .catch();
+  /*
+    getListas(callback: Function): void {
+      if (
+        !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
+          && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
+          && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
+          && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
+      ) {
+        this.http.get(this.url + 'api/listaspadrao', this.httpOptions).toPromise()
+          .then((result: any) => {
+            localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
+            localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
+            localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
+            localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
+            localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
+            localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
+            localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
+            localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
+            callback();
+          })
+          .catch();
+      }
     }
-  }
-  */
+    */
 
   getClienteLogado(): Promise<any> {
     return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions)
@@ -361,29 +362,52 @@ export class ApiService {
 
   getRelatorioVooPesquisa(fechado: boolean, dataInicio: string, dataFim: string, plataforma: string) {
     return this.http.get(`${this.url}api/RdvPorPeriodo/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
-    this.httpOptions).toPromise();
+      this.httpOptions).toPromise();
   }
 
-  
+
   getTelaConsultaRisco(): Promise<any> {
     return this.http.get(`${this.url}api/TelaConsultaAvRisco`, this.httpOptions).toPromise();
   }
 
+   getCombos(): Promise<any> {
+    return this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise();
+  }
 
-  postTelaConsultaRisco(filtro:any): Promise<any> {
+
+  postTelaConsultaRisco(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/TelaConsultaAvRisco`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  getPaxTransportado(ano: number): Promise<any> {
-    return this.http.get(`${this.url}api/RelQtdePaxTransportados/${ano}`, this.httpOptions).toPromise();
+  postPaxTransportado(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelQtdePaxTransportados`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  getLogo(cliente:string){
+  postConsComb(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelConsumoDeCombustivel`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  getLogo(cliente: string) {
     return `${this.url}assets/img/${cliente.toLowerCase()}.png`;
   }
 
-  
-  postRelPousosPorLocal(filtro:any): Promise<any> {
+
+  postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  getLocale(pais: string): any {
+    return {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      dayNamesMin: ["Do", "Se", "Te", "Qa", "Qi", "Se", "Sa"],
+      monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+      monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+      today: 'Hoje',
+      clear: 'Limpart',
+      dateFormat: 'dd/mm/yy',
+      weekHeader: 'Se'
+    };
   }
 }

@@ -1,42 +1,29 @@
-<!-- <app-loading *ngIf="loading"></app-loading> -->
-
 <div class="vertical-center">
-  <div class="container">
 
-    <form (submit)="login()">
-
-      <div class="input-group mb-3">
-        <div class="input-group-append">
-          <span class="input-group-text">Usuário</span>
-        </div>
-        <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username"
-          (change)="hideError()">
+  <form (submit)="login()">
+    <div class="input-group mb-3">
+      <div class="input-group-append">
+        <span class="input-group-text">Usuário</span>
       </div>
+      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username"
+        (change)="hideError()">
+    </div>
 
-
-      <div class="input-group mb-3">
-        <div class="input-group-append">
-          <span class="input-group-text">Senha</span>
-        </div>
-        <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password"
-          (change)="hideError()">
+    <div class="input-group mb-3">
+      <div class="input-group-append">
+        <span class="input-group-text">Senha</span>
       </div>
+      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password"
+        (change)="hideError()">
+    </div>
 
+    <p class="bg-danger text-white" *ngIf="api.error">
+      {{api.error}}
+    </p>
 
-      <!-- <label for="username">Nome</label>
-    <input type="text" id="username" name="username" [(ngModel)]="username" (change)="hideError()">
-
-    <label for="password">Password:</label> -->
-
-      <p class="bg-danger text-white" *ngIf="api.error">
-        {{api.error}}
-      </p>
-
-      <button class="btn btn-primary btn-lg btn-block">Login</button>
-    </form>
-
-    <div class="spinner-border" *ngIf="loading" >
+    <div class="spinner-border" *ngIf="loading">
       <span class="sr-only">Loading...</span>
     </div>
-  </div>
-</div>
+
+    <button class="btn btn-primary btn-lg btn-block">Login</button>
+  </form>
