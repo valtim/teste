@@ -1,0 +1,191 @@
+<app-titulo titulo="Consumo de combustível" [carregando]="!tudoPronto"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                        showIcon="true"></p-calendar>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+<div *ngIf="tudoPronto">
+
+    <div *ngIf="filtroRetorno">
+        <p-table>
+            <ng-template pTemplate="caption">
+                Periodo de: {{filtroRetorno.dataInicio | date:'dd/MM/yyyy'}} até
+                {{filtroRetorno.dataFim | date:'dd/MM/yyyy'}}
+            </ng-template>
+        </p-table>
+    </div>
+
+    <div *ngFor="let cliente of dados">
+
+
+        <!-- <p-table>
+        <ng-template pTemplate="caption">
+            Cliente: {{cliente.Cliente}}
+        </ng-template>
+    </p-table> -->
+
+        <p-table [columns]="cols">
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" [style.width]="col.width">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th colspan="3">
+                        <span class="text-center">Cliente</span>
+                    </th>
+                    <th>
+                        Hr. Voo
+                    </th>
+                    <th>
+                        Abastecido (Lts)
+                    </th>
+                    <th>
+                        Consumido (Lbs)
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer" let-columns>
+                <tr>
+                    <td colspan="3">
+                        <span class="text-center">{{cliente.Cliente}}</span>
+                    </td>
+                    <td>
+                        {{cliente.HorasTotais}}
+                    </td>
+                    <td>
+                        {{cliente.Abastecido | number}}
+                    </td>
+                    <td>
+                        {{cliente.Consumo | number}}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <div *ngFor="let prefixo of cliente.Prefixos">
+
+            <p-table [columns]="cols" [value]="prefixo.Diarios">
+                <ng-template pTemplate="caption">
+                    Aeronave: {{prefixo.Prefixo}}
+                </ng-template>
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                        <col *ngFor="let col of columns" [style.width]="col.width">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>
+                        <td>
+                            {{rowData['Data'] | date:'dd/MM/yyyy' }}
+                        </td>
+                        <td>
+                            {{rowData['RDV']}}
+                        </td>
+                        <td>
+                            {{rowData['Abastecimento']}}
+                        </td>
+                        <td>
+                            {{rowData['HrVoo']}}
+                        </td>
+                        <td>
+                            {{rowData['Abastecido']| number}}
+                        </td>
+                        <td>
+                            {{rowData['Consumo']| number}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="footer" let-columns>
+                    <tr>
+                        <td colspan="3">
+                            Total do {{prefixo.Prefixo}}
+                        </td>
+                        <td>
+                            {{prefixo.HorasTotais}}
+                        </td>
+                        <td>
+                            {{prefixo.Abastecido | number}}
+                        </td>
+                        <td>
+                            {{prefixo.Consumo | number}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+                <!-- <ng-template pTemplate="summary">
+                There are {{cars?.length}} cars
+            </ng-template> -->
+            </p-table>
+
+        </div>
+
+
+
+
+
+    </div>
+
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+    <h4>{{dados.Tripulante.Trato}}</h4>
+    <h4>{{dados.Certificado.Nome}}</h4>
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text">Vencimento</span>
+        </div>
+        <!-- <p-inputMask [mask]="dados.Cerficado.mask" [(ngModel)]="dados.ValorExibido"></p-inputMask> -->
+        <p-inputMask [(ngModel)]="data" [mask]="dados.Certificado.mask"></p-inputMask>
+
+    </div>
+
+
+    <div class="input-group mb-3">
+        <div class="input-group-append">
+            <span class="input-group-text">N/A</span>
+        </div>
+        <input type="checkbox" [(ngModel)]="dados.NaoControlado">
+    </div>
+
+    
+    <hr>
+    <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
+        class="ui-button-secondary"></button>
+</div>

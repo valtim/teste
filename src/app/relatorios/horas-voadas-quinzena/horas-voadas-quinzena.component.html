@@ -1,0 +1,114 @@
+<app-titulo titulo="Horas Voadas" [carregando]="!tudoPronto"></app-titulo>
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy"
+                    [locale]="locale_pt" showIcon="true"></p-calendar>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Final</span>
+                </div>
+                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
+                    [locale]="locale_pt" showIcon="true"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
+        </div>
+    </div>
+
+
+</div>
+
+<div *ngIf="filtroRetorno">
+    <p-table>
+        <ng-template pTemplate="caption">
+            Horas Voadas no Período
+        </ng-template>
+    </p-table>
+
+    <p-table>
+        <ng-template pTemplate="caption">
+            Periodo de: {{filtroRetorno.dataInicio | date:'dd/MM/yyyy'}} até
+            {{filtroRetorno.dataFim | date:'dd/MM/yyyy'}}
+        </ng-template>
+    </p-table>
+
+</div>
+
+
+<p-table [columns]="cols" [value]="dados" *ngIf="dados" >
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th rowspan="2">TRATO</th>
+            <th colspan="2">DIAS ÚTEIS</th>
+            <th colspan="2">DOMINGOS FERIADOS</th>
+            <th rowspan="2">HORAS VOADAS TOTAIS</th>
+            <th colspan="2">DOBRADAS</th>
+            <th>TRIPLICADAS</th>
+            <th rowspan="2">TOTAL COM EXTRA</th>
+        </tr>
+        <tr>
+            <th>DIURNO</th>
+            <th>NOTURNO</th>
+            <th>DIURNO</th>
+            <th>NOTURNO</th>
+            <th>DIAS ÚTEIS NOTURNO</th>
+            <th>DOM/FER DIURNO</th>
+            <th>DOM/FER NOTURNO</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td width="30%">
+                {{rowData['Trato']}}
+            </td>
+            <td>
+                {{rowData['TotalDiurnoUtil']}}
+            </td>
+            <td>
+                {{rowData['TotalNoturnoUtil']}}
+            </td>
+            <td>
+                {{rowData['TotalDiurnoFeriado']}}
+            </td>
+            <td>
+                {{rowData['TotalNoturnoFeriado']}}
+            </td>
+            <td>
+                {{rowData['HorasTotais']}}
+            </td>
+            <td>
+                {{rowData['TotalNoturnoUtilDobrado']}}
+            </td>
+            <td>
+                {{rowData['TotalDiurnoFeriadoDobrado']}}
+            </td>
+            <td>
+                {{rowData['TotalNoturnoFeriadoDobrado']}}
+            </td>
+            <td>
+                {{rowData['HorasSomadas']}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+

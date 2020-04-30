@@ -1,0 +1,27 @@
+@media print {
+    @page {
+        size: landscape
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+        overflow-wrap: break-word;
+    }
+    th, td {
+        border: 1px solid black;
+        font-size: small;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .c-20{
+        width: 20%;
+    }
+}
+
+@media screen {
+    table {
+        display: none;
+    }
+}

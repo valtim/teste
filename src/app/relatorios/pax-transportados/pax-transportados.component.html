@@ -1,6 +1,6 @@
-<app-titulo titulo="PAX Transportados" [carregando]="!prefixos"></app-titulo>
+<app-titulo titulo="PAX Transportados" [carregando]="carregando"></app-titulo>
 
-<div class="container d-print-none">
+<div class="container d-print-none" *ngIf="prefixos" >
 
     <div class="row ml-1">
         <div class="col-sm-6 col-lg-2">
@@ -8,7 +8,7 @@
             <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
                 filter="filter" [listStyle]="{'max-height':'250px'}">
                 <p-header>
-                    Tripulantes
+                    Clientes
                 </p-header>
             </p-listbox>
 
@@ -29,7 +29,7 @@
                 <div class="input-group-append">
                     <span class="input-group-text">Inicial</span>
                 </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true"
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy"
                     [locale]="locale_pt" showIcon="true"></p-calendar>
 
                 <div class="input-group mb-3">
@@ -37,7 +37,7 @@
                         <span class="input-group-text">Final</span>
                     </div>
                     <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
-                        [readonlyInput]="true" [locale]="locale_pt" showIcon="true"></p-calendar>
+                        [locale]="locale_pt" showIcon="true"></p-calendar>
                 </div>
 
 

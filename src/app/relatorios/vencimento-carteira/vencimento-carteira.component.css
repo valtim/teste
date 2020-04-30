@@ -1,0 +1,46 @@
+th{
+    text-align: center;
+}
+
+.tabela {
+    margin-top: 60px;
+    /* margin-bottom: 60px; */
+}
+
+.coluna{
+    height: 100px;
+    width: 130px;
+}
+
+
+
+td {
+    white-space: nowrap;
+    height: 50px;
+}
+
+.azul{
+    background-color: #bdd6ee;
+    padding: 5px;
+}
+
+.amarelo{
+    background-color: #ffff00;
+    padding: 5px;
+}
+
+.laranja{
+    background-color: #f7caac;
+    padding: 5px;
+}
+
+.vermelho{
+    background-color: crimson;
+    color: white;
+    font-weight: bolder;
+    padding: 5px;
+}
+
+div {
+    text-align: center;
+}

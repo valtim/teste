@@ -1,0 +1,48 @@
+<app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
+<div class="tabela" *ngIf="valores">
+    <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
+        scrollHeight="80vh" id="" frozenWidth="130px" frozenHeight="100px" class="tabela">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" class="coluna">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns" class="coluna">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td *ngFor="let col of columns">
+                    <div [id]="rowData[col.field].Id" *ngIf="ehObjeto(rowData[col.field])" [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
+                        {{rowData[col.field].ValorExibido}}
+                    </div>
+                    <div *ngIf="rowData[col.field].Display">
+                        <p-dialog [header]="col.field" [(visible)]="rowData[col.field].Display" [modal]="true"
+                            [baseZIndex]="10000">
+
+                                <app-editar-vencimento [dados]="rowData[col.field]" (retorno)="retornoCarteira($event)"></app-editar-vencimento>
+
+                        </p-dialog>
+                    </div>
+                     
+
+                        
+
+                    <div *ngIf="!ehObjeto(rowData[col.field])">{{rowData[col.field]}}</div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+<!-- <div class="row text-center font-weight-bold">
+    <div class="col-3" style="background-color: #bdd6ee">60 dias</div>
+    <div class="col-3" style="background-color: #ffff00">30 dias</div>
+    <div class="col-3" style="background-color: #f7caac">15 dias</div>
+    <div class="col-3 text-white" style="background-color: #ff0000">Vencidos</div>
+  </div> -->

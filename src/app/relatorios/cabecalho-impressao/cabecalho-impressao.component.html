@@ -1,0 +1,26 @@
+<table>
+    <tr *ngIf="!ExibirRevisao">
+        <td class="c-20">
+            <img src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2" width="170px">
+            <p *ngIf="registro"><b>{{registro}}</b></p>
+        </td>
+        <td>
+            <h5>{{titulo}}</h5>
+        </td>
+    </tr>
+
+    <tr *ngIf="ExibirRevisao">
+        <td class="c-20">
+            <img src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2" width="170px">
+            <p *ngIf="registro"><b>{{registro}}</b></p>
+        </td>
+        <td>
+            <h5>{{titulo}}</h5>
+        </td>
+        <td class="c-20">
+            <p *ngIf="form"><b>{{form}}</b></p>
+            <p *ngIf="revisao"><b>Revisão:</b> {{revisao}}</p>
+            <p *ngIf="data"><b>Data:</b> {{data}}</p>
+        </td>
+    </tr>
+</table>

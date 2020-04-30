@@ -161,6 +161,11 @@ export class ApiService {
       .toPromise();
   }
 
+  postVencimento(valor): Promise<any> {
+    return this.http.post(`${this.url}api/quadro-de-tripulantes`, valor, this.httpOptions)
+      .toPromise();
+  }
+
   getAbastecedoras(): any {
     return JSON.parse(localStorage.getItem('Abastecedora'));
   }
@@ -195,10 +200,10 @@ export class ApiService {
       .toPromise();
   }
 
-  postVencimento(vencimentoList: Array<any>): Promise<any> {
-    return this.http.post(`${this.url}api/vencimento`, vencimentoList, this.httpOptions)
-      .toPromise();
-  }
+  // postVencimento(vencimentoList: Array<any>): Promise<any> {
+  //   return this.http.post(`${this.url}api/vencimento`, vencimentoList, this.httpOptions)
+  //     .toPromise();
+  // }
 
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http.post(`${this.url}api/novodiario`, diarioVoo, this.httpOptions)
@@ -387,6 +392,22 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelConsumoDeCombustivel`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
+  postRelRDV(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelRdv`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  postRelHorasQuinzena(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelHorasQuinzena`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  postRelBoca(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelBoca`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  postRelHorasPorTripulante(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelHorasPorTripulante`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
   getLogo(cliente: string) {
     return `${this.url}assets/img/${cliente.toLowerCase()}.png`;
   }
@@ -394,6 +415,10 @@ export class ApiService {
 
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  postVoosRealizados(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelVoosRealizados`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
   getLocale(pais: string): any {

@@ -8,24 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RelPousoComponent implements OnInit {
 
-  colunas : [];
-  colunasSelecionadas :[];
+  colunas: [];
+  colunasSelecionadas: [];
   valores: [];
 
-  
-  colunasP : [];
-  colunasSelecionadasP :[];
+
+  colunasP: [];
+  colunasSelecionadasP: [];
   valoresP: [];
 
-
-  pt;
+  locale_pt;
 
   dataInicio: Date;
   dataFim: Date;
-  
-  
 
-  carregado = false;
+
+
+  carregando = true;
+  prefixos: any;
+  localidades: any;
+  prefixosSelecionados: any;
+  localidadesSelecionados: any;
+  clientes: any;
+  clientesSelecionados: any;
 
   constructor(private api: ApiService) { }
 
@@ -35,29 +40,42 @@ export class RelPousoComponent implements OnInit {
     this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
     this.dataFim = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    this.pt = this.api.getLocale('pt');
+    this.locale_pt = this.api.getLocale('pt');
+
+    this.api.getCombos().then(x => {
+      this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
+      this.localidades = x.Localidades.map(x => { return { label: x.Nome + '-' + x.NomeICAO, value: x.Id } });
+      this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+      this.carregando = false;
+    })
 
 
     this.rodarRelatorio();
 
-    
+
   }
 
-  rodarRelatorio(){
-    
-    this.carregado = false;
-    this.api.postRelPousosPorLocal({dataInicio : this.dataInicio, dataFim : this.dataFim}).then(x=>{
+  rodarRelatorio() {
+
+    this.carregando = true;
+    this.api.postRelPousosPorLocal({
+      dataInicio: this.dataInicio,
+      dataFim: this.dataFim,
+      localidades: this.localidadesSelecionados ? this.localidadesSelecionados : null,
+      prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+      clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
+    }).then(x => {
       this.colunasSelecionadas = x.decolagens.colunas;
       this.colunas = x.decolagens.colunas.slice(1, x.decolagens.colunas.length);
       this.valores = x.decolagens.valores;
 
-      
+
       this.colunasSelecionadasP = x.pousos.colunas;
       this.colunasP = x.pousos.colunas.slice(1, x.pousos.colunas.length);
       this.valoresP = x.pousos.valores;
 
-      this.carregado = true;
-  })
+      this.carregando = false;
+    })
   }
 
 }

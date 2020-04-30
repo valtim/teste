@@ -37,6 +37,37 @@
         </a>
       </li>
       <li>
+        <a *ngIf="isEnable('rel-horas-quinzena')" routerLink="/rel-horas-quinzena">
+          Horas da Quinzena
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isEnable('rel-horas-tripulante')" routerLink="/rel-horas-tripulante">
+          Horas por Tripulante
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isEnable('rel-boca')" routerLink="/rel-boca">
+          "BOCA"
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isEnable('rel-rdv')" routerLink="/rel-rdv">
+          RDV
+        </a>
+      </li>
+      <li>
+        <a *ngIf="isEnable('rel-rdv')" routerLink="/voos-realizados">
+          Voos Realizados
+        </a>
+      </li>
+
+      
+
+
+      
+
+      <li>
         <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
           Tipo de Pergunta
         </a>

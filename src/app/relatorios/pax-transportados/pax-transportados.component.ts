@@ -21,11 +21,16 @@ export class PaxTransportadosComponent implements OnInit {
   clientes;
   prefixosSelecionados;
   prefixos;
+  localidades: any;
+
+
+  carregando = true;
 
 
   constructor(private api: ApiService, ) { }
 
-  rodarRelatorio() {
+  rodarRelatorio() {    
+    this.carregando = true;
     this.api.postPaxTransportado(
       {
         dataInicio: this.dataInicio,
@@ -35,18 +40,19 @@ export class PaxTransportadosComponent implements OnInit {
       }).then(x => {
         this.cols = x.cols;
         this.dados = x.data;
+        this.carregando = false;
       })
   }
 
 
   ngOnInit() {
 
-
+    this.carregando = true;
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
-      //this.prefixosSelecionados = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
       this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
-      //this.clientesSelecionados = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+      this.localidades = x.Localidades.map(x => { return { label: x.Nome + '-' + x.NomeICAO, value: x.Id } });
+      this.carregando = false;
     })
 
     const date = new Date();

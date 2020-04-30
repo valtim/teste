@@ -1,0 +1,10 @@
+@media print {
+    @page {
+        size: landscape
+    }
+}
+
+th, td {
+    text-align: center;    
+    font-size: smaller;
+}

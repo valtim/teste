@@ -1,93 +1,121 @@
-<app-titulo titulo="Decolagens e Pousos Por Aeronave e Aeródromo"></app-titulo>
+<app-titulo titulo="Decolagens e Pousos Por Aeronave e Aeródromo" [carregando]="carregando"></app-titulo>
 
 
-<div class="container">
+<div class="container d-print-none" *ngIf="prefixos">
 
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
 
-    <div class="row">
-        <div class="col-sm">
+            <p-listbox [options]="localidades" [(ngModel)]="localidadesSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Localidades
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
             <div class="input-group mb-3">
                 <div class="input-group-append">
                     <span class="input-group-text">Inicial</span>
                 </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true"
-                    [locale]="pt" showIcon="true"></p-calendar>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Final</span>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                        showIcon="true"></p-calendar>
                 </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [readonlyInput]="true"
-                    [locale]="pt" showIcon="true"></p-calendar>
+
+
             </div>
         </div>
-        <div class="col-sm">
-            <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
         </div>
+
+
+
     </div>
 
-    <p-table [columns]="colunasSelecionadas" [value]="valores" *ngIf="carregado" scrollHeight="90vh"
-        [scrollable]="true">
-        <ng-template pTemplate="caption">
-            Decolagens
-            <div style="text-align:left">
-                <p-multiSelect [options]="colunas" [(ngModel)]="colunasSelecionadas" optionLabel="header"
-                    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
-                    defaultLabel="Choose Columns"></p-multiSelect>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    {{col.header}}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-    <p-table [columns]="colunasSelecionadasP" [value]="valoresP" *ngIf="carregado" scrollHeight="90vh"
-        [scrollable]="true">
-        <ng-template pTemplate="caption">
-            Pousos
-            <div style="text-align:left">
-                <p-multiSelect [options]="colunasP" [(ngModel)]="colunasSelecionadas" optionLabel="header"
-                    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
-                    defaultLabel="Choose Columns"></p-multiSelect>
-            </div>
-        </ng-template>
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                    {{col.header}}
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td *ngFor="let col of columns">
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
 
 </div>
+
+<p-table [columns]="colunasSelecionadas" [value]="valores" *ngIf="!carregando">
+    <ng-template pTemplate="caption">
+        Decolagens
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>ng
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<br>
+
+<p-table [columns]="colunasSelecionadasP" [value]="valoresP" *ngIf="!carregando">
+    <ng-template pTemplate="caption">
+        Pousos
+    </ng-template>
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 // import { ApiService } from '../shared/api.service';
 // import {SelectItem} from 'primeng/api';
-import { ApiService } from '../shared/api.service';
+import { ApiService } from '../../shared/api.service';
 import { Router } from '@angular/router';
 
 @Component({

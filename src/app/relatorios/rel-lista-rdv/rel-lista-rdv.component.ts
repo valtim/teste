@@ -1,14 +1,17 @@
-import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../shared/api.service';
+import { Router } from '@angular/router';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
-  selector: 'app-rel-cons-comb',
-  templateUrl: './rel-cons-comb.component.html',
-  styleUrls: ['./rel-cons-comb.component.css']
+  selector: 'app-rel-lista-rdv',
+  templateUrl: './rel-lista-rdv.component.html',
+  styleUrls: ['./rel-lista-rdv.component.css']
 })
-export class RelConsCombComponent implements OnInit {
+export class RelListaRdvComponent implements OnInit {
 
   locale_pt;
+  tudoPronto = false;
   dados;
   cols;
 
@@ -22,9 +25,13 @@ export class RelConsCombComponent implements OnInit {
 
   filtroRetorno;
 
-  tudoPronto = false;
 
-  constructor(private api : ApiService) { }
+  rdv;
+
+  rel_selecionado;
+
+
+  constructor(private api : ApiService, private router: Router) { }
 
   ngOnInit(): void {
 
@@ -35,37 +42,37 @@ export class RelConsCombComponent implements OnInit {
     })
 
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
-    this.dataFim = new Date(date.getFullYear(), date.getMonth() +1, 0);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth() , date.getDate());
     this.locale_pt = this.api.getLocale('pt');
 
 
-    //this.rodarRelatorio();
+    this.rodarRelatorio();
 
   }
 
   rodarRelatorio() {
     this.tudoPronto = false;
-    this.api.postConsComb (
+    this.api.postRelRDV (
       {
         dataInicio: this.dataInicio,
         dataFim: this.dataFim,
         clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
         prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+        rdv : this.rdv,
       }).then(x => {
 
         //colunas = colunas, filtro = filtro, listas = listas
         this.cols = x.colunas;
-        this.dados = x.listas;
+        this.dados = x.valores;
         this.filtroRetorno = x.filtro;
         this.tudoPronto = true;
       })
   }
 
-  log(thing) {
-    console.log(thing);
+  onRowSelect(e){
+    //this.adt.setar(e.data);
+    this.router.navigate(['/rel-rdv/' + e.data.NumeroDaFolha]);
   }
-
-  
 
 }

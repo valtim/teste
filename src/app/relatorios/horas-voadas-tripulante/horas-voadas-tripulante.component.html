@@ -1,0 +1,162 @@
+<app-titulo titulo="Horas Voadas" [carregando]="!tudoPronto"></app-titulo>
+
+
+<div class="container d-print-none">
+
+    <div class="row">
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+        </div>
+        <div class="col-sm">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Final</span>
+                </div>
+                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm">
+            <p-dropdown [options]="tripulantes" [(ngModel)]="tripulanteSelecionado" [filter]="true"
+                filterBy="label,value.name"></p-dropdown>
+
+            <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="filtroRetorno">
+    <p-table>
+        <ng-template pTemplate="caption">
+            Horas Voadas no Tripulante
+        </ng-template>
+    </p-table>
+
+    <p-table>
+        <ng-template pTemplate="caption">
+            Periodo de: {{filtroRetorno.dataInicio | date:'dd/MM/yyyy'}} até
+            {{filtroRetorno.dataFim | date:'dd/MM/yyyy'}}
+        </ng-template>
+    </p-table>
+
+</div>
+
+<div *ngIf="tabelaVisivel">
+    
+    <p-table [columns]="cols" [value]="dados" *ngIf="dados">
+        <ng-template pTemplate="caption">
+            {{trato}}
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr *ngIf="rowData['Prefixo']">
+                <td>
+                    {{rowData['Data'] | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                    {{rowData['SiglaFuncaoBordo']}}
+                </td>
+                <td>
+                    {{rowData['Equipamento']}}
+                </td>
+                <td>
+                    {{rowData['Prefixo']}}
+                </td>
+                <td>
+                    {{rowData['FolhaDoDiario']}}
+                </td>
+                <td>
+                    {{rowData['Simulador']}}
+                </td>
+                <td>
+                    {{rowData['Noturno']}}
+                </td>
+                <td>
+                    {{rowData['Diurno']}}
+                </td>
+                <td>
+                    {{rowData['VFR']}}
+                </td>
+                <td>
+                    {{rowData['IFR']}}
+                </td>
+                <td>
+                    {{rowData['Total']}}
+                </td>
+            </tr>
+    
+            <tr *ngIf="(!rowData['Prefixo'] && rowData['Equipamento'])">
+                <td colspan="5">
+                    <b>Total do Equipamento: {{rowData['Equipamento']}}</b>
+                </td>
+                <td>
+                    {{rowData['Simulador']}}
+                </td>
+                <td>
+                    {{rowData['Noturno']}}
+                </td>
+                <td>
+                    {{rowData['Diurno']}}
+                </td>
+                <td>
+                    {{rowData['VFR']}}
+                </td>
+                <td>
+                    {{rowData['IFR']}}
+                </td>
+                <td>
+                    {{rowData['Total']}}
+                </td>
+            </tr>
+    
+            <tr *ngIf="(!rowData['Prefixo'] && rowData['FuncaoBordo'])">
+                <td colspan="5">
+                    Total na Função: {{rowData['FuncaoBordo']}}
+                </td>
+                <td>
+                    {{rowData['Simulador']}}
+                </td>
+                <td>
+                    {{rowData['Noturno']}}
+                </td>
+                <td>
+                    {{rowData['Diurno']}}
+                </td>
+                <td>
+                    {{rowData['VFR']}}
+                </td>
+                <td>
+                    {{rowData['IFR']}}
+                </td>
+                <td>
+                    {{rowData['Total']}}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer" let-columns>
+            <tr class="d-print-none">
+                <td *ngFor="let col of columns">
+                    {{col.header}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

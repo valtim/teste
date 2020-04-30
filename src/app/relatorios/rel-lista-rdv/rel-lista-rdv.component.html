@@ -1,0 +1,95 @@
+<app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy"
+                    [locale]="locale_pt" showIcon="true"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
+                       [locale]="locale_pt" showIcon="true"></p-calendar>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Nº do RDV</span>
+                    </div>
+                    <input type="text" [(ngModel)]="rdv">
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+<p-table [columns]="cols" [value]="dados" *ngIf="dados" selectionMode="single" [(selection)]="rel_selecionado" dataKey="Id" (onRowSelect)="onRowSelect($event)">
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <!-- (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" -->
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">                
+                <span *ngIf="col.type != 'Date'">{{rowData[col.field]}}</span>
+                <span *ngIf="col.type == 'Date'">{{rowData[col.field] | date: 'dd/MM/yyyy' }}</span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div style="text-align: left">
+            Selected Car: {{rel_selecionado ? rel_selecionado : 'none' | json}}
+        </div>
+    </ng-template>
+</p-table>

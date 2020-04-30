@@ -1,0 +1,66 @@
+<app-cabecalho-impressao titulo="VOOS REALIZADOS"></app-cabecalho-impressao>
+
+<app-titulo titulo="Voos Realizados" [carregando]="carregando"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                        showIcon="true"></p-calendar>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="container">
+
+    <div *ngIf="filtroRetorno">
+        <h3>Periodo de: {{filtroRetorno.dataInicio | date:'dd/MM/yyyy'}} até
+            {{filtroRetorno.dataFim | date:'dd/MM/yyyy'}}
+        </h3>
+    </div>
+
+    <table class="table table-striped">
+        <tbody>
+            <tr *ngFor="let item of dados">
+                <td class="text-right">Total de voos com {{item.Item}}</td>
+                <td>{{item.Valor}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
