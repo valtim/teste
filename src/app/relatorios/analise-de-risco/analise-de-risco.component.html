@@ -1,4 +1,4 @@
-<app-titulo [titulo]="titulo"></app-titulo>
+<app-titulo [titulo]="titulo" [carregando]="carregando"></app-titulo>
 
 <div class="container">
 
@@ -26,8 +26,7 @@
         <div class="sm-12 lg-4 mt-2">
 
 
-            <p-calendar [(ngModel)]="dates" selectionMode="multiple" [inline]="true"
-                [locale]="pt"></p-calendar>
+            <p-calendar [(ngModel)]="dates" selectionMode="multiple" [inline]="true" [locale]="pt"></p-calendar>
 
         </div>
     </div>
@@ -69,7 +68,8 @@
         <div *ngFor="let item of grid;index as i">
 
             <p-dialog [header]="item.Prefixo" [(visible)]="item.Display" [modal]="true" [baseZIndex]="10000">
-                <app-visualizar-analise-de-risco [grupos]="item.Grupos" [analise]="item"></app-visualizar-analise-de-risco>
+                <app-visualizar-analise-de-risco [grupos]="item.Grupos" [analise]="item">
+                </app-visualizar-analise-de-risco>
             </p-dialog>
 
         </div>

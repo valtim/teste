@@ -4,13 +4,25 @@
 </div>
 
 <p-accordion [multiple]="true">
-  <p-accordionTab header="Relatórios" [selected]="true">
+
+
+  <p-accordionTab header="Coordenação" [selected]="true">
     <ul>
       <li>
         <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
           Fadiga
         </a>
       </li>
+      <li>
+        <a *ngIf="isEnable('rel-diario-horas-voadas')" routerLink="/rel-diario-horas-voadas">
+          Diário de Horas Voadas
+        </a>
+      </li>
+    </ul>
+  </p-accordionTab>
+
+  <p-accordionTab header="Operações" [selected]="true">
+    <ul>
       <li>
         <a *ngIf="isEnable('analise-de-risco')" routerLink="/analise-de-risco">
           Avaliação de Risco
@@ -37,23 +49,8 @@
         </a>
       </li>
       <li>
-        <a *ngIf="isEnable('rel-horas-quinzena')" routerLink="/rel-horas-quinzena">
-          Horas da Quinzena
-        </a>
-      </li>
-      <li>
         <a *ngIf="isEnable('rel-horas-tripulante')" routerLink="/rel-horas-tripulante">
           Horas por Tripulante
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('rel-boca')" routerLink="/rel-boca">
-          "BOCA"
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('rel-rdv')" routerLink="/rel-rdv">
-          RDV
         </a>
       </li>
       <li>
@@ -61,12 +58,16 @@
           Voos Realizados
         </a>
       </li>
-
-      
-
-
-      
-
+      <li>
+        <a *ngIf="isEnable('controle-de-tripulantes')" routerLink="/controle-de-tripulantes">
+          Controle de Tripulantes
+        </a>
+      </li>
+      <!-- <li>
+        <a *ngIf="isEnable('rel-rdv')" routerLink="/controle-de-combustivel">
+          Controle de Combustível
+        </a>
+      </li> -->
       <li>
         <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
           Tipo de Pergunta
@@ -79,36 +80,36 @@
       </li>
     </ul>
   </p-accordionTab>
-  <p-accordionTab header="Coordenação" [selected]="true">
-    <ul>
-      <li>
-        <a *ngIf="isEnable('relatorio-voo')" routerLink="/relatorio-voo">
-          Relatório de Voo
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('relatorio-voo-periodo')" routerLink="/relatorio-voo-periodo">
-          Relatório de Voo por Período
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('bloco')" routerLink="/bloco">
-          Bloco
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('papeleta')" routerLink="/papeleta">
-          Papeleta
-        </a>
-      </li>
-      <li>
-        <a *ngIf="isEnable('relatorio-pagamento')" routerLink="/relatorio-pagamento">
-          Relatório de Pagamento
-        </a>
-      </li>
-    </ul>
+
+  <p-accordionTab header="Petrobras" [selected]="true">
+
+    <li>
+      <a *ngIf="isEnable('rel-boca')" routerLink="/rel-boca">
+        "BOCA"
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('rel-rdv')" routerLink="/rel-rdv">
+        RDV
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('rel-rdv')" routerLink="/status-da-frota">
+        Status da Frota
+      </a>
+    </li>
   </p-accordionTab>
-  <p-accordionTab header="Ferramentas" [selected]="true">
+
+  <p-accordionTab header="Financeiro" [selected]="true">
+    <li>
+      <a *ngIf="isEnable('rel-horas-quinzena')" routerLink="/rel-horas-quinzena">
+        Horas da Quinzena
+      </a>
+    </li>
+  </p-accordionTab>
+
+  
+  <p-accordionTab header="Sistema" [selected]="true">
     <ul>
       <li>
         <a routerLink="/troca-senha">

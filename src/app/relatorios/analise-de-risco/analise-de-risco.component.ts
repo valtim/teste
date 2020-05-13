@@ -20,6 +20,8 @@ export class AnaliseDeRiscoComponent implements OnInit {
 
   dates;
 
+  carregando = true;
+
   tripulantes = [];
   tripulantesSelecionados = [];
   prefixos = [];
@@ -61,15 +63,18 @@ export class AnaliseDeRiscoComponent implements OnInit {
   ngOnInit() {
     this.api.getCombos().then(
       x => {
-        this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
+        this.prefixos = x.Prefixos;
 
-        this.tripulantes = x.Tripulantes.map(x => { return { label: x.Trato, value: x.Id } });
+        this.tripulantes = x.Tripulantes;
 
         //this.grid= x.PrimeiraConsulta;
       }
     )
-    
-    this.api.getTelaConsultaRisco().then(x => {this.grid = x; })
+
+    this.api.getTelaConsultaRisco().then(x => {
+      this.grid = x;
+      this.carregando = false;
+    })
   }
 
 

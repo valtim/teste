@@ -1,13 +1,11 @@
-
-
 .vertical-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
 
-  .container{
-    margin-top: 60px;
-    margin-bottom: 60px;
+.container {
+  margin-top: 60px;
+  margin-bottom: 60px;
 }

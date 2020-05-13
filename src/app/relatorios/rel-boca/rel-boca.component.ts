@@ -8,51 +8,48 @@ import { ApiService } from '../../shared/api.service';
 })
 export class RelBocaComponent implements OnInit {
 
-  locale_pt;
-  tudoPronto = false;
   dados;
   cols;
 
   filtroRetorno;
 
+
+  tudoPronto = false;
+  locale_pt;
+  baseDeOperacao;
+  baseDeOperacaoSelecionada;
   data: Date;
 
   TotalDeVoos;
   AeronavesUtilizadas;
-
-  baseDeOperacao;
-  baseDeOperacaoSelecionada;
   BaseDeOperacoes: any;
 
-  constructor(private api : ApiService) { }
+  constructor(private api: ApiService) { }
 
   ngOnInit(): void {
-    
+
     const date = new Date();
     this.data = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.locale_pt = this.api.getLocale('pt');
 
-    this.api.getCombos().then(x=>{
-      this.baseDeOperacao = x.BaseDeOperacao.map(x => { return { label: x.Nome, value: x.ICAO + '$' + x.Nome } });
+    this.api.getCombos().then(x => {
+      this.baseDeOperacao = x.BaseDeOperacao;
       this.baseDeOperacaoSelecionada = this.baseDeOperacao[0].value;
-
-
-
       this.rodarRelatorio();
 
     })
-  
+
 
   }
 
   rodarRelatorio() {
     this.tudoPronto = false;
-    this.api.postRelBoca (
+    this.api.postRelBoca(
       {
         data: this.data,
-        clientes : ['31965f5a-e078-11e7-a923-0026b94bb39e',
-'cfd3aa3b-5c1d-4796-abec-1de79cb7a998'],
-        base : this.baseDeOperacaoSelecionada
+        clientes: ['31965f5a-e078-11e7-a923-0026b94bb39e',
+          'cfd3aa3b-5c1d-4796-abec-1de79cb7a998'],
+        base: this.baseDeOperacaoSelecionada
       }).then(x => {
 
         //colunas = colunas, filtro = filtro, listas = listas
@@ -64,8 +61,8 @@ export class RelBocaComponent implements OnInit {
         this.BaseDeOperacoes = x.BaseDeOperacoes;
         this.tudoPronto = true;
       })
-      .catch(x=>{
-        
+      .catch(x => {
+
       })
   }
 

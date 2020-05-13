@@ -38,7 +38,7 @@
     <tbody>
       <tr (click)="goTratamento(fadiga.Id)" *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor"
         [style.cursor]="fadiga.Cursor">
-        <td *ngIf="!basico">{{fadiga.Data | date: 'dd/MM/yyyy'}}</td>
+        <td *ngIf="!basico">{{fadiga.Data}}</td>
         <td>{{fadiga.Trato}}</td>
         <td>{{fadiga.Status}}</td>
         <td>{{fadiga.Nivel}}</td>

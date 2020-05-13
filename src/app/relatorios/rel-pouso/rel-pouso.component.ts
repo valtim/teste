@@ -1,3 +1,4 @@
+import { ExcelService } from './../../services/excel-service';
 import { ApiService } from './../../shared/api.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -43,9 +44,9 @@ export class RelPousoComponent implements OnInit {
     this.locale_pt = this.api.getLocale('pt');
 
     this.api.getCombos().then(x => {
-      this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
-      this.localidades = x.Localidades.map(x => { return { label: x.Nome + '-' + x.NomeICAO, value: x.Id } });
-      this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+      this.prefixos = x.Prefixos;
+      this.localidades = x.Localidades;
+      this.clientes = x.Clientes;
       this.carregando = false;
     })
 

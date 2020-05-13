@@ -1,0 +1,64 @@
+<app-cabecalho-impressao titulo="CONTROLE DE TRIPULANTES"></app-cabecalho-impressao>
+
+<app-titulo titulo="CONTROLE DE TRIPULANTES" [carregando]="carregando"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+
+
+        </div>
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Final</span>
+                </div>
+                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+
+            <button class="ml-2" pButton type="button" icon="pi pi-file-excel" iconPos="right" label="Excel"
+                (click)="gerarExcel()"></button>
+        </div>
+
+    </div>
+</div>
+
+
+<p-table [columns]="cols" [value]="dados" *ngIf="!carregando">
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col *ngFor="let col of columns" [style.width]="col.width">
+        </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+</p-table>

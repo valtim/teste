@@ -43,6 +43,11 @@ export class DataUtil {
         return ano + '-' + mes + '-' + dia;
       }
 
+      public static from_date_to_traco(ent:Date) : string{
+    
+        return ent.toISOString().split("T")[0];
+      }
+
       
 
 }

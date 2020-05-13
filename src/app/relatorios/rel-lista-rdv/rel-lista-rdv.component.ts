@@ -36,9 +36,8 @@ export class RelListaRdvComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getCombos().then(x => {
-      this.prefixos = x.Prefixos.map(x => { return { label: x.PrefixoCompleto, value: x.Id } });
-      this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
-      this.tudoPronto = true;
+      this.prefixos = x.Prefixos;
+      this.clientes = x.Clientes;
     })
 
     const date = new Date();
@@ -72,6 +71,8 @@ export class RelListaRdvComponent implements OnInit {
 
   onRowSelect(e){
     //this.adt.setar(e.data);
+    if ( e.data.Cancelada == "SIM")
+      return;
     this.router.navigate(['/rel-rdv/' + e.data.NumeroDaFolha]);
   }
 

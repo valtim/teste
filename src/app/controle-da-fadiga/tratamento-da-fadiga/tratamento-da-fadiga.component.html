@@ -112,7 +112,7 @@
     <hr>
 
     <div *ngFor="let historico of tratamento.Avaliacoes; index as i" [ngClass]="{'back-alternative': i % 2 === 0}">
-      <h6><b>{{historico.Usuario}}</b> em {{historico.Data | date: 'dd/MM/yyyy hh:mm:ss'}}</h6>
+      <h6><b>{{historico.Usuario}}</b> em {{historico.Data}}</h6>
 
 
       <h5 *ngIf="historico.Acao">

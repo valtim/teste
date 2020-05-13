@@ -1,0 +1,81 @@
+<app-titulo titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [carregando]="!relatorio_ok"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Data</span>
+                </div>
+                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+    </div>
+
+
+</div>
+
+<div *ngIf="relatorio_ok">
+
+
+    <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [dataConsulta]="dataDaConsulta" class="d-print"></app-cabecalho-impressao>
+
+    <p-table [value]="previstas" [columns]="cols">
+        <!-- <ng-template pTemplate="caption">
+            BASE DE OPERAÇÕES: {{BaseDeOperacoes}}
+        </ng-template> -->
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th rowspan="2">Tripulante</th>
+                <th rowspan="2">ANAC</th>
+                <th rowspan="2">Apres.</th>
+                <th rowspan="2">Primeiro Dia</th>
+                <th colspan="3">Horas Voadas (Quinzena)</th>
+            </tr>
+            <tr>
+                <th>Horas Anteriores</th>
+                <th>Etapas no dia</th>
+                <th>Horas no Fim do Dia</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td>
+                    {{rowData['Tripulante'].Trato}}
+                </td>
+                <td>
+                    {{rowData['Tripulante'].CodigoANAC}}
+                </td>
+                <td>
+                    {{rowData['HoraDaApresentacao']}}
+                </td>
+                <td>
+                    {{rowData['PrimeiroDiaDeMissao']}}
+                </td>
+                <td>
+                    {{rowData['InicioDoDia']}}
+                </td>
+                <td>
+                    {{rowData['EtapasDeHoje']}}
+                </td>
+                <td>
+                    {{rowData['FinalDoDia']}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

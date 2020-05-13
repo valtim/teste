@@ -7,8 +7,10 @@ import localept from '@angular/common/locales/pt';
 
 import { registerLocaleData } from '@angular/common';
 
+import { SharedModule } from './shared/shared.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
-import { ControleDaFadigaModule } from './controle-da-fadiga/controle-da-fadiga.module';
+//import { ControleDaFadigaModule } from './controle-da-fadiga/!controle-da-fadiga.module';
+
 import { AppRoutingModule } from './app-routing.module';
 import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
@@ -20,13 +22,14 @@ import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { SharedModule } from './shared/shared.module';
 import { InputMaskModule } from 'primeng/inputmask';
+import { MenubarModule } from 'primeng/menubar';
+import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { BocaVooComponent } from './relatorios/boca-voo/boca-voo.component';
-import { BocaDiaComponent } from './relatorios/boca-dia/boca-dia.component';
 import { GraficoComponent } from './grafico/grafico.component';
 import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-de-risco.component';
 import { VisualizarAnaliseDeRiscoComponent } from './relatorios/visualizar-analise-de-risco/visualizar-analise-de-risco.component';
@@ -46,6 +49,15 @@ import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/ve
 import { EditarVencimentoComponent } from './relatorios/editar-vencimento/editar-vencimento.component';
 import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
 import { RelControleDeCombustivelComponent } from './relatorios/rel-controle-de-combustivel/rel-controle-de-combustivel.component';
+import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
+import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
+import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
+import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
+import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
+import { PesquisaBasicaComponent } from './controle-da-fadiga/pesquisa-basica/pesquisa-basica.component';
+import { RelatorioFadigaComponent } from './controle-da-fadiga/relatorio-fadiga/relatorio-fadiga.component';
+
+
 
 
 registerLocaleData(localept, 'pt');
@@ -57,8 +69,6 @@ registerLocaleData(localept, 'pt');
   declarations: [
     AppComponent,
     HomeComponent,
-    BocaVooComponent,
-    BocaDiaComponent,
     GraficoComponent,
     AnaliseDeRiscoComponent,
     VisualizarAnaliseDeRiscoComponent,
@@ -78,15 +88,27 @@ registerLocaleData(localept, 'pt');
     EditarVencimentoComponent,
     RelStatusDaFrotaComponent,
     RelControleDeCombustivelComponent,
+    RelDiarioHorasVoadasComponent,
+    ControleDeTripulantesComponent,
+    ComunicarTripulantesComponent,
+    PesquisaBasicaComponent,
+    RelatorioFadigaComponent,
+    TratamentoDaFadigaComponent,
+    FadigaComponent,
 
   ],
   imports: [
+    //ControleDaFadigaModule,
+    // TratamentoDaFadigaComponent,
+    // FadigaComponent,
+    // ComunicarTripulantesComponent,
+    // PesquisaBasicaComponent,
+    // RelatorioFadigaComponent,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
-    ControleDaFadigaModule,
     SegurancaModule,
     ReactiveFormsModule,
     FormsModule,
@@ -101,6 +123,12 @@ registerLocaleData(localept, 'pt');
     MultiSelectModule,
     DropdownModule,
     InputMaskModule,
+    ToastModule,
+    MenubarModule,
+    CheckboxModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }

@@ -37,8 +37,8 @@ export class HorasVoadasTripulanteComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getCombos().then(x => {
-      this.tripulantes = x.Tripulantes.map(x => { return { label: x.Trato, value: x.Id } });
-      this.tripulanteSelecionado = x.Tripulantes[0].Id;
+      this.tripulantes = x.Tripulantes;
+      this.tripulanteSelecionado = x.Tripulantes[0].value;
       this.tudoPronto = true;
     })
 

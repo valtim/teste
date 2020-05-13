@@ -1,3 +1,7 @@
+import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
+import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
+import { RelControleDeCombustivelComponent } from './relatorios/rel-controle-de-combustivel/rel-controle-de-combustivel.component';
+import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -102,6 +106,22 @@ const routes: Routes = [
   {
     path: 'voos-realizados',
     component: VoosRealizadosComponent,
+  },
+  {
+    path: 'status-da-frota',
+    component: RelStatusDaFrotaComponent,
+  },
+  {
+    path: 'controle-de-combustivel',
+    component: RelControleDeCombustivelComponent,
+  },
+  {
+    path: 'rel-diario-horas-voadas',
+    component: RelDiarioHorasVoadasComponent,
+  },
+  {
+    path: 'controle-de-tripulantes',
+    component: ControleDeTripulantesComponent,
   },
 
   //rel-horas-tripulante

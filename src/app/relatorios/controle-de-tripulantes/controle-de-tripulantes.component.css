@@ -1,0 +1,12 @@
+@media print {
+    @page {
+        size: landscape
+    }
+}
+
+td, th{
+    font-size: xx-small;
+    
+  white-space: nowrap;
+
+}

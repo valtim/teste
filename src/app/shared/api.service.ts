@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AutorizacaoService } from './autorizacao.service';
+
+import { DataUtil } from './../shared/DataUtil';
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class ApiService {
+  
 
 
   private httpOptions: any;
@@ -379,6 +383,10 @@ export class ApiService {
     return this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise();
   }
 
+  getCombosEdit(): Promise<any> {
+    return this.http.get(`${this.url}api/Combos/Edit`, this.httpOptions).toPromise();
+  }
+
 
   postTelaConsultaRisco(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/TelaConsultaAvRisco`, JSON.stringify(filtro), this.httpOptions).toPromise();
@@ -404,6 +412,23 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelBoca`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
+  getHorasVoadasPorDia(data: Date): Promise<any>  {
+
+    let str = DataUtil.from_date_to_traco(data);
+
+    return this.http.get(`${this.url}api/RelControleDeHoras/${str}`, this.httpOptions).toPromise();
+  }
+
+  getRelStatusDaFrota(data: Date, baseDeOperacao: string, clientes : string[]): Promise<any> {
+    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]}/${baseDeOperacao}/${clientes.join(',')}`;
+    return this.http.get(caminho, this.httpOptions).toPromise();
+  }
+
+  postRelStatusDaFrota(lista: any): Promise<any> {
+    let caminho = `${this.url}api/RelStatusDaFrota`;
+    return this.http.post(caminho, JSON.stringify(lista), this.httpOptions).toPromise();
+  }
+
   postRelHorasPorTripulante(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelHorasPorTripulante`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
@@ -420,6 +445,15 @@ export class ApiService {
   postVoosRealizados(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelVoosRealizados`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
+
+  postRelControleDeHoras(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelControleDeHoras`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+
+  postGenerico(tipo: string, dados: any): Promise<any> {
+    return this.http.post(`${this.url}api/salvar/${tipo}`, JSON.stringify(dados), this.httpOptions).toPromise();
+  }
+
 
   getLocale(pais: string): any {
     return {

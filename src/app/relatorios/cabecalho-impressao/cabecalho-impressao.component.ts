@@ -17,6 +17,7 @@ export class CabecalhoImpressaoComponent implements OnInit {
 
   @Input() registro;
 
+  @Input() dataConsulta;
 
   ExibirRevisao;
 
