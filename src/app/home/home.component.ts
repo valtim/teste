@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComponent } from '../app.component';
 import { ApiService } from 'src/app/shared/api.service';
 import { Router } from '@angular/router';
 import { AutorizacaoService } from '../shared/autorizacao.service';
@@ -13,21 +12,17 @@ export class HomeComponent implements OnInit {
   public urlLogo: string;
   public exibir = false;
   clienteLogado = "teste";
+  public menu = [];
 
   public loading: boolean;
 
   constructor(
-    private app: AppComponent,
     private api: ApiService,
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
   async ngOnInit() {
-    // this.app.setTitle('SOL Sistemas');
-    // if (!this.api.getPermission()) {
-    //   this.loading = true;
-    //   this.api.getMenuPermission();
-    // }
+    this.menu = this.autorizacao.getMenus();
     this.api.getClienteLogado().then(result => {
       this.urlLogo = this.api.getLogo(result);
       this.exibir = true;
@@ -37,22 +32,11 @@ export class HomeComponent implements OnInit {
   isEnable(name: string) {
     return this.autorizacao.getRotas().includes(name);
   }
+
   logoff(): void {
     this.loading = true;
     localStorage.clear();
-
-      // localStorage.removeItem('Abastecedora');
-      // localStorage.removeItem('Cliente');
-      // localStorage.removeItem('FuncaoBordo');
-      // localStorage.removeItem('Natureza');
-      // localStorage.removeItem('Prefixo');
-      // localStorage.removeItem('TipoDeOperacao');
-      // localStorage.removeItem('TipoDeProcedimento');
-      // localStorage.removeItem('Tripulante');
-      // localStorage.removeItem('Authorization');
-      // localStorage.removeItem('Rotas');
-      // localStorage.removeItem('Certificado');
-      this.loading = false;
-      this.router.navigate(['/']);
+    this.loading = false;
+    this.router.navigate(['/']);
   }
 }

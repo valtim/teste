@@ -1,3 +1,5 @@
+import { LogoffComponent } from './logoff/logoff.component';
+import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
 import { RelControleDeCombustivelComponent } from './relatorios/rel-controle-de-combustivel/rel-controle-de-combustivel.component';
@@ -122,6 +124,14 @@ const routes: Routes = [
   {
     path: 'controle-de-tripulantes',
     component: ControleDeTripulantesComponent,
+  },
+  {
+    path: 'rel-escala-ptbr',
+    component: RelEscalaPtbrComponent,
+  },
+  {
+    path: 'logoff',
+    component: LogoffComponent,
   },
 
   //rel-horas-tripulante

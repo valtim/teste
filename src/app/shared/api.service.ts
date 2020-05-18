@@ -130,30 +130,6 @@ export class ApiService {
     return this.http.get(this.url + 'api/listaspadrao', this.httpOptions)
       .toPromise();
   }
-  /*
-    getListas(callback: Function): void {
-      if (
-        !(localStorage.getItem('Abastecedora') && localStorage.getItem('Cliente')
-          && localStorage.getItem('FuncaoBordo') && localStorage.getItem('Natureza')
-          && localStorage.getItem('Prefixo') && localStorage.getItem('TipoDeOperacao')
-          && localStorage.getItem('TipoDeProcedimento') && localStorage.getItem('Tripulante'))
-      ) {
-        this.http.get(this.url + 'api/listaspadrao', this.httpOptions).toPromise()
-          .then((result: any) => {
-            localStorage.setItem('Abastecedora', JSON.stringify(result.Abastecedora));
-            localStorage.setItem('Cliente', JSON.stringify(result.Cliente));
-            localStorage.setItem('FuncaoBordo', JSON.stringify(result.FuncaoBordo));
-            localStorage.setItem('Natureza', JSON.stringify(result.Natureza));
-            localStorage.setItem('Prefixo', JSON.stringify(result.Prefixo));
-            localStorage.setItem('TipoDeOperacao', JSON.stringify(result.TipoDeOperacao));
-            localStorage.setItem('TipoDeProcedimento', JSON.stringify(result.TipoDeProcedimento));
-            localStorage.setItem('Tripulante', JSON.stringify(result.Tripulante));
-            callback();
-          })
-          .catch();
-      }
-    }
-    */
 
   getClienteLogado(): Promise<any> {
     return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions)
@@ -421,6 +397,11 @@ export class ApiService {
 
   getRelStatusDaFrota(data: Date, baseDeOperacao: string, clientes : string[]): Promise<any> {
     let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]}/${baseDeOperacao}/${clientes.join(',')}`;
+    return this.http.get(caminho, this.httpOptions).toPromise();
+  }
+
+  getEscalaPTBR(dataref: Date, dataIni: Date, dataFim: Date, baseDeOperacao: string): Promise<any> {
+    let caminho = `${this.url}api/RelEscala/${dataref.toISOString().split("T")[0]}/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}/${baseDeOperacao}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 

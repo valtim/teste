@@ -3,10 +3,20 @@
   <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 100px;">
 </div>
 
-<p-accordion [multiple]="true">
 
 
-  <p-accordionTab header="Coordenação" [selected]="true">
+<p-accordion [multiple]="true" >
+
+
+  <p-accordionTab *ngFor="let item of menu" [header]="item.Grupo" [selected]="true">
+    <li *ngFor="let link of item.Lista" >
+      <a *ngIf="isEnable(link.Rota)" [routerLink]="['/'+ link.Rota]">
+        {{link.Nome}}
+      </a>
+    </li>
+  </p-accordionTab>
+
+  <!-- <p-accordionTab header="Coordenação" [selected]="true">
     <ul>
       <li>
         <a *ngIf="isEnable('fadiga')" routerLink="/fadiga">
@@ -63,11 +73,6 @@
           Controle de Tripulantes
         </a>
       </li>
-      <!-- <li>
-        <a *ngIf="isEnable('rel-rdv')" routerLink="/controle-de-combustivel">
-          Controle de Combustível
-        </a>
-      </li> -->
       <li>
         <a *ngIf="isEnable('tipo-pergunta')" routerLink="/tipo-pergunta">
           Tipo de Pergunta
@@ -81,7 +86,7 @@
     </ul>
   </p-accordionTab>
 
-  <p-accordionTab header="Petrobras" [selected]="true">
+  <p-accordionTab header="Petrobras" [selected]="true" *ngIf="isEnable('rel-boca') || isEnable('rel-rdv') || isEnable('rel-rdv') || isEnable('rel-escala-ptbr')" >
 
     <li>
       <a *ngIf="isEnable('rel-boca')" routerLink="/rel-boca">
@@ -95,6 +100,11 @@
     </li>
     <li>
       <a *ngIf="isEnable('rel-rdv')" routerLink="/status-da-frota">
+        Status da Frota
+      </a>
+    </li>
+    <li>
+      <a *ngIf="isEnable('rel-escala-ptbr')" routerLink="/rel-escala-ptbr">
         Status da Frota
       </a>
     </li>
@@ -119,5 +129,5 @@
       <li><a href="#" (click)="logoff()">Logoff</a></li>
     </ul>
   </p-accordionTab>
-</p-accordion>
+</p-accordion> -->
 

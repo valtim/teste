@@ -10,7 +10,7 @@
                     <span class="input-group-text">Inicial</span>
                 </div>
                 <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true"></p-calendar>
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
             </div>
         </div>
         <div class="col-sm">
@@ -19,7 +19,7 @@
                     <span class="input-group-text">Final</span>
                 </div>
                 <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true"></p-calendar>
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
             </div>
         </div>
 
