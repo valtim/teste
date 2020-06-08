@@ -49,8 +49,8 @@ export class PaxTransportadosComponent implements OnInit {
 
     this.carregando = true;
     this.api.getCombos().then(x => {
-      this.prefixos = x.Prefixos;
-      this.clientes = x.Clientes;
+      this.prefixos = x.Prefixo;
+      this.clientes = x.Cliente;
       //sthis.localidades = x.Localidades;
       this.carregando = false;
     })

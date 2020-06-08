@@ -1,11 +1,21 @@
+import { ContratoComponent } from './cadastro/contrato/contrato.component';
+import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
+import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { RelControleDiarioDeOperacoesComponent } from './relatorios/rel-controle-diario-de-operacoes/rel-controle-diario-de-operacoes.component';
+import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
+import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
+import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
+import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
+import { CrudComponent } from './crud/crud.component';
+import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
-import { RelControleDeCombustivelComponent } from './relatorios/rel-controle-de-combustivel/rel-controle-de-combustivel.component';
 import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
 
 import { VoosRealizadosComponent } from './relatorios/voos-realizados/voos-realizados.component';
 import { RelListaRdvComponent } from './relatorios/rel-lista-rdv/rel-lista-rdv.component';
@@ -114,10 +124,6 @@ const routes: Routes = [
     component: RelStatusDaFrotaComponent,
   },
   {
-    path: 'controle-de-combustivel',
-    component: RelControleDeCombustivelComponent,
-  },
-  {
     path: 'rel-diario-horas-voadas',
     component: RelDiarioHorasVoadasComponent,
   },
@@ -132,6 +138,46 @@ const routes: Routes = [
   {
     path: 'logoff',
     component: LogoffComponent,
+  },
+  {
+    path: 'rel-operacao-de-solo',
+    component: RelOperacaoDeSoloComponent,
+  },
+  {
+    path: 'rel-controle-spot',
+    component: RelControleSpotComponent,
+  },
+  {
+    path: 'crud/:tipo',
+    component: CrudComponent,
+  },
+  {
+    path: 'motivo-do-atraso',
+    component: MotivoDoAtrasoComponent,
+  },
+  {
+    path: 'rel-pontualidade',
+    component: RelAtrasoComponent,
+  },
+  {
+    path: 'rel-indisponibilidade',
+    component: RelIndisponibilidadeComponent,
+  },
+  {
+    path: 'rel-cdo',
+    component: RelControleDiarioDeOperacoesComponent,
+  },
+  {
+    path: 'cad-email-reporte',
+    component: CadastroDeEmailReporteComponent,
+  },
+  {
+    path: 'indisponibilidade',
+    component: IndisponibilidadeComponent,
+  },
+  {
+    path: 'contrato',
+    component: ContratoComponent,
   },
 
   //rel-horas-tripulante

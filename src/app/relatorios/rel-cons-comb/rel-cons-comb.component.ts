@@ -29,8 +29,8 @@ export class RelConsCombComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getCombos().then(x => {
-      this.prefixos = x.Prefixos;
-      this.clientes = x.Clientes;
+      this.prefixos = x.Prefixo;
+      this.clientes = x.Cliente;
       this.tudoPronto = true;
     })
 

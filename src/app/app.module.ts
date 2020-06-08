@@ -26,6 +26,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 import { AppComponent } from './app.component';
@@ -48,7 +49,6 @@ import { VoosRealizadosComponent } from './relatorios/voos-realizados/voos-reali
 import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/vencimento-carteira.component';
 import { EditarVencimentoComponent } from './relatorios/editar-vencimento/editar-vencimento.component';
 import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
-import { RelControleDeCombustivelComponent } from './relatorios/rel-controle-de-combustivel/rel-controle-de-combustivel.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
 import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
@@ -58,6 +58,16 @@ import { PesquisaBasicaComponent } from './controle-da-fadiga/pesquisa-basica/pe
 import { RelatorioFadigaComponent } from './controle-da-fadiga/relatorio-fadiga/relatorio-fadiga.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { LogoffComponent } from './logoff/logoff.component';
+import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
+import { CrudComponent } from './crud/crud.component';
+import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
+import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
+import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
+import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
+import { RelControleDiarioDeOperacoesComponent } from './relatorios/rel-controle-diario-de-operacoes/rel-controle-diario-de-operacoes.component';
+import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
+import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
+import { ContratoComponent } from './cadastro/contrato/contrato.component';
 
 
 
@@ -89,7 +99,6 @@ registerLocaleData(localept, 'pt');
     VoosRealizadosComponent,
     EditarVencimentoComponent,
     RelStatusDaFrotaComponent,
-    RelControleDeCombustivelComponent,
     RelDiarioHorasVoadasComponent,
     ControleDeTripulantesComponent,
     ComunicarTripulantesComponent,
@@ -99,6 +108,16 @@ registerLocaleData(localept, 'pt');
     FadigaComponent,
     RelEscalaPtbrComponent,
     LogoffComponent,
+    RelOperacaoDeSoloComponent,
+    CrudComponent,
+    RelControleSpotComponent,
+    MotivoDoAtrasoComponent,
+    RelIndisponibilidadeComponent,
+    RelAtrasoComponent,
+    RelControleDiarioDeOperacoesComponent,
+    CadastroDeEmailReporteComponent,
+    IndisponibilidadeComponent,
+    ContratoComponent,
 
   ],
   imports: [
@@ -131,7 +150,9 @@ registerLocaleData(localept, 'pt');
     MenubarModule,
     CheckboxModule,
     FormsModule,
+    InputSwitchModule,
     ReactiveFormsModule,
+
     SharedModule,
   ],
   providers: [

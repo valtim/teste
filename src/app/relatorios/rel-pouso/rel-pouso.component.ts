@@ -44,9 +44,9 @@ export class RelPousoComponent implements OnInit {
     this.locale_pt = this.api.getLocale('pt');
 
     this.api.getCombos().then(x => {
-      this.prefixos = x.Prefixos;
-      this.localidades = x.Localidades;
-      this.clientes = x.Clientes;
+      this.prefixos = x.Prefixo;
+      this.localidades = x.Localidade;
+      this.clientes = x.Cliente;
       this.carregando = false;
     })
 

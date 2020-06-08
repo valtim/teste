@@ -1,0 +1,149 @@
+<app-titulo titulo="Controle de Checkin e Briefing" [carregando]="(!consulta_ok || !tela_ok)"></app-titulo>
+
+<div class="container d-print-none" *ngIf="tela_ok">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Data</span>
+                </div>
+                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true" [inputStyle]="{'width':'100px'}" optionLabel="Nome"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+
+            <p-dropdown [options]="filtroCliente" [(ngModel)]="clienteSelecionado" filter="true" optionLabel="Nome">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-dropdown>
+
+        </div>
+
+
+        <div class="col-sm">
+            <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
+                filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
+
+            <!-- <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button> -->
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+<div *ngIf="consulta_ok">
+
+
+    <p-toast></p-toast>
+
+    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+
+    <app-cabecalho-impressao titulo="Controle de Cehck in e Briefing" class="d-print"></app-cabecalho-impressao>
+
+    <p-table [value]="dados">
+
+        <ng-template pTemplate="caption">
+            <b>{{nomeCliente}} - {{nomeBase}}</b>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+             
+            <tr>
+                <th style="width:50px"></th>
+                <th>Data</th>
+                <th>Aeronave</th>
+                <th>Check In</th>
+                <th>Briefing</th>
+                <th>Pax - Inspeção Desembarque</th>
+                <th>Observação</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr>
+                <td style="width:50px">
+                    <p-checkbox [value]="rowData.Id" [(ngModel)]="valoresSelecionados" class="d-print-none" *ngIf="rowData.Data" (click)="verBotoes()"></p-checkbox>
+                </td>
+                <td *ngIf="rowData.Data" >
+                    {{rowData.Data | date:'dd/MM/yyyy'}}
+                </td>
+
+                <td *ngIf="!rowData.Data" >
+                    TOTAL
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.Prefixos" optionLabel="Nome"
+                                (onChange)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.Prefixos}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.CheckIn"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.CheckIn}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.Briefing"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.Briefing}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.InspecaoDesembarque"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.InspecaoDesembarque}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.Observacao"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.Observacao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="7" class="text-center"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

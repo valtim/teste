@@ -63,9 +63,8 @@ export class AnaliseDeRiscoComponent implements OnInit {
   ngOnInit() {
     this.api.getCombos().then(
       x => {
-        this.prefixos = x.Prefixos;
-
-        this.tripulantes = x.Tripulantes;
+        this.prefixos = x.Prefixo;
+        this.tripulantes = x.Tripulante;
 
         //this.grid= x.PrimeiraConsulta;
       }

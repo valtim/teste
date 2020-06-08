@@ -34,7 +34,7 @@ export class RelBocaComponent implements OnInit {
 
     this.api.getCombos().then(x => {
       this.baseDeOperacao = x.BaseDeOperacao;
-      this.baseDeOperacaoSelecionada = this.baseDeOperacao[0].value;
+      this.baseDeOperacaoSelecionada = this.baseDeOperacao[0];
       this.rodarRelatorio();
 
     })

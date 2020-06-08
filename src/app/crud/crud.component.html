@@ -1,0 +1,98 @@
+<app-titulo [titulo]="titulo" [carregando]="(!consulta_ok || !tela_ok)"></app-titulo>
+
+<div class="container d-print-none" *ngIf="tela_ok">
+
+</div>
+
+
+<div *ngIf="consulta_ok">
+
+
+    <p-toast></p-toast>
+
+    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+
+    <app-cabecalho-impressao [titulo]="titulo" class="d-print"></app-cabecalho-impressao>
+
+    <p-table [value]="dados" [columns]="colunas">
+
+        <ng-template pTemplate="caption">
+            {{titulo}}
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width:50px"></th>
+                <th *ngFor="let col of colunas">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td>
+                    <p-checkbox [value]="rowData.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"
+                        (click)="verBotoes()"></p-checkbox>
+                </td>
+
+                <td pEditableColumn *ngFor="let col of columns">
+
+                    <p-cellEditor *ngIf="col.type == 'Boolean'">
+
+                        <ng-template pTemplate="input">
+                            <p-inputSwitch [(ngModel)]="rowData[col.field]" (change)="mudeiAqui($event, rowData)">
+                            </p-inputSwitch>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <p-inputSwitch [(ngModel)]="rowData[col.field]"></p-inputSwitch>
+                        </ng-template>
+                    </p-cellEditor>
+
+
+                    <p-cellEditor *ngIf="col.type == 'DateTime'">
+
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData[col.field]"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData[col.field] | date:'dd/MM/yyyy HH:mm'}}
+                        </ng-template>
+                    </p-cellEditor>
+
+                    <p-cellEditor *ngIf="col.type == 'String'">
+
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData[col.field]"
+                                (keyup)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData[col.field]}}
+                        </ng-template>
+                    </p-cellEditor>
+
+
+
+                    <p-cellEditor *ngIf="tiposBasicos.indexOf(col.type) === -1">
+
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="listas[col.type]" [(ngModel)]="rowData[col.field]" [filter]="true"
+                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome"
+                                [showClear]="true"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="rowData[col.field] != null">{{rowData[col.field].Nome}}</span>                            
+                        </ng-template>
+                    </p-cellEditor>
+
+
+
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <b>AERÓLEO TAXI AÉREO S.A.</b>
+        </ng-template>
+    </p-table>
+
+</div>

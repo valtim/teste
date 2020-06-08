@@ -35,7 +35,7 @@
                 </div>
 
                 <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
-                    filterBy="label,value.name"></p-dropdown>
+                    filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
 
                 <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
                     class="ml-2"></button>
@@ -158,18 +158,18 @@
                 {{rowData.CPF}}
             </td>
             <td>
-                {{rowData["VALIDADE ASO"]}}
+                <span [class.texto-vermelho]="rowData['VALIDADE.ASO.vencido']">{{rowData["VALIDADE ASO"]}}</span>
             </td>
-            <td>
+            <td [class.texto-vermelho]="rowData['VALIDADE.SIMULADOR.vencido']">
                 {{rowData["VALIDADE SIMULADOR"]}}
             </td>
-            <td>
+            <td [class.texto-vermelho]="rowData['VALIDADE.HUET*.vencido']">
                 {{rowData["VALIDADE HUET*"]}}
             </td>
-            <td>
+            <td [class.texto-vermelho]="rowData['VALIDADE.MAT..PERIG.**.vencido']">
                 {{rowData["VALIDADE MAT. PERIG.**"]}}
             </td>
-            <td>
+            <td [class.texto-vermelho]="rowData['VALIDADE.CRM.vencido']">
                 {{rowData["VALIDADE CRM"]}}
             </td>
             <td>

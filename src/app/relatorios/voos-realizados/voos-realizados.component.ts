@@ -23,7 +23,7 @@ export class VoosRealizadosComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getCombos().then(x => {
-      this.clientes = x.Clientes.map(x => { return { label: x.Nome, value: x.Id } });
+      this.clientes = x.Cliente;
       this.carregando = false;
     })
 

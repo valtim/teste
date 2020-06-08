@@ -37,8 +37,8 @@ export class HorasVoadasTripulanteComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getCombos().then(x => {
-      this.tripulantes = x.Tripulantes;
-      this.tripulanteSelecionado = x.Tripulantes[0].value;
+      this.tripulantes = x.Tripulante;
+      this.tripulanteSelecionado = x.Tripulante[0];
       this.tudoPronto = true;
     })
 
@@ -64,7 +64,7 @@ export class HorasVoadasTripulanteComponent implements OnInit {
       {
         dataInicio: this.dataInicio,
         dataFim: this.dataFim,
-        tripulante: this.tripulanteSelecionado,
+        tripulante: this.tripulanteSelecionado.Id,
       }).then(x => {
 
         //colunas = colunas, filtro = filtro, listas = listas

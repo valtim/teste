@@ -1,0 +1,144 @@
+<app-titulo titulo="Avaliação de Pontualidade" [carregando]="carregandoMenu || carregandoRelatorio"></app-titulo>
+
+<div class="container d-print-none" *ngIf="!carregandoMenu">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+                filter="filter" [listStyle]="{'max-height':'250px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                        showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+<div *ngIf="!carregandoRelatorio">
+
+
+    <p-toast></p-toast>
+
+    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+
+    <app-cabecalho-impressao titulo="Status das Aeronaves Contratadas Pela Petrobras" class="d-print">
+    </app-cabecalho-impressao>
+
+    <p-table [value]="dados" [columns]="cols">
+        <ng-template pTemplate="caption">
+            Período de {{dataIniciof | date: 'dd/MM/yyyy'}} até {{dataFimf | date: 'dd/MM/yyyy'}}
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of columns" [style.width]="col.width">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th *ngFor="let col of cols">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-i="rowIndex">
+            <tr [class.cor-verde]="rowData['Modificado']">
+                <td><span *ngIf="rowData.Base">{{rowData.Base.ICAO}}</span></td>
+                <td>{{rowData.Data | date: 'dd/MM/yyyy'}}</td>
+                <td>{{rowData.Prefixo.PrefixoCompleto}}</td>
+                <td>{{rowData.Diario.NumeroDaFolha}}</td>
+                <td pEditableColumn [class.texto-vermelho]="rowData['ComProblema']">
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="rowData.PossiveisNumeros" [(ngModel)]="rowData.Voo.value"
+                                [filter]="true" filterBy="label,value.name" (onChange)="mudeiAqui($event, rowData)">
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="!rowData.ComProblema" >
+                            {{rowData.Voo.label}}
+                        </ng-template>
+                        <ng-template pTemplate="output" *ngIf="rowData.ComProblema" >
+                            {{rowData.NumeroDoVoo}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <!-- <td>{{rowData.NumeroDoVoo}}</td> -->
+                <td>{{rowData.HoraPrevista}}</td>
+                <td>{{rowData.HoraReal}}</td>
+                <td>{{rowData.Atraso}}</td>
+                <td><span *ngIf="rowData.Cliente">{{rowData.Cliente.Nome}}</span></td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="motivosDoAtraso" [(ngModel)]="rowData.MotivoDoAtraso.value" [filter]="true"
+                                filterBy="label,value.name" (onChange)="mudeiAqui($event, rowData)" [style]="{'width':'100%'}"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="rowData.MotivoDoAtraso">{{rowData.MotivoDoAtraso.value.label}}</span><span *ngIf="!rowData.MotivoDoAtraso">---</span>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.Descricao"
+                                (onChange)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.Descricao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td colspan="11" class="text-center"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

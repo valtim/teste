@@ -29,7 +29,6 @@ export class RelStatusDaFrotaComponent implements OnInit {
   tiposDeOperacao: any;
   disponibilidade: { value: any; label: string; }[];
   valoresSelecionados = [];
-  filtroBase: any;
 
   constructor(
     private api: ApiService,
@@ -62,90 +61,66 @@ export class RelStatusDaFrotaComponent implements OnInit {
 
 
 
-      var date = new Date();
-      date.setDate(date.getDate() + 1);
+    var date = new Date();
+    date.setDate(date.getDate() + 1);
 
-    //var date = new Date();
-    //date = date.setDate(date.getDate() + 1);
     this.data = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.locale_pt = this.api.getLocale('pt');
 
-    let nova = [{ value: undefined, label: '' }];
-
     this.api.getCombos().then(x => {
 
-      let nova = [{ value: undefined, label: '' }];
-      this.filtroBase = x.BaseDeOperacao;
-
-    });
-
-    this.api.getCombosEdit().then(x => {
-
-      this.disponibilidade = nova.concat(x.Disponibilidade);
-      this.prefixos = nova.concat(x.Prefixos);
-      this.tiposDeOperacao = nova.concat(x.TipoDeOperacao);
-      this.baseDeOperacao = nova.concat(x.BaseDeOperacao);
-      this.baseDeOperacaoSelecionada = this.filtroBase[0].value;
+      this.disponibilidade = x.Disponibilidade;
+      this.prefixos = x.Prefixo;
+      this.tiposDeOperacao = x.TipoDeOperacao;
+      this.baseDeOperacao = x.BaseDeOperacao;
+      this.baseDeOperacaoSelecionada = x.BaseDeOperacao[0];
       this.tela_ok = true;
       this.rodarRelatorio();
 
     });
   }
   excluir() {
-    throw new Error("Method not implemented.");
+    this.api.deleteGenerico('StatusDaFrota', this.valoresSelecionados)
+    .then(() => {
+      
+      this.rodarRelatorio();
+    });
+  }
+  
+  novoItem() {
+    let nova =
+    {
+      "Id": uuidv4(),
+      "Prefixo": {
+        "label": "",
+        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
+      },
+      "HorarioDisponibilidade": "",
+      "Disponibilidade": this.disponibilidade[0],
+      "TipoDeOperacao": this.tiposDeOperacao[0],
+      "Backup": {
+        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
+      },
+      "Substituto": {
+        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
+      },
+      "Posicao": "HANGAR",
+      "Observacoes": "",
+      "Modificado": true,
+      "Data": this.data,
+    };
+    this.dados.push(nova);
+
   }
   salvar() {
-    // var novos = this.dados.filter(x => x.Novo);
-    //     var modificados = this.dados.filter(x => x.Modificado);
-
-    //     modificados.forEach(x => {
-    //         x.Ativo = true;
-    //         delete x.Modificado;
-    //     });
-
-        
-            this.api.postRelStatusDaFrota(this.dados).then(x => {
-                this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Status Salvos com sucesso!' });
-                this.verBotoes();
-            })
+    this.api.postRelStatusDaFrota(this.dados).then(x => {
+      this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Status Salvos com sucesso!' });
+      this.verBotoes();
+    })
   }
-  novoItem() {
-    
-      
-      let nova = 
-        {          
-          "Id" : uuidv4(), 
-          "Prefixo": {
-            "label": "",
-            "value": { label : "", value : '00000000-0000-0000-0000-000000000000' }   
-          },
-          "HorarioDisponibilidade": "",
-          "Disponibilidade": {
-            "label": "",
-            "value": ""
-          },
-          "TipoDeOperacao": {
-            "label": "",
-            "value": ""
-          },
-          "Backup": {
-            "value": { label : "", value : '00000000-0000-0000-0000-000000000000' }                                            
-          },
-          "Substituto": {
-            "value": { label : "", value : '00000000-0000-0000-0000-000000000000' }                                            
-          },
-          "Posicao": "HANGAR",
-          "Observacoes": "",
-          "Modificado" : true,
-          "Data" : this.data,
-        };
-      this.dados.push(nova);
-        
-  }
-
   rodarRelatorio() {
     this.consulta_ok = false;
-    this.api.getRelStatusDaFrota(this.data, this.baseDeOperacaoSelecionada, [ '31965f5a-e078-11e7-a923-0026b94bb39e','cfd3aa3b-5c1d-4796-abec-1de79cb7a998']).then(x => {
+    this.api.getRelStatusDaFrota(this.data, this.baseDeOperacaoSelecionada.Id, ['31965f5a-e078-11e7-a923-0026b94bb39e', 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998']).then(x => {
       this.dados = x;
       this.consulta_ok = true;
     })

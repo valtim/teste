@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AutorizacaoService } from './autorizacao.service';
 
 import { DataUtil } from './../shared/DataUtil';
@@ -38,6 +38,25 @@ export class ApiService {
       message: '',
       type: 'alert',
       callBack: () => { }
+    };
+  }
+
+  getOptions(lista : []){
+    if ( lista == undefined ){
+      return {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': localStorage.getItem('Authorization'),
+        })
+      };
+    }
+
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('Authorization'),
+        'Lista': JSON.stringify(lista)
+      })
     };
   }
 
@@ -91,6 +110,10 @@ export class ApiService {
         v = c === 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
+  }
+
+  newBlankGuid():string{
+    return '00000000-0000-0000-0000-000000000000'           
   }
 
   getDiarioById(id: string): Promise<any> {
@@ -359,9 +382,9 @@ export class ApiService {
     return this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise();
   }
 
-  getCombosEdit(): Promise<any> {
-    return this.http.get(`${this.url}api/Combos/Edit`, this.httpOptions).toPromise();
-  }
+  // getCombosEdit(): Promise<any> {
+  //   return this.http.get(`${this.url}api/Combos/Edit`, this.httpOptions).toPromise();
+  // }
 
 
   postTelaConsultaRisco(filtro: any): Promise<any> {
@@ -395,9 +418,31 @@ export class ApiService {
     return this.http.get(`${this.url}api/RelControleDeHoras/${str}`, this.httpOptions).toPromise();
   }
 
-  getRelStatusDaFrota(data: Date, baseDeOperacao: string, clientes : string[]): Promise<any> {
-    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]}/${baseDeOperacao}/${clientes.join(',')}`;
+  getRelStatusDaFrota(data: Date, baseDeOperacao: string, cliente : string[]): Promise<any> {
+    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]}/${baseDeOperacao}/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
+  }
+
+  getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente : string[]): Promise<any> {
+    let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
+    return this.http.get(caminho, this.httpOptions).toPromise();
+  }
+
+  
+  deleteOperacaoDeSolo(itens : any): Promise<any> {
+
+    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+    
+    let caminho = `${this.url}api/RelOperacaoDeSolo`;
+    return this.http.delete(caminho, this.getOptions(itens)).toPromise();
+  }
+
+  postOperacaoDeSolo(itens : []): Promise<any> {
+
+    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+    
+    let caminho = `${this.url}api/RelOperacaoDeSolo`;
+    return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
   }
 
   getEscalaPTBR(dataref: Date, dataIni: Date, dataFim: Date, baseDeOperacao: string): Promise<any> {
@@ -433,6 +478,39 @@ export class ApiService {
 
   postGenerico(tipo: string, dados: any): Promise<any> {
     return this.http.post(`${this.url}api/salvar/${tipo}`, JSON.stringify(dados), this.httpOptions).toPromise();
+  }
+
+
+  getContrato(): Promise<any> {
+    return this.http.get(`${this.url}api/contrato`, this.httpOptions).toPromise();
+  }
+
+  getGenerico(tipo: string): Promise<any> {
+
+    if ( tipo == 'contrato')
+      return this.getContrato(); 
+
+    return this.http.get(`${this.url}api/genericoComExemplo/${tipo}`, this.httpOptions).toPromise();
+  }
+
+  deleteGenerico(tipo: string, itens : any): Promise<any> {
+
+    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+    
+    let caminho = `${this.url}api/Generico/${tipo}`;
+    return this.http.delete(caminho, this.getOptions(itens)).toPromise();
+  }
+
+  postIndisponibilidade(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/relIndisponibilidade`, filtro, this.httpOptions)
+      .toPromise();
+  }
+
+  
+
+  postAtraso(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelVooPorData`, filtro, this.httpOptions)
+      .toPromise();
   }
 
 

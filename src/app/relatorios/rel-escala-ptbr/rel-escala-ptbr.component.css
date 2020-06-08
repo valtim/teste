@@ -1,24 +1,16 @@
 @media print {
-
     td {
         font-size: 7px;
     }
-    
     th {
         font-size: 7px;
         text-align: center;
     }
-
     @page {
         size: landscape
     }
-
-
-    
 }
 
-
-    
 .c-20 {
     width: 20%;
 }
@@ -28,27 +20,26 @@
     text-align: center;
 }
 
-
-@media screen{
-
-
-.so_impressora{
-    display:none;
-}
-
+@media screen {
+    .texto-vermelho {
+        color: white;
+        font-style: bold;
+        background-color: red;
+        padding: 5px;
+    }
+    .so_impressora {
+        display: none;
+    }
     .input-group-text {
         width: 100px;
     }
-    
     td {
         font-size: x-small;
     }
-    
     th {
         font-size: x-small;
         text-align: center;
     }
-    
     .c-60 {
         width: 60%;
         text-align: center;

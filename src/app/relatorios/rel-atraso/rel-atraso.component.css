@@ -1,0 +1,10 @@
+.cor-verde{
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.texto-vermelho{
+    text-decoration: underline;
+    font-weight: bold;
+    color: red;
+}

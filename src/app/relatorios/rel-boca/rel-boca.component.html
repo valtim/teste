@@ -16,7 +16,7 @@
 
         <div class="col-sm">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
-                filterBy="label,value.name"></p-dropdown>
+                filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
 
             <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
         </div>

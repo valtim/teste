@@ -33,7 +33,7 @@ export class RelEscalaPtbrComponent implements OnInit {
       let nova = [{ value: undefined, label: '' }];
       this.filtroBase = x.BaseDeOperacao;
 
-      this.baseDeOperacaoSelecionada = x.BaseDeOperacao[0].value;
+      this.baseDeOperacaoSelecionada = x.BaseDeOperacao[0];
 
       this.rodarRelatorio();
     });
@@ -58,7 +58,7 @@ export class RelEscalaPtbrComponent implements OnInit {
 
   rodarRelatorio(){
     this.tudoPronto = false;
-    this.api.getEscalaPTBR(this.dataReferencia, this.dataInicio, this.dataFim, this.baseDeOperacaoSelecionada).then(x=>{
+    this.api.getEscalaPTBR(this.dataReferencia, this.dataInicio, this.dataFim, this.baseDeOperacaoSelecionada.Id).then(x=>{
         this.resultado = x.tabela;
         this.empresa = x.Empresa;
         this.retReferencia = x.dataReferencia;
