@@ -51,12 +51,7 @@ export class ContratoComponent implements OnInit {
 
     let nova = [{ value: { value : this.api.newBlankGuid(), label: ''}, label: '' }];
 
-    this.api.getCombos().then(x => {
 
-      let nova = [{ value: undefined, label: '' }];
-      
-
-    });
 
     this.api.getCombos().then(x => {
 
