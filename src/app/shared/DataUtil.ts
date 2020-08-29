@@ -6,14 +6,59 @@ export class DataUtil {
   }
 
   public static ParaData(ent: string ){    
+    if (ent == null ) return null;
+    if (ent == "" ) return null;
+
+
     if ( typeof ent != 'string' ) return this.Hoje();
 
 
-    let dia = +ent.split('/')[0];
-    let mes = +ent.split('/')[1];
-    let ano = +ent.split('/')[2];
+    let partes = ent.split(" ");
 
-    return new Date(ano, mes-1,dia +1);
+    let dia = +partes[0].split('/')[0];
+    let mes = +partes[0].split('/')[1];
+    let ano = +partes[0].split('/')[2];
+
+
+
+    if ( partes.length == 1)
+      return new Date(ano, mes-1,dia);
+
+      
+    let hora = +partes[1].split(':')[0];
+    let minuto = +partes[1].split(':')[1];
+
+    return new Date(ano, mes-1,dia, hora-3, minuto);
+    
+  }
+
+  public static ParaDataISO(ent: string ){    
+    if (ent == null ) return null;
+    if (ent == "" ) return null;
+    if (ent == "__/__/____ __:__") return null;
+    if (ent == "__/__/____") return null;
+
+
+    if ( typeof ent != 'string' ) return this.Hoje().toISOString();
+
+
+    let partes = ent.split(" ");
+
+    let dia = +partes[0].split('/')[0];
+    let mes = +partes[0].split('/')[1];
+    let ano = +partes[0].split('/')[2];
+
+
+
+    if ( partes.length == 1)
+      return new Date(ano, mes-1,dia);
+
+      
+    let hora = +partes[1].split(':')[0];
+    let minuto = +partes[1].split(':')[1];
+
+    return new Date(ano, mes-1,dia, hora-3, minuto).toISOString();
+    
   }
 
   public static diasPartindoDeHoje(ent:string) : number{

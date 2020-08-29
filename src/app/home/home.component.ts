@@ -21,10 +21,11 @@ export class HomeComponent implements OnInit {
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
-  async ngOnInit() {
-    this.menu = this.autorizacao.getMenus();
+   ngOnInit() {
+    
     this.api.getClienteLogado().then(result => {
       this.urlLogo = this.api.getLogo(result);
+      this.menu = this.autorizacao.getMenus();
       this.exibir = true;
     });
   }

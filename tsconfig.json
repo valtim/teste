@@ -20,7 +20,8 @@
     ],
     "paths": {
       "exceljs": [
-        "node_modules/exceljs/dist/exceljs.min"
+        "node_modules/exceljs/dist/exceljs.min.js"
+        //node_modules\exceljs\dist\exceljs.min.js
       ]
     }
   },

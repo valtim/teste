@@ -1,3 +1,4 @@
+import { Indisponibilidade } from './../../model/Indisponibilidade';
 import { ApiService } from './../../shared/api.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -18,7 +19,7 @@ export class RelIndisponibilidadeComponent implements OnInit {
   locale_pt;
   penaliza : true;
   carregandoRelatorio: boolean;
-  dados: any;
+  dados: Indisponibilidade[];
   cols: any;
 
 
@@ -60,7 +61,7 @@ export class RelIndisponibilidadeComponent implements OnInit {
         dataFim : this.dataFim,
     };
       this.api.postIndisponibilidade(filtro).then(x=>{
-        this.dados = x.dados,
+        this.dados = x.dados
         this.cols = x.cols,
         this.carregandoRelatorio = false;
         this.dataIniciof = x.filtros.dataInicio;

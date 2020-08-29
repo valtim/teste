@@ -1,7 +1,8 @@
-import { AutorizacaoService } from './../../shared/autorizacao.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { ApiService } from 'src/app/shared/api.service';
+import { AutorizacaoService } from './../../shared/autorizacao.service';
 
 @Component({
   selector: 'app-login',
@@ -26,31 +27,34 @@ export class LoginComponent implements OnInit {
         .then((x) => {
           this.loading = false;
           this.api.username = this.username;
-          
+
+          this.api.getCombosServidor().then(
+            () => {
+              this.auth.setAuthorization(x.Authorization);
+              this.auth.setRotas(x.Rotas);
+              this.auth.setMenus(x.Menu);
+              this.api.updateAuthorization();
+
+
+              if (localStorage.getItem('beforeLogin') != null) {
+                var url = localStorage.getItem('beforeLogin');
+                localStorage.removeItem('beforeLogin');
+                this.router.navigate([url]);
+                return;
+              }
+              this.router.navigateByUrl('/home')
+              //this.router.navigate(['home']);
+
+            }
+          );
 
 
 
-          this.auth.setAuthorization(x.Authorization);
-          this.auth.setRotas(x.Rotas);
-          this.auth.setMenus(x.Menu);
-          this.api.updateAuthorization();
-          
-
-          if ( localStorage.getItem('beforeLogin') != null ){
-            var url = localStorage.getItem('beforeLogin');
-            localStorage.removeItem('beforeLogin');
-              this.router.navigate([url]);
-              return;
-          }
-
-
-
-          this.router.navigate(['home']);
 
         })
         .catch((error) => {
 
-          switch ( error.status ) {
+          switch (error.status) {
             case 0:
               this.api.error = 'Não foi possível acessar o servidor';
               break;

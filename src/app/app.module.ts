@@ -9,29 +9,12 @@ import { registerLocaleData } from '@angular/common';
 
 import { SharedModule } from './shared/shared.module';
 import { SegurancaModule } from './seguranca/seguranca.module';
-//import { ControleDaFadigaModule } from './controle-da-fadiga/!controle-da-fadiga.module';
 
 import { AppRoutingModule } from './app-routing.module';
-import { ListboxModule } from 'primeng/listbox';
-import { CalendarModule } from 'primeng/calendar';
-import { ChartModule } from 'primeng/chart';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
-import { AccordionModule } from 'primeng/accordion';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
-import { MenubarModule } from 'primeng/menubar';
-import { ToastModule } from 'primeng/toast';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { GraficoComponent } from './grafico/grafico.component';
 import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-de-risco.component';
 import { VisualizarAnaliseDeRiscoComponent } from './relatorios/visualizar-analise-de-risco/visualizar-analise-de-risco.component';
 import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
@@ -42,6 +25,7 @@ import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
 import { RelConsCombComponent } from './relatorios/rel-cons-comb/rel-cons-comb.component';
 import { HorasVoadasQuinzenaComponent } from './relatorios/horas-voadas-quinzena/horas-voadas-quinzena.component';
 import { HorasVoadasTripulanteComponent } from './relatorios/horas-voadas-tripulante/horas-voadas-tripulante.component';
+import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
 import { RelBocaComponent } from './relatorios/rel-boca/rel-boca.component';
 import { RelRdvComponent } from './relatorios/rel-rdv/rel-rdv.component';
 import { RelListaRdvComponent } from './relatorios/rel-lista-rdv/rel-lista-rdv.component';
@@ -59,15 +43,17 @@ import { RelatorioFadigaComponent } from './controle-da-fadiga/relatorio-fadiga/
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
-import { CrudComponent } from './crud/crud.component';
+import { CrudComponent } from './cadastro/crud/crud.component';
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
 import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
 import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
 import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
-import { RelControleDiarioDeOperacoesComponent } from './relatorios/rel-controle-diario-de-operacoes/rel-controle-diario-de-operacoes.component';
 import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
 import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
 import { ContratoComponent } from './cadastro/contrato/contrato.component';
+import { EditarIndisponibilidadeComponent } from './cadastro/editar-indisponibilidade/editar-indisponibilidade.component';
+import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
+import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
 
 
 
@@ -81,7 +67,7 @@ registerLocaleData(localept, 'pt');
   declarations: [
     AppComponent,
     HomeComponent,
-    GraficoComponent,
+    //GraficoComponent,
     AnaliseDeRiscoComponent,
     VisualizarAnaliseDeRiscoComponent,
     DocumentoImpressoComponent,
@@ -93,6 +79,7 @@ registerLocaleData(localept, 'pt');
     RelConsCombComponent,
     HorasVoadasQuinzenaComponent,
     HorasVoadasTripulanteComponent,
+    RelCdoComponent,
     RelBocaComponent,
     RelRdvComponent,
     RelListaRdvComponent,
@@ -114,46 +101,22 @@ registerLocaleData(localept, 'pt');
     MotivoDoAtrasoComponent,
     RelIndisponibilidadeComponent,
     RelAtrasoComponent,
-    RelControleDiarioDeOperacoesComponent,
     CadastroDeEmailReporteComponent,
     IndisponibilidadeComponent,
     ContratoComponent,
+    EditarIndisponibilidadeComponent,
+    ValidarJornadaComponent,
+    ImprimirJornadaNovoComponent,
 
   ],
   imports: [
-    //ControleDaFadigaModule,
-    // TratamentoDaFadigaComponent,
-    // FadigaComponent,
-    // ComunicarTripulantesComponent,
-    // PesquisaBasicaComponent,
-    // RelatorioFadigaComponent,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    SharedModule,
-    SegurancaModule,
     ReactiveFormsModule,
-    FormsModule,
-    ChartModule,
-    ListboxModule,
-    CalendarModule,
-    ToolbarModule,
-    ButtonModule,
-    DialogModule,
-    TableModule,
-    AccordionModule,
-    MultiSelectModule,
-    DropdownModule,
-    InputMaskModule,
-    ToastModule,
-    MenubarModule,
-    CheckboxModule,
-    FormsModule,
-    InputSwitchModule,
-    ReactiveFormsModule,
-
     SharedModule,
+    SegurancaModule, 
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }

@@ -6,7 +6,7 @@
         <div class="col-sm-6 col-lg-2">
 
             <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'250px'}" optionLabel="Nome">
+                filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
                 <p-header>
                     Clientes
                 </p-header>
@@ -16,7 +16,7 @@
         <div class="col-sm-6 col-lg-2">
 
             <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'250px'}" optionLabel="Nome">
+                filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
                 <p-header>
                     Prefixos
                 </p-header>
@@ -79,17 +79,22 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th *ngFor="let col of cols">
-                    {{col.header}}
-                </th>
+                <th>Data</th>
+                <th>Prefixo</th>
+                <th>Início</th>
+                <th>Fim</th>
+                <th>Tempo</th>
+                <th>Motivo</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-car>
             <tr>
-                <td *ngFor="let col of cols" nowrap>
-                    <span class="d-lg-none d-print-none">{{col.header}}</span>
-                    {{car[col.field]}}
-                </td>
+                <td>{{car.Data | date: 'dd/MM/yyyy'}}</td>
+                <td>{{car.PrefixoCompleto}}</td>
+                <td>{{car.Inicio}}</td>
+                <td>{{car.Termino}}</td>
+                <td>{{car.Indisponibilidade}}</td>
+                <td>{{car.DescricaoDoMotivo}}</td>
             </tr>
         </ng-template>
     </p-table>

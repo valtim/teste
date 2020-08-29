@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
-import { v4 as uuidv4 } from './../../../../node_modules/uuid';
+//import { v4 as uuidv4 } from './../../../../node_modules/uuid';
 
 @Component({
   selector: 'app-rel-operacao-de-solo',

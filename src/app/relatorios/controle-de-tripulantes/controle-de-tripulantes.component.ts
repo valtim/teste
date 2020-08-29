@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 
-import { ExcelService } from "./../../services/excel-service";
+//import { ExcelService } from "./../../services/excel-service";
 
 @Component({
   selector: 'app-controle-de-tripulantes',
   templateUrl: './controle-de-tripulantes.component.html',
   styleUrls: ['./controle-de-tripulantes.component.css'],
-  providers: [ExcelService]
+  //providers: [ExcelService]
 })
 export class ControleDeTripulantesComponent implements OnInit {
   carregando: boolean;
@@ -18,7 +18,7 @@ export class ControleDeTripulantesComponent implements OnInit {
   filtroRetorno: any;
   cols: any;
 
-  constructor(private api : ApiService, private excelService: ExcelService) { }
+  constructor(private api : ApiService) { }//, private excelService: ExcelService) { }
 
   ngOnInit(): void {
 
@@ -38,7 +38,7 @@ export class ControleDeTripulantesComponent implements OnInit {
   }
 
   gerarExcel(){
-    this.excelService.exportAsExcelFile(this.cols.map(x=>x.header), this.dados, 'controle-de-tripulantes')
+    //this.excelService.exportAsExcelFile(this.cols.map(x=>x.header), this.dados, 'controle-de-tripulantes')
   }
 
   rodarRelatorio() {

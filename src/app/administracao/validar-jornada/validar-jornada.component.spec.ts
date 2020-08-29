@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CrudComponent } from './crud.component';
+import { ValidarJornadaComponent } from './validar-jornada.component';
 
-describe('CrudComponent', () => {
-  let component: CrudComponent;
-  let fixture: ComponentFixture<CrudComponent>;
+describe('ValidarJornadaComponent', () => {
+  let component: ValidarJornadaComponent;
+  let fixture: ComponentFixture<ValidarJornadaComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CrudComponent ]
+      declarations: [ ValidarJornadaComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CrudComponent);
+    fixture = TestBed.createComponent(ValidarJornadaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

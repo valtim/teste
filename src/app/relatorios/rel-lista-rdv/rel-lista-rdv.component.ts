@@ -22,6 +22,8 @@ export class RelListaRdvComponent implements OnInit {
   clientes;
   prefixosSelecionados;
   prefixos;
+  naturezasSelecionadas;
+  naturezas;
 
   filtroRetorno;
 
@@ -38,6 +40,7 @@ export class RelListaRdvComponent implements OnInit {
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixo;
       this.clientes = x.Cliente;
+      this.naturezas = x.Natureza;
     })
 
     const date = new Date();
@@ -58,6 +61,7 @@ export class RelListaRdvComponent implements OnInit {
         dataFim: this.dataFim,
         clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
         prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+        naturezas: this.naturezasSelecionadas ? this.naturezasSelecionadas : null,
         rdv : this.rdv,
       }).then(x => {
 

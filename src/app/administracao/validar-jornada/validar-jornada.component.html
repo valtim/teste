@@ -1,0 +1,70 @@
+<app-titulo titulo="VALIDAÇÃO DE JORNADA"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Data</span>
+                </div>
+                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+</div>
+
+<div *ngIf="dados" >
+
+    <p-table [value]="dados">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>TRIPULANTE</th>
+                <th>INÍCIO</th>
+                <th>FIM</th>
+                <th>OK. TRIP</th>
+                <th>OK. ANALISTA</th>
+                <th>OK. GERENTE</th>
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr (click)="rowData.Visible = true">
+                <td>
+                    {{rowData['Tripulante']}}
+                </td>
+                <td>
+                    {{rowData['DataDeInicio']}}
+                </td>
+                <td>
+                    {{rowData['DataDeFim']}}
+                </td>
+                <td>
+                    {{rowData['ConfirmacaoDoTripulante']}}
+                </td>
+                <td>
+                    {{rowData['ConfirmacaoDoAssistente']}}
+                </td>
+                <td>
+                    {{rowData['ConfirmacaoDoGerente']}}
+                </td>
+            </tr>
+        </ng-template>       
+
+    </p-table>
+    <p-dialog *ngFor="let item of dados"  header="ORDEM DE MISSÃO" [(visible)]="item.Visible" [style]="{width: '90vw'}" [baseZIndex]="10000">
+        <app-imprimir-jornada-novo [jornada]="item" [gerente]="gerente" [analista]="analista" *ngIf="item.Visible" ></app-imprimir-jornada-novo>
+    </p-dialog>
+
+
+</div>

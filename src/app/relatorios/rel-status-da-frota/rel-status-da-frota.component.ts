@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/shared/api.service';
 import { MenuItem, MessageService } from 'primeng/api';
 
 
-import { v4 as uuidv4 } from './../../../../node_modules/uuid';
+//import { v4 as uuidv4 } from './../../../../node_modules/uuid';
 
 @Component({
   selector: 'app-rel-status-da-frota',
@@ -90,7 +90,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
   novoItem() {
     let nova =
     {
-      "Id": uuidv4(),
+      //"Id": uuidv4(),
       "Prefixo": {
         "label": "",
         "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }

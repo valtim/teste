@@ -1,0 +1,290 @@
+<app-titulo titulo="DAILY FLIGHT TIME CONTROL" [carregando]="(!consulta_ok)"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Data</span>
+                </div>
+                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+</div>
+
+<app-cabecalho-impressao titulo="DAILY FLIGHT TIME CONTROL" form="FORM CDV 012" data="16/04/2012" revisao="00"
+    class="d-print"></app-cabecalho-impressao>
+
+ <div *ngIf="consulta_ok">
+
+    <p-table [value]="dados" sortField="Cliente.Nome" sortMode="single">
+
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th colspan="20">{{data | date:'dd/MM/yyyy'}}</th>
+            </tr>
+            <tr>
+                <th rowspan="2" colspan="2">Contrato</th>
+                <th rowspan="2">Modelo</th>
+                <th rowspan="2">Prefixo</th>
+                <th rowspan="2">Base</th>
+                <th rowspan="2">Situação</th>
+                <th colspan="2">Flight time - contract</th>
+                <th colspan="2">Flight time - spot</th>
+                <th colspan="2">Unavailable Time</th>
+
+                <th colspan="2">UNAVAILABILITY</th>
+                <th colspan="3">Flight Time - Company - Day</th>
+                <th colspan="3">Flight Time - Company - Month</th>
+            </tr>
+            <tr>
+                <th>DAY</th>
+                <th>UP TO DATE</th>
+                <th>DAY</th>
+                <th>UP TO DATE</th>
+                <th>DAY</th>
+                <th>UP TO DATE</th>
+                <th>MONTH TO DATE (%)</th>
+                <th>MONTH (%)</th>
+                <th>MNT</th>
+                <th>INST</th>
+                <th>FERRY</th>
+                <th>MNT</th>
+                <th>INST</th>
+                <th>FERRY</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+            <tr *ngIf="rowData.Cliente == 'TOTAL'">
+                <th colspan="6">
+                    {{rowData.Cliente}}
+                </th>
+                <th>
+                    {{rowData.VooContratoHoje}}
+                </th>
+
+                <th>
+
+                    {{rowData.VooContratoAteHoje}}
+                </th>
+
+                <th>
+                    {{rowData.VooSPOTHoje}}
+                </th>
+                <th>
+                    {{rowData.VooSPOTAteHoje}}
+                </th>
+                <th>
+                    {{rowData.IndispDoDia}}
+
+                </th>
+                <th>
+                    {{rowData.IndispAcumulada}}
+
+                </th>
+                <th>
+                    {{rowData.PercIndispAteData}}
+
+                </th>
+                <th>
+                    {{rowData.PercIndispMes}}
+
+                </th>
+                <th>
+                    {{rowData.VooMNTHoje}}
+
+                </th>
+                <th>
+                    {{rowData.VooInstHoje}}
+
+                </th>
+                <th>
+                    {{rowData.VooTransladoHoje}}
+
+                </th>
+                <th>
+                    {{rowData.VooMNTAteHoje}}
+
+                </th>
+                <th>
+                    {{rowData.VooInstAteHoje}}
+
+                </th>
+                <th>
+                    {{rowData.VooTransladoAteHoje}}
+
+                </th>
+            </tr>
+
+            <tr *ngIf="rowData.Posicao == 'SUBTOTAL'">
+                <th colspan="5">
+                    {{rowData.Posicao}}
+                </th>
+                <td>
+                    {{rowData.VooContratoHoje}}
+                </td>
+
+                <td>
+
+                    {{rowData.VooContratoAteHoje}}
+                </td>
+
+                <td>
+                    {{rowData.VooSPOTHoje}}
+                </td>
+                <td>
+                    {{rowData.VooSPOTAteHoje}}
+                </td>
+                <td>
+                    {{rowData.IndispDoDia}}
+
+                </td>
+                <td>
+                    {{rowData.IndispAcumulada}}
+
+                </td>
+                <td>
+                    {{rowData.PercIndispAteData}}
+
+                </td>
+                <td>
+                    {{rowData.PercIndispMes}}
+
+                </td>
+                <td>
+                    {{rowData.VooMNTHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooInstHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooTransladoHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooMNTAteHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooInstAteHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooTransladoAteHoje}}
+
+                </td>
+            </tr>
+
+            <tr *ngIf="rowData.Cliente != 'TOTAL' && rowData.Posicao != 'SUBTOTAL'">
+                <td *ngIf="rowGroupMetadata[rowData.Cliente].index === rowIndex"
+                    [attr.rowspan]="rowGroupMetadata[rowData.Cliente].size">
+                    {{rowData.Cliente}}
+                </td>
+
+                <td>
+                    {{rowData.Posicao}}
+                </td>
+
+                <td>
+                    {{rowData.Prefixo.PrefixoCompleto}}
+                </td>
+
+                <td>
+                    {{rowData.Prefixo.TipoDeAeronave.Nome}}
+                </td>
+
+                <td>
+                    {{rowData.Base}}
+                </td>
+
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input pInputText type="text" [(ngModel)]="rowData.Posicao"
+                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData.Posicao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+
+                <td>
+                    {{rowData.VooContratoHoje}}
+                </td>
+
+                <td>
+
+                    {{rowData.VooContratoAteHoje}}
+                </td>
+
+                <td>
+                    {{rowData.VooSPOTHoje}}
+                </td>
+                <td>
+                    {{rowData.VooSPOTAteHoje}}
+                </td>
+                <td>
+                    {{rowData.IndispDoDia}}
+
+                </td>
+                <td>
+                    {{rowData.IndispAcumulada}}
+
+                </td>
+                <td>
+                    {{rowData.PercIndispAteData}}
+
+                </td>
+                <td>
+                    {{rowData.PercIndispMes}}
+
+                </td>
+                <td>
+                    {{rowData.VooMNTHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooInstHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooTransladoHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooMNTAteHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooInstAteHoje}}
+
+                </td>
+                <td>
+                    {{rowData.VooTransladoAteHoje}}
+
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <b>AERÓLEO TAXI AÉREO S.A.</b>
+        </ng-template>
+    </p-table>
+
+</div> -

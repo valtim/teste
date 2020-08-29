@@ -1,0 +1,29 @@
+@media print {
+    @page {
+        size: landscape
+    }
+    p-table{
+        transform: scale(0.5);
+    }
+
+    th{
+        font-size: x-small;
+        text-align: center;
+    }
+    td{
+        font-size: x-small;
+        text-align: center;
+    }
+}
+
+@media screen {
+
+    th{
+        font-size: x-small;
+        text-align: center;
+    }
+    td{
+        font-size: x-small;
+        text-align: center;
+    }
+}

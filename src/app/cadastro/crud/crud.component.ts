@@ -1,8 +1,9 @@
-import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
 
-import { v4 as uuidv4 } from './../../../node_modules/uuid';
+import { ApiService } from 'src/app/shared/api.service';
+import { MenuItem, MessageService } from 'primeng/api';
+// import { v4 as uuidv4 } from 'uuid';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-crud',
@@ -37,22 +38,29 @@ export class CrudComponent implements OnInit {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos : string[] = [ "Boolean", "DateTime", "String" ];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo"];
   listas: any[];
 
-  constructor(
-    private api: ApiService
-  ) { }
+
+  //fg: FormGroup;
+  
+  grupos: FormGroup[];
+
+  constructor(private api: ApiService,
+    private fb: FormBuilder) { }
 
 
   ngOnInit(): void {
 
-    // this.api.getCombosEdit().then(x=>{
-    //   this.combos = x;
-    // });
 
     this.pesquisar();
 
+  }
+
+  createMemberGroup(member: any): FormGroup {
+    return this.fb.group({
+      ...member,
+    });
   }
 
   pesquisar() {
@@ -82,9 +90,9 @@ export class CrudComponent implements OnInit {
     //this.tipo = this.route.snapshot.params['tipo'];
 
 
-    
 
-    this.api.getCombos().then(x=> {
+
+    this.api.getCombos().then(x => {
       this.listas = x;
 
 
@@ -98,14 +106,14 @@ export class CrudComponent implements OnInit {
 
     })
 
-    
+
   }
 
   excluir() {
 
     this.api.deleteGenerico(this.tipo, this.valoresSelecionados).then(
       () => {
-          this.pesquisar();
+        this.pesquisar();
       }
     )
 
@@ -157,17 +165,27 @@ export class CrudComponent implements OnInit {
         continue;
       }
 
-      novoItem[this.todasAsColunas[i].field] = { Id :null, Nome : '' };
+      if (this.todasAsColunas[i].type == "TimeSpan") {
+        novoItem[this.todasAsColunas[i].field] = '';
+        continue;
+      }
+
+      if (this.todasAsColunas[i].type == "DateTime") {
+        novoItem[this.todasAsColunas[i].field] = '';
+        continue;
+      }
+
+      novoItem[this.todasAsColunas[i].field] = { Id: null, Nome: '' };
 
     }
 
 
 
 
-    if ( this.camposAutomaticos != null )
-    this.camposAutomaticos.forEach(x => {
-      Object.assign(novoItem, x);
-    });
+    if (this.camposAutomaticos != null)
+      this.camposAutomaticos.forEach(x => {
+        Object.assign(novoItem, x);
+      });
 
     novoItem['Modificado'] = true;
 

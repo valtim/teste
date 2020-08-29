@@ -1,15 +1,26 @@
-import { ContratoComponent } from './cadastro/contrato/contrato.component';
-import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
-import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RelControleDiarioDeOperacoesComponent } from './relatorios/rel-controle-diario-de-operacoes/rel-controle-diario-de-operacoes.component';
+
+
+
+
+
+
+
+
+import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
+import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
+import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
+import { ContratoComponent } from './cadastro/contrato/contrato.component';
+import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
+import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
+
 import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
 import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
 import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
-import { CrudComponent } from './crud/crud.component';
+import { CrudComponent } from './cadastro/crud/crud.component';
 import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
@@ -165,7 +176,7 @@ const routes: Routes = [
   },
   {
     path: 'rel-cdo',
-    component: RelControleDiarioDeOperacoesComponent,
+    component: RelCdoComponent,
   },
   {
     path: 'cad-email-reporte',
@@ -179,18 +190,14 @@ const routes: Routes = [
     path: 'contrato',
     component: ContratoComponent,
   },
-
-  //rel-horas-tripulante
-  // {
-  //   path: 'tripulante',
-  //   component: TripulanteComponent,
-  //   canActivate: [AuthGuardService]
-  // },
-  // {
-  //   path: 'tripulante',
-  //   component: TripulanteComponent,
-  //   canActivate: [AuthGuardService]
-  // },
+  {
+    path: 'validar-jornada',
+    component: ValidarJornadaComponent,
+  },
+  {
+    path: 'imprimir-jornada',
+    component: ImprimirJornadaNovoComponent,
+  },
 ];
 
 @NgModule({

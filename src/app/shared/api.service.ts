@@ -1,15 +1,17 @@
+import { Indisponibilidade } from './../model/Indisponibilidade';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AutorizacaoService } from './autorizacao.service';
 
 import { DataUtil } from './../shared/DataUtil';
 
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class ApiService {
-  
+
 
 
   private httpOptions: any;
@@ -20,8 +22,8 @@ export class ApiService {
   username: string;
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
-    this.url = window.location.host === 'localhost:4200' ? 'https://emar.fastapi.com.br/' : '/';
-    this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44314/' : '/';
+    //this.url = window.location.host === 'localhost:4200' ? 'https://aeroleo.fastapi.com.br/' : '/';
+    this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
 
     if (localStorage.getItem('Authorization')) {
       this.httpOptions = {
@@ -41,8 +43,8 @@ export class ApiService {
     };
   }
 
-  getOptions(lista : []){
-    if ( lista == undefined ){
+  getOptions(lista: []) {
+    if (lista == undefined) {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -112,8 +114,8 @@ export class ApiService {
     });
   }
 
-  newBlankGuid():string{
-    return '00000000-0000-0000-0000-000000000000'           
+  newBlankGuid(): string {
+    return '00000000-0000-0000-0000-000000000000'
   }
 
   getDiarioById(id: string): Promise<any> {
@@ -378,8 +380,38 @@ export class ApiService {
     return this.http.get(`${this.url}api/TelaConsultaAvRisco`, this.httpOptions).toPromise();
   }
 
-   getCombos(): Promise<any> {
-    return this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise();
+
+  getCombosServidor(): Promise<any> {
+
+    const promise = new Promise((resolve, reject) => {
+
+      this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise().then(x => {
+        localStorage.setItem('Combos', JSON.stringify(x));
+        resolve(x);
+      });
+
+
+
+    });
+    return promise;
+  }
+
+  getCombos(): Promise<any> {
+
+    const promise = new Promise((resolve, reject) => {
+      if (JSON.parse(localStorage.getItem('Combos')) == null) {
+        this.getCombosServidor().then(() => {
+          resolve(JSON.parse(localStorage.getItem('Combos')));
+        })
+      }
+      else {
+        resolve(JSON.parse(localStorage.getItem('Combos')));
+      }
+
+    });
+
+    return promise;
+
   }
 
   // getCombosEdit(): Promise<any> {
@@ -411,36 +443,36 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelBoca`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  getHorasVoadasPorDia(data: Date): Promise<any>  {
+  getHorasVoadasPorDia(data: Date): Promise<any> {
 
     let str = DataUtil.from_date_to_traco(data);
 
     return this.http.get(`${this.url}api/RelControleDeHoras/${str}`, this.httpOptions).toPromise();
   }
 
-  getRelStatusDaFrota(data: Date, baseDeOperacao: string, cliente : string[]): Promise<any> {
+  getRelStatusDaFrota(data: Date, baseDeOperacao: string, cliente: string[]): Promise<any> {
     let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]}/${baseDeOperacao}/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
-  getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente : string[]): Promise<any> {
+  getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente: string[]): Promise<any> {
     let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
-  
-  deleteOperacaoDeSolo(itens : any): Promise<any> {
+
+  deleteOperacaoDeSolo(itens: any): Promise<any> {
 
     let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-    
+
     let caminho = `${this.url}api/RelOperacaoDeSolo`;
     return this.http.delete(caminho, this.getOptions(itens)).toPromise();
   }
 
-  postOperacaoDeSolo(itens : []): Promise<any> {
+  postOperacaoDeSolo(itens: []): Promise<any> {
 
     let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-    
+
     let caminho = `${this.url}api/RelOperacaoDeSolo`;
     return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
   }
@@ -485,20 +517,26 @@ export class ApiService {
     return this.http.get(`${this.url}api/contrato`, this.httpOptions).toPromise();
   }
 
+  getTodos(tipo: string): Promise<any> {
+
+    return this.http.get(`${this.url}api/${tipo}`, this.httpOptions).toPromise();
+  }
+
+
   getGenerico(tipo: string): Promise<any> {
 
-    if ( tipo == 'contrato')
-      return this.getContrato(); 
+    if (tipo == 'contrato')
+      return this.getContrato();
 
     return this.http.get(`${this.url}api/genericoComExemplo/${tipo}`, this.httpOptions).toPromise();
   }
 
-  deleteGenerico(tipo: string, itens : any): Promise<any> {
+  deleteGenerico(tipo: string, itens: any[]): Promise<any> {
 
-    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-    
-    let caminho = `${this.url}api/Generico/${tipo}`;
-    return this.http.delete(caminho, this.getOptions(itens)).toPromise();
+    //let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+
+    let caminho = `${this.url}api/Generico/delete/${tipo}`;
+    return this.http.post(caminho, itens, this.httpOptions).toPromise();
   }
 
   postIndisponibilidade(filtro: any): Promise<any> {
@@ -506,13 +544,26 @@ export class ApiService {
       .toPromise();
   }
 
-  
+
+  postCrudIndisponibilidadeFiltro(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/CrudIndiponibilidade/filtro`, filtro, this.httpOptions)
+      .toPromise();
+  }
+
+  postCrudIndisponibilidade(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/CrudIndiponibilidade`, filtro, this.httpOptions)
+      .toPromise();
+  }
 
   postAtraso(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelVooPorData`, filtro, this.httpOptions)
       .toPromise();
   }
 
+
+  getCDO(data: Date): Promise<any> {
+    return this.http.get(`${this.url}api/RelControleDiarioDeOperacoes/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
 
   getLocale(pais: string): any {
     return {
@@ -528,4 +579,25 @@ export class ApiService {
       weekHeader: 'Se'
     };
   }
+
+
+  getJornadaImpressaoPeloId(id: string): Promise<any> {
+    return this.http.get(`${this.url}api/impressaodejornada/${id}`, this.httpOptions)
+      .toPromise();
+  }
+
+  getJornadaImpressaoPeloMesAno(data: Date): Promise<any> {
+    return this.http.get(`${this.url}api/jornadamensal/data/${data.toISOString().split('T')[0]}`, this.httpOptions)
+      .toPromise();
+  }
+
+  getConfirmacaoDeJornada(gerente:boolean, id:string){
+    if ( gerente )
+      return this.http.get(`${this.url}api/confirmacaodejornada/gerente/${id}`, this.httpOptions).toPromise();
+      
+      return this.http.get(`${this.url}api/confirmacaodejornada/analista/${id}`, this.httpOptions).toPromise();
+
+    //confirmacao-de-jornada/gerente
+  }
+
 }

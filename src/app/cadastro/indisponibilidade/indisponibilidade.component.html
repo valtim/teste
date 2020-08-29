@@ -1,1 +1,98 @@
-<p>indisponibilidade works!</p>
+<app-titulo titulo="Indisponibilidade" [carregando]="(carregandoMenu || carregandoRelatorio)"></app-titulo>
+
+<p-toast></p-toast>
+
+<div class="container d-print-none" *ngIf="!carregandoMenu">
+
+    <div class="row ml-1">
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+                <p-header>
+                    Clientes
+                </p-header>
+            </p-listbox>
+
+        </div>
+        <div class="col-sm-6 col-lg-2">
+
+            <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+                <p-header>
+                    Prefixos
+                </p-header>
+            </p-listbox>
+
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Final</span>
+                    </div>
+                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                        showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+        <div class="col-sm-6 col-lg-2">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+
+
+
+    </div>
+
+
+</div>
+
+
+<div *ngIf="!carregandoRelatorio">
+
+
+    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+    
+    <p-table [columns]="cols" [value]="dados" dataKey="Id" selectionMode="single"  dataKey="Id" (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>Contrato</th>
+                <th>Início</th>
+                <th>Fim</th>
+                <th>Ocorrência</th>
+                <th style="width:40%">Motivo</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr [pSelectableRow]="rowData">
+                <td>{{rowData.Contrato.Nome}}</td>
+                <td>{{rowData.Inicio}}</td>
+                <td>{{rowData.Fim}}</td>
+                <td>{{rowData.EhOcorrencia ? "SIM" : "NÃO"}}</td>
+                <td>{{rowData.DescricaoDoMotivo}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+
+    <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="false" [modal]="true">
+        <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos" [base]="basesDeOperacao" (retorno)="onLinhaAlterada($event)">
+
+        </app-editar-indisponibilidade >
+    </p-dialog>
+
+</div>

@@ -17,6 +17,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
   dataInicio: Date;
   dataFim: Date;
+  dadosInstrucao: any;
 
   constructor(private api : ApiService) { }
 
@@ -46,6 +47,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
         //colunas = colunas, filtro = filtro, listas = listas
         this.cols = x.colunas;
         this.dados = x.valores;
+        this.dadosInstrucao = x.valoresInstrucao;
         this.filtroRetorno = x.filtro;
         this.tudoPronto = true;
       })

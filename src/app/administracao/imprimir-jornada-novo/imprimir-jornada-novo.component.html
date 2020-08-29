@@ -1,0 +1,262 @@
+<div class="spinner-border" *ngIf="carregando">
+    <span class="sr-only">Loading...</span>
+</div>
+
+
+<div *ngIf="!carregando">
+
+
+    <div *ngIf="jornada">
+
+        <button *ngIf="gerente" class="btn btn-success ml-1"
+            (click)="confirmarJornada(true, jornada.Id)">Confirmar</button>
+
+        <button *ngIf="analista" class="btn btn-success ml-1"
+            (click)="confirmarJornada(false, jornada.Id)">Confirmar</button>
+    </div>
+
+    <nav *ngIf="!id" class="navbar fixed-top navbar-light bg-light justify-content-center">
+        <button class="btn btn-success ml-1"
+            [routerLink]="['/confirmacao-de-jornada', anac, mes, ano]">Confirmar</button>
+    </nav>
+
+    <div id="normal">
+
+        <table id="cabecalho">
+            <tr>
+                <td class="c-20">
+                    <img src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2"
+                        width="170px">
+                    <p><b>AOC #: 2000-08-0CBC-03-02</b></p>
+                </td>
+                <td>
+                    <div class="col-12 text-center m-2 s-2">
+                        <h2>ORDEM DE MISSÃO</h2>
+                        <div class="row">
+                            <div class="col text-center">
+                                Base Cabo Frio
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col text-center">
+                                Nome: {{retorno.Tripulante.NomeCompleto}} <br />
+                            </div>
+                            <div class="col text-center">
+                                Função: {{retorno.Tripulante.Cargo.Nome}}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col text-center text-nowrap">
+                                De: {{retorno.Jornada.DataDeInicio | date: 'dd/MM/yyyy'}} ao dia:
+                                {{retorno.Jornada.DataDeFim | date: 'dd/MM/yyyy'}}
+                            </div>
+                            <!-- <div class="col text-center text-nowrap">
+                    Deslocou: {{Jornada.InicioDeDeslocamento | date: 'dd/MM/yyyy'}} Retornou:
+                    {{Jornada.FimDeDeslocamento | date: 'dd/MM/yyyy'}}
+                  </div> -->
+                        </div>
+
+                    </div>
+                </td>
+                <td class="c-20">
+                    <p><b>FORM-OPE-004</b></p>
+                    <p><b>Revisão:</b> 03</p>
+                    <p><b>Data:</b> 12/06/2020</p>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+        <table class="table table-sm">
+            <tr>
+                <th rowspan="2">Data</th>
+                <th rowspan="2">Cod</th>
+                <th rowspan="2">Dom/Fer</th>
+                <th rowspan="2">Apresentação</th>
+                <th colspan="2">Refeição 1</th>
+                <th colspan="2">Refeição 2</th>
+                <th rowspan="2">Fim da Jornada</th>
+                <th colspan="5">Horas de Voo</th>
+            </tr>
+
+            <tr>
+                <th>Refeição</th>
+                <th>Fim da Refeição</th>
+                <th>Refeição</th>
+                <th>Fim da Refeição</th>
+                <th>VFR</th>
+                <th>IFR</th>
+                <th>Noturno</th>
+                <th>Total do Dia</th>
+                <th>Total Últ. 30 dias</th>
+            </tr>
+
+            <ng-container *ngFor="let item of retorno.Lista">
+                <tr *ngIf="item.Data == 'Total'">
+                    <td colspan="9">{{item.Data}}</td>
+                    <td>{{item.HorasDeVooVFR}}</td>
+                    <td>{{item.HorasDeVooIFR}}</td>
+                    <td>{{item.HorasDeVooNot}}</td>
+                    <td>{{item.HorasDeVooDia}}</td>
+                    <td>-</td>
+                </tr>
+                <tr *ngIf="item.Data != 'Total'">
+                    <td>{{item.Data}}</td>
+                    <td>{{item.Escala}}</td>
+                    <td *ngIf="item.DomingoOuFeriado">SIM</td>
+                    <td *ngIf="!item.DomingoOuFeriado">NÃO</td>
+                    <td>{{item.Apresentacao}}</td>
+                    <td>{{item.Almoco}}</td>
+                    <td>{{item.FimAlmoco}}</td>
+                    <td>{{item.Almoco2}}</td>
+                    <td>{{item.FimAlmoco2}}</td>
+                    <td>{{item.FimDaJornada}}</td>
+                    <td>{{item.HorasDeVooVFR}}</td>
+                    <td>{{item.HorasDeVooIFR}}</td>
+                    <td>{{item.HorasDeVooNot}}</td>
+                    <td>{{item.HorasDeVooDia}}</td>
+                    <td>{{item.Horas30Dias}}</td>
+                </tr>
+            </ng-container>
+
+            <tr>
+                <td colspan="14">
+                    <h5>Foi-me concedido diariamente, (1) uma hora de refeição a cada 6 (seis) horas de jornada</h5>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td colspan="7">Tripulante: {{retorno.Tripulante.NomeCompleto}} - ANAC {{retorno.Tripulante.CodigoANAC}}
+                    <span *ngIf="confirmacaoDoTripulante"><br />Assinado eletronicamente pelo tripulante em
+                        {{confirmacaoDoTripulante | date:'dd/MM/yyyy HH:mm:ss'}}</span></td>
+                <td colspan="7">Gerente de Operações: LEANDRO Barboza Antunes - ANAC 124089
+                    <span *ngIf="confirmacaoDoGerente"><br />Assinado eletronicamente pelo Gerente de Operações em
+                        {{confirmacaoDoGerente| date:'dd/MM/yyyy HH:mm:ss'}}</span></td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div id="mobile">
+        <div class="container">
+
+            <table class="table table-sm">
+                <tbody *ngFor="let item of retorno.Lista; let i = index">
+
+                    <ng-container *ngIf="item.Data == 'Total'">
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th colspan="2">{{item.Data}}</th>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo VFR</th>
+                            <td>{{item.HorasDeVooVFR}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo IFR</th>
+                            <td>{{item.HorasDeVooIFR}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo Noturno</th>
+                            <td>{{item.HorasDeVooNot}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo no Dia</th>
+                            <td>{{item.HorasDeVooDia}}</td>
+                        </tr>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="item.Data != 'Total'">
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th width="50%">Data</th>
+                            <td width="50%">{{item.Data}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Cod</th>
+                            <td>{{item.Escala}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Dom/Fer</th>
+                            <td *ngIf="item.DomingoOuFeriado">SIM</td>
+                            <td *ngIf="!item.DomingoOuFeriado">NÃO</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Apresentação</th>
+                            <td>{{item.Apresentacao}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Refeição</th>
+                            <td>{{item.Almoco}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Fim da Refeição</th>
+                            <td>{{item.FimAlmoco}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Refeição</th>
+                            <td>{{item.Almoco2}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Fim da Refeição</th>
+                            <td>{{item.FimAlmoco2}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Fim da Jornada</th>
+                            <td>{{item.FimDaJornada}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo VFR</th>
+                            <td>{{item.HorasDeVooVFR}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo IFR</th>
+                            <td>{{item.HorasDeVooIFR}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo Noturno</th>
+                            <td>{{item.HorasDeVooNot}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Voo Dia</th>
+                            <td>{{item.HorasDeVooDia}}</td>
+                        </tr>
+                        <tr [ngClass]="(i%2 === 0) ? 'bg-secondary text-white' : 'bg-white'">
+                            <th>Últ. 30 dias</th>
+                            <td>{{item.Horas30Dias}}</td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+
+
+
+
+                <tr>
+                    <td colspan="14">
+                        <h6>Foi-me concedido diariamente, (1) uma hora de refeição a cada 6 (seis) horas de jornada</h6>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="2">Tripulante: {{retorno.Tripulante.NomeCompleto}} - ANAC
+                        {{retorno.Tripulante.CodigoANAC}}
+                        <span *ngIf="confirmacaoDoTripulante"><br />Assinado eletronicamente pelo tripulante em
+                            {{confirmacaoDoTripulante}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Gerente de Operações: LEANDRO Barboza Antunes - ANAC 124089
+                        <span *ngIf="confirmacaoDoGerente"><br />Assinado eletronicamente pelo Gerente de Operações em
+                            {{confirmacaoDoGerente}}</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
