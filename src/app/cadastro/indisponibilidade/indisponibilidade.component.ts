@@ -1,7 +1,7 @@
 import { ApiService } from './../../shared/api.service';
 import { Component, OnInit } from '@angular/core';
 
-import { TreeNode, MessageService } from 'primeng/api';
+import { TreeNode, MessageService } from 'primeng-lts/api';
 
 @Component({
   selector: 'app-indisponibilidade',

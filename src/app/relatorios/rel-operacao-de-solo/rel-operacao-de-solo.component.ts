@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng-lts/api';
 
 //import { v4 as uuidv4 } from './../../../../node_modules/uuid';
 

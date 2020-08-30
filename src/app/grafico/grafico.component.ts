@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import {ChartModule} from 'primeng/chart';
+//import {ChartModule} from 'primeng-lts/chart';
 
 @Component({
   selector: 'app-grafico',

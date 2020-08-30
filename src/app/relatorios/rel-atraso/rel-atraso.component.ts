@@ -1,6 +1,6 @@
 import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng-lts/api';
 
 @Component({
   selector: 'app-rel-atraso',

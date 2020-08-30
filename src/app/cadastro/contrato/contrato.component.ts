@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
-import { MessageService, MenuItem } from 'primeng/api';
+import { MessageService, MenuItem } from 'primeng-lts/api';
 
 @Component({
   selector: 'app-contrato',

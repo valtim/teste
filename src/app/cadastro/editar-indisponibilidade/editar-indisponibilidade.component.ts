@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
-import { MessageService } from 'primeng/api';
+import { MessageService } from 'primeng-lts/api';
 
 import { DataUtil } from './../../shared/DataUtil';
 import { stringify } from 'querystring';
