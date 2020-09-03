@@ -3,16 +3,40 @@
         size: landscape
     }
     p-table{
-        transform: scale(0.5);
+        transform: scale(0.1) !important;
     }
 
     th{
-        font-size: x-small;
+        font-size: xx-small;
         text-align: center;
     }
     td{
-        font-size: x-small;
+        font-size: xx-small;
         text-align: center;
+    }
+
+    .contrato{
+        background-color: #99CCFF !important;
+        color: black;
+    }
+    .spot{
+        background-color: #CCFFFF !important;
+        color: black;
+    }
+    .indisponivel{
+        background-color: #CCFFCC !important;
+        color: black;
+    }
+    .indisponivel-month-to-date{
+        background-color: #FFFF00 !important;
+        color: #1F497D !important;
+    }
+    .indisponivel-month{
+        background-color: #FFFF00 !important;
+        color: #FF2300 !important;
+    }
+    .company{
+        background-color: #FFFF99 !important;
     }
 }
 
@@ -25,5 +49,29 @@
     td{
         font-size: x-small;
         text-align: center;
+    }
+
+    .contrato{
+        background-color: #99CCFF !important;
+        color: black;
+    }
+    .spot{
+        background-color: #CCFFFF !important;
+        color: black;
+    }
+    .indisponivel{
+        background-color: #CCFFCC !important;
+        color: black;
+    }
+    .indisponivel-month-to-date{
+        background-color: #FFFF00 !important;
+        color: #1F497D !important;
+    }
+    .indisponivel-month{
+        background-color: #FFFF00 !important;
+        color: #FF2300 !important;
+    }
+    .company{
+        background-color: #FFFF99 !important;
     }
 }

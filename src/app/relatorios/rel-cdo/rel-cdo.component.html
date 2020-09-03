@@ -26,13 +26,13 @@
 <app-cabecalho-impressao titulo="DAILY FLIGHT TIME CONTROL" form="FORM CDV 012" data="16/04/2012" revisao="00"
     class="d-print"></app-cabecalho-impressao>
 
- <div *ngIf="consulta_ok">
+<div *ngIf="consulta_ok">
 
-    <p-table [value]="dados" sortField="Cliente.Nome" sortMode="single">
+    <p-table [value]="dados">
 
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th colspan="20">{{data | date:'dd/MM/yyyy'}}</th>
+                <th colspan="22">{{data | date:'dd/MM/yyyy'}}</th>
             </tr>
             <tr>
                 <th rowspan="2" colspan="2">Contrato</th>
@@ -40,29 +40,31 @@
                 <th rowspan="2">Prefixo</th>
                 <th rowspan="2">Base</th>
                 <th rowspan="2">Situação</th>
-                <th colspan="2">Flight time - contract</th>
-                <th colspan="2">Flight time - spot</th>
-                <th colspan="2">Unavailable Time</th>
+                <th colspan="2" class="contrato">Flight time - contract</th>
+                <th colspan="2" class="spot">Flight time - spot</th>
+                <th colspan="2" class="indisponivel">Unavailable Time</th>
 
-                <th colspan="2">UNAVAILABILITY</th>
-                <th colspan="3">Flight Time - Company - Day</th>
-                <th colspan="3">Flight Time - Company - Month</th>
+                <th colspan="2" class="indisponivel-month-to-date">UNAVAILABILITY</th>
+                <th colspan="4" class="company">Flight Time - Company - Day</th>
+                <th colspan="4" class="company">Flight Time - Company - Month</th>
             </tr>
             <tr>
-                <th>DAY</th>
-                <th>UP TO DATE</th>
-                <th>DAY</th>
-                <th>UP TO DATE</th>
-                <th>DAY</th>
-                <th>UP TO DATE</th>
-                <th>MONTH TO DATE (%)</th>
-                <th>MONTH (%)</th>
-                <th>MNT</th>
-                <th>INST</th>
-                <th>FERRY</th>
-                <th>MNT</th>
-                <th>INST</th>
-                <th>FERRY</th>
+                <th class="contrato">DAY</th>
+                <th class="contrato">UP TO DATE</th>
+                <th class="spot">DAY</th>
+                <th class="spot">UP TO DATE</th>
+                <th class="indisponivel">DAY</th>
+                <th class="indisponivel">UP TO DATE</th>
+                <th class="indisponivel-month-to-date">MONTH TO DATE (%)</th>
+                <th class="indisponivel-month">MONTH (%)</th>
+                <th class="company">MNT</th>
+                <th class="company">INST</th>
+                <th class="company">FERRY</th>
+                <th class="company">NON REVENUE</th>
+                <th class="company">MNT</th>
+                <th class="company">INST</th>
+                <th class="company">FERRY</th>
+                <th class="company">NON REVENUE</th>
             </tr>
         </ng-template>
 
@@ -86,20 +88,20 @@
                 <th>
                     {{rowData.VooSPOTAteHoje}}
                 </th>
-                <th>
+                <th class="indisponivel">
                     {{rowData.IndispDoDia}}
 
                 </th>
-                <th>
+                <th class="indisponivel">
                     {{rowData.IndispAcumulada}}
 
                 </th>
-                <th>
-                    {{rowData.PercIndispAteData}}
+                <th class="indisponivel-month-to-date">
+                    {{rowData.PercIndispAteData}}%
 
                 </th>
-                <th>
-                    {{rowData.PercIndispMes}}
+                <th class="indisponivel-month">
+                    {{rowData.PercIndispMes}}%
 
                 </th>
                 <th>
@@ -115,6 +117,10 @@
 
                 </th>
                 <th>
+                    {{rowData.VooPrivadoHoje}}
+
+                </th>
+                <th>
                     {{rowData.VooMNTAteHoje}}
 
                 </th>
@@ -124,8 +130,11 @@
                 </th>
                 <th>
                     {{rowData.VooTransladoAteHoje}}
-
                 </th>
+                <th>
+                    {{rowData.VooPrivadoAteHoje}}
+                </th>
+
             </tr>
 
             <tr *ngIf="rowData.Posicao == 'SUBTOTAL'">
@@ -147,20 +156,20 @@
                 <td>
                     {{rowData.VooSPOTAteHoje}}
                 </td>
-                <td>
+                <td class="indisponivel">
                     {{rowData.IndispDoDia}}
 
                 </td>
-                <td>
+                <td class="indisponivel">
                     {{rowData.IndispAcumulada}}
 
                 </td>
-                <td>
-                    {{rowData.PercIndispAteData}}
+                <td class="indisponivel-month-to-date">
+                    {{rowData.PercIndispAteData}}%
 
                 </td>
-                <td>
-                    {{rowData.PercIndispMes}}
+                <td class="indisponivel-month">
+                    {{rowData.PercIndispMes}}%
 
                 </td>
                 <td>
@@ -176,6 +185,10 @@
 
                 </td>
                 <td>
+                    {{rowData.VooPrivadoHoje}}
+
+                </td>
+                <td>
                     {{rowData.VooMNTAteHoje}}
 
                 </td>
@@ -186,6 +199,9 @@
                 <td>
                     {{rowData.VooTransladoAteHoje}}
 
+                </td>
+                <td>
+                    {{rowData.VooPrivadoAteHoje}}
                 </td>
             </tr>
 
@@ -211,17 +227,22 @@
                     {{rowData.Base}}
                 </td>
 
-                <td pEditableColumn>
+
+
+                <td>
+                    {{rowData.Situacao}}
+                </td>
+
+                <!-- <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <input pInputText type="text" [(ngModel)]="rowData.Posicao"
                                 (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{rowData.Posicao}}
                         </ng-template>
                     </p-cellEditor>
-                </td>
+                </td> -->
 
 
                 <td>
@@ -239,20 +260,20 @@
                 <td>
                     {{rowData.VooSPOTAteHoje}}
                 </td>
-                <td>
+                <td class="indisponivel">
                     {{rowData.IndispDoDia}}
 
                 </td>
-                <td>
+                <td class="indisponivel">
                     {{rowData.IndispAcumulada}}
 
                 </td>
-                <td>
-                    {{rowData.PercIndispAteData}}
+                <td class="indisponivel-month-to-date">
+                    {{rowData.PercIndispAteData}}%
 
                 </td>
-                <td>
-                    {{rowData.PercIndispMes}}
+                <td class="indisponivel-month">
+                    {{rowData.PercIndispMes}}%
 
                 </td>
                 <td>
@@ -268,6 +289,10 @@
 
                 </td>
                 <td>
+                    {{rowData.VooPrivadoHoje}}
+
+                </td>
+                <td>
                     {{rowData.VooMNTAteHoje}}
 
                 </td>
@@ -278,6 +303,9 @@
                 <td>
                     {{rowData.VooTransladoAteHoje}}
 
+                </td>
+                <td>
+                    {{rowData.VooPrivadoAteHoje}}
                 </td>
 
             </tr>
