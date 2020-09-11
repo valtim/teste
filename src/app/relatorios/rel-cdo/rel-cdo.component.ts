@@ -15,11 +15,12 @@ export class RelCdoComponent implements OnInit {
   locale_pt;
 
 
-  dados;
   retorno_data;
 
 
   rowGroupMetadata: any;
+  dadosCliente: any;
+  dadosInterno: any;
 
 
   constructor(private api: ApiService) {
@@ -34,7 +35,8 @@ export class RelCdoComponent implements OnInit {
   rodarRelatorio() {
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {
-      this.dados = x.lista;
+      this.dadosCliente = x.lista;
+      this.dadosInterno = x.listaInterna;
       this.retorno_data = x.data;
       this.consulta_ok = true;
       this.updateRowGroupMetaData("Cliente");
@@ -44,9 +46,9 @@ export class RelCdoComponent implements OnInit {
   updateRowGroupMetaData(coluna: string) {
     this.rowGroupMetadata = {};
     let previousRowData: any;
-    if (this.dados) {
-      for (let i = 0; i < this.dados.length; i++) {
-        let rowData = this.dados[i];
+    if (this.dadosCliente) {
+      for (let i = 0; i < this.dadosCliente.length; i++) {
+        let rowData = this.dadosCliente[i];
         let brand = rowData[coluna];
         if (i == 0) {
           this.rowGroupMetadata[brand] = { index: 0, size: 1 };

@@ -2,76 +2,83 @@
     @page {
         size: landscape
     }
-    p-table{
+    p-table {
         transform: scale(0.1) !important;
     }
-
-    th{
+    th {
         font-size: xx-small;
         text-align: center;
     }
-    td{
+    td {
         font-size: xx-small;
         text-align: center;
     }
-
-    .contrato{
+    .contrato {
         background-color: #99CCFF !important;
         color: black;
     }
-    .spot{
+    .spot {
         background-color: #CCFFFF !important;
         color: black;
     }
-    .indisponivel{
+    .indisponivel {
         background-color: #CCFFCC !important;
         color: black;
     }
-    .indisponivel-month-to-date{
+    .indisponivel-month-to-date {
         background-color: #FFFF00 !important;
         color: #1F497D !important;
     }
-    .indisponivel-month{
+    .indisponivel-month {
         background-color: #FFFF00 !important;
         color: #FF2300 !important;
     }
-    .company{
+    .company {
         background-color: #FFFF99 !important;
     }
 }
 
-@media screen {
 
-    th{
+    table, th, td {
+        border: 1px solid black;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100vw;
+    }
+    th {
         font-size: x-small;
         text-align: center;
     }
-    td{
+    td {
         font-size: x-small;
         text-align: center;
     }
-
-    .contrato{
+    .contrato {
         background-color: #99CCFF !important;
         color: black;
     }
-    .spot{
+    .spot {
         background-color: #CCFFFF !important;
         color: black;
     }
-    .indisponivel{
+    .indisponivel {
         background-color: #CCFFCC !important;
         color: black;
     }
-    .indisponivel-month-to-date{
+    .indisponivel-month-to-date {
         background-color: #FFFF00 !important;
         color: #1F497D !important;
     }
-    .indisponivel-month{
+    .indisponivel-month {
         background-color: #FFFF00 !important;
         color: #FF2300 !important;
     }
-    .company{
+    .company {
         background-color: #FFFF99 !important;
     }
-}
+
+    .total{
+        font-weight: bolder;
+        background-color: lightgray;
+    }
