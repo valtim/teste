@@ -49,7 +49,7 @@
             <th class="titulo" rowspan="2" colspan="2"> Customer (Contract)</th>
             <th class="titulo" rowspan="2">A/C Model</th>
             <th class="titulo" rowspan="2">Tail #</th>
-            <th class="titulo" rowspan="2">Operating Base</th>
+            <th class="titulo" rowspan="2">Base of Operation</th>
             <th class="titulo" rowspan="2">A/C Status</th>
             <th colspan="2" class="contrato">Flight time - contract</th>
             <th colspan="2" class="spot">Flight time - spot</th>
@@ -216,12 +216,12 @@
         <tr>
             <th class="titulo" rowspan="2">A/C Model</th>
             <th class="titulo" rowspan="2">Tail #</th>
-            <th class="titulo" rowspan="2">Operating Base</th>
+            <th class="titulo" rowspan="2">Base of Operation</th>
             <th class="titulo" rowspan="2">A/C Status</th>
-            <th colspan="2" class="contrato">Flight time - Eng. Start to Eng. Off</th>
-            <th colspan="2" class="indisponivel">Unavailable Time</th>
+            <th colspan="2" class="contrato">BaseOverall Flight time - Eng. Start to Eng. Off</th>
+            <th colspan="2" class="indisponivel">Overall Unavailable Time</th>
 
-            <th colspan="2" class="indisponivel-month-to-date">UNAVAILABILITY</th>
+            <th colspan="2" class="indisponivel-month-to-date">OVERALL UNAVAILABILITY</th>
             <th colspan="4" class="company">Flight Time - Company - Day</th>
             <th colspan="4" class="company">Flight Time - Company - Month</th>
         </tr>
@@ -389,18 +389,18 @@
 
     <table>
         <tr>
-            <td class="titulo">TAKE-OFF DELAY</td>
+            <td class="titulo">TAKE-OFF DELAY (day/up to date)</td>
             <td>{{resultado.Atrasos}}</td>
-            <td class="titulo">UNUSUAL EVENTS</td>
+            <td class="titulo">UNUSUAL EVENTS (day/up to date)</td>
             <td>{{resultado.OcorrenciasPetrobras}}</td>
-            <td class="titulo">EQUINOR. UNUSUAL EVENTS</td>
+            <td class="titulo">EQUINOR. UNUSUAL EVENTS (day/up to date)</td>
             <td>{{resultado.OcorrenciasEquinor}}</td>
         </tr>
         <tr>
             <td colspan="2"></td>
-            <td class="titulo">PETROBRAS REPRESENTATIVE CHECKING</td>
+            <td class="titulo">PETROBRAS REPRESENTATIVE CHECKING (day/up to date)</td>
             <td>{{resultado.AuditoriasPetrobras}}</td>
-            <td class="titulo">INTER / RIG REPRESENTATIVE CHECKING</td>
+            <td class="titulo">INTER / RIG REPRESENTATIVE CHECKING (day/up to date)</td>
             <td>{{resultado.AuditoriasEquinor}}</td>
         </tr>
     </table>
