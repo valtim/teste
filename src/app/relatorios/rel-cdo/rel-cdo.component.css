@@ -45,6 +45,7 @@
     table {
         border-collapse: collapse;
         width: 100vw;
+        margin-bottom: 2px;
     }
     th {
         font-size: x-small;
@@ -81,4 +82,10 @@
     .total{
         font-weight: bolder;
         background-color: lightgray;
+    }
+
+    .titulo{
+        background-color: #1F497D;
+        color: white;
+        font-weight: bold;
     }

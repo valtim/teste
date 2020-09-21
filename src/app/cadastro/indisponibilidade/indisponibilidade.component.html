@@ -90,7 +90,7 @@
 
 
     <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="false" [modal]="true">
-        <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos" [base]="basesDeOperacao" (retorno)="onLinhaAlterada($event)">
+        <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos" [base]="basesDeOperacao" [motivosIndisponibilidade]="motivosIndisponibilidade" (retorno)="onLinhaAlterada($event)">
 
         </app-editar-indisponibilidade >
     </p-dialog>

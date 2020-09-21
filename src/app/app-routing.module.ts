@@ -1,3 +1,4 @@
+import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -185,6 +186,10 @@ const routes: Routes = [
   {
     path: 'indisponibilidade',
     component: IndisponibilidadeComponent,
+  },
+  {
+    path: 'motivo-da-indisponibilidade',
+    component: MotivoDaIndisponibilidadeComponent,
   },
   {
     path: 'contrato',

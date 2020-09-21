@@ -21,6 +21,9 @@ export class RelCdoComponent implements OnInit {
   rowGroupMetadata: any;
   dadosCliente: any;
   dadosInterno: any;
+  indisponibilidadesAbertas: any;
+  resultado: any;
+  observacaoIndisponibilidade: any;
 
 
   constructor(private api: ApiService) {
@@ -28,7 +31,9 @@ export class RelCdoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data.setDate(this.data.getDate() - 1);
     this.rodarRelatorio();
+    
   }
 
 
@@ -38,6 +43,8 @@ export class RelCdoComponent implements OnInit {
       this.dadosCliente = x.lista;
       this.dadosInterno = x.listaInterna;
       this.retorno_data = x.data;
+      this.observacaoIndisponibilidade = x.observacaoIndisponibilidade;
+      this.resultado = x.resultado;
       this.consulta_ok = true;
       this.updateRowGroupMetaData("Cliente");
     })

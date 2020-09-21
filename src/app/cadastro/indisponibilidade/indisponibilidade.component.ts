@@ -27,6 +27,7 @@ export class IndisponibilidadeComponent implements OnInit {
   contratos: any;
   basesDeOperacao: any;
   botoes: { label: string; icon: string; command: () => void; }[];
+  motivosIndisponibilidade: any;
 
 
 
@@ -57,6 +58,7 @@ export class IndisponibilidadeComponent implements OnInit {
       this.clientes = x.Cliente;
       this.contratos = x.Contrato;
       this.basesDeOperacao = x.BaseDeOperacao;
+      this.motivosIndisponibilidade = x.MotivoIndisponibilidade;
       this.carregandoMenu = false;
       this.rodarRelatorio();
     })

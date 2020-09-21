@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
-import { MessageService } from 'primeng-lts/api';
 
 import { DataUtil } from './../../shared/DataUtil';
-import { stringify } from 'querystring';
 
 
 @Component({
@@ -18,11 +16,14 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
 
   fg2: FormGroup;
 
+  fg3: FormGroup;
+
 
   @Input() indisponibilidade;
   @Input() contrato;
   @Input() prefixo;
   @Input() base;
+  @Input() motivosIndisponibilidade;
   locale_pt: any;
 
   @Output() retorno = new EventEmitter();
@@ -41,10 +42,6 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
     });
   }
 
-  // ngOnInit(): void {
-
-  // }
-
 
 
   private createForm(): void {
@@ -60,7 +57,12 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
 
 
     this.fg2 = this.fb.group({
-      tableRowArray: this.fb.array([])
+      tbIndisponibilidades: this.fb.array([])
+    });
+
+
+    this.fg3 = this.fb.group({
+      tbObs: this.fb.array([])
     });
 
 
@@ -68,71 +70,95 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
 
       let grupo = this.createMemberGroup(element);
 
-      this.tableRowArray.push(grupo);
+      this.tbIndisponibilidades.push(grupo);
+    })
+
+    this.indisponibilidade.Observacoes.forEach(element => {
+
+      let grupo = this.createMemberGroup(element);
+
+      this.tbObs.push(grupo);
     })
   }
 
-  get tableRowArray(): FormArray {
-    return this.fg2.get('tableRowArray') as FormArray;
+  get tbIndisponibilidades(): FormArray {
+    return this.fg2.get('tbIndisponibilidades') as FormArray;
   }
 
-  addNewRow(): void {
-    this.tableRowArray.push(this.createMemberGroup(this.createTableRow()));
+  get tbObs(): FormArray {
+    return this.fg3.get('tbObs') as FormArray;
   }
-  createTableRow(): Object {
-    return {
+
+  addNewRow(tabela: string): void {
+
+    if (tabela == 'tbIndisponibilidades') {
+      this.tbIndisponibilidades.push(this.createMemberGroup({
+        Atualizacao: null,
+        BaseDeOperacao: null,
+        Inicio: null,
+        Penaliza: false,
+        Substituto: null,
+        Termino: null,
+        Id: null,
+      }));
+      return;
+    }
+
+    this.tbObs.push(this.createMemberGroup({
       Atualizacao: null,
-      BaseDeOperacao: null,
-      Inicio: null,
-      Penaliza: false,
-      Substituto: null,
-      Termino: null,
+      Motivo: null,
+      Observacoes: null,
       Id: null,
-    };
+    }));
+
+
   }
 
-  onDeleteRow(rowIndex: number): void {
-    let item = this.tableRowArray.controls[rowIndex].value;
+  onDeleteRow(tabela: string, rowIndex: number): void {
+    let item = this["tbIndisponibilidades"].controls[rowIndex].value;
     item.Ativo = false;
-    this.tableRowArray.removeAt(rowIndex);
+    this.tbIndisponibilidades.removeAt(rowIndex);
   }
 
   cancelar() {
     this.indisponibilidade.Exibir = false;
   }
 
-excluir(){
-  this.salvar(true);
-}
+  excluir() {
+    this.salvar(true);
+  }
 
 
-  salvar(excluir : boolean ) {
-    let postagem =Object.assign({}, this.fg.value);
+  salvar(excluir: boolean) {
+    let postagem = Object.assign({}, this.fg.value);
     postagem.Ativo = !excluir;
-    //postagem.Contrato = this.fg.value.Contrato;
     postagem.Inicio = DataUtil.ParaDataISO(this.fg.value.Inicio);
     postagem.Fim = DataUtil.ParaDataISO(this.fg.value.Fim);
 
     postagem.Ocorrencias = [];
-    this.tableRowArray.controls.forEach(x => {
+    this.tbIndisponibilidades.controls.forEach(x => {
       let item = Object.assign({}, x.value);
-
       item.Inicio = DataUtil.ParaDataISO(item.Inicio);
       item.Termino = DataUtil.ParaDataISO(item.Termino);
-      item.Indisponibilidade = { Id : postagem.Id };
-
       postagem.Ocorrencias.push(item);
     });
 
-    
+    postagem.Observacoes =[];
+    this.tbObs.controls.forEach(x => {
+      let item = Object.assign({}, x.value);
+      //item.Inicio = DataUtil.ParaDataISO(item.Inicio);
+      item.Motivo = { Id: item.Motivo.Id };
+      postagem.Observacoes.push(item);
+    });
 
 
-    this.api.postCrudIndisponibilidade(postagem).then( x=> 
-      {
-        this.indisponibilidade.Exibir = false;
-        this.indisponibilidade = x;
-        this.retorno.emit("OK");    
-      }
+
+
+    this.api.postCrudIndisponibilidade(postagem).then(x => {
+      this.indisponibilidade.Exibir = false;
+      this.indisponibilidade = x;
+      this.retorno.emit("OK");
+    }
     )
 
   }

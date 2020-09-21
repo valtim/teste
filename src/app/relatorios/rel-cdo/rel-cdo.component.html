@@ -28,21 +28,29 @@
 
 <div *ngIf="consulta_ok">
 
-    <app-cabecalho-impressao titulo="DAILY FLIGHT TIME CONTROL" form="FORM CDV 012" data="16/04/2012" revisao="00"
-        class="d-print"></app-cabecalho-impressao>
+    <table>
+        <tr>
+            <td>
+                <h4>DAILY FLIGHT TIME CONTROL</h4>
+            </td>
+            <td>FORM CDV 012<br>Revisão: 00<br />Data: 16/04/12<br /><b>{{data | date:'MM-dd-yyyy'}}</b></td>
+        </tr>
+    </table>
+
+    <!-- <app-cabecalho-impressao titulo="" form="" data="16/04/2012" revisao="00" class="d-print"></app-cabecalho-impressao> -->
 
     <table>
         <tr>
-            <th colspan="14">
-                <H6>Customers (Contracts) - {{data | date:'dd/MM/yyyy'}}</H6>
+            <th colspan="14" class="titulo">
+                <B>Customer - Revenue - {{data | date:'MM-dd-yyyy'}}</B>
             </th>
         </tr>
         <tr>
-            <th rowspan="2" colspan="2"> Customer (Contract)</th>
-            <th rowspan="2">A/C Model</th>
-            <th rowspan="2">Tail #</th>
-            <th rowspan="2">Operating Base</th>
-            <th rowspan="2">A/C Status</th>
+            <th class="titulo" rowspan="2" colspan="2"> Customer (Contract)</th>
+            <th class="titulo" rowspan="2">A/C Model</th>
+            <th class="titulo" rowspan="2">Tail #</th>
+            <th class="titulo" rowspan="2">Operating Base</th>
+            <th class="titulo" rowspan="2">A/C Status</th>
             <th colspan="2" class="contrato">Flight time - contract</th>
             <th colspan="2" class="spot">Flight time - spot</th>
             <th colspan="2" class="indisponivel">Unavailable Time</th>
@@ -147,7 +155,7 @@
                     {{rowData.Prefixo.TipoDeAeronave.Nome}}
                 </td>
 
-                <td>
+                <td nowrap>
                     {{rowData.Prefixo.PrefixoCompleto}}
                 </td>
 
@@ -201,17 +209,16 @@
 
     <table>
         <tr>
-            <th colspan="21">
-                <H6>INTERNAL CONTROL</H6>
-            </th>
+            <td colspan="21" class="titulo">
+                <B>Bristow totals - Flight hours</B>
+            </td>
         </tr>
         <tr>
-            <th rowspan="2">A/C Model</th>
-            <th rowspan="2">Tail #</th>
-            <th rowspan="2">Operating Base</th>
-            <th rowspan="2">A/C Status</th>
-            <th colspan="2" class="contrato">Flight time - contract</th>
-            <th colspan="2" class="spot">Flight time - spot</th>
+            <th class="titulo" rowspan="2">A/C Model</th>
+            <th class="titulo" rowspan="2">Tail #</th>
+            <th class="titulo" rowspan="2">Operating Base</th>
+            <th class="titulo" rowspan="2">A/C Status</th>
+            <th colspan="2" class="contrato">Flight time - Eng. Start to Eng. Off</th>
             <th colspan="2" class="indisponivel">Unavailable Time</th>
 
             <th colspan="2" class="indisponivel-month-to-date">UNAVAILABILITY</th>
@@ -221,8 +228,6 @@
         <tr>
             <th class="contrato">DAY</th>
             <th class="contrato">UP TO DATE</th>
-            <th class="spot">DAY</th>
-            <th class="spot">UP TO DATE</th>
             <th class="indisponivel">DAY</th>
             <th class="indisponivel">UP TO DATE</th>
             <th class="indisponivel-month-to-date">MONTH TO DATE (%)</th>
@@ -253,12 +258,6 @@
                     {{rowData.VooContratoAteHoje}}
                 </th>
 
-                <th class="total">
-                    {{rowData.VooSPOTHoje}}
-                </th>
-                <th class="total">
-                    {{rowData.VooSPOTAteHoje}}
-                </th>
                 <th class="total">
                     {{rowData.IndispDoDia}}
 
@@ -314,7 +313,7 @@
                     {{rowData.Prefixo.TipoDeAeronave.Nome}}
                 </td>
 
-                <td>
+                <td nowrap>
                     {{rowData.Prefixo.PrefixoCompleto}}
                 </td>
 
@@ -334,12 +333,6 @@
                     {{rowData.VooContratoAteHoje}}
                 </td>
 
-                <td>
-                    {{rowData.VooSPOTHoje}}
-                </td>
-                <td>
-                    {{rowData.VooSPOTAteHoje}}
-                </td>
                 <td class="indisponivel">
                     {{rowData.IndispDoDia}}
 
@@ -392,6 +385,34 @@
         </ng-container>
 
 
+    </table>
+
+    <table>
+        <tr>
+            <td class="titulo">TAKE-OFF DELAY</td>
+            <td>{{resultado.Atrasos}}</td>
+            <td class="titulo">UNUSUAL EVENTS</td>
+            <td>{{resultado.OcorrenciasPetrobras}}</td>
+            <td class="titulo">EQUINOR. UNUSUAL EVENTS</td>
+            <td>{{resultado.OcorrenciasEquinor}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td class="titulo">PETROBRAS REPRESENTATIVE CHECKING</td>
+            <td>{{resultado.AuditoriasPetrobras}}</td>
+            <td class="titulo">INTER / RIG REPRESENTATIVE CHECKING</td>
+            <td>{{resultado.AuditoriasEquinor}}</td>
+        </tr>
+    </table>
+
+    <table *ngIf="observacaoIndisponibilidade">
+        <tr *ngFor="let item of observacaoIndisponibilidade;let i = index">
+            <td class="titulo" [rowSpan]="i + 2" *ngIf="i == 0" ><b>UNAVAILABILITY</b></td>
+            <td>{{item.PrefixoCompleto}}</td>
+            <td>{{item.Motivo}}</td>
+            <td>{{item.Observacoes}}</td>
+            <td>{{item.Atualizacao | date: 'MM-dd-yyyy'}}</td>
+        </tr>
     </table>
 
 </div>

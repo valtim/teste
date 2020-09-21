@@ -54,6 +54,7 @@ import { ContratoComponent } from './cadastro/contrato/contrato.component';
 import { EditarIndisponibilidadeComponent } from './cadastro/editar-indisponibilidade/editar-indisponibilidade.component';
 import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
 import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
+import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 
 
 
@@ -107,6 +108,7 @@ registerLocaleData(localept, 'pt');
     EditarIndisponibilidadeComponent,
     ValidarJornadaComponent,
     ImprimirJornadaNovoComponent,
+    MotivoDaIndisponibilidadeComponent,
 
   ],
   imports: [
