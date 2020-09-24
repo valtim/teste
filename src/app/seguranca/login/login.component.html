@@ -1,6 +1,6 @@
 <div class="vertical-center">
 
-  <form (submit)="login()">
+  <form>
     <div class="input-group mb-3">
       <div class="input-group-append">
         <span class="input-group-text">Usuário</span>
@@ -25,5 +25,5 @@
       <span class="sr-only">Loading...</span>
     </div>
 
-    <button class="btn btn-primary btn-lg btn-block">Login</button>
+    <button class="btn btn-primary btn-lg btn-block" (click)="login()">Login</button>
   </form>

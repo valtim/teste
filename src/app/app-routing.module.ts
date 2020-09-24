@@ -1,13 +1,13 @@
-import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
+
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuardService } from './shared/guards/auth-guard.service';
 
-
-
-
-
-
+import { HomeComponent } from './home/home.component';
+import { LogoffComponent } from './logoff/logoff.component';
+import { LoginComponent } from './seguranca/login/login.component';
+import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
 
 
 import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
@@ -23,7 +23,6 @@ import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-a
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
 import { CrudComponent } from './cadastro/crud/crud.component';
 import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
-import { LogoffComponent } from './logoff/logoff.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
@@ -43,23 +42,21 @@ import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-d
 import { GraficoComponent } from './grafico/grafico.component';
 import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
 import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
-import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './seguranca/login/login.component';
 import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
-import { AuthGuardService } from './shared/guards/auth-guard.service';
 import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/vencimento-carteira.component';
-
+import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
-  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, {
+  { path: 'home', component: HomeComponent },
+  { path: 'troca-senha', component: TrocaSenhaComponent },
+  { path: 'logoff', component: LogoffComponent },
+  {
     path: 'fadiga',
     component: FadigaComponent,
     canActivate: [AuthGuardService]
   },
-  { path: 'troca-senha', component: TrocaSenhaComponent }, {
+  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, {
     path: 'fadiga',
     component: FadigaComponent,
     canActivate: [AuthGuardService]
@@ -148,10 +145,6 @@ const routes: Routes = [
     component: RelEscalaPtbrComponent,
   },
   {
-    path: 'logoff',
-    component: LogoffComponent,
-  },
-  {
     path: 'rel-operacao-de-solo',
     component: RelOperacaoDeSoloComponent,
   },
@@ -206,7 +199,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

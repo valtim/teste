@@ -63,6 +63,13 @@ export class ApiService {
   }
 
   async postLogin(username: string, password: string): Promise<any> {
+
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
     return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password }, this.httpOptions)
       .toPromise();
     // .then((result: any) => {

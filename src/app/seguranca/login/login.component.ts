@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.api.username = this.username;
 
-          this.api.getCombosServidor().then(
-            () => {
+          // this.api.getCombosServidor().then(
+          //   () => {
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
               this.auth.setMenus(x.Menu);
@@ -42,18 +42,20 @@ export class LoginComponent implements OnInit {
                 this.router.navigate([url]);
                 return;
               }
-              this.router.navigateByUrl('/home')
+              //this.router.navigateByUrl('/quadro-de-tripulantes')
               //this.router.navigate(['home']);
 
-            }
-          );
+            // }
+          // );
 
 
+              // this.router.navigateByUrl('/quadro-de-tripulantes')
 
 
         })
         .catch((error) => {
 
+          this.loading = false;
           switch (error.status) {
             case 0:
               this.api.error = 'Não foi possível acessar o servidor';
@@ -66,8 +68,8 @@ export class LoginComponent implements OnInit {
             default:
               this.api.error = 'Não foi possível acessar o servidor';
               break;
-          }
-          this.loading = false;
+          
+            }
         });
     } else {
       this.api.error = 'Usuário ou senha obrigatórios';
