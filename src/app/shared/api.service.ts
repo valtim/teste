@@ -22,7 +22,7 @@ export class ApiService {
   username: string;
 
   constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
-    //this.url = window.location.host === 'localhost:4200' ? 'https://aeroleo.fastapi.com.br/' : '/';
+    //this.url = window.location.host === 'localhost:4200' ? 'https://aeroleo.sistemasol.com.br/' : '/';
     this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
 
     if (localStorage.getItem('Authorization')) {

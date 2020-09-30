@@ -23,6 +23,8 @@ export class RelConsCombComponent implements OnInit {
 
   filtroRetorno;
 
+  CE;
+
 
   constructor(private api : ApiService) { }
 

@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
           this.loading = false;
           this.api.username = this.username;
 
-          // this.api.getCombosServidor().then(
-          //   () => {
+           this.api.getCombosServidor().then(
+             () => {
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
               this.auth.setMenus(x.Menu);
@@ -43,10 +43,10 @@ export class LoginComponent implements OnInit {
                 return;
               }
               //this.router.navigateByUrl('/quadro-de-tripulantes')
-              //this.router.navigate(['home']);
+              this.router.navigate(['home']);
 
-            // }
-          // );
+            }
+           );
 
 
               // this.router.navigateByUrl('/quadro-de-tripulantes')
