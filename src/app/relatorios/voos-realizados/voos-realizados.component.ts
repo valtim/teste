@@ -17,6 +17,8 @@ export class VoosRealizadosComponent implements OnInit {
   dados: any;
   cols: any;
   clientesSelecionados: any;
+  todosOsVoos: any;
+  todosOsDiarios: any;
 
   constructor(private api : ApiService) { }
 
@@ -51,6 +53,8 @@ export class VoosRealizadosComponent implements OnInit {
         this.dados = x.valores;
         this.filtroRetorno = x.filtro;
         this.carregando = false;
+        this.todosOsVoos = x.todosOsVoos;
+        this.todosOsDiarios = x.todosOsDiarios;
       })
   }
 

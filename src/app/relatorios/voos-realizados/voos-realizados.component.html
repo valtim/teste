@@ -64,3 +64,44 @@
     </table>
 
 </div>
+
+<div *ngIf="!carregando">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <td>Prefixo</td>
+                <th>NumerodoVoo</th>
+                <th>Origem</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of todosOsVoos">
+                <td>{{item.NumerodoVoo}}</td>
+                <td>{{item.Prefixo}}</td>
+                <td>{{item.Data}}</td>
+                <td>{{item.Origem}}</td>
+                <td>{{item.Status}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>DataDoDiario</th>
+                <td>Prefixo</td>
+                <th>EhAuditoria</th>
+                <th>NumeroDaFolha</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of todosOsDiarios">
+                <td>{{item.Data}}</td>
+                <td>{{item.Prefixo}}</td>
+                <td>{{item.EhAuditoria}}</td>
+                <td>{{item.NumeroDaFolha}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
