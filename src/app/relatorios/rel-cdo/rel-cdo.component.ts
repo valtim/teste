@@ -37,6 +37,10 @@ export class RelCdoComponent implements OnInit {
   }
 
 
+  imprimir(){
+    window.print();
+  }
+
   rodarRelatorio() {
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {

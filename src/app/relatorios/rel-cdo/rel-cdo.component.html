@@ -13,9 +13,11 @@
             </div>
         </div>
 
-        <div class="col-sm-6 col-lg-2">
+        <div class="col-sm-6 col-lg-4">
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button>
+            <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir"
+                (click)="imprimir()"></button>
         </div>
 
 
@@ -407,7 +409,7 @@
 
     <table *ngIf="observacaoIndisponibilidade">
         <tr *ngFor="let item of observacaoIndisponibilidade;let i = index">
-            <td class="titulo" [rowSpan]="i + 2" *ngIf="i == 0" ><b>UNAVAILABILITY</b></td>
+            <td class="titulo" [rowSpan]="i + 2" *ngIf="i == 0"><b>UNAVAILABILITY</b></td>
             <td>{{item.PrefixoCompleto}}</td>
             <td>{{item.Motivo}}</td>
             <td>{{item.Observacoes}}</td>
