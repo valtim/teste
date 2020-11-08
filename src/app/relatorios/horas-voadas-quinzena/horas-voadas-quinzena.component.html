@@ -118,59 +118,25 @@
     </p-table>
 
     <p-table [columns]="cols" [value]="dadosInstrucao" *ngIf="dadosInstrucao">
-        <ng-template pTemplate="colgroup" let-columns>
+        <!-- <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns" [style.width]="col.width">
             </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
+        </ng-template> -->
+        <ng-template pTemplate="header">
             <tr>
-                <th rowspan="2">TRATO</th>
-                <th colspan="2">DIAS ÚTEIS</th>
-                <th colspan="2">DOMINGOS FERIADOS</th>
-                <th rowspan="2">HORAS VOADAS TOTAIS</th>
-                <th colspan="2">DOBRADAS</th>
-                <th>TRIPLICADAS</th>
-                <th rowspan="2">TOTAL PARA PAGAMENTO (1/3)</th>
-            </tr>
-            <tr>
-                <th>DIURNO</th>
-                <th>NOTURNO</th>
-                <th>DIURNO</th>
-                <th>NOTURNO</th>
-                <th>DIAS ÚTEIS NOTURNO</th>
-                <th>DOM/FER DIURNO</th>
-                <th>DOM/FER NOTURNO</th>
+                <th>TRATO</th>
+                <th>HORAS VOADAS TOTAIS</th>
+                <th>TOTAL PARA PAGAMENTO (1/3)</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData>
             <tr>
                 <td width="30%">
                     {{rowData['Trato']}}
                 </td>
                 <td>
-                    {{rowData['TotalDiurnoUtil']}}
-                </td>
-                <td>
-                    {{rowData['TotalNoturnoUtil']}}
-                </td>
-                <td>
-                    {{rowData['TotalDiurnoFeriado']}}
-                </td>
-                <td>
-                    {{rowData['TotalNoturnoFeriado']}}
-                </td>
-                <td>
                     {{rowData['HorasTotais']}}
-                </td>
-                <td>
-                    {{rowData['TotalNoturnoUtilDobrado']}}
-                </td>
-                <td>
-                    {{rowData['TotalDiurnoFeriadoDobrado']}}
-                </td>
-                <td>
-                    {{rowData['TotalNoturnoFeriadoDobrado']}}
                 </td>
                 <td>
                     {{rowData['HorasSomadas']}}

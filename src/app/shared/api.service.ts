@@ -14,6 +14,9 @@ export class ApiService {
 
 
 
+
+
+
   private httpOptions: any;
   private url: string;
   private permission;
@@ -41,6 +44,14 @@ export class ApiService {
       type: 'alert',
       callBack: () => { }
     };
+  }
+
+  SaveSettings(values: any){
+    localStorage.setItem(window.location.href, values);
+  }
+
+  GetSettings() : any{
+    return localStorage.getItem(window.location.href);
   }
 
   getOptions(lista: []) {

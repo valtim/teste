@@ -15,6 +15,8 @@ export class PesquisaBasicaComponent implements OnInit {
 
   @Output() comeco = new EventEmitter();
 
+
+
   @Input() data;
 
   @Input() completa;
@@ -22,6 +24,8 @@ export class PesquisaBasicaComponent implements OnInit {
   @Input() tripulantes;
 
   @Input() niveis;
+
+
 
   constructor(
     private api: ApiService,

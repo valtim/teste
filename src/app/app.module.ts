@@ -39,7 +39,6 @@ import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-
 import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
 import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
 import { PesquisaBasicaComponent } from './controle-da-fadiga/pesquisa-basica/pesquisa-basica.component';
-import { RelatorioFadigaComponent } from './controle-da-fadiga/relatorio-fadiga/relatorio-fadiga.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { LogoffComponent } from './logoff/logoff.component';
 import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
@@ -91,7 +90,6 @@ registerLocaleData(localept, 'pt');
     ControleDeTripulantesComponent,
     ComunicarTripulantesComponent,
     PesquisaBasicaComponent,
-    RelatorioFadigaComponent,
     TratamentoDaFadigaComponent,
     FadigaComponent,
     RelEscalaPtbrComponent,

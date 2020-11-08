@@ -55,7 +55,11 @@ export class FadigaComponent implements OnInit {
   retornoDaPesquisa(retorno) {
 
     //console.log(retorno);
-    this.fadigas = retorno;
+    this.fadigas = retorno.retorno;
+    if ( retorno.filtro.Data != undefined ){
+      this.data = retorno.filtro.Data;
+      this.caminho = "/comunicar-tripulantes/" + this.data;      
+    }
     this.loadingDados = false;
     this.registros = "1 registro";
     if (this.fadigas.length != 1)

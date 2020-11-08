@@ -31,7 +31,17 @@ export class RelCdoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.setDate(this.data.getDate() - 1);
+
+    if ( this.api.GetSettings() != null )
+    {
+      this.data = new Date(this.api.GetSettings());
+      this.rodarRelatorio();
+      return;
+    }
+
+    let data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay() + 1);
+
+    this.data.setDate(data.getDate() - 1);
     this.rodarRelatorio();
     
   }
@@ -42,6 +52,7 @@ export class RelCdoComponent implements OnInit {
   }
 
   rodarRelatorio() {
+    this.api.SaveSettings(this.data.toISOString());
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {
       this.dadosCliente = x.lista;
