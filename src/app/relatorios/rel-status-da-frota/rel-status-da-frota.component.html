@@ -1,6 +1,6 @@
-<app-titulo titulo="Status da Frota" [carregando]="(!consulta_ok || !tela_ok)"></app-titulo>
+<app-titulo titulo="Status da Frota" [carregando]="!consulta_ok"></app-titulo>
 
-<div class="container d-print-none" *ngIf="tela_ok">
+<div class="container d-print-none" *ngIf="consulta_ok">
 
     <div class="row ml-1">
         <div class="col-sm-6 col-lg-4">

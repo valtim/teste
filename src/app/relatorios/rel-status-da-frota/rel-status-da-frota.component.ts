@@ -92,18 +92,14 @@ export class RelStatusDaFrotaComponent implements OnInit {
     {
       //"Id": uuidv4(),
       "Prefixo": {
-        "label": "",
-        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
+        "Nome": "",
+        "Id": { Nome: "", Id: '00000000-0000-0000-0000-000000000000' }
       },
       "HorarioDisponibilidade": "",
       "Disponibilidade": this.disponibilidade[0],
       "TipoDeOperacao": this.tiposDeOperacao[0],
-      "Backup": {
-        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
-      },
-      "Substituto": {
-        "value": { label: "", value: '00000000-0000-0000-0000-000000000000' }
-      },
+      "Backup": null,
+      "Substituto": null,
       "Posicao": "HANGAR",
       "Observacoes": "",
       "Modificado": true,
@@ -121,8 +117,8 @@ export class RelStatusDaFrotaComponent implements OnInit {
   rodarRelatorio() {
     this.consulta_ok = false;
     this.api.getRelStatusDaFrota(this.data, this.baseDeOperacaoSelecionada.Id, ['31965f5a-e078-11e7-a923-0026b94bb39e', 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998']).then(x => {
-      this.dados = x;
       this.consulta_ok = true;
+      this.dados = x;
     })
   }
 

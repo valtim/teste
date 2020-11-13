@@ -1,5 +1,6 @@
 import { ApiService } from './../../shared/api.service';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rel-cdo',
@@ -25,8 +26,10 @@ export class RelCdoComponent implements OnInit {
   resultado: any;
   observacaoIndisponibilidade: any;
 
+  htmlContent : any;
 
-  constructor(private api: ApiService) {
+
+  constructor(private api: ApiService, private sanitizer:DomSanitizer) {
     this.locale_pt = this.api.getLocale('pt');
   }
 
@@ -55,13 +58,14 @@ export class RelCdoComponent implements OnInit {
     this.api.SaveSettings(this.data.toISOString());
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {
-      this.dadosCliente = x.lista;
-      this.dadosInterno = x.listaInterna;
-      this.retorno_data = x.data;
-      this.observacaoIndisponibilidade = x.observacaoIndisponibilidade;
-      this.resultado = x.resultado;
+      this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(x);
+      // this.dadosCliente = x.lista;
+      // this.dadosInterno = x.listaInterna;
+      // this.retorno_data = x.data;
+      // this.observacaoIndisponibilidade = x.observacaoIndisponibilidade;
+      // this.resultado = x.resultado;
       this.consulta_ok = true;
-      this.updateRowGroupMetaData("Cliente");
+      // this.updateRowGroupMetaData("Cliente");
     })
   }
 
