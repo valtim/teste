@@ -573,8 +573,8 @@ export class ApiService {
       .toPromise();
   }
 
-  postAtraso(filtro: any): Promise<any> {
-    return this.http.post(`${this.url}api/RelVooPorData`, filtro, this.httpOptions)
+  postPontualidade(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelPontualidade`, filtro, this.httpOptions)
       .toPromise();
   }
 

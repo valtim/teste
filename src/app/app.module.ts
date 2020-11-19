@@ -46,7 +46,7 @@ import { CrudComponent } from './cadastro/crud/crud.component';
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
 import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
 import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
-import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
+import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
 import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
 import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
 import { ContratoComponent } from './cadastro/contrato/contrato.component';
@@ -99,7 +99,7 @@ registerLocaleData(localept, 'pt');
     RelControleSpotComponent,
     MotivoDoAtrasoComponent,
     RelIndisponibilidadeComponent,
-    RelAtrasoComponent,
+    RelPontualidadeComponent,
     CadastroDeEmailReporteComponent,
     IndisponibilidadeComponent,
     ContratoComponent,

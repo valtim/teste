@@ -18,7 +18,7 @@ import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indispo
 import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
 
 import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
-import { RelAtrasoComponent } from './relatorios/rel-atraso/rel-atraso.component';
+import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
 import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
 import { CrudComponent } from './cadastro/crud/crud.component';
@@ -162,7 +162,7 @@ const routes: Routes = [
   },
   {
     path: 'rel-pontualidade',
-    component: RelAtrasoComponent,
+    component: RelPontualidadeComponent,
   },
   {
     path: 'rel-indisponibilidade',

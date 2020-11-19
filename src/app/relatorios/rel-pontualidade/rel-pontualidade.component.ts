@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng-lts/api';
 
 @Component({
-  selector: 'app-rel-atraso',
-  templateUrl: './rel-atraso.component.html',
-  styleUrls: ['./rel-atraso.component.css'],
+  selector: 'app-rel-pontualidade',
+  templateUrl: './rel-pontualidade.component.html',
+  styleUrls: ['./rel-pontualidade.component.css'],
   providers: [MessageService]
 })
-export class RelAtrasoComponent implements OnInit {
+export class RelPontualidadeComponent implements OnInit {
 
   botoes: MenuItem[];
 
@@ -87,7 +87,7 @@ export class RelAtrasoComponent implements OnInit {
       //base : this.baseDeOperacaoSelecionada,  
     }
 
-    this.api.postAtraso(dados).then(x => {
+    this.api.postPontualidade(dados).then(x => {
       this.dados = x.dados;
       this.cols = x.cols;
       this.carregandoRelatorio = false;
