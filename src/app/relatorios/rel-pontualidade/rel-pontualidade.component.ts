@@ -52,8 +52,9 @@ export class RelPontualidadeComponent implements OnInit {
     this.locale_pt = this.api.getLocale('pt');
 
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth()-1, 26);
-    this.dataFim = new Date(date.getFullYear(), date.getMonth(), 25);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth()+1, 1);
+    this.dataFim.setDate(this.dataFim.getDate() - 1);
 
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixo;
@@ -88,9 +89,9 @@ export class RelPontualidadeComponent implements OnInit {
     }
 
     this.api.postPontualidade(dados).then(x => {
+      this.carregandoRelatorio = false;
       this.dados = x.dados;
       this.cols = x.cols;
-      this.carregandoRelatorio = false;
       this.dataIniciof = x.filtros.dataInicio;
       this.dataFimf = x.filtros.dataFim;
       this.motivosDoAtraso = x.MotivoDoAtraso;

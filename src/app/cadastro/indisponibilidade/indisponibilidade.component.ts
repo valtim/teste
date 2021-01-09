@@ -16,8 +16,8 @@ export class IndisponibilidadeComponent implements OnInit {
   carregandoRelatorio: boolean = true;
   prefixosSelecionados: any;
   clientesSelecionados: any;
-  dataInicio: any;
-  dataFim: any;
+  dataInicio: Date;
+  dataFim: Date;
   dados = [];
   cols: any;
   locale_pt: any;
@@ -47,8 +47,12 @@ export class IndisponibilidadeComponent implements OnInit {
       ]
 
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth() - 2, 26);
+    
     this.dataFim = new Date(date.getFullYear(), date.getMonth(), 25);
+    this.dataFim = new Date(this.dataFim.setMonth(this.dataFim.getMonth()+1));
+
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth() -2 , 26);
+    
 
 
 
@@ -73,6 +77,7 @@ export class IndisponibilidadeComponent implements OnInit {
       Fim: null,
       Id: null,
       Inicio: null,
+      EhOcorrencia: false,
       Ocorrencias: [],
     }
 

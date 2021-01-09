@@ -43,10 +43,31 @@ export class RelListaRdvComponent implements OnInit {
       this.naturezas = x.Natureza;
     })
 
+
+
     const date = new Date();
     this.dataInicio = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1);
     this.dataFim = new Date(date.getFullYear(), date.getMonth() , date.getDate());
     this.locale_pt = this.api.getLocale('pt');
+
+
+
+
+    var objPesquisa = localStorage['rel-lista-rdv'];
+
+
+    if ( objPesquisa ){
+
+      objPesquisa = JSON.parse(objPesquisa);
+
+      this.dataInicio = new Date(objPesquisa.dataInicio);
+      this.dataFim = new Date(objPesquisa.dataFim);
+  
+      if (objPesquisa.prefixos) this.prefixosSelecionados = objPesquisa.prefixos;
+      if (objPesquisa.clientes) this.clientesSelecionados = objPesquisa.clientes;
+      if (objPesquisa.naturezas) this.naturezasSelecionadas = objPesquisa.naturezas;
+    }
+
 
 
     this.rodarRelatorio();
@@ -54,16 +75,24 @@ export class RelListaRdvComponent implements OnInit {
   }
 
   rodarRelatorio() {
+
+    var objPesquisa = {
+      dataInicio: this.dataInicio,
+      dataFim: this.dataFim,
+      clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
+      prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+      naturezas: this.naturezasSelecionadas ? this.naturezasSelecionadas : null,
+      rdv : this.rdv,
+    };
+
+
+    localStorage.setItem('rel-lista-rdv', JSON.stringify(objPesquisa));
+
+
     this.tudoPronto = false;
     this.api.postRelRDV (
-      {
-        dataInicio: this.dataInicio,
-        dataFim: this.dataFim,
-        clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
-        prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
-        naturezas: this.naturezasSelecionadas ? this.naturezasSelecionadas : null,
-        rdv : this.rdv,
-      }).then(x => {
+      objPesquisa
+      ).then(x => {
 
         //colunas = colunas, filtro = filtro, listas = listas
         this.cols = x.colunas;

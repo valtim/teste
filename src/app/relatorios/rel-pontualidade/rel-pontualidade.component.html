@@ -1,12 +1,16 @@
-<app-titulo titulo="Avaliação de Pontualidade" [carregando]="carregandoMenu || carregandoRelatorio"></app-titulo>
+<app-titulo titulo="Avaliação de Pontualidade" [carregando]="carregandoRelatorio"></app-titulo>
+
+<p-toast></p-toast>
+
+<p-menubar [model]="botoes" class="d-print-none botoes"></p-menubar>
 
 <div class="container d-print-none" *ngIf="!carregandoMenu">
 
     <div class="row ml-1">
         <div class="col-sm-6 col-lg-2">
 
-            <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'110px'}">
+            <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
                 <p-header>
                     Clientes
                 </p-header>
@@ -15,8 +19,8 @@
         </div>
         <div class="col-sm-6 col-lg-2">
 
-            <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'110px'}">
+            <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
+                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
                 <p-header>
                     Prefixos
                 </p-header>
@@ -58,12 +62,11 @@
 
 </div>
 
+
+
 <div *ngIf="!carregandoRelatorio">
 
 
-    <p-toast></p-toast>
-
-    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
 
     <app-cabecalho-impressao titulo="Status das Aeronaves Contratadas Pela Petrobras" class="d-print">
     </app-cabecalho-impressao>
@@ -90,44 +93,23 @@
                 <td>{{rowData.Data | date: 'dd/MM/yyyy'}}</td>
                 <td>{{rowData.Prefixo.PrefixoCompleto}}</td>
                 <td>{{rowData.Diario.NumeroDaFolha}}</td>
-                <td pEditableColumn [class.texto-vermelho]="rowData['ComProblema']">
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown [options]="rowData.PossiveisNumeros" [(ngModel)]="rowData.Voo.Id"
-                                [filter]="true" filterBy="label,value.name" (onChange)="mudeiAqui($event, rowData)"  optionLabel="Nome">
-                            </p-dropdown>
-                        </ng-template>
-
-
-                        <!-- <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
-                        filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
-                        <p-header>
-                            Prefixos
-                        </p-header>
-                    </p-listbox> -->
-
-
-                        <!-- <ng-template pTemplate="output" *ngIf="!rowData.ComProblema" >
-                            {{rowData.Voo.label}}
-                        </ng-template>
-                        <ng-template pTemplate="output" *ngIf="rowData.ComProblema" >
-                            {{rowData.NumeroDoVoo}}
-                        </ng-template> -->
-                    </p-cellEditor>
-                </td>
+                <td><span *ngIf="rowData.Voo">{{rowData.Voo.NumerodoVoo}}</span></td>
                 <!-- <td>{{rowData.NumeroDoVoo}}</td> -->
                 <td>{{rowData.HoraPrevistaPartida}}</td>
-                <td>{{rowData.HoraRealPartida}}</td>
-                <td>{{rowData.Atraso}}</td>
+                <td [ngClass]="{'negrito': rowData.Cliente.Nome != 'EQUINOR'}">{{rowData.HoraRealPartida}}</td>
+                <td [ngClass]="{'negrito': rowData.Cliente.Nome == 'EQUINOR'}">{{rowData.HoraRealDecolagem}}</td>
+                <td [ngClass]="{'texto-vermelho': rowData.Atraso != '00:00:00'} ">{{rowData.Atraso}}</td>
                 <td><span *ngIf="rowData.Cliente">{{rowData.Cliente.Nome}}</span></td>
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="motivosDoAtraso" [(ngModel)]="rowData.MotivoDoAtraso" [filter]="true"
-                                filterBy="Nome" (onChange)="mudeiAqui($event, rowData)" [style]="{'width':'100%'}" optionLabel="Nome"></p-dropdown>
+                                optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)" [showClear]="true">
+                            </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <span *ngIf="rowData.MotivoDoAtraso">{{rowData.MotivoDoAtraso.Nome}}</span><span *ngIf="!rowData.MotivoDoAtraso">---</span>
+                            <span *ngIf="rowData.MotivoDoAtraso">{{rowData.MotivoDoAtraso.Nome}}</span><span
+                                *ngIf="!rowData.MotivoDoAtraso">---</span>
                         </ng-template>
                     </p-cellEditor>
                 </td>

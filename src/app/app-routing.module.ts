@@ -45,6 +45,8 @@ import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tr
 import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
 import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/vencimento-carteira.component';
 import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
+import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
+import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -54,6 +56,16 @@ const routes: Routes = [
   {
     path: 'fadiga',
     component: FadigaComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'observacao-db',
+    component: ObservacaoDbComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'motivo-do-erro-no-preenchimento',
+    component: MotivoDoErroNoPreenchimentoComponent,
     canActivate: [AuthGuardService]
   },
   { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, {

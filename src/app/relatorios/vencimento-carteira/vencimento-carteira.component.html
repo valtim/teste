@@ -20,7 +20,7 @@
                     <div [id]="rowData[col.field].Id" *ngIf="ehObjeto(rowData[col.field])" [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
                         {{rowData[col.field].ValorExibido}}
                     </div>
-                    <div *ngIf="rowData[col.field].Display">
+                    <div *ngIf="rowData[col.field].Display && !rowData[col.field].Certificado.Readonly">
                         <p-dialog [header]="col.field" [(visible)]="rowData[col.field].Display" [modal]="true"
                             [baseZIndex]="10000">
 

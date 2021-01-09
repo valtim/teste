@@ -3,8 +3,19 @@
     font-weight: bolder;
 }
 
+.negrito{
+    font-weight: bolder;
+}
+
 .texto-vermelho{
     text-decoration: underline;
     font-weight: bold;
     color: red;
 }
+
+.botoes {
+    position: fixed;
+    top: 60; /* Position the navbar at the top of the page */
+    z-index : 9000;
+    right: 10px;
+  }

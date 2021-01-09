@@ -54,6 +54,8 @@ import { EditarIndisponibilidadeComponent } from './cadastro/editar-indisponibil
 import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
 import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
 import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
+import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
+import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
 
 
 
@@ -107,6 +109,8 @@ registerLocaleData(localept, 'pt');
     ValidarJornadaComponent,
     ImprimirJornadaNovoComponent,
     MotivoDaIndisponibilidadeComponent,
+    MotivoDoErroNoPreenchimentoComponent,
+    ObservacaoDbComponent,
 
   ],
   imports: [

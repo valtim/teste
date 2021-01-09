@@ -18,10 +18,19 @@ export class EditarVencimentoComponent implements OnInit {
   na;
   data;
 
-  constructor(private api : ApiService) { }
+  mask;
+
+  constructor(private api : ApiService) {
+
+
+
+   }
 
   ngOnInit(): void {
     // this.trato = this.vencimento.Dados['Trato'];
+    if ( this.dados.ValorExibido == "n/a")
+      return;
+      this.mask = this.dados.Certificado.Mascara.replace("dd", "99").replace("MM", "99").replace("yyyy", "9999");
      this.data = this.dados.ValorExibido;
     // this.id = this.vencimento.Dados[this.vencimento.Campo].Id;
     // this.locale_pt = this.api.getLocale('pt');
