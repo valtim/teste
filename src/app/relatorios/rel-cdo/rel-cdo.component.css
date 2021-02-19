@@ -89,3 +89,8 @@
         color: white;
         font-weight: bold;
     }
+    
+    .container_html{
+        width: 300px;
+        border-color: #FF2300;
+    }

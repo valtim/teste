@@ -20,7 +20,6 @@ import { VisualizarAnaliseDeRiscoComponent } from './relatorios/visualizar-anali
 import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
 import { CabecalhoImpressaoComponent } from './relatorios/cabecalho-impressao/cabecalho-impressao.component';
 import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
-import { UltimasOcorrenciasComponent } from './relatorios/ultimas-ocorrencias/ultimas-ocorrencias.component';
 import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
 import { RelConsCombComponent } from './relatorios/rel-cons-comb/rel-cons-comb.component';
 import { HorasVoadasQuinzenaComponent } from './relatorios/horas-voadas-quinzena/horas-voadas-quinzena.component';
@@ -56,6 +55,12 @@ import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-n
 import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
 import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
+import { CertificadoComponent } from './treinamento/certificado/certificado.component';
+import { UltimasDatasComponent } from './relatorios/ultimas-datas/ultimas-datas.component';
+import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component';
+import { PrevisaoDoDiaComponent } from './escala/previsao-do-dia/previsao-do-dia.component';
+import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
+import { EditarEscalaComponent } from './escala/editar-escala/editar-escala.component';
 
 
 
@@ -76,7 +81,6 @@ registerLocaleData(localept, 'pt');
     CabecalhoImpressaoComponent,
     PaxTransportadosComponent,
     VencimentoCarteiraComponent,
-    UltimasOcorrenciasComponent,
     RelPousoComponent,
     RelConsCombComponent,
     HorasVoadasQuinzenaComponent,
@@ -111,6 +115,12 @@ registerLocaleData(localept, 'pt');
     MotivoDaIndisponibilidadeComponent,
     MotivoDoErroNoPreenchimentoComponent,
     ObservacaoDbComponent,
+    CertificadoComponent,
+    UltimasDatasComponent,
+    TipoDeOcorrenciaComponent,
+    PrevisaoDoDiaComponent,
+    EscalaMensalComponent,
+    EditarEscalaComponent,
 
   ],
   imports: [

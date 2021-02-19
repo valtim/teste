@@ -34,6 +34,9 @@ export class RelRdvComponent implements OnInit {
         rdv : this.id_busca,
       }).then(x => {
         this.rdv = x.valores[0];
+        // this.rdv.Linhas.forEach(x => {
+        //   x.
+        // });
         this.tudoPronto = true;
       })
 

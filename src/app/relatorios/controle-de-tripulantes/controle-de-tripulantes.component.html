@@ -44,21 +44,45 @@
 <p-table [columns]="cols" [value]="dados" *ngIf="!carregando">
     <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
+            <col [style.width]="largura_padrao">
+            <col [style.width]="largura_padrao">
+            <col [style.width]="largura_padrao">
             <col *ngFor="let col of columns" [style.width]="col.width">
+            <col [style.width]="largura_estreita">
+            <col [style.width]="largura_estreita">
+            <col [style.width]="largura_padrao">
+            <col [style.width]="largura_padrao">
         </colgroup>
-    </ng-template>
+    </ng-template> 
     <ng-template pTemplate="header" let-columns>
         <tr>
-            <th *ngFor="let col of columns">
+            <th rowspan="2">Data</th>
+            <th rowspan="2">Tripulante</th>
+            <th rowspan="2">Apres</th>
+            <th rowspan="2" *ngFor="let col of columns" width="{{col.width}}">
                 {{col.header}}
             </th>
+            <th colspan="2">Refeição</th>
+            <th rowspan="2">Saída</th>
+            <th rowspan="2">Jornada</th>
+        </tr>
+        <tr>
+            <th>1</th>
+            <th>2</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <tr>
+            <td>{{rowData.Data}}</td>
+            <td>{{rowData.Tripulante}}</td>
+            <td>{{rowData.Apresentacao}}</td>
             <td *ngFor="let col of columns">
                 {{rowData[col.field]}}
             </td>
+            <td>{{rowData.Refeicao1}}</td>
+            <td>{{rowData.Refeicao2}}</td>
+            <td>{{rowData.Saida}}</td>
+            <td>{{rowData.Jornada}}</td>
         </tr>
     </ng-template>
 </p-table>

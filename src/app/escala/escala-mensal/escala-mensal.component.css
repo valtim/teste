@@ -1,0 +1,110 @@
+.amarelo{
+    background-color: burlywood;
+}
+
+.negrito{
+    font-weight: bolder;
+    font-style: italic;
+}
+
+body {
+    font-size: small;
+}
+
+table, th, td {
+    border: 1px solid black;
+    white-space: nowrap;
+    text-align: center;
+    padding: 1px;
+    font-size: small;
+}
+
+/* tr:nth-child(even) {background: #FFF}
+tr:nth-child(odd) {background: lightgray} */
+
+table {
+    border-collapse: collapse;
+    font-family: helvetica;
+    caption-side: top;
+    text-transform: capitalize;
+}
+
+caption {
+    text-align: left;
+    position: fixed;
+    left: 0;
+    top: 0
+}
+
+td, th {
+    border: 1px solid;
+    padding: 5px;
+    min-width: 40px;
+    background: white;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: small;
+}
+
+th {
+    box-shadow: 0 0 0 1px black;
+}
+
+.table-container {
+    position: relative;
+    width: 96vw;
+    height: 75vh;
+    overflow: scroll;
+    margin-left: 2vw;
+    margin-right: 2vw;
+}
+
+thead th, tfoot th {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: hsl(20, 50%, 70%);
+}
+
+thead th:first-child, tfoot th:first-child {
+    left: 0;
+    z-index: 3;
+}
+
+tfoot {
+    position: -webkit-sticky;
+    bottom: 0;
+    z-index: 2;
+}
+
+tfoot th {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background: hsl(20, 50%, 70%);
+}
+
+tfoot td:first-child {
+    z-index: 3;
+}
+
+tbody {
+    overflow: scroll;
+    height: 200px;
+}
+
+/* MAKE LEFT COLUMN FIXEZ */
+
+tr> :first-child {
+    position: -webkit-sticky;
+    position: sticky;
+    background: hsl(180, 50%, 70%);
+    left: 0;
+}
+
+/* don't do this */
+
+tr> :first-child {
+    box-shadow: inset 0px 1px black;
+}

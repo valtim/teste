@@ -81,19 +81,39 @@
             <col *ngFor="let col of columns" [style.width]="col.width">
         </colgroup>
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
+    <ng-template pTemplate="header">
         <tr>
-            <th *ngFor="let col of columns">
-                {{col.header}}
-            </th>
+            <th>Prefixo</th>
+            <th>Número Do DB</th>
+            <th>Folha</th>
+            <th>Data Do Diario</th>
+            <th>PIC</th>
+            <th>SIC</th>
+            <th>Cliente</th>
+            <th>Natureza</th>
+            <th>Horas de Voo</th>
+            <th>Horas Dec/Pou</th>
+            <th>Canc.</th>
+            <th>SPOT</th>
+            <th>Audit.</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
         <!-- (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" -->
         <tr [pSelectableRow]="rowData">
-            <td *ngFor="let col of columns">                
-                {{rowData[col.field]}}
-            </td>
-        </tr>
+            <td>{{rowData.Prefixo}}</td>
+            <td>{{rowData.NumeroDoDiario}}</td>
+            <td>{{rowData.NumeroDaFolha}}</td>
+            <td>{{rowData.DataDoDiario|date:'dd/MM/yyyy'}}</td>
+            <td>{{rowData.PIC}}</td>
+            <td>{{rowData.SIC}}</td>
+            <td>{{rowData.Cliente}}</td>
+            <td>{{rowData.Natureza}}</td>
+            <td>{{rowData.HorasDeVoo}}</td>
+            <td>{{rowData.HorasDepArr}}</td>
+            <td>{{rowData.Canceladastr}}</td>
+            <td>{{rowData.EhSPOTstr}}</td>
+            <td>{{rowData.EhAuditoriastr}}</td>
+         </tr>
     </ng-template>
 </p-table>

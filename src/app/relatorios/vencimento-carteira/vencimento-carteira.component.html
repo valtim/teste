@@ -1,7 +1,7 @@
 <app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
 <div class="tabela" *ngIf="valores">
     <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
-        scrollHeight="80vh" id="" frozenWidth="130px" frozenHeight="100px" class="tabela">
+        scrollHeight="80vh" id="" frozenWidth="180px" frozenHeight="100px" class="tabela" (sortFunction)="customSort($event)" [customSort]="true" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns" class="coluna">
@@ -9,7 +9,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" class="coluna">
+                <th [pSortableColumn]="col.field" *ngFor="let col of columns; let i = index" class="coluna">
                     {{col.header}}
                 </th>
             </tr>
@@ -17,20 +17,31 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
                 <td *ngFor="let col of columns">
-                    <div [id]="rowData[col.field].Id" *ngIf="ehObjeto(rowData[col.field])" [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
+
+
+
+                    <div *ngIf="ehObjeto(rowData[col.field]) && rowData[col.field].Certificado.Readonly"
+                        [ngClass]="rowData[col.field].Cor" (click)="exibirVoos($event, rowData[col.field]);op.toggle($event)">
                         {{rowData[col.field].ValorExibido}}
                     </div>
-                    <div *ngIf="rowData[col.field].Display && !rowData[col.field].Certificado.Readonly">
+
+
+
+                    <div [id]="rowData[col.field].Id" *ngIf="ehObjeto(rowData[col.field]) && !rowData[col.field].Certificado.Readonly"
+                        [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
+                        {{rowData[col.field].ValorExibido}}
+                    </div>
+
+                    <div *ngIf="rowData[col.field].Display && !rowData[col.field].Certificado.Readonly && podeEditar">
                         <p-dialog [header]="col.field" [(visible)]="rowData[col.field].Display" [modal]="true"
                             [baseZIndex]="10000">
 
-                                <app-editar-vencimento [dados]="rowData[col.field]" (retorno)="retornoCarteira($event)"></app-editar-vencimento>
+                            <app-editar-vencimento [dados]="rowData[col.field]" (retorno)="retornoCarteira($event)">
+                            </app-editar-vencimento>
 
                         </p-dialog>
                     </div>
-                     
 
-                        
 
                     <div *ngIf="!ehObjeto(rowData[col.field])">{{rowData[col.field]}}</div>
                 </td>
@@ -40,9 +51,17 @@
 
 </div>
 
-<!-- <div class="row text-center font-weight-bold">
+
+
+
+<div class="row text-center font-weight-bold">
     <div class="col-3" style="background-color: #bdd6ee">60 dias</div>
     <div class="col-3" style="background-color: #ffff00">30 dias</div>
     <div class="col-3" style="background-color: #f7caac">15 dias</div>
     <div class="col-3 text-white" style="background-color: #ff0000">Vencidos</div>
-  </div> -->
+</div>
+
+
+<p-overlayPanel #op >
+    <div #myDiv></div>
+</p-overlayPanel>

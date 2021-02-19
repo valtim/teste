@@ -117,7 +117,7 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <input pInputText type="text" [(ngModel)]="rowData.Descricao"
-                                (onChange)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                                (keyup)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{rowData.Descricao}}

@@ -1,0 +1,12 @@
+<div (click)="op.toggle($event)">
+    {{valor.ValorExibido}}  
+</div>
+
+<!-- <button type="text" pButton label="{{valor.ValorExibido}}" (click)="op.toggle($event)"></button> -->
+
+
+<p-overlayPanel #op>
+    <ng-template pTemplate>
+        Content
+    </ng-template>
+</p-overlayPanel>

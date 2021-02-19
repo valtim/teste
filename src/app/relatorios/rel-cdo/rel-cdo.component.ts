@@ -1,5 +1,5 @@
 import { ApiService } from './../../shared/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -8,6 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./rel-cdo.component.css']
 })
 export class RelCdoComponent implements OnInit {
+
+  @ViewChild ('conteudo') conteudo;
 
   tela_ok = false;
   consulta_ok = false;
@@ -51,14 +53,35 @@ export class RelCdoComponent implements OnInit {
 
 
   imprimir(){
-    window.print();
+    //window.getElementById("conteudo").print();
+    //this.conteudo.nativeElement.print();
+    print();
   }
+
+  print(): void {
+    let printContents, popupWin;
+    printContents = document.getElementById('conteudo').innerHTML;
+    popupWin = window.open('', '_blank', 'top=0,left=0,height=100%,width=auto');
+    popupWin.document.open();
+    popupWin.document.write(`
+      <html>
+        <head>
+          <title>Print tab</title>
+          <style>
+          //........Customized style.......
+          </style>
+        </head>
+    <body onload="window.print();window.close()">${printContents}</body>
+      </html>`
+    );
+    popupWin.document.close();
+}
 
   rodarRelatorio() {
     this.api.SaveSettings(this.data.toISOString());
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {
-      this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(x);
+      this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(x[0].HTML + x[1].HTML);
       // this.dadosCliente = x.lista;
       // this.dadosInterno = x.listaInterna;
       // this.retorno_data = x.data;

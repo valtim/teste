@@ -47,6 +47,9 @@ import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/ve
 import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
 import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
+import { CertificadoComponent } from './treinamento/certificado/certificado.component';
+import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component';
+import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -68,11 +71,14 @@ const routes: Routes = [
     component: MotivoDoErroNoPreenchimentoComponent,
     canActivate: [AuthGuardService]
   },
-  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, {
+  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, 
+  { path: 'quadro-de-tripulantes-readonly', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, 
+  {
     path: 'fadiga',
     component: FadigaComponent,
     canActivate: [AuthGuardService]
   },
+  { path: 'tipo-de-certificado', component: CertificadoComponent, canActivate: [AuthGuardService] },
   {
     path: 'fadiga/:data',
     component: FadigaComponent,
@@ -207,6 +213,14 @@ const routes: Routes = [
   {
     path: 'imprimir-jornada',
     component: ImprimirJornadaNovoComponent,
+  },
+  {
+    path: 'escala-mensal',
+    component: EscalaMensalComponent,
+  },
+  {
+    path: 'tipo-de-ocorrencia',
+    component: TipoDeOcorrenciaComponent,
   },
 ];
 

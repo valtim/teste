@@ -33,7 +33,7 @@ export class RelConsCombComponent implements OnInit {
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixo;
       this.clientes = x.Cliente;
-      this.tudoPronto = true;
+      //this.tudoPronto = true;
     })
 
     const date = new Date();

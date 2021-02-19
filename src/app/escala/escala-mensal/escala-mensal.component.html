@@ -1,0 +1,79 @@
+<app-titulo titulo="Escala Mensal" [carregando]="!tudoPronto"></app-titulo>
+
+<div class="container d-print-none">
+
+    <div class="row ml-1">
+        <div class="col-4">
+
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Inicial</span>
+                </div>
+                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+
+        </div>
+
+        <div class="col-4">
+
+            <div class="input-group mb-3">
+                <div class="input-group-append">
+                    <span class="input-group-text">Final</span>
+                </div>
+                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                    showIcon="true"></p-calendar>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="table-container">
+
+    <table>
+        <thead>
+            <tr>
+                <th *ngFor="let col of colunas">{{col.header}}</th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <th *ngFor="let col of colunas">{{col.header}}</th>
+            </tr>
+        </tfoot>
+
+
+        <tr *ngFor="let linha of dados">
+            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.header].Id)"  [ngClass]="linha[col.header].Realizada ? 'negrito' : ''" [class]="linha[col.header].Estilo">
+                {{linha[col.header].Texto}}</td>
+        </tr>
+
+        
+    </table>
+
+</div>
+
+<ul>
+    <li *ngFor="let item of vencimentos">{{item.Curso}}
+        <ul>
+            <li *ngFor="let data of item.Datas">{{data.ValorExibido}} - {{data.Tripulante.Trato}}</li>
+        </ul>
+    </li>
+
+</ul>
+
+<!-- [header]="col.field" -->
+<p-dialog header="Escala do Dia" [(visible)]="ExibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultar()">
+
+    <app-editar-escala *ngFor="let item of previsoes" [Registro]="item" [TipoDeOcorrencias]="TipoDeOcorrencias"
+        (retorno)="retornoEvento($event)"></app-editar-escala>
+
+</p-dialog>

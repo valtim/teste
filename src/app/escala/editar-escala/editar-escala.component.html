@@ -1,0 +1,53 @@
+<div *ngIf="Registro.Display">
+
+    <h3>{{Registro.Tripulante.Trato}} - {{Registro.Data | date:'dd/MM/yyyy'}}</h3>
+
+    <p-pickList [source]="list1" [target]="list2" dragdrop="true" [sourceStyle]="lista" [targetStyle]="lista"
+        (onTargetSelect)="funteste($event)">
+        <ng-template let-item pTemplate="item">
+            <div>
+                <b>{{item.TipoDeOcorrencia.Nome}}</b>
+                <span *ngIf="item.Descricao"><br />{{item.Descricao}}</span>
+            </div>
+        </ng-template>
+
+    </p-pickList>
+
+
+
+
+    <div *ngIf="itemSelecionado">
+
+        <hr>
+
+
+        <div class="row" *ngIf="itemSelecionado.TipoDeOcorrencia.ExibeHora">
+            <div class="col-6">
+                <label for="txt_inicio">Início</label>
+                <p-inputMask id="txt_inicio" mask="99:99" [(ngModel)]="itemSelecionado.HrInicio"></p-inputMask>
+            </div>
+            <div class="col-6">
+                <label for="txt_fim">Fim</label>
+                <p-inputMask id="txt_fim" mask="99:99" [(ngModel)]="itemSelecionado.HrFim"></p-inputMask>
+            </div>
+        </div>
+        <div class="row">
+            <label for="txt_descricao">Descrição</label>
+            <div id="txt_descricao" class="col-12"><textarea *ngIf="itemSelecionado" [(ngModel)]="itemSelecionado.Descricao" cols="70"
+                    rows="5"></textarea></div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+
+    <hr>
+    <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
+        class="ui-button-secondary"></button>
+
+</div>

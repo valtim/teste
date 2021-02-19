@@ -24,6 +24,9 @@ export class CrudComponent implements OnInit {
 
   @Input() combos: [];
 
+
+  @Input() Ordem;/// : any = function (a, b) { return a - b;}
+
   botoes: MenuItem[];
 
   locale_pt;
@@ -38,7 +41,7 @@ export class CrudComponent implements OnInit {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo"];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo", "Int32"];
   listas: any[];
 
 
@@ -98,6 +101,8 @@ export class CrudComponent implements OnInit {
 
       this.api.getGenerico(this.tipo).then(x => {
         this.dados = x.lista;
+        if ( this.Ordem != undefined )
+          this.dados = x.lista.sort(this.Ordem);
         this.colunas = x.propriedades.filter(x => (this.colunasExibidas.indexOf(x.field) > -1));
         this.todasAsColunas = x.propriedades;
         this.tela_ok = true;
@@ -172,6 +177,11 @@ export class CrudComponent implements OnInit {
 
       if (this.todasAsColunas[i].type == "DateTime") {
         novoItem[this.todasAsColunas[i].field] = '';
+        continue;
+      }      
+
+      if (this.todasAsColunas[i].type == "Int32") {
+        novoItem[this.todasAsColunas[i].field] = 0;
         continue;
       }
 

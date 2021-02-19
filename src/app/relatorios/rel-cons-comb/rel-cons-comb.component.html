@@ -78,13 +78,87 @@
     <div *ngFor="let cliente of dados">
 
 
-        <!-- <p-table>
-        <ng-template pTemplate="caption">
-            Cliente: {{cliente.Cliente}}
-        </ng-template>
-    </p-table> -->
+        			
 
-        <p-table [columns]="cols">
+        <p-table styleClass="p-datatable-gridlines">
+            <!-- <ng-template pTemplate="caption">
+                {{cliente.Cliente}}
+            </ng-template> -->
+            <ng-template pTemplate="header">
+                <tr>
+                    <th colspan="3">Cliente</th>
+                    <th>Hr. Voo</th>
+                    <th>Abastecido (Lts)</th>
+                    <th>Consumido (Lbs)</th>
+                </tr>
+                <tr>
+                    <th colspan="3">{{cliente.Cliente}}</th>
+                    <th>{{cliente.HrVoo}}</th>
+                    <th>{{cliente.Abastecido | number}}</th>
+                    <th>{{cliente.Consumo | number}}</th>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <div *ngFor="let prefixo of cliente.Filhos">
+
+            <p-table [value]="prefixo.Filhos" styleClass="p-datatable-gridlines" [columns]="cols">
+                <ng-template pTemplate="caption">
+                    {{prefixo.Prefixo}}
+                </ng-template>
+                <ng-template pTemplate="colgroup" let-columns>
+                    <colgroup>
+                        <col *ngFor="let col of columns" [style.width]="col.width">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Data</th>
+                        <th>Nº RDV</th>
+                        <th>Abastecimento</th>
+                        <th>Hr. Voo</th>
+                        <th>Abastecido (Lts)</th>
+                        <th>Consumido (Lbs)</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product>
+                    <tr>
+                        <td>{{product.Data | date:'dd/MM/yyyy'}}</td>
+                        <td>{{product.RDV}}</td>
+                        <td>{{product.Abastecimento}}</td>
+                        <td>{{product.HrVoo}}</td>
+                        <td>{{product.Abastecido | number}}</td>
+                        <td>{{product.Consumo | number}}</td>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="footer" let-columns>
+                    <tr>
+                        <td colspan="3">
+                            Total do {{prefixo.Prefixo}}
+                        </td>
+                        <td>
+                            {{prefixo.HrVoo}}
+                        </td>
+                        <td>
+                            {{prefixo.Abastecido | number}}
+                        </td>
+                        <td>
+                            {{prefixo.Consumo | number}}
+                        </td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+
+        </div>
+
+
+
+    </div>
+
+        
+        <!-- <p-table [columns]="cols">
             <ng-template pTemplate="colgroup" let-columns>
                 <colgroup>
                     <col *ngFor="let col of columns" [style.width]="col.width">
@@ -112,7 +186,7 @@
                         <span class="text-center">{{cliente.Cliente}}</span>
                     </td>
                     <td>
-                        {{cliente.HorasTotais}}
+                        {{cliente.HrVoo}}
                     </td>
                     <td>
                         {{cliente.Abastecido | number}}
@@ -124,75 +198,68 @@
             </ng-template>
         </p-table>
 
-        <div *ngFor="let prefixo of cliente.Prefixos">
+        
 
-            <p-table [columns]="cols" [value]="prefixo.Diarios">
-                <ng-template pTemplate="caption">
-                    Aeronave: {{prefixo.Prefixo}}
-                </ng-template>
-                <ng-template pTemplate="colgroup" let-columns>
-                    <colgroup>
-                        <col *ngFor="let col of columns" [style.width]="col.width">
-                    </colgroup>
-                </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th *ngFor="let col of columns">
-                            {{col.header}}
-                        </th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                    <tr>
-                        <td>
-                            {{rowData['Data'] | date:'dd/MM/yyyy' }}
-                        </td>
-                        <td>
-                            {{rowData['RDV']}}
-                        </td>
-                        <td>
-                            {{rowData['Abastecimento']}}
-                        </td>
-                        <td>
-                            {{rowData['HrVoo']}}
-                        </td>
-                        <td>
-                            {{rowData['Abastecido']| number}}
-                        </td>
-                        <td>
-                            {{rowData['Consumo']| number}}
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <ng-template pTemplate="footer" let-columns>
-                    <tr>
-                        <td colspan="3">
-                            Total do {{prefixo.Prefixo}}
-                        </td>
-                        <td>
-                            {{prefixo.HorasTotais}}
-                        </td>
-                        <td>
-                            {{prefixo.Abastecido | number}}
-                        </td>
-                        <td>
-                            {{prefixo.Consumo | number}}
-                        </td>
-                    </tr>
-                </ng-template>
-
-                <!-- <ng-template pTemplate="summary">
-                There are {{cars?.length}} cars
-            </ng-template> -->
-            </p-table>
-
-        </div>
+        <p-table [columns]="cols" [value]="prefixo.Filhos">
+            <ng-template pTemplate="caption">
+                Aeronave: {{prefixo.Prefixo}}
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col *ngFor="let col of columns" [style.width]="col.width">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th *ngFor="let col of columns">
+                        {{col.header}}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-filho>
 
 
+                <tr *ngFor="let rdv of prefixo.Filhos">
+                    <td>
+                        {{filho.Data | date:'dd/MM/yyyy' }}
+                    </td>
+                    <td>
+                        {{filho.RDV}}
+                    </td>
+                    <td>
+                        {{filho.Abastecimento}}
+                    </td>
+                    <td>
+                        {{filho.HrVoo }}
+                    </td>
+                    <td>
+                        {{filho.Abastecido | number}}
+                    </td>
+                    <td>
+                        {{filho.Consumo | number}}
+                    </td>
+                </tr>
 
+                
+            </ng-template>
 
-
-    </div>
+            <ng-template pTemplate="footer" let-columns>
+                <tr>
+                    <td colspan="3">
+                        Total do {{prefixo.Prefixo}}
+                    </td>
+                    <td>
+                        {{cliente.HrVoo}}
+                    </td>
+                    <td>
+                        {{cliente.Abastecido | number}}
+                    </td>
+                    <td>
+                        {{cliente.Consumo | number}}
+                    </td>
+                </tr>
+            </ng-template>
+            
+        </p-table> -->
 
 </div>

@@ -21,7 +21,7 @@
             <td rowspan="2">{{rdv.Prefixo}}</td>
             <td rowspan="2">{{rdv.IdentificadorCliente}}</td>
             <td rowspan="2">{{rdv.Base}}</td>
-            <td rowspan="2">{{rdv.DataDodiario}}</td>
+            <td rowspan="2">{{rdv.DataDoDiario |date:'dd/MM/yyyy'}}</td>
             <th>Nº VOO</th>
             <td>{{rdv.NumeroDoVoo}}</td>
 
@@ -68,12 +68,12 @@
             <td>{{item.Decolagem | date: 'HH:mm'}}</td>
             <td>{{item.Pouso | date: 'HH:mm'}}</td>
             <td>{{item.Corte | date: 'HH:mm'}}</td>
-            <td>{{item.DecAtePou}}</td>
+            <td>{{item.DecAtePou| slice:0:5}}</td>
             <td>{{item.Pousos}}</td>
-            <td>{{item.VFR}}</td>
-            <td>{{item.IFR}}</td>
-            <td>{{item.Noturno}}</td>
-            <td>{{item.Total}}</td>
+            <td>{{item.VFR| slice:0:5}}</td>
+            <td>{{item.IFR| slice:0:5}}</td>
+            <td>{{item.Noturno| slice:0:5}}</td>
+            <td>{{item.Total| slice:0:5}}</td>
             <td>{{item.Pax}}</td>
             <td>{{item.Carga}}</td>
             <td>{{item.FuelDec}}</td>
@@ -84,10 +84,10 @@
             <td>{{rdv.Partidas}}</td>
             <th colspan="4">Pri Dec/Ulti Pou: {{rdv.HorasDepArr}}</th>
             <td>{{rdv.Pousos}}</td>
-            <td>{{rdv.VFR}}</td>
-            <td>{{rdv.IFR}}</td>
-            <td>{{rdv.Noturno}}</td>
-            <td>{{rdv.Total}}</td>
+            <td>{{rdv.VFR| slice:0:5}}</td>
+            <td>{{rdv.IFR| slice:0:5}}</td>
+            <td>{{rdv.Noturno| slice:0:5}}</td>
+            <td>{{rdv.Total| slice:0:5}}</td>
             <td>{{rdv.Pax}}</td>
             <td>---</td>
             <th>CONSUMO:</th>
@@ -112,7 +112,7 @@
                 </tr>
                 <tr *ngFor="let item of rdv.Abastecimento">
                     <td>{{item.Local}}</td>
-                    <td>{{item.Abastecedora}}</td>
+                    <td>{{item.Abastecedora.Nome}}</td>
                     <td>{{item.Nota}}</td>
                     <td>{{item.QuantidadeAbastecida | number}}</td>
                 </tr>

@@ -18,6 +18,9 @@ export class ControleDeTripulantesComponent implements OnInit {
   filtroRetorno: any;
   cols: any;
 
+  largura_padrao = "3%";
+  largura_estreita = "1.5%";
+
   constructor(private api : ApiService) { }//, private excelService: ExcelService) { }
 
   ngOnInit(): void {
@@ -38,8 +41,31 @@ export class ControleDeTripulantesComponent implements OnInit {
   }
 
   gerarExcel(){
+
+   
+    import("xlsx").then(xlsx => {
+        const worksheet = xlsx.utils.json_to_sheet(this.dados);
+        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, "tripulantes");
+    });
+
+    
+  
+
     //this.excelService.exportAsExcelFile(this.cols.map(x=>x.header), this.dados, 'controle-de-tripulantes')
   }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    import("file-saver").then(FileSaver => {
+        let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+        let EXCEL_EXTENSION = '.xlsx';
+        const data: Blob = new Blob([buffer], {
+            type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+    });
+}
 
   rodarRelatorio() {
     this.carregando = true;

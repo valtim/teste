@@ -10,50 +10,68 @@ import { ApiService } from 'src/app/shared/api.service';
 export class EditarVencimentoComponent implements OnInit {
 
 
+
+  @Input() podeEditar;
   @Input() dados;
 
   @Output() retorno = new EventEmitter();
-  
+
   locale_pt: any;
-  na;
-  data;
+  naoControlado: boolean = false;
+  valorExibido: string;
+  mascara: string;
 
-  mask;
-
-  constructor(private api : ApiService) {
-
+  constructor(private api: ApiService) {
 
 
-   }
+
+  }
 
   ngOnInit(): void {
-    // this.trato = this.vencimento.Dados['Trato'];
-    if ( this.dados.ValorExibido == "n/a")
+
+    this.mascara = "99/99/99";
+    if (this.dados.Certificado.SomenteMes)
+      this.mascara = "99/99";
+
+    this.naoControlado = this.dados.NaoControlado;
+
+    if (this.dados.ValorExibido == "---" || this.dados.NaoControlado)
       return;
-      this.mask = this.dados.Certificado.Mascara.replace("dd", "99").replace("MM", "99").replace("yyyy", "9999");
-     this.data = this.dados.ValorExibido;
-    // this.id = this.vencimento.Dados[this.vencimento.Campo].Id;
-    // this.locale_pt = this.api.getLocale('pt');
 
-
-    // this.curso = this.vencimento.Dados[this.vencimento.Campo];
-
-    // this.tripulante_id = this.curso["Tripulante_Id"];
-    // this.curso_id = this.curso["Certificado_Id"];
-
-
+    this.valorExibido = this.dados.ValorExibido;
   }
 
-  salvar(){
+  editarData(e) {
+    this.naoControlado = (e.target.value.length != this.mascara.length);
+  }
+
+  clique(e) {
+    if (e.checked)
+      this.valorExibido = '';
+  }
+
+  salvar() {
+
+    if (this.valorExibido.length == 0 && !this.naoControlado) {
+      alert('Deve ser preenchido um valor válido ou marcar N/A caso esta data não seja controlada');
+      return;
+    }
+
+    if (this.valorExibido.length != 0 && this.naoControlado) {
+      alert('Deve ser preenchido um valor válido ou marcar N/A caso esta data não seja controlada');
+      return;
+    }
+
     let novoValor = Object.assign(this.dados);
-    novoValor.ValorExibido = this.data;
-    this.retorno.emit({ Confirmado: true, Certificado : novoValor });
+    novoValor.ValorExibido = this.valorExibido;
+    novoValor.NaoControlado = this.naoControlado;
+    this.retorno.emit({ Confirmado: true, Certificado: novoValor });
   }
 
-  cancelar(){
+  cancelar() {
     // this.vencimento.Linha[this.vencimento.Campo].Display = false;
     this.dados.Display = false;
-    this.retorno.emit({ Confirmado: false});
+    this.retorno.emit({ Confirmado: false });
   }
 
 }

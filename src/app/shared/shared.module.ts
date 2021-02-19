@@ -23,6 +23,8 @@ import { CheckboxModule } from 'primeng-lts/checkbox';
 import { InputSwitchModule } from 'primeng-lts/inputswitch';
 import { InputTextareaModule } from 'primeng-lts/inputtextarea';
 import { CardModule } from 'primeng-lts/card';
+import { OverlayPanelModule } from 'primeng-lts/overlaypanel';
+import { PickListModule } from 'primeng-lts/picklist';
 // import { ListboxModule } from 'primeng-lts/listbox';
 
 @NgModule({
@@ -53,6 +55,8 @@ import { CardModule } from 'primeng-lts/card';
     FormsModule,
     InputSwitchModule,
     InputTextareaModule,
+    OverlayPanelModule,
+    PickListModule,
   ],
   imports: [
     CommonModule,
@@ -74,6 +78,8 @@ import { CardModule } from 'primeng-lts/card';
     FormsModule,
     InputSwitchModule,
     InputTextareaModule,
+    OverlayPanelModule,
+    PickListModule,
   ],
 })
 export class SharedModule { }

@@ -189,6 +189,12 @@ export class ApiService {
       .toPromise();
   }
 
+
+  getEscalaMensal(dataInicio : Date, dataFim: Date): any {
+    return this.http.get(`${this.url}api/escala-mensal/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.httpOptions)
+      .toPromise();
+  }
+
   getAbastecedoras(): any {
     return JSON.parse(localStorage.getItem('Abastecedora'));
   }
