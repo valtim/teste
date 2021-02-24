@@ -61,6 +61,7 @@ import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de
 import { PrevisaoDoDiaComponent } from './escala/previsao-do-dia/previsao-do-dia.component';
 import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
 import { EditarEscalaComponent } from './escala/editar-escala/editar-escala.component';
+import { EditarComposicaoComponent } from './escala/editar-composicao/editar-composicao.component';
 
 
 
@@ -121,6 +122,7 @@ registerLocaleData(localept, 'pt');
     PrevisaoDoDiaComponent,
     EscalaMensalComponent,
     EditarEscalaComponent,
+    EditarComposicaoComponent,
 
   ],
   imports: [

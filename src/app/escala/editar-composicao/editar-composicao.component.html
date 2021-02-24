@@ -1,0 +1,28 @@
+<div *ngIf="Escala.Display">
+
+    <h3>{{Escala.Data| date:'dd/MM/yyyy'}}</h3><br />
+
+    <table>
+        <tr>
+            <th>PIC</th>
+            <th>SIC</th>
+            <th>Cliente</th>
+            <th>Base</th>
+            <th>Observação</th>
+        </tr>
+        <tr *ngFor="let item of Escala.Lista">
+            <td><p-dropdown [options]="somentePIC" [(ngModel)]="item.PIC" optionLabel="Trato" [filter]="true" filterBy="Trato" [showClear]="true" placeholder="PIC"></p-dropdown></td>
+            <td><p-dropdown [options]="todosOsTripulantes" [(ngModel)]="item.SIC" optionLabel="Trato" [filter]="true" filterBy="Trato" [showClear]="true" placeholder="SIC"></p-dropdown></td>
+            <td><p-dropdown [options]="Clientes" [(ngModel)]="item.Cliente" optionLabel="Nome" [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Cliente"></p-dropdown></td>
+            <td><p-dropdown [options]="Bases" [(ngModel)]="item.BaseDoTripulante" optionLabel="ICAO" [filter]="true" filterBy="ICAO" [showClear]="true" placeholder="Base"></p-dropdown></td>
+            <td><input type="text" [(ngModel)]="item.Descricao"></td>
+        </tr>
+    
+    </table>
+
+    <hr>
+    <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
+        class="ui-button-secondary"></button>
+
+</div>

@@ -13,9 +13,14 @@ export class EscalaMensalComponent implements OnInit {
   previsoes: any;
   vencimentos: any;
 
+  escalaDoDiaSelecionada;
   registroSelecionado;
   TipoDeOcorrencias: any;
   ExibirDialogo: boolean;
+  Tripulacoes: any;
+  Tripulantes: any;
+  Clientes: any;
+  Bases: any;
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -34,6 +39,12 @@ export class EscalaMensalComponent implements OnInit {
   }
 
 
+  editarDia(e, dia){
+    this.escalaDoDiaSelecionada = this.Tripulacoes.find(x=>x.Data == dia+"T00:00:00");
+    this.escalaDoDiaSelecionada.Display = true;
+    this.ExibirDialogo = true;
+  }
+
   rodarRelatorio() {
 
 
@@ -41,12 +52,20 @@ export class EscalaMensalComponent implements OnInit {
     this.api.getEscalaMensal(this.dataInicio, this.dataFim).then(x=> {
       this.dados = x;
 
-      this.colunas = x.Colunas.map(x=> ({'field': x, 'header' : x}));
+      this.colunas = x.Colunas;
       this.dados = x.Dados;
       this.previsoes = x.previsoes;
       this.TipoDeOcorrencias = x.TipoDeOcorrencias;
+      this.Tripulacoes = x.Tripulacoes;
+      this.Tripulantes = x.Tripulantes;
+      this.Clientes = x.clientes;
+      this.Bases = x.bases;
 
       this.previsoes.forEach(x => {
+        x.Display = false
+      });
+
+      this.Tripulacoes.forEach(x => {
         x.Display = false
       });
 
@@ -81,19 +100,22 @@ export class EscalaMensalComponent implements OnInit {
 
 
   fazerBalanco(coluna){
-    const items = this.dados.filter(x=>x.PIC.Texto).map(x=>x[coluna.field]).filter(x=>x.Texto.includes("EV")).length + "/" + this.dados.map(x=>x[coluna.field]).filter(x=> x.Texto && x.Texto.includes("EV")).length ;
+    const items = this.dados.filter(x=>x.PIC.Texto).map(x=>x[coluna.Header]).filter(x=>x.Texto.includes("EV")).length + "/" + this.dados.map(x=>x[coluna.Header]).filter(x=> x.Texto && x.Texto.includes("EV")).length ;
 
     let balanco = this.dados.find(x=>x.Name.Texto == "BALANCE");
-    balanco[coluna.field] = { "Texto": items };
+    balanco[coluna.Header] = { "Texto": items };
   }
 
   retornoEvento(e){
     this.ExibirDialogo = false;
-    this.registroSelecionado.Display = false;
+    this.ocultar();
   }
 
   ocultar(){
-    this.registroSelecionado.Display = false;
+    if (this.registroSelecionado)
+      this.registroSelecionado.Display = false;
+    if ( this.escalaDoDiaSelecionada )
+      this.escalaDoDiaSelecionada.Display = false;
   }
 
 }

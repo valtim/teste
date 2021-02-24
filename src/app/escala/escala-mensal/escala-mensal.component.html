@@ -40,20 +40,21 @@
     <table>
         <thead>
             <tr>
-                <th *ngFor="let col of colunas">{{col.header}}</th>
+                <th *ngFor="let col of colunas" (click)="editarDia($event, col.Value)">{{col.Header}}</th>
             </tr>
         </thead>
 
         <tfoot>
             <tr>
-                <th *ngFor="let col of colunas">{{col.header}}</th>
+                <th *ngFor="let col of colunas">{{col.Header}}</th>
             </tr>
         </tfoot>
 
 
         <tr *ngFor="let linha of dados">
-            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.header].Id)"  [ngClass]="linha[col.header].Realizada ? 'negrito' : ''" [class]="linha[col.header].Estilo">
-                {{linha[col.header].Texto}}</td>
+            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"  [ngClass]="linha[col.Header].Realizada ? 'negrito' : ''" [class]="linha[col.Header].Estilo">
+                {{linha[col.Header].Texto}} <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br/>{{linha[col.Header].Base}}</span>
+            </td>
         </tr>
 
         
@@ -70,8 +71,11 @@
 
 </ul>
 
-<!-- [header]="col.field" -->
-<p-dialog header="Escala do Dia" [(visible)]="ExibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultar()">
+<!-- [Header]="col.field" -->
+<p-dialog Header="Escala do Dia" [(visible)]="ExibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultar()">
+
+
+    <app-editar-composicao *ngFor="let item of Tripulacoes" [Escala]="item" [Tripulantes]="Tripulantes" [Clientes]="Clientes" [Bases]="Bases"></app-editar-composicao>
 
     <app-editar-escala *ngFor="let item of previsoes" [Registro]="item" [TipoDeOcorrencias]="TipoDeOcorrencias"
         (retorno)="retornoEvento($event)"></app-editar-escala>
