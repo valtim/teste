@@ -21,6 +21,7 @@ export class EscalaMensalComponent implements OnInit {
   Tripulantes: any;
   Clientes: any;
   Bases: any;
+  Balanco: any;
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -60,6 +61,7 @@ export class EscalaMensalComponent implements OnInit {
       this.Tripulantes = x.Tripulantes;
       this.Clientes = x.clientes;
       this.Bases = x.bases;
+      this.Balanco = x.balanco;
 
       this.previsoes.forEach(x => {
         x.Display = false
@@ -102,8 +104,8 @@ export class EscalaMensalComponent implements OnInit {
   fazerBalanco(coluna){
     const items = this.dados.filter(x=>x.PIC.Texto).map(x=>x[coluna.Header]).filter(x=>x.Texto.includes("EV")).length + "/" + this.dados.map(x=>x[coluna.Header]).filter(x=> x.Texto && x.Texto.includes("EV")).length ;
 
-    let balanco = this.dados.find(x=>x.Name.Texto == "BALANCE");
-    balanco[coluna.Header] = { "Texto": items };
+    //let balanco = this.dados.find(x=>x.Name.Texto == "BALANCE");
+    this.Balanco[coluna.Header] = { "Texto": items };
   }
 
   retornoEvento(e){

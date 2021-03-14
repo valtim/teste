@@ -8,11 +8,14 @@
 
 
   <p-accordionTab *ngFor="let item of menu" [header]="item.Grupo" [selected]="true">
-    <li *ngFor="let link of item.Lista">
-      <a *ngIf="isEnable(link.Rota) && !link.Novo" [routerLink]="['/'+ link.Rota]">
+    <li *ngFor="let link of item.Lista">      
+      <a *ngIf="isEnable(link.Rota) && link.LinkExterno" [href]="[link.Rota]" _target="_blank">
+        <b>{{link.Nome}}</b>
+      </a>
+      <a *ngIf="isEnable(link.Rota) && !link.Novo && !link.LinkExterno" [routerLink]="['/'+ link.Rota]">
         {{link.Nome}}
       </a>
-      <a *ngIf="isEnable(link.Rota) && link.Novo" [routerLink]="['/'+ link.Rota]">
+      <a *ngIf="isEnable(link.Rota) && link.Novo && !link.LinkExterno" [routerLink]="['/'+ link.Rota]">
         <b>{{link.Nome}}</b>
       </a>
     </li>

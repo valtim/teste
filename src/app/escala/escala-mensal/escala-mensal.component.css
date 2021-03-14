@@ -1,17 +1,26 @@
-.p-picklist-source-controls{
-    display: none !important;;
+.p-picklist-source-controls {
+    display: none !important;
+    ;
 }
 
-.amarelo{
+/* .amarelo{
     background-color: burlywood;
-}
+} */
 
-.negrito{
+.negrito {
     font-weight: bolder;
     font-style: italic;
 }
 
-.texto-pequeno{
+.escala_de_voo {
+    background-color: rgba(9, 255, 0, 0.1);
+}
+
+.folga {
+    background-color: rgba(0, 174, 255, 0.1);
+}
+
+.texto-pequeno {
     font-weight: bold;
     font-size: xx-small;
     vertical-align: bottom;
@@ -21,16 +30,18 @@ body {
     font-size: small;
 }
 
-table, th, td {
-    border: 1px solid black;
-    white-space: nowrap;
+
+
+td, th {
+    border: 1px solid;
+    padding: 5px;
+    background: white;
     text-align: center;
-    padding: 1px;
     font-size: small;
+    min-width: 100px;
+    height: 100px;
 }
 
-/* tr:nth-child(even) {background: #FFF}
-tr:nth-child(odd) {background: lightgray} */
 
 table {
     border-collapse: collapse;
@@ -46,18 +57,9 @@ caption {
     top: 0
 }
 
-td, th {
-    border: 1px solid;
-    padding: 5px;
-    min-width: 40px;
-    background: white;
-    box-sizing: border-box;
-    text-align: center;
-    font-size: small;
-}
-
 th {
     box-shadow: 0 0 0 1px black;
+    height: 50px;
 }
 
 .table-container {

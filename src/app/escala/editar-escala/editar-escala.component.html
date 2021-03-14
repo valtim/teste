@@ -3,7 +3,7 @@
     <h3>{{Registro.Tripulante.Trato}} - {{Registro.Data | date:'dd/MM/yyyy'}}</h3>
 
     <p-pickList [source]="list1" [target]="list2" dragdrop="true" [sourceStyle]="lista" [targetStyle]="lista"
-        (onTargetSelect)="funteste($event)">
+        (onTargetSelect)="funteste($event)" showTargetControls="false"> 
         <ng-template let-item pTemplate="item">
             <div>
                 <b>{{item.TipoDeOcorrencia.Nome}}</b>

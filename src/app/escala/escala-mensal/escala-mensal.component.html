@@ -46,18 +46,25 @@
 
         <tfoot>
             <tr>
-                <th *ngFor="let col of colunas">{{col.Header}}</th>
+                <th *ngFor="let col of colunas">
+                    {{Balanco[col.Header].Texto}}
+                </th>
             </tr>
+            <!-- <tr>
+                <th *ngFor="let col of colunas">{{col.Header}}</th>
+            </tr> -->
         </tfoot>
 
 
         <tr *ngFor="let linha of dados">
-            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"  [ngClass]="linha[col.Header].Realizada ? 'negrito' : ''" [class]="linha[col.Header].Estilo">
+            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)" [class]="linha[col.Header].Estilo">
                 {{linha[col.Header].Texto}} <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br/>{{linha[col.Header].Base}}</span>
             </td>
         </tr>
 
         
+
+
     </table>
 
 </div>
