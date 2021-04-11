@@ -4,10 +4,13 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/api.service';
 import { AutorizacaoService } from './../../shared/autorizacao.service';
 
+import {MessageService} from 'primeng/api';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
 

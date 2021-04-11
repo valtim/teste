@@ -1,29 +1,20 @@
-<div class="vertical-center">
+<p-fieldset legend="Login">
 
-  <form>
-    <div class="input-group mb-3">
-      <div class="input-group-append">
-        <span class="input-group-text">Usuário</span>
-      </div>
-      <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username"
-        (change)="hideError()">
-    </div>
+  <h4>Usuário</h4>
+  <input type="text" pInputText [(ngModel)]="username">
 
-    <div class="input-group mb-3">
-      <div class="input-group-append">
-        <span class="input-group-text">Senha</span>
-      </div>
-      <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password"
-        (change)="hideError()">
-    </div>
+  <h4>Senha</h4>
+  <input type="password" pInputText [(ngModel)]="password">
 
-    <p class="bg-danger text-white" *ngIf="api.error">
-      {{api.error}}
-    </p>
+  <p class="bg-danger text-white" *ngIf="api.error">
+    {{api.error}}
+  </p>
 
-    <div class="spinner-border" *ngIf="loading">
-      <span class="sr-only">Loading...</span>
-    </div>
+  <p>
+    <button pButton label="Login" (click)="login()" *ngIf="!loading"></button>
+  </p>
+  
+  <p-progressSpinner *ngIf="loading"></p-progressSpinner>
 
-    <button class="btn btn-primary btn-lg btn-block" (click)="login()">Login</button>
-  </form>
+  <p-toast position="top-left"></p-toast>
+</p-fieldset>

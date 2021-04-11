@@ -1,51 +1,41 @@
-
 <app-titulo titulo="Fadiga" [carregando]="loadingDados || loadingPagina"></app-titulo>
 
-<div class="container">
+<p-tabView>
+  <p-tabPanel header="Básica">
+    <button type="button" pButton pRipple label="Enviar e-mail com
+    pendências" [routerLink]="caminho" class="p-mb-2"></button>
+    <!-- <button class="btn btn-warning btn-lg btn-block mt-2 mb-2" [routerLink]="caminho">Enviar e-mail com
+      pendências</button> -->
 
+    <app-pesquisa-basica *ngIf="basico" [data]="data" (retorno)="retornoDaPesquisa($event)"
+      (comeco)="inicioDaPesquisa($event)">
+    </app-pesquisa-basica>
+  </p-tabPanel>
+  <p-tabPanel header="Avançada">
+    <app-pesquisa-basica [data]="data" completa="true" [tripulantes]="tripulantes" [niveis]="niveis"
+      (retorno)="retornoDaPesquisa($event)" (comeco)="inicioDaPesquisa($event)"></app-pesquisa-basica>
+  </p-tabPanel>
+</p-tabView>
 
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      <a class="nav-link" [ngClass]="{'active' : basico}" (click)="basico = true;">Básica</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [ngClass]="{'active' : !basico}" (click)="basico = false;">Avançada</a>
-    </li>
-  </ul>
-
-
-  <div *ngIf="basico">
-    <button class="btn btn-warning btn-lg btn-block mt-2 mb-2" [routerLink]="caminho">Enviar e-mail com
-      pendências</button>
-  </div>
-  <app-pesquisa-basica *ngIf="basico" [data]="data" (retorno)="retornoDaPesquisa($event)"
-    (comeco)="inicioDaPesquisa($event)">
-  </app-pesquisa-basica>
-
-  <app-pesquisa-basica *ngIf="!basico" [data]="data" completa="true" [tripulantes]="tripulantes" [niveis]="niveis"
-    (retorno)="retornoDaPesquisa($event)" (comeco)="inicioDaPesquisa($event)"></app-pesquisa-basica>
-
-  <table class="table table-hover table-sm mt-2">
-    <thead>
-      <tr>
-        <th *ngIf="!basico">Data</th>
-        <th>Tripulante</th>
-        <th>Status</th>
-        <th>Nível</th>
-        <th>Pontos</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr (click)="goTratamento(fadiga.Id)" *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor"
-        [style.cursor]="fadiga.Cursor">
-        <td *ngIf="!basico">{{fadiga.Data}}</td>
-        <td>{{fadiga.Trato}}</td>
-        <td>{{fadiga.Status}}</td>
-        <td>{{fadiga.Nivel}}</td>
-        <td>{{fadiga.Pontos}}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="text-center">{{registros}}</div>
-
-</div>
+<table class="table table-hover table-sm mt-2">
+  <thead>
+    <tr>
+      <th *ngIf="!basico">Data</th>
+      <th>Tripulante</th>
+      <th>Status</th>
+      <th>Nível</th>
+      <th>Pontos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr (click)="goTratamento(fadiga.Id)" *ngFor="let fadiga of fadigas" [style.background]="fadiga.Cor"
+      [style.cursor]="fadiga.Cursor">
+      <td *ngIf="!basico">{{fadiga.Data}}</td>
+      <td>{{fadiga.Trato}}</td>
+      <td>{{fadiga.Status}}</td>
+      <td>{{fadiga.Nivel}}</td>
+      <td>{{fadiga.Pontos}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="text-center">{{registros}}</div>

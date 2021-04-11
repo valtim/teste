@@ -1,41 +1,36 @@
-th{
+tr {
+    height: 120px;
+}
+
+th {
     text-align: center;
-}
-
-.tabela {
-    margin-top: 60px;
-    /* margin-bottom: 60px; */
-}
-
-.coluna{
-    height: 100px;
-    width: 130px;
-}
-
-
-
-td {
-    white-space: nowrap;
-    height: 50px;
     font-size: small;
 }
 
-.azul{
+.coluna {
+    width: 130px;
+}
+
+td {
+    font-size: small;
+}
+
+.azul {
     background-color: #bdd6ee;
     padding: 5px;
 }
 
-.amarelo{
+.amarelo {
     background-color: #ffff00;
     padding: 5px;
 }
 
-.laranja{
+.laranja {
     background-color: #f7caac;
     padding: 5px;
 }
 
-.vermelho{
+.vermelho {
     background-color: crimson;
     color: white;
     font-weight: bolder;

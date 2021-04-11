@@ -1,37 +1,26 @@
 <app-titulo titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [carregando]="!relatorio_ok"></app-titulo>
 
-<div class="container d-print-none">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Data</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
+<div class="p-grid">
+    <div class="p-col"></div>
+    <div class="p-col v-no-wrap"><button type="button" pButton pRipple label="Data"></button>
+        <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+        showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+            (click)="rodarRelatorio()" class="p-ml-2"></button>
     </div>
 
 
+    <div class="p-col"></div>
 </div>
 
 <div *ngIf="relatorio_ok">
 
 
-    <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [dataConsulta]="dataDaConsulta" class="d-print"></app-cabecalho-impressao>
+    <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [dataConsulta]="dataDaConsulta" class="d-print">
+    </app-cabecalho-impressao>
 
-    <p-table [value]="previstas" [columns]="cols">
-        <!-- <ng-template pTemplate="caption">
-            BASE DE OPERAÇÕES: {{BaseDeOperacoes}}
-        </ng-template> -->
+    <p-table [value]="previstas" [columns]="cols" styleClass="p-datatable-striped">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns" [style.width]="col.width">

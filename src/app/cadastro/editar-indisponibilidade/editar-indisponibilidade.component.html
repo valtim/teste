@@ -3,33 +3,33 @@
 
     <form [formGroup]="fg" class="mt-2">
 
-
-        <div class="p-grid ui-fluid">
-            <div class="p-col-10 p-md-4">
-                <span class="ui-float-label mt-4">
-                    <p-inputSwitch id="ehOcorrencia" formControlName="EhOcorrencia"></p-inputSwitch>
-                    <label for="ehOcorrencia">Esta indisponibilidade é ocorrência?</label>
-                </span>
-                <div class="ui-inputgroup">
-                    <span class="ui-inputgroup-addon">Contrato</span>
-                    <p-dropdown [options]="contrato" formControlName="Contrato" placeholder="Selecione um contrato"
-                        optionLabel="Nome" [showClear]="true"></p-dropdown>
-                </div>
-                <span class="ui-float-label mt-4">
-                    <textarea id="float-input" rows="5" cols="100" pInputTextarea
-                        formControlName="DescricaoDoMotivo"></textarea>
-                    <label for="float-input">Descrição do Motivo</label>
-                </span>
-                <div class="ui-inputgroup">
-                    <span class="ui-inputgroup-addon">Início</span>
-                    <p-inputMask formControlName="Inicio" mask="99/99/9999 99:99"></p-inputMask>
-                    <span class="ui-inputgroup-addon">Término</span>
-                    <p-inputMask formControlName="Fim" mask="99/99/9999 99:99"></p-inputMask>
-                </div>
+        <div class="p-grid">
+            <div class="p-col">
+                <button type="button" pButton pRipple label="É ocorrência?"></button>
+                <p-inputSwitch id="ehOcorrencia" formControlName="EhOcorrencia"></p-inputSwitch>
+            </div>
+            <div class="p-col">
+                <p-dropdown [options]="contrato" formControlName="Contrato" placeholder="Contrato" optionLabel="Nome"
+                    [showClear]="true"></p-dropdown>
+            </div>
+            <div class="p-col">
+                <button type="button" pButton pRipple label="Início"></button>
+                <p-inputMask formControlName="Inicio" mask="99/99/9999 99:99"></p-inputMask>
+            </div>
+            <div class="p-col">
+                <button type="button" pButton pRipple label="Término"></button>
+                <p-inputMask formControlName="Fim" mask="99/99/9999 99:99"></p-inputMask>
             </div>
         </div>
-
-
+        <div class="p-grid">
+            <div class="p-col"></div>
+            <div class="p-col">
+                <button type="button" pButton pRipple label="Descrição do Motivo"></button>
+                <textarea id="float-input" rows="5" cols="100" pInputTextarea
+                    formControlName="DescricaoDoMotivo"></textarea>
+            </div>
+            <div class="p-col"></div>
+        </div>
 
     </form>
 
@@ -129,9 +129,13 @@
         </p-table>
     </form>
 
-    <p-footer class=" d-flex justify-content-end">
-        <button pButton type="button" label="Excluir" class="ui-button-danger mr-2" (click)="excluir()"></button>
-        <button pButton type="button" label="Cancelar" class="ui-button-warning mr-2" (click)="cancelar()"></button>
-        <button pButton type="button" label="Salvar" class="ui-button-success" (click)="salvar(false)"></button>
-    </p-footer>
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col">
+            <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger p-mr-2" (click)="excluir()"></button>
+            <button pButton type="button" icon="pi pi-undo" label="Cancelar" class="p-button-warning p-mr-2" (click)="cancelar()"></button>
+            <button pButton type="button" icon="pi pi-check" label="Salvar" class="p-button-success"(click)="salvar(false)"></button>
+        </div>
+        <div class="p-col"></div>
+    </div>
 </p-card>

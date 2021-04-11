@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { SortEvent } from 'primeng-lts/api/sortevent';
+import { SortEvent } from 'primeng/api/sortevent';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({

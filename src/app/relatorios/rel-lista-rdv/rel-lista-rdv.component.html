@@ -1,81 +1,57 @@
 <app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="container d-print-none">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-2">
-
-            <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
-                <p-header>
-                    Clientes
-                </p-header>
-            </p-listbox>
-
-        </div>
-        <div class="col-sm-6 col-lg-2">
-
-            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
-                <p-header>
-                    Prefixos
-                </p-header>
-            </p-listbox>
-
-        </div>
-        <div class="col-sm-6 col-lg-4" style="width: 200px;">
-
-            <p-listbox [options]="naturezas" [(ngModel)]="naturezasSelecionadas" multiple="multiple" checkbox="checkbox"
-                filter="filter" optionLabel="Nome" [listStyle]="{'max-height':'110px'}">
-                <p-header>
-                    Naturezas
-                </p-header>
-            </p-listbox>
-
-        </div>
-
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy"
-                    [locale]="locale_pt" showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <span class="input-group-text">Final</span>
-                    </div>
-                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
-                       [locale]="locale_pt" showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-                </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <span class="input-group-text">Nº do RDV</span>
-                    </div>
-                    <input type="text" [(ngModel)]="rdv">
-                </div>
-
-
-            </div>
-        </div>
-
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
-
+<div class="p-grid">    
+    <div class="p-col"></div>
+    <div class="p-col">
+        <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+            filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
+            <p-header>
+                Clientes
+            </p-header>
+        </p-listbox>
+    </div>
+    <div class="p-col">
+        <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+            filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
+            <p-header>
+                Prefixos
+            </p-header>
+        </p-listbox>
+    </div>
+    <div class="p-col">
+        <p-listbox [options]="naturezas" [(ngModel)]="naturezasSelecionadas" multiple="multiple" checkbox="checkbox"
+            filter="filter" optionLabel="Nome" [listStyle]="{'max-height':'110px'}">
+            <p-header>
+                Naturezas
+            </p-header>
+        </p-listbox>
 
     </div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Inicial"></button>
 
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+
+        <button type="button" pButton pRipple label="Final"></button>
+        
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+    </div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Nº do RDV"></button>
+        <input type="text" pInputText [(ngModel)]="rdv"></div>
+    <div class="p-col">
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+            (click)="rodarRelatorio()"></button>
+    </div>
+    <div class="p-col"></div>
 
 </div>
 
-
-<p-table [columns]="cols" [value]="dados" *ngIf="dados" selectionMode="single" [(selection)]="rel_selecionado" dataKey="Id" (onRowSelect)="onRowSelect($event)">
+<p-table [columns]="cols" [value]="dados" *ngIf="dados" selectionMode="single" [(selection)]="rel_selecionado"
+    dataKey="Id" (onRowSelect)="onRowSelect($event)">
     <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
             <col *ngFor="let col of columns" [style.width]="col.width">
@@ -114,6 +90,6 @@
             <td>{{rowData.Canceladastr}}</td>
             <td>{{rowData.EhSPOTstr}}</td>
             <td>{{rowData.EhAuditoriastr}}</td>
-         </tr>
+        </tr>
     </ng-template>
 </p-table>

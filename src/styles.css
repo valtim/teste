@@ -1,11 +1,25 @@
-.vertical-center {
+/* .vertical-center {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
 }
 
-.container {
-  margin-top: 60px;
-  margin-bottom: 60px;
+body{  
+  font-family: helvetica;
+} */
+
+@media print {
+  .nao-imprimir {
+    display: none;
+  }
+  app-titulo {
+    display: none;
+  }
+}
+
+@media screen {
+  .somente-impressora {
+    display: none;
+  }
 }

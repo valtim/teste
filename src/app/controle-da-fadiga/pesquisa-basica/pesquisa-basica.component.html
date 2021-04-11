@@ -1,12 +1,8 @@
 <form [formGroup]="fg" class="mt-2">
-    <div class="input-group" *ngIf="!completa">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Data</span>
-        </div>
-        <input type="date" class="form-control" formControlName="Data">
-        <div class="input-group-append">
-            <p-button icon="pi pi-search" iconPos="left" (click)="enviarForm()"></p-button>
-        </div>
+    <div *ngIf="!completa">
+        <button type="button" pButton pRipple label="Data"></button>
+        <input pInputText type="text" formControlName="Data" (focus)="$event.target.select()">
+        <p-button icon="pi pi-search" iconPos="left" (click)="enviarForm()" class="p-ml-2"></p-button>
     </div>
 
 

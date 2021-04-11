@@ -1,7 +1,8 @@
 <app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
 <div class="tabela" *ngIf="valores">
     <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
-        scrollHeight="80vh" id="" frozenWidth="180px" frozenHeight="100px" class="tabela" (sortFunction)="customSort($event)" [customSort]="true" >
+        scrollHeight="70vh" id="" frozenWidth="280px" frozenHeight="200px" class="tabela"
+        (sortFunction)="customSort($event)" [customSort]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of columns" class="coluna">
@@ -21,13 +22,15 @@
 
 
                     <div *ngIf="ehObjeto(rowData[col.field]) && rowData[col.field].Certificado.Readonly"
-                        [ngClass]="rowData[col.field].Cor" (click)="exibirVoos($event, rowData[col.field]);op.toggle($event)">
+                        [ngClass]="rowData[col.field].Cor"
+                        (click)="exibirVoos($event, rowData[col.field]);op.toggle($event)">
                         {{rowData[col.field].ValorExibido}}
                     </div>
 
 
 
-                    <div [id]="rowData[col.field].Id" *ngIf="ehObjeto(rowData[col.field]) && !rowData[col.field].Certificado.Readonly"
+                    <div [id]="rowData[col.field].Id"
+                        *ngIf="ehObjeto(rowData[col.field]) && !rowData[col.field].Certificado.Readonly"
                         [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
                         {{rowData[col.field].ValorExibido}}
                     </div>
@@ -62,6 +65,6 @@
 </div>
 
 
-<p-overlayPanel #op >
+<p-overlayPanel #op>
     <div #myDiv></div>
 </p-overlayPanel>

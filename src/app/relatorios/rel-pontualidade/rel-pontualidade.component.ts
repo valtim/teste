@@ -1,6 +1,6 @@
 import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
-import { MenuItem, MessageService } from 'primeng-lts/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-rel-pontualidade',
@@ -36,18 +36,6 @@ export class RelPontualidadeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-
-    this.botoes =
-    [
-      {
-        label: 'Salvar',
-        icon: 'pi pi-save',
-        command: () => { this.salvar() },
-        disabled: false,
-      },
-    ];
-
 
     this.locale_pt = this.api.getLocale('pt');
 

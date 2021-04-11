@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {OverlayPanel} from 'primeng-lts/overlaypanel';
+import {OverlayPanel} from 'primeng/overlaypanel';
 
 @Component({
   selector: 'app-ultimas-datas',

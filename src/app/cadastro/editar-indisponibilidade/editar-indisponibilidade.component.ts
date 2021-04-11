@@ -143,7 +143,7 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
       postagem.Ocorrencias.push(item);
     });
 
-    postagem.Observacoes =[];
+    postagem.Observacoes = [];
     this.tbObs.controls.forEach(x => {
       let item = Object.assign({}, x.value);
       //item.Inicio = DataUtil.ParaDataISO(item.Inicio);
@@ -158,8 +158,7 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
       this.indisponibilidade.Exibir = false;
       this.indisponibilidade = x;
       this.retorno.emit("OK");
-    }
-    )
+    })
 
   }
 

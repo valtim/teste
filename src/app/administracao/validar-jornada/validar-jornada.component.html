@@ -1,36 +1,28 @@
-<app-titulo titulo="VALIDAÇÃO DE JORNADA"></app-titulo>
+<app-titulo titulo="VALIDAÇÃO DE JORNADA" [carregando]="carregando"></app-titulo>
 
-<div class="container d-print-none">
+<div class="p-grid p-mt-1">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Data"></button>
+        <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [locale]="locale_pt"></p-calendar>
+        <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy" [locale]="locale_pt" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar> -->
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Data</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
-
-
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="p-ml-2"></button>
     </div>
+    <div class="p-col"></div>
 </div>
 
-<div *ngIf="dados" >
+<div *ngIf="dados">
 
-    <p-table [value]="dados">
+    <p-table [value]="dados" styleClass="p-datatable-striped">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>TRIPULANTE</th>
                 <th>INÍCIO</th>
                 <th>FIM</th>
+                <th>ALERTAS</th>
                 <th>OK. TRIP</th>
                 <th>OK. ANALISTA</th>
                 <th>OK. GERENTE</th>
@@ -41,29 +33,35 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr (click)="rowData.Visible = true">
                 <td>
-                    {{rowData['Tripulante']}}
+                    {{rowData['Tripulante'].Trato}}
                 </td>
                 <td>
-                    {{rowData['DataDeInicio']}}
+                    {{rowData['DataDeInicio'] | date:'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    {{rowData['DataDeFim']}}
+                    {{rowData['DataDeFim'] | date:'dd/MM/yyyy'}}
+                </td>
+                <td>                    
+                    <span *ngIf="rowData['Alertas'] == 0 ">válido</span>
+                    <span *ngIf="rowData['Alertas'] > 0">{{rowData['Alertas']}} alertas</span>
                 </td>
                 <td>
-                    {{rowData['ConfirmacaoDoTripulante']}}
+                    <span *ngIf="rowData['ConfirmacaoDoTripulante']">{{rowData['ConfirmacaoDoTripulante'] | date:'dd/MM/yyyy'}}</span>
                 </td>
                 <td>
-                    {{rowData['ConfirmacaoDoAssistente']}}
+                    <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] | date:'dd/MM/yyyy'}}</span>
                 </td>
                 <td>
-                    {{rowData['ConfirmacaoDoGerente']}}
+                    <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] | date:'dd/MM/yyyy'}}</span>
                 </td>
             </tr>
-        </ng-template>       
+        </ng-template>
 
     </p-table>
-    <p-dialog *ngFor="let item of dados"  header="ORDEM DE MISSÃO" [(visible)]="item.Visible" [style]="{width: '90vw'}" [baseZIndex]="10000">
-        <app-imprimir-jornada-novo [jornada]="item" [gerente]="gerente" [analista]="analista" *ngIf="item.Visible" ></app-imprimir-jornada-novo>
+    <p-dialog *ngFor="let item of dados" header="ORDEM DE MISSÃO" [(visible)]="item.Visible" [style]="{width: '90vw'}"
+        [baseZIndex]="10000">
+        <app-imprimir-jornada-novo [jornada]="item" [gerente]="gerente" [analista]="analista" *ngIf="item.Visible">
+        </app-imprimir-jornada-novo>
     </p-dialog>
 
 

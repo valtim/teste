@@ -2,43 +2,33 @@
 
 <div class="container d-print-none" *ngIf="tela_ok">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Data</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}" optionLabel="Nome"></p-calendar>
-            </div>
+
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col"><button type="button" pButton pRipple label="Data"></button>
+            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}" optionLabel="Nome"></p-calendar>
         </div>
-
-        <div class="col-sm-6 col-lg-2">
-
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Cliente"></button>
             <p-dropdown [options]="filtroCliente" [(ngModel)]="clienteSelecionado" filter="true" optionLabel="Nome">
                 <p-header>
                     Clientes
                 </p-header>
             </p-dropdown>
-
         </div>
-
-
-        <div class="col-sm">
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Base"></button>
             <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
                 filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
-
-            <!-- <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button> -->
         </div>
-
-        <div class="col-sm-6 col-lg-2">
+        <div class="p-col">
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button>
         </div>
-
-
-
+        <div class="p-col"></div>
     </div>
+
 
 
 </div>
@@ -59,7 +49,7 @@
             <b>{{nomeCliente}} - {{nomeBase}}</b>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
-             
+
             <tr>
                 <th style="width:50px"></th>
                 <th>Data</th>
@@ -73,13 +63,14 @@
         <ng-template pTemplate="body" let-rowData let-i="rowIndex">
             <tr>
                 <td style="width:50px">
-                    <p-checkbox [value]="rowData.Id" [(ngModel)]="valoresSelecionados" class="d-print-none" *ngIf="rowData.Data" (click)="verBotoes()"></p-checkbox>
+                    <p-checkbox [value]="rowData.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"
+                        *ngIf="rowData.Data" (click)="verBotoes()"></p-checkbox>
                 </td>
-                <td *ngIf="rowData.Data" >
+                <td *ngIf="rowData.Data">
                     {{rowData.Data | date:'dd/MM/yyyy'}}
                 </td>
 
-                <td *ngIf="!rowData.Data" >
+                <td *ngIf="!rowData.Data">
                     TOTAL
                 </td>
                 <td pEditableColumn>
@@ -139,11 +130,11 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="footer">
+        <!-- <ng-template pTemplate="footer">
             <tr>
                 <td colspan="7" class="text-center"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
             </tr>
-        </ng-template>
+        </ng-template> -->
     </p-table>
 
 </div>

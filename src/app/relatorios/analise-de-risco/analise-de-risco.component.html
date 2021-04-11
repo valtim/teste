@@ -1,80 +1,102 @@
 <app-titulo [titulo]="titulo" [carregando]="carregando"></app-titulo>
 
-<div class="container">
+<div class="p-grid">
+    <div class="p-col"></div>
+    <div class="p-col">
 
-    <div class="row ml-1">
-        <div class="sm-6 lg-4 mr-2">
-
-            <p-listbox [options]="tripulantes" [(ngModel)]="tripulantesSelecionados" multiple="multiple"
-                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Trato">
-                <p-header>
-                    Tripulantes
-                </p-header>
-            </p-listbox>
-
-        </div>
-        <div class="sm-6 lg-4 mr-2">
-
-            <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
-                filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
-                <p-header>
-                    Prefixos
-                </p-header>
-            </p-listbox>
-
-        </div>
-        <div class="sm-12 lg-4 mt-2">
-
-
-            <p-calendar [(ngModel)]="dates" selectionMode="multiple" [inline]="true" [locale]="pt" [inputStyle]="{'width':'100px'}"></p-calendar>
-
-        </div>
-    </div>
-    <!-- (click)="handleClick($event)" -->
-    <button pButton type="button" label="Pesquisar" (click)="pesquisar()"></button>
-
-
-
-    <div *ngIf="grid">
-        <table class="table table-hover table-sm table-striped">
-            <thead>
-                <tr>
-                    <th>Data <br>Hora</th>
-                    <!-- <th>ETD</th> -->
-                    <th>Prefixo</th>
-                    <th>PIC <br>SIC</th>
-                    <th>Nota</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of grid;index as i" (click)="showDialog(i)">
-                    <td>{{item.Data}} <br> {{item.ETD}}</td>
-                    <td nowrap>{{item.Prefixo}}</td>
-                    <td>{{item.PIC}} <br> {{item.SIC}}</td>
-                    <td>{{item.NotaFinal}}</td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
-
-
-    <!-- <button type="button" (click)="showDialog()">asdasd</button> -->
-
-    <div *ngIf="display">
-
-
-
-        <div *ngFor="let item of grid;index as i">
-
-            <p-dialog [header]="item.Prefixo" [(visible)]="item.Display" [modal]="true" [baseZIndex]="10000">
-                <app-visualizar-analise-de-risco [grupos]="item.Grupos" [analise]="item">
-                </app-visualizar-analise-de-risco>
-            </p-dialog>
-
-        </div>
-
+        <p-listbox [options]="tripulantes" [(ngModel)]="tripulantesSelecionados" multiple="multiple" checkbox="checkbox"
+            filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Trato">
+            <p-header>
+                Tripulantes
+            </p-header>
+        </p-listbox>
 
     </div>
+    <div class="p-col">
+
+        <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+            filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
+            <p-header>
+                Prefixos
+            </p-header>
+        </p-listbox>
+
+    </div>
+    <div class="p-col">
+
+
+        <p-calendar [(ngModel)]="dates" selectionMode="multiple" [inline]="true" [locale]="locale_pt"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+
+    </div>
+    <div class="p-col">
+
+        <button pButton type="button" label="Pesquisar" (click)="pesquisar()"></button>
+
+    </div>
+</div>
+
+<div *ngIf="grid">
+
+    <p-table [value]="grid" styleClass="p-datatable-striped">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data / Hora</th>
+                <th>Prefixo</th>
+                <th>PIC/SIC</th>
+                <th>Nota</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr (click)="showDialog(item.Id)">
+                <td>{{item.Data}} <br> {{item.ETD}}</td>
+                <td nowrap>{{item.Prefixo}}</td>
+                <td>{{item.PIC}} <br> {{item.SIC}}</td>
+                <td>{{item.NotaFinal}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+
+
+    <table class="table table-hover table-sm table-striped">
+        <thead>
+            <tr>
+                <th>Data <br>Hora</th>
+                <!-- <th>ETD</th> -->
+                <th>Prefixo</th>
+                <th>PIC <br>SIC</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of grid;index as i" (click)="showDialog(i)">
+                <td>{{item.Data}} <br> {{item.ETD}}</td>
+                <td nowrap>{{item.Prefixo}}</td>
+                <td>{{item.PIC}} <br> {{item.SIC}}</td>
+                <td>{{item.NotaFinal}}</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+<!-- <button type="button" (click)="showDialog()">asdasd</button> -->
+
+<div *ngIf="display">
+
+
+
+    <div *ngFor="let item of grid;index as i">
+
+        <p-dialog [header]="item.Prefixo" [(visible)]="item.Display" [modal]="true" [baseZIndex]="10000">
+            <app-visualizar-analise-de-risco [grupos]="item.Grupos" [analise]="item">
+            </app-visualizar-analise-de-risco>
+        </p-dialog>
+
+    </div>
+
 
 </div>

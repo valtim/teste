@@ -3,42 +3,27 @@
 <app-titulo titulo="CONTROLE DE TRIPULANTES" [carregando]="carregando"></app-titulo>
 
 <div class="container d-print-none">
-
-    <div class="row ml-1">
-
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-
-
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col"><button type="button" pButton pRipple label="Inicial"></button>
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Final</span>
-                </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-
-
+        <div class="p-col p-ml-1">
+            <button type="button" pButton pRipple label="Final"></button>
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-
-        <div class="col-sm-6 col-lg-4">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+        <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button>
-
-            <button class="ml-2" pButton type="button" icon="pi pi-file-excel" iconPos="right" label="Excel"
+            <button class="p-ml-2" pButton type="button" icon="pi pi-file-excel" iconPos="right" label="Excel"
                 (click)="gerarExcel()"></button>
         </div>
-
+        <div class="p-col"></div>
     </div>
 </div>
+
+
 
 
 <p-table [columns]="cols" [value]="dados" *ngIf="!carregando">
@@ -53,13 +38,13 @@
             <col [style.width]="largura_padrao">
             <col [style.width]="largura_padrao">
         </colgroup>
-    </ng-template> 
+    </ng-template>
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th rowspan="2">Data</th>
             <th rowspan="2">Tripulante</th>
             <th rowspan="2">Apres</th>
-            <th rowspan="2" *ngFor="let col of columns" width="{{col.width}}">
+            <th rowspan="2" *ngFor="let col of columns" width="{{col.width}}" wrap>
                 {{col.header}}
             </th>
             <th colspan="2">Refeição</th>

@@ -1,35 +1,21 @@
 <app-titulo titulo="Status da Frota" [carregando]="!consulta_ok"></app-titulo>
 
-<div class="container d-print-none" *ngIf="consulta_ok">
+<div class="nao-imprimir" *ngIf="consulta_ok">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col"><button type="button" pButton pRipple label="Inicial"></button>
+            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-
-
-        <div class="col-sm">
+        <div class="p-col">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
                 filterBy="Nome" optionLabel="Nome"></p-dropdown>
-
-            <!-- <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button> -->
         </div>
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
-
-
+        <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button></div>
+        <div class="p-col"></div>
     </div>
-
 
 </div>
 
@@ -39,7 +25,7 @@
 
     <p-toast></p-toast>
 
-    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+    <p-menubar [model]="botoes" class="nao-imprimir"></p-menubar>
 
     <app-cabecalho-impressao titulo="Status das Aeronaves Contratadas Pela Petrobras" class="d-print">
     </app-cabecalho-impressao>
@@ -166,11 +152,11 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="footer">
+        <!-- <ng-template pTemplate="footer">
             <tr>
                 <td colspan="11" class="text-center"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
             </tr>
-        </ng-template>
+        </ng-template> -->
     </p-table>
 
 </div>

@@ -9,6 +9,7 @@ export class EditarEscalaComponent implements OnInit {
 
   @Input() Registro;
   @Input() TipoDeOcorrencias;
+  @Input() Coluna;
 
   TipoDeOcorrencias2 = [];
 
@@ -31,7 +32,8 @@ export class EditarEscalaComponent implements OnInit {
   // }
 
   salvar(){
-
+    this.Registro.DialogResult = 'OK';
+    this.retorno.emit(this.Registro);
   }
 
   cancelar(){

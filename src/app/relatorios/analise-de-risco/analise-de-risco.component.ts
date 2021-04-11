@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import { ApiService } from '../shared/api.service';
-// import {SelectItem} from 'primeng-lts/api';
+// import {SelectItem} from 'primeng/api';
 import { ApiService } from '../../shared/api.service';
 import { Router } from '@angular/router';
 
@@ -16,7 +16,7 @@ export class AnaliseDeRiscoComponent implements OnInit {
 
   titulo = "Avaliação de Risco";
 
-  pt: any;
+  locale_pt: any;
 
   dates;
 
@@ -31,8 +31,8 @@ export class AnaliseDeRiscoComponent implements OnInit {
   constructor(
     private api: ApiService,
     private router: Router, ) {
-
-    this.pt = api.getLocale('pt');
+    
+    this.locale_pt = this.api.getLocale('pt');
 
 
   }
@@ -79,8 +79,12 @@ export class AnaliseDeRiscoComponent implements OnInit {
 
   display = [true];
 
-  showDialog(i) {
-    this.grid[i].Display = true;
+  showDialog(id) {
+    for(let i =0; i< this.grid.length;i++){
+      this.grid[i].display = false;
+    }
+    let valor = this.grid.find(x=>x.Id == id);
+    valor.Display = true;
     // document.getElementById("idx" + i).visible = true;
     //this.display[0] = !this.display[0];
   }

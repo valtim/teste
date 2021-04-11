@@ -3,35 +3,44 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { MenuComponent } from './menu/menu.component';
 import { FormataDataPipe } from './pipe/formata-data.pipe';
 import { ConfirmacaoComponent } from './confirmacao/confirmacao.component';
 import { TituloComponent } from './titulo/titulo.component';
-import { ListboxModule } from 'primeng-lts/listbox';
-import { CalendarModule } from 'primeng-lts/calendar';
-//import { ChartModule } from 'primeng-lts/chart';
-import { ToolbarModule } from 'primeng-lts/toolbar';
-import { ButtonModule } from 'primeng-lts/button';
-import { DialogModule } from 'primeng-lts/dialog';
-import { TableModule } from 'primeng-lts/table';
-import { AccordionModule } from 'primeng-lts/accordion';
-import { MultiSelectModule } from 'primeng-lts/multiselect';
-import { DropdownModule } from 'primeng-lts/dropdown';
-import { InputMaskModule } from 'primeng-lts/inputmask';
-import { MenubarModule } from 'primeng-lts/menubar';
-import { ToastModule } from 'primeng-lts/toast';
-import { CheckboxModule } from 'primeng-lts/checkbox';
-import { InputSwitchModule } from 'primeng-lts/inputswitch';
-import { InputTextareaModule } from 'primeng-lts/inputtextarea';
-import { CardModule } from 'primeng-lts/card';
-import { OverlayPanelModule } from 'primeng-lts/overlaypanel';
-import { PickListModule } from 'primeng-lts/picklist';
-// import { ListboxModule } from 'primeng-lts/listbox';
+
+import { ListboxModule } from 'primeng/listbox';
+import { CalendarModule } from 'primeng/calendar';
+//import { ChartModule } from 'primeng/chart';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputMaskModule } from 'primeng/inputmask';
+import { MenubarModule } from 'primeng/menubar';
+import { ToastModule } from 'primeng/toast';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { CardModule } from 'primeng/card';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { PickListModule } from 'primeng/picklist';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {FieldsetModule} from 'primeng/fieldset';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {TabViewModule} from 'primeng/tabview';
+import {InputTextModule} from 'primeng/inputtext';
+
 
 @NgModule({
   declarations: [
     TituloComponent,
     ConfirmacaoComponent,
-    FormataDataPipe, 
+    FormataDataPipe,
+    MenuComponent
     // TituloComponent
   ],
   exports: [
@@ -57,10 +66,16 @@ import { PickListModule } from 'primeng-lts/picklist';
     InputTextareaModule,
     OverlayPanelModule,
     PickListModule,
+    ProgressSpinnerModule,
+    FieldsetModule,
+    MessagesModule,
+    MessageModule,
+    TabViewModule,
+    InputTextModule
   ],
   imports: [
     CommonModule,
-    RouterModule,   
+    RouterModule,
     CardModule,
     ListboxModule,
     CalendarModule,
@@ -80,6 +95,12 @@ import { PickListModule } from 'primeng-lts/picklist';
     InputTextareaModule,
     OverlayPanelModule,
     PickListModule,
+    ProgressSpinnerModule,
+    FieldsetModule,
+    MessagesModule,
+    MessageModule,
+    TabViewModule,
+    InputTextModule
   ],
 })
 export class SharedModule { }

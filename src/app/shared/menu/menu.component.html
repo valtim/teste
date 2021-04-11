@@ -1,0 +1,21 @@
+<i id="controle_menu" class="pi pi-bars" style="font-size: 2rem" (click)="exibirmenu($event)"></i>
+<div id="main" *ngIf="exibir">
+    <p-accordion [multiple]="true" *ngIf="exibir">
+        <p-accordionTab *ngFor="let item of menu" [header]="item.Grupo" [selected]="true">
+            <li *ngFor="let link of item.Lista">
+                <a *ngIf="isEnable(link.Rota) && link.LinkExterno" [href]="[link.Rota]" _target="_blank"
+                    (click)="exibirmenu($event)">
+                    <b>{{link.Nome}}</b>
+                </a>
+                <a *ngIf="isEnable(link.Rota) && !link.Novo && !link.LinkExterno" [routerLink]="['/'+ link.Rota]"
+                    (click)="exibirmenu($event)">
+                    {{link.Nome}}
+                </a>
+                <a *ngIf="isEnable(link.Rota) && link.Novo && !link.LinkExterno" [routerLink]="['/'+ link.Rota]"
+                    (click)="exibirmenu($event)">
+                    <b>{{link.Nome}}</b>
+                </a>
+            </li>
+        </p-accordionTab>
+    </p-accordion>
+</div>

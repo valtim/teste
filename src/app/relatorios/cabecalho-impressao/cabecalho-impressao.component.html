@@ -1,11 +1,11 @@
 <table>
     <tr>
         <td class="c-20">
-            <img src="https://aeroleo.controledafadiga.com.br/assets/img/aeroleo.png" class="mt-2 mb-2" width="170px">
+            <img [src]="logo" class="mt-2 mb-2" width="170px">
             <p *ngIf="registro"><b>{{registro}}</b></p>
         </td>
         <td>
-            <h5>{{titulo}}</h5>
+            <h3>{{titulo}}</h3>
         </td>
         <td class="c-20" *ngIf="ExibirRevisao">
             <p *ngIf="form"><b>{{form}}</b></p>

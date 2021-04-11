@@ -1,53 +1,42 @@
 <app-titulo titulo="Escala Diária de Tripulantes" [carregando]="!tudoPronto"></app-titulo>
 
 
-<div class="container d-print-none">
-    <div class="row">
-        <div class="col-12 text-center">
-            <div class="input-group">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+<div class="nao-imprimir">
 
-                <div class="input-group-append ml-2">
-                    <span class="input-group-text">Final</span>
-                </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
+
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Inicial"></button>
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Final"></button>
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+        </div>
+        <div class="p-col"></div>
     </div>
 
-    <div class="row mt-2 text-center">
-
-        <div class="col-12">
-            <div class="input-group">
-                <div class="input-group-append">
-                    <span class="input-group-text">Referência</span>
-                </div>
-                <p-calendar [(ngModel)]="dataReferencia" selectionMode="single" dateFormat="dd/mm/yy"
-                    [locale]="locale_pt" showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-
-                <div class="input-group-append ml-2">
-                    <span class="input-group-text">Base</span>
-                </div>
-
-                <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
-                    filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
-
-                <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
-                    class="ml-2"></button>
-
-            </div>
-
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Referência"></button>
+            <p-calendar [(ngModel)]="dataReferencia" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Base"></button>
+            <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
+                filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
+        </div>
+        <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button></div>
+        <div class="p-col"></div>
     </div>
-
 </div>
 
-<table class="so_impressora">
+<table class="somente-impressora">
     <tr>
         <td class="c-20" rowspan="5">
             <img src="https://aeroleo.controledafadiga.com.br/assets/img/PETROBRAS.png" class="mt-2 mb-2" width="170px">
@@ -58,53 +47,45 @@
         <td class="c-20">
             Início da Quinzena
         </td>
-        <td>            
+        <td>
             {{retInicio}}
         </td>
     </tr>
-    <tr>        
+    <tr>
         <td>
             Fim da Quinzena
         </td>
-        <td>            
+        <td>
             {{retFim}}
         </td>
     </tr>
-    <tr>        
+    <tr>
         <td>
             Empresa
         </td>
-        <td>            
+        <td>
             {{empresa}}
         </td>
     </tr>
-    <tr>        
+    <tr>
         <td>
             Base
         </td>
-        <td>            
+        <td>
             {{ICAO}}
         </td>
     </tr>
-    <tr>        
+    <tr>
         <td>
             Data de Referência
         </td>
-        <td>            
+        <td>
             {{retReferencia}}
         </td>
     </tr>
 </table>
 
 <p-table [value]="resultado">
-    <!-- <ng-template pTemplate="caption">
-        BASE DE OPERAÇÕES: {{BaseDeOperacoes}}
-    </ng-template> -->
-    <!-- <ng-template pTemplate="colgroup" let-columns>
-        <colgroup>
-            <col *ngFor="let col of columns" [style.width]="col.width">
-        </colgroup>
-    </ng-template> -->
     <ng-template pTemplate="header" let-columns>
         <tr>
             <th rowspan="2">PREFIXO</th>
@@ -176,7 +157,7 @@
                 {{rowData["3Ciclos90Dias"]}}
             </td>
             <td>
-                
+
             </td>
         </tr>
     </ng-template>
@@ -184,17 +165,24 @@
         <tr>
             <td colspan="16">
                 <p>Instruções para preenchimento:</p>
-                <p>* HUET: preencher validade de acordo com a exigência do contrato, que pode variar entre 2 e 4 anos;</p>
+                <p>* HUET: preencher validade de acordo com a exigência do contrato, que pode variar entre 2 e 4 anos;
+                </p>
                 <p>** Materiais Perigosos: considerar validade de 1 ano (conforme legislação);</p>
                 <p>*** Pouso Noturno: </p>
                 <ul>
-                    <li>Coluna de 3 ciclos a cada 90 dias: preencher para escalas de transformers e aeromédicos que poderão efetuar voos noturnos;</li>
-                    <li>Coluna de 2 ciclos a cada 30 dias: preencher somente para escalas de aeromédicos que poderão efetuar voos noturnos;</li>
-                    <li>Só serão considerados treinamentos reais realizados com pouso em unidades marítimas, salvo exceções em acordo com base operacional da PETROBRAS.</li>
+                    <li>Coluna de 3 ciclos a cada 90 dias: preencher para escalas de transformers e aeromédicos que
+                        poderão efetuar voos noturnos;</li>
+                    <li>Coluna de 2 ciclos a cada 30 dias: preencher somente para escalas de aeromédicos que poderão
+                        efetuar voos noturnos;</li>
+                    <li>Só serão considerados treinamentos reais realizados com pouso em unidades marítimas, salvo
+                        exceções em acordo com base operacional da PETROBRAS.</li>
                 </ul>
-                <p>Tripulantes que apresentarem qualquer requisito inválido/vencido não estão autorizados a voar pela Petrobras, salvo exceção da RBAC 61.33.c, que permite voo com CHT vencida até 30 dias. </p>
-                <p>Tripulantes autorizados para operação PETROBRAS para determinada aeronave/contrato estão autorizados a efetuar voos de outras aeronaves/contratos de mesmo modelo, desde que a OPERADORA AÉREA se responsabilize de que a tripulação atenda a todos os requisitos contratuais do outro contrato.</p>
-                
+                <p>Tripulantes que apresentarem qualquer requisito inválido/vencido não estão autorizados a voar pela
+                    Petrobras, salvo exceção da RBAC 61.33.c, que permite voo com CHT vencida até 30 dias. </p>
+                <p>Tripulantes autorizados para operação PETROBRAS para determinada aeronave/contrato estão autorizados
+                    a efetuar voos de outras aeronaves/contratos de mesmo modelo, desde que a OPERADORA AÉREA se
+                    responsabilize de que a tripulação atenda a todos os requisitos contratuais do outro contrato.</p>
+
             </td>
         </tr>
     </ng-template>

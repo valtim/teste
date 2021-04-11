@@ -3,31 +3,21 @@
 <div class="container d-print-none">
 
 
-    <div class="row">
-        <div class="col-sm">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col"><button type="button" pButton pRipple label="Inicial"></button>
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-        <div class="col-sm">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Final</span>
-                </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
+        <div class="p-col"><button type="button" pButton pRipple label="Final"></button>
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-
-        <div class="col-sm">
+        <div class="p-col">
             <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
         </div>
+        <div class="p-col"></div>
     </div>
-
 
 </div>
 

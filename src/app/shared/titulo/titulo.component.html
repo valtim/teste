@@ -1,9 +1,7 @@
-<nav class="navbar navbar-light bg-light fixed-top">
-    <a class="navbar-brand" routerLink="/home">{{titulo}}</a>
-    <div class="spinner-border" role="status" *ngIf="carregando" >
-        <span class="sr-only">Loading...</span>
-    </div>
+<p-toolbar>
+    <span id="texto" (click)="exibir_menu()">{{titulo}}</span>
+    <p-progressSpinner [style]="{width: '25px', height: '25px'}" *ngIf="carregando"></p-progressSpinner>
+    <button pButton type="button" icon="pi pi-sign-out" label="Sair" class="p-button-danger" [routerLink]="['/logoff']" routerLinkActive="router-link-active" ></button>
+</p-toolbar>
 
-    <button type="button" class="btn btn-link" routerLink="/"><span class="oi"
-            data-glyph="account-logout">&nbsp;</span>Sair</button>
-</nav>
+<app-menu [exibir]="exibir"></app-menu>

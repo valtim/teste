@@ -2,8 +2,8 @@
 
     <h3>{{Registro.Tripulante.Trato}} - {{Registro.Data | date:'dd/MM/yyyy'}}</h3>
 
-    <p-pickList [source]="list1" [target]="list2" dragdrop="true" [sourceStyle]="lista" [targetStyle]="lista"
-        (onTargetSelect)="funteste($event)" showTargetControls="false"> 
+    <p-pickList [source]="list1" [target]="list2" dragdrop="true" (onTargetSelect)="funteste($event)"
+        [showTargetControls]="false" [showSourceControls]="false">
         <ng-template let-item pTemplate="item">
             <div>
                 <b>{{item.TipoDeOcorrencia.Nome}}</b>
@@ -33,8 +33,8 @@
         </div>
         <div class="row">
             <label for="txt_descricao">Descrição</label>
-            <div id="txt_descricao" class="col-12"><textarea *ngIf="itemSelecionado" [(ngModel)]="itemSelecionado.Descricao" cols="70"
-                    rows="5"></textarea></div>
+            <div id="txt_descricao" class="col-12"><textarea *ngIf="itemSelecionado"
+                    [(ngModel)]="itemSelecionado.Descricao" cols="70" rows="5"></textarea></div>
         </div>
 
 

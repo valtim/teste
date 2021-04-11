@@ -1,124 +1,101 @@
 <app-titulo titulo="BOCA" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="container d-print-none" *ngIf="tudoPronto">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
+<div class="nao-imprimir">
+    <div class="p-grid">
+        <div class="p-col"></div>
+        <div class="p-col"><button type="button" pButton pRipple label="Data"></button>
+            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-
-
-        <div class="col-sm">
+        <div class="p-col">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
                 filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
-
-            <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
         </div>
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
-
-
+        <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()"></button></div>
+        <div class="p-col"></div>
     </div>
-
-
 </div>
 
-<div *ngIf="tudoPronto">
+
+
+<div *ngIf="tudoPronto" id="tabela">
 
 
     <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DA UTILIZAÇÃO DE AERONAVES CONTRATADAS" form="FORM CDV 023"
         data="20/04/2020" revisao="01" class="d-print"></app-cabecalho-impressao>
 
-    <p-table [columns]="cols" [value]="dados">
-        <ng-template pTemplate="caption">
-            BASE DE OPERAÇÕES: {{BaseDeOperacoes.Nome}}
-        </ng-template>
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of columns" [style.width]="col.width">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th colspan="2">DADOS DA AERONAVE</th>
-                <th rowspan="2">QUANTIDADE DE VOOS</th>
-                <th colspan="3">HORAS VOADAS NO DIA</th>
-                <th colspan="2">INDISPONIBILIDADE</th>
-            </tr>
-            <tr>
-                <th>PREFIXO</th>
-                <th>Nº EQUIP.SAP</th>
-                <th>Nº VOO</th>
-                <th>TEMPO DE VOO</th>
-                <th>TEMPO TOTAL</th>
-                <th>MOTIVO</th>
-                <th>TEMPO</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
-                <td>
-                    {{rowData['PrefixoCompleto']}}
-                </td>
-                <td>
-                    {{rowData['IdentificadorCliente']}}
-                </td>
-                <td>
-                    {{rowData['QtdeDeVoos']}}
-                </td>
-                <td style="white-space: pre-line;">
-                    {{rowData['Voos']}}
-                </td>
-                <td style="white-space: pre-line;">
-                    {{rowData['Tempos']}}
-                </td>
-                <td>
-                    {{rowData['Total']}}
-                </td>
-                <td style="white-space: pre-line;">
-                    {{rowData['MotivoIndisponibilidade']}}
-                </td>
-                <td>
-                    {{rowData['TempoIndisponibilidade']}}
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <tr>
-                <td colspan="2"><b>TOTAL DE VOOS</b></td>
-                <td>{{TotalDeVoos}}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>AERONAVES UTILIZADAS</b></td>
-                <td colspan="4">{{AeronavesUtilizadas}}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>REPRESENTANTES DA:</b></td>
-                <td colspan="2">CONTRATADA</td>
-                <td colspan="2">PETROBRAS</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>DATA</b></td>
-                <td colspan="2" rowspan="2"></td>
-                <td colspan="2" rowspan="2"></td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>{{filtroRetorno.data |  date: 'dd/MM/yyyy'}}</b></td>
-            </tr>
-            <tr>
-                <td colspan="8"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
-            </tr>
-        </ng-template>
-    </p-table>
+
+    <table>
+        <tr>
+            <th colspan="8">BASE DE OPERAÇÕES: {{BaseDeOperacoes.Nome}}</th>
+        </tr>
+        <tr>
+            <th colspan="2">DADOS DA AERONAVE</th>
+            <th rowspan="2">QUANTIDADE DE VOOS</th>
+            <th colspan="3">HORAS VOADAS NO DIA</th>
+            <th colspan="2">INDISPONIBILIDADE</th>
+        </tr>
+        <tr>
+            <th>PREFIXO</th>
+            <th>Nº EQUIP.SAP</th>
+            <th>Nº VOO</th>
+            <th>TEMPO DE VOO</th>
+            <th>TEMPO TOTAL</th>
+            <th>MOTIVO</th>
+            <th>TEMPO</th>
+        </tr>
+        <tr *ngFor="let item of dados">
+            <td>
+                {{item['PrefixoCompleto']}}
+            </td>
+            <td>
+                {{item['IdentificadorCliente']}}
+            </td>
+            <td>
+                {{item['QtdeDeVoos']}}
+            </td>
+            <td style="white-space: pre-line;">
+                {{item['Voos']}}
+            </td>
+            <td style="white-space: pre-line;">
+                {{item['Tempos']}}
+            </td>
+            <td>
+                {{item['Total']}}
+            </td>
+            <td style="white-space: pre-line;">
+                {{item['MotivoIndisponibilidade']}}
+            </td>
+            <td>
+                {{item['TempoIndisponibilidade']}}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>TOTAL DE VOOS</b></td>
+            <td>{{TotalDeVoos}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>AERONAVES UTILIZADAS</b></td>
+            <td colspan="4">{{AeronavesUtilizadas}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>REPRESENTANTES DA:</b></td>
+            <td colspan="2">CONTRATADA</td>
+            <td colspan="2">PETROBRAS</td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>DATA</b></td>
+            <td colspan="2" rowspan="2"></td>
+            <td colspan="2" rowspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><b>{{filtroRetorno.data | date: 'dd/MM/yyyy'}}</b></td>
+        </tr>
+        <tr>
+            <td colspan="8"><b>AERÓLEO TAXI AÉREO S.A.</b></td>
+        </tr>
+    </table>
 
 </div>

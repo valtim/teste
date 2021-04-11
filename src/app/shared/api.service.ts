@@ -20,6 +20,9 @@ export class ApiService {
   private httpOptions: any;
   private url: string;
   private permission;
+
+  private clienteLogado;
+
   error: string;
   message: any;
   username: string;
@@ -36,6 +39,9 @@ export class ApiService {
         })
       };
     }
+
+
+    this.getClienteLogado().then(x=>this.clienteLogado = x);
 
     this.message = {
       show: false,
@@ -174,9 +180,8 @@ export class ApiService {
       .toPromise();
   }
 
-  getClienteLogado(): Promise<any> {
-    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions)
-      .toPromise();
+  private getClienteLogado(): Promise<any> {
+    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise();
   }
 
   getQuadroDeTripulantes(): Promise<any> {
@@ -409,7 +414,7 @@ export class ApiService {
 
     const promise = new Promise((resolve, reject) => {
 
-      this.http.get(`${this.url}api/Combos`, this.httpOptions).toPromise().then(x => {
+      this.http.get(`${this.url}api/Combos-Light`, this.httpOptions).toPromise().then(x => {
         localStorage.setItem('Combos', JSON.stringify(x));
         resolve(x);
       });
@@ -515,8 +520,12 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelHorasPorTripulante`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  getLogo(cliente: string) {
-    return `${this.url}assets/img/${cliente.toLowerCase()}.png`;
+  getCliente(){
+    return this.http.get(`${this.url}api/clientelogado`, this.httpOptions).toPromise();
+  }
+
+  getLogo() {
+      return `${this.url}assets/img/${this.clienteLogado}.png`;
   }
 
 

@@ -1,37 +1,22 @@
 <app-titulo titulo="Escala Mensal" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="container d-print-none">
-
-    <div class="row ml-1">
-        <div class="col-4">
-
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true"></p-calendar>
-            </div>
-
-        </div>
-
-        <div class="col-4">
-
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Final</span>
-                </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true"></p-calendar>
-            </div>
-        </div>
-
-        <div class="col-4">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
+<div class="p-grid p-mt-1">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true"></p-calendar>
     </div>
-
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true"></p-calendar>
+    </div>
+    <div class="p-col">
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="p-ml-2"></button>
+    </div>
+    <div class="p-col"></div>
 </div>
 
 
@@ -57,12 +42,17 @@
 
 
         <tr *ngFor="let linha of dados">
-            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)" [class]="linha[col.Header].Estilo">
-                {{linha[col.Header].Texto}} <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br/>{{linha[col.Header].Base}}</span>
+            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"
+                [class]="linha[col.Header].Estilo">
+                {{linha[col.Header].Texto}}<span class="p-badge p-badge-danger"
+                    *ngIf="linha[col.Header].NumeroDeVencimentos > 0 ">{{linha[col.Header].NumeroDeVencimentos}}</span>
+                <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>
+                <span class="p-badge p-badge-warning"
+                    *ngIf="linha[col.Header].NumeroDeTreinamentos > 0 ">{{linha[col.Header].NumeroDeTreinamentos}}</span>
             </td>
         </tr>
 
-        
+
 
 
     </table>
@@ -82,7 +72,8 @@
 <p-dialog Header="Escala do Dia" [(visible)]="ExibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultar()">
 
 
-    <app-editar-composicao *ngFor="let item of Tripulacoes" [Escala]="item" [Tripulantes]="Tripulantes" [Clientes]="Clientes" [Bases]="Bases"></app-editar-composicao>
+    <app-editar-composicao *ngFor="let item of Tripulacoes" [Escala]="item" [Tripulantes]="Tripulantes"
+        [Clientes]="Clientes" [Bases]="Bases"></app-editar-composicao>
 
     <app-editar-escala *ngFor="let item of previsoes" [Registro]="item" [TipoDeOcorrencias]="TipoDeOcorrencias"
         (retorno)="retornoEvento($event)"></app-editar-escala>

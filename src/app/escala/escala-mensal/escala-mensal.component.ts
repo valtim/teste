@@ -103,8 +103,6 @@ export class EscalaMensalComponent implements OnInit {
 
   fazerBalanco(coluna){
     const items = this.dados.filter(x=>x.PIC.Texto).map(x=>x[coluna.Header]).filter(x=>x.Texto.includes("EV")).length + "/" + this.dados.map(x=>x[coluna.Header]).filter(x=> x.Texto && x.Texto.includes("EV")).length ;
-
-    //let balanco = this.dados.find(x=>x.Name.Texto == "BALANCE");
     this.Balanco[coluna.Header] = { "Texto": items };
   }
 

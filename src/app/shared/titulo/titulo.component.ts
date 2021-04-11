@@ -1,8 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-// import { Router } from '@angular/router';
-
-
-// import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-titulo',
@@ -14,12 +10,19 @@ export class TituloComponent implements OnInit {
   @Input() titulo;
   @Input() carregando;
 
+  exibir = false;
+
+
   Tripulante;
   
   constructor() { }
 
   ngOnInit() {
     // this.Tripulante = this.data.getTripulanteLogado();
+  }
+
+  exibir_menu(){
+    this.exibir = !this.exibir;
   }
 
 }

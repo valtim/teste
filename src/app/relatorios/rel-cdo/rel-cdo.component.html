@@ -1,31 +1,21 @@
 <app-titulo titulo="DAILY FLIGHT TIME CONTROL" [carregando]="(!consulta_ok)"></app-titulo>
 
-<div class="container d-print-none">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Data</span>
-                </div>
-                <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-        </div>
-
-        <div class="col-sm-6 col-lg-4">
+<div class="p-grid p-mt-1">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <div class="p-inputgroup">
+            <button type="button" pButton pRipple label="Data"></button>
+            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-            <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir"
-                (click)="imprimir()"></button>
+                (click)="rodarRelatorio()" class="p-ml-2"></button>
+            <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir" (click)="imprimir()"
+                class="p-ml-2"></button>
         </div>
-
-
-
     </div>
+    <div class="p-col"></div>
+
 </div>
-
-
-
 
 <div class="container_html" *ngIf="consulta_ok" [innerHTML]="htmlContent"></div>

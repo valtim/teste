@@ -1,0 +1,16 @@
+#hamburguer{
+    position: absolute;
+    top:5px;
+    left:5px;
+    z-index: 20000;
+}
+
+#menu{
+    padding-top: 60px;
+    float: left; 
+    width: 300px;
+}
+#conteudo{
+    padding-top: 60px;
+    float: left; 
+}

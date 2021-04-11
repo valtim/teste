@@ -21,7 +21,7 @@ export class RelRdvComponent implements OnInit {
   id_busca;
 
   ngOnInit(): void {
-    this.urlLogo = this.api.getLogo('aeroleo');
+    this.urlLogo = this.api.getLogo();
 
     const lista = this.router.url.split('/');
 

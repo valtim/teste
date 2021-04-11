@@ -1,36 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { ApiService } from './shared/api.service';
-import { AutorizacaoService } from './shared/autorizacao.service';
+import { ApiService } from '../api.service';
+import { AutorizacaoService } from '../autorizacao.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
 })
-export class AppComponent implements OnInit {
+export class MenuComponent implements OnInit {
+
   public urlLogo: string;
-  public exibir = true;
   clienteLogado = "teste";
   public menu = [];
 
   public loading: boolean;
 
-  exibirmenu(){
+
+  @Input() exibir = false;
+
+
+  exibirmenu(e) {
     this.exibir = !this.exibir;
   }
-  
   constructor(
     private api: ApiService,
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
   ngOnInit() {
-
     this.urlLogo = this.api.getLogo();
     this.menu = this.autorizacao.getMenus();
-    this.exibir = true;
+    this.exibir = this.router.url === '/home';
   }
 
   isEnable(name: string) {
@@ -44,6 +45,4 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-
-  title = 'sol';
 }

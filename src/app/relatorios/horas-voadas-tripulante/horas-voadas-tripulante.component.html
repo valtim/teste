@@ -1,36 +1,29 @@
 <app-titulo titulo="Horas Voadas" [carregando]="!tudoPronto"></app-titulo>
 
 
-<div class="container d-print-none">
+<div class="p-grid p-mt-1">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
 
-    <div class="row">
-        <div class="col-sm">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-        </div>
-        <div class="col-sm">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Final</span>
-                </div>
-                <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-            </div>
-        </div>
-
-        <div class="col-sm">
-            <p-dropdown [options]="tripulantes" [(ngModel)]="tripulanteSelecionado" [filter]="true"
-                filterBy="label,value.name" optionLabel="Trato"></p-dropdown>
-
-            <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
-        </div>
+        <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
     </div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Tripulantes" class="p-ml-2"></button>
+        <p-dropdown [options]="tripulantes" [(ngModel)]="tripulanteSelecionado" [filter]="true"
+            filterBy="Trato" optionLabel="Trato"></p-dropdown>
+
+        <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
+            class="p-ml-2"></button>
+    </div>
+    <div class="p-col"></div>
+
 </div>
+
 
 <div *ngIf="filtroRetorno">
     <p-table>
@@ -49,7 +42,7 @@
 </div>
 
 <div *ngIf="tabelaVisivel">
-    
+
     <p-table [columns]="cols" [value]="dados" *ngIf="dados">
         <ng-template pTemplate="caption">
             {{trato}}
@@ -72,7 +65,7 @@
                     {{rowData['Data'] | date: 'dd/MM/yyyy'}}
                 </td>
                 <td>
-                    {{rowData['SiglaFuncaoBordo']}}
+                    {{rowData['FuncaoBordo'].Sigla}}
                 </td>
                 <td>
                     {{rowData['Equipamento']}}
@@ -102,7 +95,7 @@
                     {{rowData['Total']}}
                 </td>
             </tr>
-    
+
             <tr *ngIf="(!rowData['Prefixo'] && rowData['Equipamento'])">
                 <td colspan="5">
                     <b>Total do Equipamento: {{rowData['Equipamento']}}</b>
@@ -126,10 +119,10 @@
                     {{rowData['Total']}}
                 </td>
             </tr>
-    
+
             <tr *ngIf="(!rowData['Prefixo'] && rowData['FuncaoBordo'])">
                 <td colspan="5">
-                    Total na Função: {{rowData['FuncaoBordo']}}
+                    Total na Função: {{rowData['FuncaoBordo'].Nome}}
                 </td>
                 <td>
                     {{rowData['Simulador']}}

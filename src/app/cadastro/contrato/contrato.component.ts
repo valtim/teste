@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService, MenuItem } from 'primeng-lts/api';
+import { MessageService, MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-contrato',

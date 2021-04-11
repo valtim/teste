@@ -29,36 +29,39 @@ export class ImprimirJornadaNovoComponent implements AfterViewInit {
 
   @Input() analista: boolean;
 
+  @Input() tripulante: any;
+
   constructor(private api: ApiService,
     private route: ActivatedRoute) { }
 
 
   ngAfterViewInit(): void {
+         this.carregando = false;
 
 
-    this.id = this.route.snapshot.paramMap.get("id");
+    // this.id = this.route.snapshot.paramMap.get("id");
 
-    if (this.id == null)
-      this.id = this.jornada.Id;
+    // if (this.id == null)
+    //   this.id = this.jornada.Id;
 
-    if (this.id != null) {
-      this.api.getJornadaImpressaoPeloId(this.id).then(
-        x => {
+    // if (this.id != null) {
+    //   this.api.getJornadaImpressaoPeloId(this.id).then(
+    //     x => {
 
-          this.retorno = x;
-          this.carregando = false;
+    //       this.retorno = x;
+    //       this.carregando = false;
 
-          if (x.Jornada.ConfirmacaoDoTripulante != null)
-            this.confirmacaoDoTripulante = x.Jornada.ConfirmacaoDoTripulante;
+    //       if (x.Jornada.ConfirmacaoDoTripulante != null)
+    //         this.confirmacaoDoTripulante = x.Jornada.ConfirmacaoDoTripulante;
 
-          if (x.Jornada.ConfirmacaoDoGerente != null)
-            this.confirmacaoDoGerente = x.Jornada.ConfirmacaoDoGerente;
+    //       if (x.Jornada.ConfirmacaoDoGerente != null)
+    //         this.confirmacaoDoGerente = x.Jornada.ConfirmacaoDoGerente;
 
-          this.myAngularxQrCode = this.retorno.Caminho;
-        }
-      )
-      return;
-    }
+    //       this.myAngularxQrCode = this.retorno.Caminho;
+    //     }
+    //   )
+    //   return;
+    // }
 
   }
 

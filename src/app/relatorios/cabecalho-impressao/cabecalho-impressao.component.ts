@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-cabecalho-impressao',
@@ -21,10 +22,14 @@ export class CabecalhoImpressaoComponent implements OnInit {
 
   ExibirRevisao;
 
-  constructor() { }
+  logo;
+
+  constructor(private api: ApiService) { }
 
   ngOnInit() {
     this.ExibirRevisao = (this.revisao != undefined || this.data != undefined || this.form != undefined);
+
+    this.logo = this.api.getLogo();
     
   }
 

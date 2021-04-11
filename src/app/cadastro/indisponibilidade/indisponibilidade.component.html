@@ -2,71 +2,49 @@
 
 <p-toast></p-toast>
 
-<div class="container d-print-none" *ngIf="!carregandoMenu">
 
-    <div class="row ml-1">
-        <div class="col-sm-6 col-lg-2">
-
-            <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
-                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
-                <p-header>
-                    Clientes
-                </p-header>
-            </p-listbox>
-
-        </div>
-        <div class="col-sm-6 col-lg-2">
-
-            <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
-                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
-                <p-header>
-                    Prefixos
-                </p-header>
-            </p-listbox>
-
-        </div>
-
-        <div class="col-sm-6 col-lg-4">
-            <div class="input-group mb-3">
-                <div class="input-group-append">
-                    <span class="input-group-text">Inicial</span>
-                </div>
-                <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                    showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-append">
-                        <span class="input-group-text">Final</span>
-                    </div>
-                    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                        showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-                </div>
-
-
-
-            </div>
-        </div>
-
-
-        <div class="col-sm-6 col-lg-2">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()"></button>
-        </div>
-
-
-
+<div class="p-grid">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
+            checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+            <p-header>
+                Clientes
+            </p-header>
+        </p-listbox>
     </div>
-
+    <div class="p-col">
+        <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
+            checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+            <p-header>
+                Prefixos
+            </p-header>
+        </p-listbox>
+    </div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+<br/>
+        <button type="button" pButton pRipple label="Final"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+    </div>
+    <div class="p-col">
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+            (click)="rodarRelatorio()"></button>
+    </div>
+    <div class="p-col"></div>
 
 </div>
-
 
 <div *ngIf="!carregandoRelatorio">
 
 
     <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
-    
-    <p-table [columns]="cols" [value]="dados" dataKey="Id" selectionMode="single"  dataKey="Id" (onRowSelect)="onRowSelect($event)">
+
+    <p-table [columns]="cols" [value]="dados" dataKey="Id" selectionMode="single" dataKey="Id"
+        (onRowSelect)="onRowSelect($event)">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>Contrato</th>
@@ -89,10 +67,12 @@
 
 
 
-    <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="false" [modal]="true">
-        <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos" [base]="basesDeOperacao" [motivosIndisponibilidade]="motivosIndisponibilidade" (retorno)="onLinhaAlterada($event)">
+    <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="true" [modal]="true">
+        <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos"
+            [base]="basesDeOperacao" [motivosIndisponibilidade]="motivosIndisponibilidade"
+            (retorno)="onLinhaAlterada($event)">
 
-        </app-editar-indisponibilidade >
+        </app-editar-indisponibilidade>
     </p-dialog>
 
 </div>
