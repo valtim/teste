@@ -1,68 +1,182 @@
-<app-titulo titulo="VALIDAÇÃO DE JORNADA" [carregando]="carregando"></app-titulo>
-
-<div class="p-grid p-mt-1">
-    <div class="p-col"></div>
-    <div class="p-col">
-        <button type="button" pButton pRipple label="Data"></button>
-        <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [locale]="locale_pt"></p-calendar>
-        <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy" [locale]="locale_pt" showIcon="true"
-            [inputStyle]="{'width':'100px'}"></p-calendar> -->
-
-        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-            class="p-ml-2"></button>
-    </div>
-    <div class="p-col"></div>
+<div class="spinner-border" *ngIf="carregando">
+    <span class="sr-only">Loading...</span>
 </div>
 
-<div *ngIf="dados">
 
-    <p-table [value]="dados" styleClass="p-datatable-striped">
-        <ng-template pTemplate="header" let-columns>
+<div *ngIf="!carregando">
+
+
+    <div *ngIf="jornada">
+
+        <button *ngIf="gerente" pButton type="button" label="Confirmar"
+            (click)="confirmarJornada(true, jornada.Id)"></button>
+
+        <button *ngIf="analista" pButton type="button" label="Confirmar"
+            (click)="confirmarJornada(false, jornada.Id)"></button>
+    </div>
+
+    <div id="normal">
+        <h3>{{jornada.Tripulante.NomeCompleto}}</h3>
+
+
+        <p-table [value]="jornada.EscalasRealizadas" styleClass="p-datatable-striped">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th rowspan="2">Data</th>
+                    <th rowspan="2">Apresentação</th>
+                    <th colspan="2">Refeição 1</th>
+                    <th colspan="2">Refeição 2</th>
+                    <th rowspan="2">Fim da Jornada</th>
+                    <th colspan="2">Horas de Voo</th>
+                    <th rowspan="2">Alertas</th>
+                </tr>
+
+                <tr>
+                    <th>Refeição</th>
+                    <th>Fim da Refeição</th>
+                    <th>Refeição</th>
+                    <th>Fim da Refeição</th>
+                    <th>Total do Dia</th>
+                    <th>Total Últ. 30 dias</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr *ngIf="item.Data == 'Total'">
+                    <td colspan="9">{{item.Data}}</td>
+                    <td>{{item.HorasDeVooVFR}}</td>
+                    <td>{{item.HorasDeVooIFR}}</td>
+                    <td>{{item.HorasDeVooNot}}</td>
+                    <td>{{item.HorasDeVooDia}}</td>
+                    <td>-</td>
+                </tr>
+                <tr *ngIf="item.Data != 'Total'">
+                    <td>{{item.Data | date:'dd/MM/yyyy'}}</td>
+                    <td>{{item.Apresentacao | date:'HH:mm'}}</td>
+                    <td><span *ngIf="item.Almoco">{{item.Almoco | date:'HH:mm'}}</span></td>
+                    <td><span *ngIf="item.FimAlmoco">{{item.FimAlmoco | date:'HH:mm'}}</span></td>
+                    <td><span *ngIf="item.Almoco2">{{item.Almoco2 | date:'HH:mm'}}</span></td>
+                    <td><span *ngIf="item.FimAlmoco2">{{item.FimAlmoco2 | date:'HH:mm'}}</span></td>
+                    <td><span *ngIf="item.FimDaJornada">{{item.FimDaJornada | date:'HH:mm'}}</span></td>
+                    <td>{{item.HorasDeVooDia}}</td>
+                    <td>{{item.Tempo30Dias}}</td>
+                    <td>{{item.Alertas}}</td>                 
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+
+
+    <!-- <div id="mobile">
+        <table class="table table-sm">
+            <tbody *ngFor="let item of jornada.Escalas; let i = index">
+
+                <ng-container *ngIf="item.Data == 'Total'">
+                    <tr>
+                        <th colspan="2">{{item.Data}}</th>
+                    </tr>
+                    <tr>
+                        <th>Voo VFR</th>
+                        <td>{{item.HorasDeVooVFR}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo IFR</th>
+                        <td>{{item.HorasDeVooIFR}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo Noturno</th>
+                        <td>{{item.HorasDeVooNot}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo no Dia</th>
+                        <td>{{item.HorasDeVooDia}}</td>
+                    </tr>
+
+                </ng-container>
+
+                <ng-container *ngIf="item.Data != 'Total'">
+                    <tr>
+                        <th width="50%">Data</th>
+                        <td width="50%">{{item.Data}}</td>
+                    </tr>
+                    <tr>
+                        <th>Cod</th>
+                        <td>{{item.Escala}}</td>
+                    </tr>
+                    <tr>
+                        <th>Dom/Fer</th>
+                        <td *ngIf="item.DomingoOuFeriado">SIM</td>
+                        <td *ngIf="!item.DomingoOuFeriado">NÃO</td>
+                    </tr>
+                    <tr>
+                        <th>Apresentação</th>
+                        <td>{{item.Apresentacao}}</td>
+                    </tr>
+                    <tr>
+                        <th>Refeição</th>
+                        <td>{{item.Almoco}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fim da Refeição</th>
+                        <td>{{item.FimAlmoco}}</td>
+                    </tr>
+                    <tr>
+                        <th>Refeição</th>
+                        <td>{{item.Almoco2}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fim da Refeição</th>
+                        <td>{{item.FimAlmoco2}}</td>
+                    </tr>
+                    <tr>
+                        <th>Fim da Jornada</th>
+                        <td>{{item.FimDaJornada}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo VFR</th>
+                        <td>{{item.HorasDeVooVFR}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo IFR</th>
+                        <td>{{item.HorasDeVooIFR}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo Noturno</th>
+                        <td>{{item.HorasDeVooNot}}</td>
+                    </tr>
+                    <tr>
+                        <th>Voo Dia</th>
+                        <td>{{item.HorasDeVooDia}}</td>
+                    </tr>
+                    <tr>
+                        <th>Últ. 30 dias</th>
+                        <td>{{item.Horas30Dias}}</td>
+                    </tr>
+                </ng-container>
+            </tbody>
+
             <tr>
-                <th>TRIPULANTE</th>
-                <th>INÍCIO</th>
-                <th>FIM</th>
-                <th>ALERTAS</th>
-                <th>OK. TRIP</th>
-                <th>OK. ANALISTA</th>
-                <th>OK. GERENTE</th>
-            </tr>
-        </ng-template>
-
-
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr (click)="rowData.Visible = true">
-                <td>
-                    {{rowData['Tripulante'].Trato}}
-                </td>
-                <td>
-                    {{rowData['DataDeInicio'] | date:'dd/MM/yyyy'}}
-                </td>
-                <td>
-                    {{rowData['DataDeFim'] | date:'dd/MM/yyyy'}}
-                </td>
-                <td>                    
-                    <span *ngIf="rowData['Alertas'] == 0 ">válido</span>
-                    <span *ngIf="rowData['Alertas'] > 0">{{rowData['Alertas']}} alertas</span>
-                </td>
-                <td>
-                    <span *ngIf="rowData['ConfirmacaoDoTripulante']">{{rowData['ConfirmacaoDoTripulante'] | date:'dd/MM/yyyy'}}</span>
-                </td>
-                <td>
-                    <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] | date:'dd/MM/yyyy'}}</span>
-                </td>
-                <td>
-                    <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] | date:'dd/MM/yyyy'}}</span>
+                <td colspan="14">
+                    <h6>Foi-me concedido diariamente, (1) uma hora de refeição a cada 6 (seis) horas de jornada
+                    </h6>
                 </td>
             </tr>
-        </ng-template>
-
-    </p-table>
-    <p-dialog *ngFor="let item of dados" header="ORDEM DE MISSÃO" [(visible)]="item.Visible" [style]="{width: '90vw'}"
-        [baseZIndex]="10000">
-        <app-imprimir-jornada-novo [jornada]="item" [gerente]="gerente" [analista]="analista" *ngIf="item.Visible">
-        </app-imprimir-jornada-novo>
-    </p-dialog>
 
 
+            <tr>
+                <td colspan="2">Tripulante: {{jornada.Tripulante.NomeCompleto}} - ANAC
+                    {{jornada.Tripulante.CodigoANAC}}
+                    <span *ngIf="confirmacaoDoTripulante"><br />Assinado eletronicamente pelo tripulante em
+                        {{confirmacaoDoTripulante}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">Gerente de Operações: LEANDRO Barboza Antunes - ANAC 124089
+                    <span *ngIf="confirmacaoDoGerente"><br />Assinado eletronicamente pelo Gerente de Operações
+                        em
+                        {{confirmacaoDoGerente}}</span>
+                </td>
+            </tr>
+        </table>
+    </div> -->
 </div>

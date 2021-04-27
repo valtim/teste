@@ -22,7 +22,7 @@
 
 <div class="table-container">
 
-    <table>
+    <table #tabela>
         <thead>
             <tr>
                 <th *ngFor="let col of colunas" (click)="editarDia($event, col.Value)">{{col.Header}}</th>
@@ -43,7 +43,7 @@
 
         <tr *ngFor="let linha of dados">
             <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"
-                [class]="linha[col.Header].Estilo">
+                [ngClass]="linha[col.Header].Estilo">
                 {{linha[col.Header].Texto}}<span class="p-badge p-badge-danger"
                     *ngIf="linha[col.Header].NumeroDeVencimentos > 0 ">{{linha[col.Header].NumeroDeVencimentos}}</span>
                 <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>

@@ -10,8 +10,7 @@ import { LoginComponent } from './seguranca/login/login.component';
 import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
 
 
-import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
-import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
+import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
 import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
 import { ContratoComponent } from './cadastro/contrato/contrato.component';
 import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
@@ -50,6 +49,8 @@ import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.co
 import { CertificadoComponent } from './treinamento/certificado/certificado.component';
 import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component';
 import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
+import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jornada.component';
+import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -207,8 +208,8 @@ const routes: Routes = [
     component: ContratoComponent,
   },
   {
-    path: 'validar-jornada',
-    component: ValidarJornadaComponent,
+    path: 'listar-jornada',
+    component: ListarJornadaComponent,
   },
   {
     path: 'imprimir-jornada',
@@ -221,6 +222,10 @@ const routes: Routes = [
   {
     path: 'tipo-de-ocorrencia',
     component: TipoDeOcorrenciaComponent,
+  },
+  {
+    path: 'quinzena',
+    component: QuinzenaComponent,
   },
 ];
 

@@ -15,25 +15,25 @@ export class EditarEscalaComponent implements OnInit {
 
   @Output() retorno = new EventEmitter();
 
+
+  valorEditado : any = {};
+
+  estilo = { height: '200px'};
   constructor() { }
   ngOnInit(): void {
+    this.valorEditado = Object.assign({}, this.Registro);
     this.list1 = this.TipoDeOcorrencias.map(x=> ({'TipoDeOcorrencia': x, 'Descricao' : null}));
-    this.list2 = this.Registro.Detalhes;
+    this.list2 = this.valorEditado.Detalhes;
   }
 
   list1: any[];
 
   list2: any[];
 
-  lista: 'width:300px; height:300px;';
-
-  // ngOnInit(): void {
-  //   //this.list1 = this.tiposDeOcorrencia.find(x=>x.)
-  // }
-
   salvar(){
-    this.Registro.DialogResult = 'OK';
-    this.retorno.emit(this.Registro);
+    this.valorEditado.DialogResult = 'OK';
+    this.valorEditado.Siglas = this.valorEditado.Detalhes.map(x=>x.Sigla).join('/');
+    this.retorno.emit(this.valorEditado);
   }
 
   cancelar(){

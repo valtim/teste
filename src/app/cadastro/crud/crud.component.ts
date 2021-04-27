@@ -50,7 +50,9 @@ export class CrudComponent implements OnInit {
   grupos: FormGroup[];
 
   constructor(private api: ApiService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder) {
+      this.locale_pt = this.api.getLocale('pt');
+     }
 
 
   ngOnInit(): void {
@@ -215,6 +217,16 @@ export class CrudComponent implements OnInit {
   mudeiAqui(e, dado) {
     dado['Modificado'] = true;
     this.verBotoes();
+  }
+
+  mudeiAquiData(e, dado, campo) {
+    let pedacos = dado[campo].split("/");
+
+    if ( pedacos.length != 3 )
+      return;
+
+    dado[campo] = new Date(pedacos[2], (+pedacos[1])-1, pedacos[0]);
+    this.mudeiAqui(e, dado);
   }
 
 }

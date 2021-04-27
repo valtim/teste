@@ -1,6 +1,5 @@
 .p-picklist-source-controls {
     display: none !important;
-    ;
 }
 
 /* .amarelo{
@@ -20,6 +19,11 @@
     background-color: rgba(0, 174, 255, 0.1);
 }
 
+.destaque{
+    font-weight: bolder;
+    background-color: red;
+}
+
 .texto-pequeno {
     font-weight: bold;
     font-size: xx-small;
@@ -35,7 +39,7 @@ body {
 td, th {
     border: 1px solid;
     padding: 5px;
-    background: white;
+    /* background: white; */
     text-align: center;
     font-size: small;
     min-width: 50px;

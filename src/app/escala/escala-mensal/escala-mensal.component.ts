@@ -1,4 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
+import { from } from 'rxjs';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class EscalaMensalComponent implements OnInit {
   Clientes: any;
   Bases: any;
   Balanco: any;
+  colunasBalance: any;
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -31,6 +33,8 @@ export class EscalaMensalComponent implements OnInit {
 
   }
 
+  @ViewChildren("tabela") tb_principal: any;
+
   dataInicio;
   dataFim;
   tudoPronto = true;
@@ -39,9 +43,8 @@ export class EscalaMensalComponent implements OnInit {
     this.rodarRelatorio()
   }
 
-
-  editarDia(e, dia){
-    this.escalaDoDiaSelecionada = this.Tripulacoes.find(x=>x.Data == dia+"T00:00:00");
+  editarDia(e, dia) {
+    this.escalaDoDiaSelecionada = this.Tripulacoes.find(x => x.Data == dia + "T00:00:00");
     this.escalaDoDiaSelecionada.Display = true;
     this.ExibirDialogo = true;
   }
@@ -50,10 +53,11 @@ export class EscalaMensalComponent implements OnInit {
 
 
     this.tudoPronto = false;
-    this.api.getEscalaMensal(this.dataInicio, this.dataFim).then(x=> {
+    this.api.getEscalaMensal(this.dataInicio, this.dataFim).then(x => {
       this.dados = x;
 
       this.colunas = x.Colunas;
+      this.colunasBalance = x.ColunasBalance;
       this.dados = x.Dados;
       this.previsoes = x.previsoes;
       this.TipoDeOcorrencias = x.TipoDeOcorrencias;
@@ -72,12 +76,10 @@ export class EscalaMensalComponent implements OnInit {
       });
 
       this.vencimentos = x.Vencimentos;
-  
-      for(let i = 3; i< this.colunas.length;i++){
-        this.fazerBalanco(this.colunas[i]);
-      }
 
-      if ( this.vencimentos.length > 0)
+      this.fazerBalanco();
+
+      if (this.vencimentos.length > 0)
         alert("Existem vencimentos de Cursos/Carteiras no período selecionado.\nVerifique a lista detalhada abaixo da Escala.");
 
       this.tudoPronto = true;
@@ -90,31 +92,83 @@ export class EscalaMensalComponent implements OnInit {
   }
 
 
-  modificarRegistro(evento, id){
-    //let retorno = this.previsoes.find(x=>x.Id == valor).Detalhes.map(x=>x.Descricao).join(', ');
-    //alert(retorno);
+  destacarLinha(evento, numeroDaLinha) {
 
-    this.registroSelecionado = this.previsoes.find(x=>x.Id == id);
+    for (let linha = 1; linha < this.tb_principal.first.nativeElement.rows.length; linha++) {
+      for (let celula = 1; celula < this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells.length; celula++) {
+        this.tb_principal.first.nativeElement.rows[linha].cells[celula].bgColor = "";
+      }
+    }
+
+
+    for (let i = 1; i < this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells.length; i++) {
+      //this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells[i].bgColor = "#000000";
+      this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells[i].bgColor = "gray";
+    }
+
+  }
+
+  modificarRegistro(evento, id) {
+
+    if (evento.target.cellIndex == 0) {
+      this.destacarLinha(evento, evento.target.parentElement.rowIndex);
+      return;
+    }
+
+    this.registroSelecionado = this.previsoes.find(x => x.Id == id);
     this.registroSelecionado.Display = true;
     this.ExibirDialogo = true;
 
   }
 
+  retornoEvento(e) {
 
-  fazerBalanco(coluna){
-    const items = this.dados.filter(x=>x.PIC.Texto).map(x=>x[coluna.Header]).filter(x=>x.Texto.includes("EV")).length + "/" + this.dados.map(x=>x[coluna.Header]).filter(x=> x.Texto && x.Texto.includes("EV")).length ;
-    this.Balanco[coluna.Header] = { "Texto": items };
-  }
 
-  retornoEvento(e){
     this.ExibirDialogo = false;
     this.ocultar();
+
+    this.registroSelecionado = e;
+
+    let registro = this.previsoes.find(x=>x.Id == e.Id);
+
+    registro = e;
+
+    let data = new Date(e.Data);
+
+    var linhas = this.dados.find(x=>x.Name.Texto == e.Tripulante.Trato);
+
+    var indice = data.getDate().toString()
+
+    if ( indice.length == 1 ) indice = "0" + indice;
+
+    var linha = linhas[indice];
+
+    if ( e.Siglas.indexOf('EV') == -1){
+      linha.Texto = "";
+      linha.Base = "";
+    }
+
+    linha.Texto = e.Detalhes.map(x=>x.TipoDeOcorrencia.Sigla).join(",");
+
+    this.fazerBalanco();
   }
 
-  ocultar(){
+  fazerBalanco() {
+    
+    for (let col = 0; col < this.colunasBalance.length; col++) {      
+      let coluna = this.colunasBalance[col];
+
+      const items = this.dados.filter(x => x.PIC.Texto).map(x => x[coluna.Header]).filter(x => x.Texto.includes("EV")).length + "/" + this.dados.map(x => x[coluna.Header]).filter(x => x.Texto && x.Texto.includes("EV")).length;
+
+      this.Balanco[coluna.Header] = { "Texto": items };
+    }
+  }
+
+
+  ocultar() {
     if (this.registroSelecionado)
       this.registroSelecionado.Display = false;
-    if ( this.escalaDoDiaSelecionada )
+    if (this.escalaDoDiaSelecionada)
       this.escalaDoDiaSelecionada.Display = false;
   }
 

@@ -50,8 +50,7 @@ import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-d
 import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
 import { ContratoComponent } from './cadastro/contrato/contrato.component';
 import { EditarIndisponibilidadeComponent } from './cadastro/editar-indisponibilidade/editar-indisponibilidade.component';
-import { ValidarJornadaComponent } from './administracao/validar-jornada/validar-jornada.component';
-import { ImprimirJornadaNovoComponent } from './administracao/imprimir-jornada-novo/imprimir-jornada-novo.component';
+import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
 import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
 import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
 import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
@@ -62,6 +61,8 @@ import { PrevisaoDoDiaComponent } from './escala/previsao-do-dia/previsao-do-dia
 import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
 import { EditarEscalaComponent } from './escala/editar-escala/editar-escala.component';
 import { EditarComposicaoComponent } from './escala/editar-composicao/editar-composicao.component';
+import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jornada.component';
+import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
 
 
 
@@ -111,7 +112,7 @@ registerLocaleData(localept, 'pt');
     IndisponibilidadeComponent,
     ContratoComponent,
     EditarIndisponibilidadeComponent,
-    ValidarJornadaComponent,
+    ListarJornadaComponent,
     ImprimirJornadaNovoComponent,
     MotivoDaIndisponibilidadeComponent,
     MotivoDoErroNoPreenchimentoComponent,
@@ -123,6 +124,7 @@ registerLocaleData(localept, 'pt');
     EscalaMensalComponent,
     EditarEscalaComponent,
     EditarComposicaoComponent,
+    QuinzenaComponent,
 
   ],
   imports: [

@@ -1,9 +1,9 @@
-<div *ngIf="Registro.Display">
+<div *ngIf="Registro.Display" style="height:500px">
 
     <h3>{{Registro.Tripulante.Trato}} - {{Registro.Data | date:'dd/MM/yyyy'}}</h3>
 
     <p-pickList [source]="list1" [target]="list2" dragdrop="true" (onTargetSelect)="funteste($event)"
-        [showTargetControls]="false" [showSourceControls]="false">
+        [showTargetControls]="false" [showSourceControls]="false" [sourceStyle]="estilo" [targetStyle]="estilo" (onMoveToSource)="itemSelecionado = false">
         <ng-template let-item pTemplate="item">
             <div>
                 <b>{{item.TipoDeOcorrencia.Nome}}</b>

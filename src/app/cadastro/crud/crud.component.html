@@ -51,11 +51,11 @@
                     <p-cellEditor *ngIf="col.type == 'DateTime'">
 
                         <ng-template pTemplate="input">
-                            <input pInputText type="text" [(ngModel)]="rowData[col.field]"
-                                (change)="mudeiAqui($event, rowData)" (focus)="$event.target.select()">
+                            <p-inputMask mask="99/99/9999" [(ngModel)]="rowData[col.field]"
+                            (change)="mudeiAquiData($event, rowData, col.field)" (focus)="$event.target.select()"></p-inputMask>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            {{rowData[col.field] | date:'dd/MM/yyyy HH:mm'}}
+                            {{rowData[col.field] | date:'dd/MM/yyyy'}}
                         </ng-template>
                     </p-cellEditor>
 

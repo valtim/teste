@@ -1,0 +1,33 @@
+@media print {
+    @page {
+        size: portrait
+    }
+    #mobile {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    #normal {
+        display: inline;
+    }
+    #mobile {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    #normal {
+        display: none;
+    }
+    #mobile {
+        display: inline;
+    }
+    tbody:nth-child(even) {
+        background: gray;
+        color: white;
+    }
+    td {
+        text-align: center;
+    }
+}

@@ -624,7 +624,7 @@ export class ApiService {
       .toPromise();
   }
 
-  getConfirmacaoDeJornada(gerente:boolean, id:string){
+  getConfirmacaoDeJornada(gerente:boolean, id:string): Promise<any> {
     if ( gerente )
       return this.http.get(`${this.url}api/confirmacaodejornada/gerente/${id}`, this.httpOptions).toPromise();
       
