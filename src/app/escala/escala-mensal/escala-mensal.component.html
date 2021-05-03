@@ -1,7 +1,5 @@
 <app-titulo titulo="Escala Mensal" [carregando]="!tudoPronto"></app-titulo>
-
 <div class="p-grid p-mt-1">
-    <div class="p-col"></div>
     <div class="p-col">
         <button type="button" pButton pRipple label="Inicial"></button>
         <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
@@ -15,58 +13,147 @@
     <div class="p-col">
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
             class="p-ml-2"></button>
+        <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"
+            class="p-ml-2 p-button-success"></button>
     </div>
-    <div class="p-col"></div>
 </div>
 
+<p-tabView>
+    <p-tabPanel header="Hitch Control">
+        <div class="table-container">
+            <table #tabela>
+                <thead>
+                    <tr>
+                        <th *ngFor="let col of colunas" (click)="editarDia($event, col.Value)">{{col.Header}}</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th *ngFor="let col of colunas">
+                            {{Balanco[col.Header].Texto}}
+                        </th>
+                    </tr>
+                </tfoot>
+                <tr *ngFor="let linha of dados">
+                    <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"
+                        [ngClass]="linha[col.Header].Estilo">
+                        {{linha[col.Header].Texto}}<span class="p-badge p-badge-danger"
+                            *ngIf="linha[col.Header].NumeroDeVencimentos > 0 ">{{linha[col.Header].NumeroDeVencimentos}}</span>
+                        <span *ngIf="linha[col.Header].Base"
+                            class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>
+                        <span class="p-badge p-badge-warning"
+                            *ngIf="linha[col.Header].NumeroDeTreinamentos > 0 ">{{linha[col.Header].NumeroDeTreinamentos}}</span>
+                    </td>
+                </tr>
+            </table>
 
-<div class="table-container">
-
-    <table #tabela>
-        <thead>
-            <tr>
-                <th *ngFor="let col of colunas" (click)="editarDia($event, col.Value)">{{col.Header}}</th>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Crew Control">
+        <table #tabela2>
+            <thead>
+                <tr>
+                    <th>CONTRACTS</th>
+                    <th>COMPANY</th>
+                    <th *ngFor="let col of colunasBalance" (click)="editarDia($event, col.Value)">{{col.Header}}</th>
+                </tr>
+            </thead>
+            <!-- <tfoot>
+                <tr>
+                    <th *ngFor="let col of colunas">
+                        {{Balanco[col.Header].Texto}}
+                    </th>
+                </tr>
+            </tfoot> -->
+            <tr *ngFor="let contrato of contratos">
+                <th>CONTRACTS</th>
+                <th>{{contrato.Cliente.Nome}}</th>
+                <td *ngFor="let col of colunasBalance">
+                    1
+                </td>
             </tr>
-        </thead>
 
-        <tfoot>
             <tr>
-                <th *ngFor="let col of colunas">
-                    {{Balanco[col.Header].Texto}}
-                </th>
+                <th rowspan="5">REQUIRED CREW</th>
+                <td>PILOTS REQUIRED PER DAY (CONTRACTS)</td>
             </tr>
-            <!-- <tr>
-                <th *ngFor="let col of colunas">{{col.Header}}</th>
-            </tr> -->
-        </tfoot>
+            <tr>
+                <td>PILOTS REQUIRED FOR TRAINNING PROGRAM (MONTH)</td>
+            </tr>
+            <tr>
+                <td>TOTAL CREW</td>
+            </tr>
+            <tr>
+                <td>CAPTAINS PER HITCH</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICERS PER HITCH</td>
+            </tr>
 
+            <tr>
+                <th rowspan="2">CURRENT CREW STAFF</th>
+                <td>CAPTAINS PER HICTH</td>
+            </tr>
+            <tr>
+                <td>TOTAL 1 OFFICERS</td>
+            </tr>
 
-        <tr *ngFor="let linha of dados">
-            <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"
-                [ngClass]="linha[col.Header].Estilo">
-                {{linha[col.Header].Texto}}<span class="p-badge p-badge-danger"
-                    *ngIf="linha[col.Header].NumeroDeVencimentos > 0 ">{{linha[col.Header].NumeroDeVencimentos}}</span>
-                <span *ngIf="linha[col.Header].Base" class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>
-                <span class="p-badge p-badge-warning"
-                    *ngIf="linha[col.Header].NumeroDeTreinamentos > 0 ">{{linha[col.Header].NumeroDeTreinamentos}}</span>
-            </td>
-        </tr>
+            <tr>
+                <th rowspan="10">CREW STATUS</th>
+                <td>CAPTAINS ON TRAINING</td>
+            </tr>
+            <tr>
+                <th>CAPTAINS ON VACATION</th>
+            </tr>
+            <tr>
+                <td>CAPITAINS OUT OF DUTY (OTHERS)</td>
+            </tr>
+            <tr>
+                <td>CAPTAINS ON DUTY OUT OF HITCH</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICERS ON TRAINNING</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICERS ON VACATION</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICER OUT OF DUTY (OTHERS)</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICERS ON DUTY OUT OF HITCH</td>
+            </tr>
+            <tr>
+                <td>CAPTAINS TOTAL BALANCE</td>
+            </tr>
+            <tr>
+                <td>FIRST OFFICERS TOTAL BALANCE</td>
+            </tr>
 
-
-
-
-    </table>
-
-</div>
-
-<ul>
-    <li *ngFor="let item of vencimentos">{{item.Curso}}
+            <tr>
+                <th rowspan="2">MANAGERS FLIGHT SCHEDULE</th>
+                <td>OPERATIONS MANAGER </td>
+            </tr>
+            <tr>
+                <th>CHIEF PILOT</th>
+            </tr>
+        </table>
+    </p-tabPanel>
+    <p-tabPanel header="Expiration">
         <ul>
-            <li *ngFor="let data of item.Datas">{{data.ValorExibido}} - {{data.Tripulante.Trato}}</li>
+            <li *ngFor="let item of vencimentos">{{item.Curso}}
+                <ul>
+                    <li *ngFor="let data of item.Datas">{{data.ValorExibido}} - {{data.Tripulante.Trato}}</li>
+                </ul>
+            </li>
         </ul>
-    </li>
+    </p-tabPanel>
+</p-tabView>
 
-</ul>
+
+
+
+
 
 <!-- [Header]="col.field" -->
 <p-dialog Header="Escala do Dia" [(visible)]="ExibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultar()">

@@ -68,11 +68,11 @@ th {
 
 .table-container {
     position: relative;
-    width: 96vw;
+    width: 97vw;
     height: 75vh;
     overflow: scroll;
-    margin-left: 2vw;
-    margin-right: 2vw;
+    margin-left: 0vw;
+    margin-right: 1vw;
 }
 
 thead th, tfoot th {
@@ -122,6 +122,11 @@ tr> :first-child {
     background: #0D89EC;
     color: white;
     left: 0;
+}
+
+
+ul, li {    
+    font-family: helvetica;
 }
 
 /* don't do this */

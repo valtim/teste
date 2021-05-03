@@ -24,6 +24,7 @@ export class EscalaMensalComponent implements OnInit {
   Bases: any;
   Balanco: any;
   colunasBalance: any;
+  contratos: any;
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -66,6 +67,7 @@ export class EscalaMensalComponent implements OnInit {
       this.Clientes = x.clientes;
       this.Bases = x.bases;
       this.Balanco = x.balanco;
+      this.contratos = x.Contratos;
 
       this.previsoes.forEach(x => {
         x.Display = false
@@ -94,17 +96,29 @@ export class EscalaMensalComponent implements OnInit {
 
   destacarLinha(evento, numeroDaLinha) {
 
+    var linhaMarcarda = -1;
+
     for (let linha = 1; linha < this.tb_principal.first.nativeElement.rows.length; linha++) {
+      if (this.tb_principal.first.nativeElement.rows[linha].cells[5].bgColor != "gray")
+        continue;
+
+      linhaMarcarda = linha;
       for (let celula = 1; celula < this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells.length; celula++) {
         this.tb_principal.first.nativeElement.rows[linha].cells[celula].bgColor = "";
       }
     }
 
 
+    if (linhaMarcarda == numeroDaLinha)
+      return;
+
     for (let i = 1; i < this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells.length; i++) {
-      //this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells[i].bgColor = "#000000";
       this.tb_principal.first.nativeElement.rows[numeroDaLinha].cells[i].bgColor = "gray";
     }
+
+  }
+
+  salvar() {
 
   }
 
@@ -129,33 +143,33 @@ export class EscalaMensalComponent implements OnInit {
 
     this.registroSelecionado = e;
 
-    let registro = this.previsoes.find(x=>x.Id == e.Id);
+    let registro = this.previsoes.find(x => x.Id == e.Id);
 
     registro = e;
 
     let data = new Date(e.Data);
 
-    var linhas = this.dados.find(x=>x.Name.Texto == e.Tripulante.Trato);
+    var linhas = this.dados.find(x => x.Name.Texto == e.Tripulante.Trato);
 
     var indice = data.getDate().toString()
 
-    if ( indice.length == 1 ) indice = "0" + indice;
+    if (indice.length == 1) indice = "0" + indice;
 
     var linha = linhas[indice];
 
-    if ( e.Siglas.indexOf('EV') == -1){
+    if (e.Siglas.indexOf('EV') == -1) {
       linha.Texto = "";
       linha.Base = "";
     }
 
-    linha.Texto = e.Detalhes.map(x=>x.TipoDeOcorrencia.Sigla).join(",");
+    linha.Texto = e.Detalhes.map(x => x.TipoDeOcorrencia.Sigla).join(",");
 
     this.fazerBalanco();
   }
 
   fazerBalanco() {
-    
-    for (let col = 0; col < this.colunasBalance.length; col++) {      
+
+    for (let col = 0; col < this.colunasBalance.length; col++) {
       let coluna = this.colunasBalance[col];
 
       const items = this.dados.filter(x => x.PIC.Texto).map(x => x[coluna.Header]).filter(x => x.Texto.includes("EV")).length + "/" + this.dados.map(x => x[coluna.Header]).filter(x => x.Texto && x.Texto.includes("EV")).length;
