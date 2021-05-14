@@ -51,6 +51,8 @@ import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de
 import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
 import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jornada.component';
 import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
+import { TrilhoComponent } from './escala/trilho/trilho.component';
+import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -226,6 +228,14 @@ const routes: Routes = [
   {
     path: 'quinzena',
     component: QuinzenaComponent,
+  },
+  {
+    path: 'trilho',
+    component: TrilhoComponent,
+  },
+  {
+    path: 'escala-do-dia',
+    component: EscalaDoDiaComponent,
   },
 ];
 

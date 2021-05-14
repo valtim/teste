@@ -22,6 +22,10 @@ export class FadigaComponent implements OnInit {
 
   public caminho;
 
+  trocouTab(e){
+    this.basico = e.index == 0;
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,

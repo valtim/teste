@@ -63,6 +63,8 @@ import { EditarEscalaComponent } from './escala/editar-escala/editar-escala.comp
 import { EditarComposicaoComponent } from './escala/editar-composicao/editar-composicao.component';
 import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jornada.component';
 import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
+import { TrilhoComponent } from './escala/trilho/trilho.component';
+import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
 
 
 
@@ -125,6 +127,8 @@ registerLocaleData(localept, 'pt');
     EditarEscalaComponent,
     EditarComposicaoComponent,
     QuinzenaComponent,
+    TrilhoComponent,
+    EscalaDoDiaComponent,
 
   ],
   imports: [

@@ -11,6 +11,8 @@ import { TituloComponent } from './titulo/titulo.component';
 import { ListboxModule } from 'primeng/listbox';
 import { CalendarModule } from 'primeng/calendar';
 //import { ChartModule } from 'primeng/chart';
+
+import {AutoCompleteModule} from 'primeng/autocomplete';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -71,7 +73,8 @@ import {InputTextModule} from 'primeng/inputtext';
     MessagesModule,
     MessageModule,
     TabViewModule,
-    InputTextModule
+    InputTextModule,
+    AutoCompleteModule
   ],
   imports: [
     CommonModule,
@@ -100,7 +103,8 @@ import {InputTextModule} from 'primeng/inputtext';
     MessagesModule,
     MessageModule,
     TabViewModule,
-    InputTextModule
+    InputTextModule,
+    AutoCompleteModule
   ],
 })
 export class SharedModule { }

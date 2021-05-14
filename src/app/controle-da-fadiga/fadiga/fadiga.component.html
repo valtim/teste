@@ -1,6 +1,6 @@
 <app-titulo titulo="Fadiga" [carregando]="loadingDados || loadingPagina"></app-titulo>
 
-<p-tabView>
+<p-tabView (onChange)="trocouTab($event)">
   <p-tabPanel header="Básica">
     <button type="button" pButton pRipple label="Enviar e-mail com
     pendências" [routerLink]="caminho" class="p-mb-2"></button>
@@ -11,7 +11,7 @@
       (comeco)="inicioDaPesquisa($event)">
     </app-pesquisa-basica>
   </p-tabPanel>
-  <p-tabPanel header="Avançada">
+  <p-tabPanel header="Avançada" (click)="basico == !basico">
     <app-pesquisa-basica [data]="data" completa="true" [tripulantes]="tripulantes" [niveis]="niveis"
       (retorno)="retornoDaPesquisa($event)" (comeco)="inicioDaPesquisa($event)"></app-pesquisa-basica>
   </p-tabPanel>

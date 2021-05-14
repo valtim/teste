@@ -1,0 +1,106 @@
+<app-titulo titulo="Trilho" [carregando]="!tudoPronto"></app-titulo>
+
+
+<p-toast position="center"></p-toast>
+
+
+<p-card>
+    <button type="button" pButton pRipple label="Data"></button>
+    <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt" showIcon="true"
+        [inputStyle]="{'width':'150px'}"></p-calendar>
+    <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+        class="p-ml-2"></button>
+</p-card>
+
+<span class="p-buttonset botoes_salvar">
+    <button pButton type="button" label="Novo" (click)="novaLinha()" icon="pi pi-file"
+        class="p-button-raised p-button-rounded p-button-success" [disabled]="!tudoPronto"></button>
+    <button pButton type="button" label="Salvar" (click)="salvar()" icon="pi pi-check"
+        class="p-button-raised p-button-rounded" [disabled]="!tudoPronto"></button>
+    <button pButton type="button" label="Cancelar" icon="pi pi-times"
+        class="p-button-raised p-button-rounded p-button-warning" [disabled]="!tudoPronto"></button>
+        <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()" 
+            class="p-button-raised p-button-rounded p-button-danger" [disabled]="linhasSelecionadas.length == 0 || !tudoPronto"></button>
+</span>
+
+<div class="card">
+    <p-table [value]="trilhos" dataKey="id" editMode="row">
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width:5%">
+                <col style="width:12%">
+                <col style="width:12%">
+                <col style="width:12%">
+                <col style="width:56%">
+                <col style="width:15%">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Cliente</th>
+                <th>Partida</th>
+                <th>Pouso</th>
+                <th>Rota</th>
+                <th>Prefixo</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="linha">                
+                <td>
+                    <p-checkbox [value]="linha.Id" [(ngModel)]="linhasSelecionadas"></p-checkbox>
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-autoComplete [(ngModel)]="linha.Cliente" [suggestions]="resultsCliente"
+                                (completeMethod)="searchCliente($event)" field="Nome" autoHighlight="true">
+                            </p-autoComplete>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.Cliente.Nome}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputMask mask="99:99" [(ngModel)]="linha.HoraDoVoo"></p-inputMask>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.HoraDoVoo}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td>
+                    {{linha.Pouso}}
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-autoComplete [(ngModel)]="linha.Rota" [suggestions]="resultsLocal"
+                                (completeMethod)="searchLocal($event)" [multiple]="true" field="Nome"
+                                [autoHighlight]="true" [unique]="false"></p-autoComplete>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngFor="let item of linha.Rota">{{item.Nome}} </span>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
+                                (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true">
+                            </p-autoComplete>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.Prefixo.PrefixoCompleto}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

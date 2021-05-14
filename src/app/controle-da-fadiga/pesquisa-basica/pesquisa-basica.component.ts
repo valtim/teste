@@ -26,6 +26,7 @@ export class PesquisaBasicaComponent implements OnInit {
   @Input() niveis;
 
 
+  locale_pt: any;
 
   constructor(
     private api: ApiService,
@@ -33,6 +34,7 @@ export class PesquisaBasicaComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+    this.locale_pt = this.api.getLocale('pt');
   }
 
   initForm() {

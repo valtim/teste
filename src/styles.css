@@ -16,10 +16,25 @@ body{
   app-titulo {
     display: none;
   }
+
+
+  .botoes_salvar{
+    display:none;
+  }
+
 }
 
 @media screen {
   .somente-impressora {
     display: none;
   }
+
+
+  .botoes_salvar{
+    position:fixed;
+    right:150px;
+    top:10px;
+    z-index:10000;
+  }
+
 }

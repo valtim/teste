@@ -205,7 +205,7 @@ export class ApiService {
   }
 
   getPrefixos(): any {
-    return JSON.parse(localStorage.getItem('Prefixo'));
+    return JSON.parse(localStorage.getItem('Combos')).soPrefixo;
   }
 
   getNaturezas(): any {
@@ -217,7 +217,7 @@ export class ApiService {
   }
 
   getClientes(): any {
-    return JSON.parse(localStorage.getItem('Cliente'));
+    return JSON.parse(localStorage.getItem('Combos')).Cliente;
   }
 
   getTipoDeOperacoes(): any {
@@ -316,6 +316,25 @@ export class ApiService {
 
   postLocalidade(localidades: Array<any>): Promise<any> {
     return this.http.post(this.url + 'api/localidade', localidades, this.httpOptions).toPromise();
+  }
+  getListasTrilho(): Promise<any> {
+    return this.http.get(this.url + `api/listasTrilho`, this.httpOptions).toPromise();
+  }
+
+  getTrilho(data:Date): Promise<any> {
+    return this.http.get(this.url + `api/trilho/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
+
+  getEscalaDiaria(data:Date): Promise<any> {
+    return this.http.get(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
+
+  postTrilho(trilhos: Array<any>): Promise<any> {
+    return this.http.post(this.url + 'api/trilho', trilhos, this.httpOptions).toPromise();
+  }
+
+  deleteTrilho(trilhos: Array<string>): Promise<any> {
+    return this.http.post(this.url + 'api/trilho/delete', trilhos, this.httpOptions).toPromise();
   }
 
   getListaBloco(): Promise<any> {
