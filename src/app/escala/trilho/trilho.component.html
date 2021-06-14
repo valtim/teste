@@ -54,7 +54,7 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-autoComplete [(ngModel)]="linha.Cliente" [suggestions]="resultsCliente"
-                                (completeMethod)="searchCliente($event)" field="Nome" autoHighlight="true">
+                                (completeMethod)="searchCliente($event)" field="Nome" autoHighlight="true" [inputStyle]="{'width': '120px'}">
                             </p-autoComplete>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -65,7 +65,7 @@
                 <td pInitEditableRow>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-                            <p-inputMask mask="99:99" [(ngModel)]="linha.HoraDoVoo"></p-inputMask>
+                            <p-inputMask mask="99:99" [(ngModel)]="linha.HoraDoVoo" [style]="{'width': '80px'}"></p-inputMask>
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{linha.HoraDoVoo}}
@@ -81,7 +81,7 @@
                         <ng-template pTemplate="input">
                             <p-autoComplete [(ngModel)]="linha.Rota" [suggestions]="resultsLocal"
                                 (completeMethod)="searchLocal($event)" [multiple]="true" field="Nome"
-                                [autoHighlight]="true" [unique]="false"></p-autoComplete>
+                                [autoHighlight]="true" [unique]="false" [inputStyle]="{'min-width': '120px'}"></p-autoComplete>
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngFor="let item of linha.Rota">{{item.Nome}} </span>
@@ -92,7 +92,7 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
-                                (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true">
+                                (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true" [inputStyle]="{'width': '90px'}">
                             </p-autoComplete>
                         </ng-template>
                         <ng-template pTemplate="output">

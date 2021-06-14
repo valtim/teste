@@ -2,24 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
 
-
 @Component({
-  selector: 'app-escala-do-dia',
-  templateUrl: './escala-do-dia.component.html',
-  styleUrls: ['./escala-do-dia.component.css'],
+  selector: 'app-escala-semanal',
+  templateUrl: './escala-semanal.component.html',
+  styleUrls: ['./escala-semanal.component.css'],
   providers: [MessageService]
 })
-export class EscalaDoDiaComponent implements OnInit {
-  tudoPronto: any;
-  data: Date;
+export class EscalaSemanalComponent implements OnInit {
   locale_pt: any;
+  data: Date;
+  urlLogo: string;
+  colunas: any[];
   relatorio: any;
   tripulacoes: any;
+  tudoPronto: boolean;
   todosOsTrilhos: any;
   turmas: any;
   extras: any;
-  urlLogo: string;
-
+  resposta: any;
 
   constructor(private api: ApiService,
     private messageService: MessageService) { }
@@ -32,15 +32,12 @@ export class EscalaDoDiaComponent implements OnInit {
     this.urlLogo = this.api.getLogo();
   }
 
-  numeroDeColunas = 0;
-  colunas = [];
-
   getColunas(numero) {
     this.colunas = [];
     for (let i = 0; i < numero; i++)
       this.colunas.push(`evento`);
 
-      return this.colunas;
+    return this.colunas;
   }
 
   rodarRelatorio() {
@@ -48,19 +45,17 @@ export class EscalaDoDiaComponent implements OnInit {
     this.tripulacoes = null;
     this.tudoPronto = false;
 
-    this.api.getEscalaDiaria(this.data).then(x => {
+    this.api.getEscalaSemanal(this.data).then(x => {
       this.tudoPronto = true;
-      //this.relatorio = x.logs;
-      this.tripulacoes = x.Tripulacoes;
+      this.resposta = x.resposta;
+      //this.tripulacoes = x.Tripulacoes;
       this.todosOsTrilhos = x.todosOsTrilhos;
-      this.turmas = x.turmas;
-      this.extras = x.extras;
       this.getColunas(x.colunas);
     })
-    .catch(x=>{
-      this.tudoPronto = true;
-      this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Escala não pode ser executada!' });
-    })
+      .catch(x => {
+        this.tudoPronto = true;
+        this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Escala não pode ser executada!' });
+      })
 
   }
 

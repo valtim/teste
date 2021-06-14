@@ -19,7 +19,7 @@
     background-color: rgba(0, 174, 255, 0.1);
 }
 
-.destaque{
+.destaque {
     font-weight: bolder;
     background-color: red;
 }
@@ -34,8 +34,6 @@ body {
     font-size: small;
 }
 
-
-
 td, th {
     border: 1px solid;
     padding: 5px;
@@ -45,7 +43,6 @@ td, th {
     min-width: 50px;
     height: 50px;
 }
-
 
 table {
     border-collapse: collapse;
@@ -124,8 +121,7 @@ tr> :first-child {
     left: 0;
 }
 
-
-ul, li {    
+ul, li {
     font-family: helvetica;
 }
 

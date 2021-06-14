@@ -4,7 +4,7 @@
 <p-toast position="center"></p-toast>
 
 
-<p-card>
+<p-card class="nao-imprimir">
     <button type="button" pButton pRipple label="Data"></button>
     <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt" showIcon="true"
         [inputStyle]="{'width':'150px'}"></p-calendar>
@@ -13,36 +13,92 @@
 </p-card>
 
 <p-card *ngFor="let item of relatorio">
-<h5>{{item.Name}}</h5>
+    <h5>{{item.Name}}</h5>
     <ul>
-        <li *ngFor="let evento of item.Events">{{evento.Descricao}} <span *ngIf="evento.Crew.PIC">{{evento.Crew.PIC.Trato}}</span>&nbsp;<span *ngIf="evento.Crew.SIC">{{evento.Crew.SIC.Trato}}</span></li>
+        <li *ngFor="let evento of item.Events">{{evento.Descricao}} <span
+                *ngIf="evento.Crew.PIC">{{evento.Crew.PIC.Trato}}</span>&nbsp;<span
+                *ngIf="evento.Crew.SIC">{{evento.Crew.SIC.Trato}}</span></li>
     </ul>
 </p-card>
 
-<p-card>Escala do dia {{data | date:'dd/MM/yyyy'}}</p-card>
+<p-card><img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de Escala do dia {{data | date:'dd/MM/yyyy'}}</span></p-card>
+
+
+<table class="nao-imprimir">
+    <tr>
+        <th>Cliente</th>
+        <th>Partida</th>
+        <th>Pouso</th>
+        <th>Rota</th>
+        <th>Prefixo</th>
+        <th>Atendido</th>
+    </tr>
+    <tr *ngFor="let trilho of todosOsTrilhos">
+        <td>{{trilho.Cliente.Nome}}</td>
+        <td>{{trilho.HoraDoVoo | slice:0:5}}</td>
+        <td>{{trilho.Pouso | slice:0:5}}</td>
+        <td>{{trilho.RotaTexto}}</td>
+        <td>{{trilho.Prefixo.PrefixoCompleto}}</td>
+        <td>{{trilho.Atendido}}</td>
+    </tr>
+</table>
+
+<table class="nao-imprimir">
+    <tr>
+        <th>Turma</th>
+        <th>Instrutor</th>
+        <th>Alunos</th>
+    </tr>
+    <tr *ngFor="let turma of turmas">
+        <td>{{turma.Treinamento.Nome}}</td>
+        <td><span *ngIf="turma.Instrutor">{{turma.Instrutor.Trato}}</span><span *ngIf="!turma.Instrutor">EXTERNO</span>
+        </td>
+        <td>{{turma.AlunosStr}}</td>
+    </tr>
+</table>
 
 <table>
     <tr>
-        <td>Trato</td>
+        <td>Nome</td>
+        <!-- <td>FB</td> -->
         <td>Base</td>
-        <td>Apresentação</td>
-        <td>FB</td>
-        <td>Dupla</td>
+        <td>Apres.</td>
+        <td>Obs.</td>
+        <!-- <td>Dupla</td> -->
         <td *ngFor="let coluna of colunas">&nbsp;</td>
         <td>Saída</td>
-        <td>Limite Corte</td>
+        <!-- <td>Limite Corte</td> -->
         <td>Limite Jornada</td>
     </tr>
     <tr *ngFor="let crew of tripulacoes">
         <td>{{crew.PIC.Trato}}</td>
+        <!-- <td><span *ngIf="!crew.EscaladoComoSIC">PIC</span><span *ngIf="crew.EscaladoComoSIC">SIC</span></td> -->
         <td>{{crew.Base}}</td>
-        <td>{{crew.Apresentacao}}</td>
-        <td><span *ngIf="crew.EhPIC">PIC</span><span *ngIf="!crew.EhPIC">SIC</span></td>
-        <td>{{crew.SIC.Trato}}</td>
-        <td *ngFor="let evento of crew.Eventos"><span *ngIf="evento.Tipo == 1">{{evento.Prefixo}}</span> {{evento.PrefixoDeApresentacao}}{{evento.Descricao}}</td>
-        
-        <td>{{crew.HoraDaSaida}}</td>
+        <td>{{crew.Apresentacao | slice:0:5}}</td>
+        <td>{{crew.Observacao}}</td>
+        <!-- <td>{{crew.SIC.Trato}}</td> -->
+        <td *ngFor="let evento of crew.Eventos">
+            <span *ngIf="evento.Tipo == 1">Prefixo: {{evento.Prefixo}}<br />
+                <span *ngIf="!crew.EscaladoComoSIC">PIC: {{crew.PIC.Trato}} / SIC: {{crew.SIC.Trato}}</span>
+                <span *ngIf="crew.EscaladoComoSIC">PIC: {{crew.SIC.Trato}} / SIC: {{crew.PIC.Trato}}</span>
+                <br />
+            </span>
+            {{evento.Descricao}}
+            <span *ngIf="evento.Tipo == 2"><br />Início: {{evento.Inicio | slice:0:5}} / Fim: {{evento.Fim |
+                slice:0:5}}</span>
+        </td>
+
+        <!-- <td>{{crew.HoraDaSaida | slice:0:5}}</td> -->
         <td>{{crew.LimiteDeCorte | slice:0:5}}</td>
         <td>{{crew.LimiteDeJornada | slice:0:5}}</td>
     </tr>
 </table>
+
+
+<div *ngIf="extras" class="formatted">
+    {{extras.Comentario}}
+    <br /><br />
+    Elaborado por: {{extras.PilotoChefe}}
+    <br /><br />
+    Divulgado por: {{extras.Coordenador}}
+</div>

@@ -65,6 +65,9 @@ import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jo
 import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
 import { TrilhoComponent } from './escala/trilho/trilho.component';
 import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
+import { DuplaComponent } from './escala/dupla/dupla.component';
+import { DuplaDetalheComponent } from './escala/dupla-detalhe/dupla-detalhe.component';
+import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
 
 
 
@@ -129,6 +132,9 @@ registerLocaleData(localept, 'pt');
     QuinzenaComponent,
     TrilhoComponent,
     EscalaDoDiaComponent,
+    DuplaComponent,
+    DuplaDetalheComponent,
+    EscalaSemanalComponent,
 
   ],
   imports: [

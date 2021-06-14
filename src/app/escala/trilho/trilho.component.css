@@ -1,3 +1,11 @@
 p-card{
     text-align: center;
 }
+
+.p-autoComplete{
+    width: 50px;
+}
+
+/* p-autoComplete .maximo{
+    min-height: 50px;
+} */

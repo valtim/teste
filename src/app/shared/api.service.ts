@@ -11,12 +11,7 @@ import { DataUtil } from './../shared/DataUtil';
 })
 
 export class ApiService {
-
-
-
-
-
-
+  
   private httpOptions: any;
   private url: string;
   private permission;
@@ -200,6 +195,22 @@ export class ApiService {
       .toPromise();
   }
 
+  getDuplas(dataInicio : Date, dataFim: Date) :any {
+    return this.http.get(`${this.url}api/dupla/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.httpOptions)
+      .toPromise();
+  }
+
+  postDuplas(duplas: any): Promise<any> {
+    return this.http.post(`${this.url}api/dupla`, duplas, this.httpOptions)
+      .toPromise();
+  }
+
+  getListasDupla() : any {
+    return this.http.get(`${this.url}api/dupla/listas`, this.httpOptions)
+      .toPromise();
+  }
+
+
   getAbastecedoras(): any {
     return JSON.parse(localStorage.getItem('Abastecedora'));
   }
@@ -327,6 +338,10 @@ export class ApiService {
 
   getEscalaDiaria(data:Date): Promise<any> {
     return this.http.get(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
+
+  getEscalaSemanal(data:Date): Promise<any> {
+    return this.http.get(this.url + `api/escala-semanal/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
   postTrilho(trilhos: Array<any>): Promise<any> {

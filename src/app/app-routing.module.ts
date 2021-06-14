@@ -53,6 +53,8 @@ import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jo
 import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
 import { TrilhoComponent } from './escala/trilho/trilho.component';
 import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
+import { DuplaComponent } from './escala/dupla/dupla.component';
+import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -236,6 +238,14 @@ const routes: Routes = [
   {
     path: 'escala-do-dia',
     component: EscalaDoDiaComponent,
+  },
+  {
+    path: 'dupla',
+    component: DuplaComponent,
+  },
+  {
+    path: 'escala-semanal',
+    component: EscalaSemanalComponent,
   },
 ];
 
