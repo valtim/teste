@@ -25,6 +25,8 @@ export class TrilhoComponent implements OnInit {
   resultsCliente: any[];
   locale_pt: any;
   data = new Date();
+  tripulantes: any;
+  resultsTrip: any;
 
   constructor(private api: ApiService,
     private messageService: MessageService) {
@@ -38,6 +40,7 @@ export class TrilhoComponent implements OnInit {
       this.localidades = x.Localidades;
       this.prefixos = x.Prefixos;
       this.clientes = x.Clientes;
+      this.tripulantes = x.Tripulantes;
       this.tudoPronto = this.tabelaPronta && this.listasProntas;
     })
 
@@ -46,6 +49,12 @@ export class TrilhoComponent implements OnInit {
 
     this.rodarRelatorio();
 
+  }
+
+
+
+  searchTrip(event){
+    this.resultsTrip = this.tripulantes.filter(x => x.Trato.indexOf(event.query.toUpperCase()) > -1);
   }
 
   rodarRelatorio() {

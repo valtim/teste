@@ -50,6 +50,7 @@
                 <col style="width:15%">
                 <col style="width:15%">
                 <col style="width:15%">
+                <col style="width:15%">
                 <col style="width:46%">
                 <col style="width:20%">
             </colgroup>
@@ -62,6 +63,7 @@
                 <th rowspan="2">PIC</th>
                 <th rowspan="2">SIC</th>
                 <th rowspan="2">Apresentacao</th>
+                <th rowspan="2">Prefixo</th>
                 <th colspan="2">Disponibilidade</th>
                 <th rowspan="2">Observação</th>
                 <th rowspan="2">Repete Até</th>
@@ -139,6 +141,20 @@
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{linha.Apresentacao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
+                                (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true"
+                                [inputStyle]="{'width': '120px'}">
+                            </p-autoComplete>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span>
                         </ng-template>
                     </p-cellEditor>
                 </td>

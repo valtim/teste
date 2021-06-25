@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
@@ -20,7 +21,7 @@ export class ListarJornadaComponent implements OnInit {
   carregando = true;
 
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private router: Router) {
     this.locale_pt = this.api.getLocale('pt');
   }
   ngOnInit(): void {
@@ -38,6 +39,10 @@ export class ListarJornadaComponent implements OnInit {
         this.analista = x.Analista;
         this.carregando = false;
     })
+  }
+
+  imprimir(id : string){
+    window.open(`https://aeroleo.controledafadiga.com.br/imprimir-jornada/${id}`);
   }
 
 }

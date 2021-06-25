@@ -41,14 +41,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-crew>
             <tr>
-                <td>{{crew.Titulo}}</td>
+                <td>{{crew.Tripulante.Trato}}</td>
                 <td>{{crew.Base}}</td>
                 <td>{{crew.Apresentacao | slice:0:5}}</td>
                 <td>{{crew.Observacao}}</td>
                 <td *ngFor="let evento of crew.Eventos">
                     <span *ngIf="evento.Tipo == 1">
-                        <span *ngIf="!crew.EscaladoComoSIC">PIC: {{crew.PIC.Trato}} / SIC: {{crew.SIC.Trato}}</span>
-                        <span *ngIf="crew.EscaladoComoSIC">PIC: {{crew.SIC.Trato}} / SIC: {{crew.PIC.Trato}}</span>
+                        PIC: {{evento.PIC.Trato}} / SIC: {{evento.SIC.Trato}}                        
                         <br />
                     </span>
                     {{evento.Descricao}}

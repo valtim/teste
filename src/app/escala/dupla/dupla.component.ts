@@ -29,8 +29,8 @@ export class DuplaComponent implements OnInit {
   constructor(private api: ApiService,
     private messageService: MessageService) {
     this.locale_pt = this.api.getLocale('pt');
-    this.dataInicio = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+    this.dataInicio = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
+    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
 
     this.api.getListasDupla().then(x => {
       this.tripulantes = x.tripulantes;
@@ -77,7 +77,7 @@ export class DuplaComponent implements OnInit {
 
     let chaves = Object.keys(teste.editingRowKeys);
 
-    let editado = this.duplas.filter(x=>chaves.includes(x.Id))
+    let editado = this.duplas.filter(x => chaves.includes(x.Id))
 
 
     teste.editingRowKeys = [];
@@ -97,25 +97,25 @@ export class DuplaComponent implements OnInit {
 
       this.duplas.push.apply(this.duplas, novos);
 
-      this.duplas.forEach(x=>x.RepeteAte = undefined);
-      
+      this.duplas.forEach(x => x.RepeteAte = undefined);
+
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
     })
   }
 
   delete() {
 
-    let editado = this.duplas.filter(x=>this.linhasSelecionadas.includes(x.Id));
+    let editado = this.duplas.filter(x => this.linhasSelecionadas.includes(x.Id));
 
-    editado.forEach(x=>x.Ativo = false);
+    editado.forEach(x => x.Ativo = false);
 
     this.api.postDuplas(editado).then(x => {
-      
-      this.duplas = this.duplas.filter(x=>!this.linhasSelecionadas.includes(x.Id));
-      
+
+      this.duplas = this.duplas.filter(x => !this.linhasSelecionadas.includes(x.Id));
+
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
     })
-    
+
   }
 
   onRowEditInit(linha: any) {

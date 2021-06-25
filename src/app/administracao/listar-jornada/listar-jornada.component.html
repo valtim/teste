@@ -26,6 +26,7 @@
                 <th>OK. TRIP</th>
                 <th>OK. ANALISTA</th>
                 <th>OK. GERENTE</th>
+                <th></th>
             </tr>
         </ng-template>
 
@@ -54,6 +55,7 @@
                 <td>
                     <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] | date:'dd/MM/yyyy'}}</span>
                 </td>
+                <td><button pButton type="button" icon="pi pi-print" iconPos="left" (click)="imprimir(rowData.Id)"></button></td>
             </tr>
         </ng-template>
 

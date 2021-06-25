@@ -10,6 +10,45 @@
         [inputStyle]="{'width':'150px'}"></p-calendar>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
         class="p-ml-2"></button>
+    <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir" (click)="imprimir()"
+        class="p-ml-2"></button>
+</p-card>
+
+
+
+<p-card class="nao-imprimir" *ngIf="extras">
+
+
+    <div class="p-grid">
+        <div class="p-col-2">
+            <span class="p-float-label">
+                <input id="float-input" type="text" pInputText [(ngModel)]="extras.Elaborado">
+                <label for="float-input">Elaborado por:</label>
+            </span>
+        </div>
+        <div class="p-col-2">
+            <span class="p-float-label">
+                <input id="float-input" type="text" pInputText [(ngModel)]="extras.Divulgado">
+                <label for="float-input">Divulgado por:</label>
+            </span>
+        </div>
+    </div>
+    <br />
+    <div class="p-grid">
+        <div class="p-col-4">
+            <span class="p-float-label">
+                <textarea id="float-input" [(ngModel)]="extras.Observacoes" rows="5" cols="100"
+                    pInputTextarea></textarea>
+                <label for="float-input">Observações</label>
+            </span>
+        </div>
+    </div>
+
+
+
+
+
+
 </p-card>
 
 <p-card *ngFor="let item of relatorio">
@@ -21,9 +60,6 @@
     </ul>
 </p-card>
 
-<p-card><img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de Escala do dia {{data | date:'dd/MM/yyyy'}}</span></p-card>
-
-
 <table class="nao-imprimir">
     <tr>
         <th>Cliente</th>
@@ -34,11 +70,11 @@
         <th>Atendido</th>
     </tr>
     <tr *ngFor="let trilho of todosOsTrilhos">
-        <td>{{trilho.Cliente.Nome}}</td>
-        <td>{{trilho.HoraDoVoo | slice:0:5}}</td>
-        <td>{{trilho.Pouso | slice:0:5}}</td>
-        <td>{{trilho.RotaTexto}}</td>
-        <td>{{trilho.Prefixo.PrefixoCompleto}}</td>
+        <td>{{trilho.Cliente}}</td>
+        <td>{{trilho.HoraDoVoo}}</td>
+        <td>{{trilho.Pouso}}</td>
+        <td>{{trilho.Rota}}</td>
+        <td>{{trilho.Prefixo}}</td>
         <td>{{trilho.Atendido}}</td>
     </tr>
 </table>
@@ -57,48 +93,55 @@
     </tr>
 </table>
 
-<table>
+<div id="download">
+    <img #canvas>
+    <a #downloadLink></a>
+</div>
+
+<table #escala>
+    <tr>
+        <th [attr.colspan]="valorColspan">
+            <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de Escala
+                do dia {{data | date:'dd/MM/yyyy'}}</span>
+        </th>
+    </tr>
+
     <tr>
         <td>Nome</td>
-        <!-- <td>FB</td> -->
         <td>Base</td>
+        <td>Prefixo</td>
         <td>Apres.</td>
         <td>Obs.</td>
-        <!-- <td>Dupla</td> -->
         <td *ngFor="let coluna of colunas">&nbsp;</td>
         <td>Saída</td>
-        <!-- <td>Limite Corte</td> -->
         <td>Limite Jornada</td>
     </tr>
     <tr *ngFor="let crew of tripulacoes">
-        <td>{{crew.PIC.Trato}}</td>
-        <!-- <td><span *ngIf="!crew.EscaladoComoSIC">PIC</span><span *ngIf="crew.EscaladoComoSIC">SIC</span></td> -->
+        <td>{{crew.Trato}}</td>
         <td>{{crew.Base}}</td>
-        <td>{{crew.Apresentacao | slice:0:5}}</td>
+        <td>{{crew.Prefixo}}</td>
+        <td>{{crew.Apresentacao}}</td>
         <td>{{crew.Observacao}}</td>
-        <!-- <td>{{crew.SIC.Trato}}</td> -->
         <td *ngFor="let evento of crew.Eventos">
-            <span *ngIf="evento.Tipo == 1">Prefixo: {{evento.Prefixo}}<br />
-                <span *ngIf="!crew.EscaladoComoSIC">PIC: {{crew.PIC.Trato}} / SIC: {{crew.SIC.Trato}}</span>
-                <span *ngIf="crew.EscaladoComoSIC">PIC: {{crew.SIC.Trato}} / SIC: {{crew.PIC.Trato}}</span>
+            <span *ngIf="evento.Tipo == 'Voo'">Prefixo: {{evento.Prefixo}}<br />
+                <span>PIC: {{evento.PIC}} / SIC: {{evento.SIC}}</span>
                 <br />
             </span>
             {{evento.Descricao}}
-            <span *ngIf="evento.Tipo == 2"><br />Início: {{evento.Inicio | slice:0:5}} / Fim: {{evento.Fim |
-                slice:0:5}}</span>
+            <span *ngIf="evento.Tipo == 'Treinamento'"><br />Início: {{evento.Inicio}} / Fim: {{evento.Fim}}</span>
         </td>
-
-        <!-- <td>{{crew.HoraDaSaida | slice:0:5}}</td> -->
-        <td>{{crew.LimiteDeCorte | slice:0:5}}</td>
-        <td>{{crew.LimiteDeJornada | slice:0:5}}</td>
+        <td>{{crew.LimiteDeCorte}}</td>
+        <td>{{crew.LimiteDeJornada}}</td>
     </tr>
 </table>
 
 
-<div *ngIf="extras" class="formatted">
-    {{extras.Comentario}}
+<div class="formatted somente-impressora" *ngIf="extras">
+    <b>Previsão de escala. Alterações poderão ocorrer devido às nossas operações serem não regulares e/ou por demanda
+        dos contratantes</b>
+    Elaborado por: {{extras.Elaborado}}
+    <br />
+    Divulgado por: {{extras.Divulgado}}
     <br /><br />
-    Elaborado por: {{extras.PilotoChefe}}
-    <br /><br />
-    Divulgado por: {{extras.Coordenador}}
+    Observações: <br /> {{extras.Observacoes}}
 </div>

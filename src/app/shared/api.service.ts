@@ -175,7 +175,7 @@ export class ApiService {
       .toPromise();
   }
 
-  private getClienteLogado(): Promise<any> {
+  getClienteLogado(): Promise<any> {
     return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise();
   }
 
@@ -329,7 +329,7 @@ export class ApiService {
     return this.http.post(this.url + 'api/localidade', localidades, this.httpOptions).toPromise();
   }
   getListasTrilho(): Promise<any> {
-    return this.http.get(this.url + `api/listasTrilho`, this.httpOptions).toPromise();
+    return this.http.get(this.url + `api/trilho/listas`, this.httpOptions).toPromise();
   }
 
   getTrilho(data:Date): Promise<any> {
@@ -562,6 +562,10 @@ export class ApiService {
       return `${this.url}assets/img/${this.clienteLogado}.png`;
   }
 
+  getServer(){
+    return this.url;
+  }
+
 
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();
@@ -577,6 +581,10 @@ export class ApiService {
 
   postGenerico(tipo: string, dados: any): Promise<any> {
     return this.http.post(`${this.url}api/salvar/${tipo}`, JSON.stringify(dados), this.httpOptions).toPromise();
+  }
+
+  postEscalaNova(dados: any): Promise<any> {
+    return this.http.post(`${this.url}api/dadosDaEscala`, JSON.stringify(dados), this.httpOptions).toPromise();
   }
 
 

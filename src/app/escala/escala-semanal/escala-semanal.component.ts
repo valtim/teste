@@ -29,7 +29,7 @@ export class EscalaSemanalComponent implements OnInit {
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.rodarRelatorio();
 
-    this.urlLogo = this.api.getLogo();
+    this.api.getClienteLogado().then(x=> this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
   }
 
   getColunas(numero) {
