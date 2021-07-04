@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { MessageService } from 'primeng/api';
+import { GuidUtil } from 'src/app/shared/GuidUtil';
 
 @Component({
   selector: 'app-trilho',
@@ -101,7 +102,7 @@ export class TrilhoComponent implements OnInit {
   }
 
   novaLinha() {
-    this.trilhos.push({ Id: this.api.newGuid(), Cliente: undefined, Hora: "06:00", Rota: [], Prefixo: undefined, Paradas: [] });
+    this.trilhos.push({ Id: GuidUtil.NewGuid(), Cliente: undefined, Hora: "06:00", Rota: [], Prefixo: undefined, Paradas: [] });
   }
 
   delete() {

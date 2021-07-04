@@ -43,6 +43,9 @@ export class EscalaDoDiaComponent implements OnInit {
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.rodarRelatorio();
 
+    this.extras.Data = this.data;
+    this.extras.Ativo = true;
+
   }
 
 
@@ -82,6 +85,15 @@ export class EscalaDoDiaComponent implements OnInit {
       return this.colunas;
   }
 
+
+  email(){
+    this.tudoPronto = false;
+    this.api.postEscalaPorEmail(this.data, this.extras).then(x=>{
+      this.tudoPronto = true;
+      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Escala Enviada!' });
+    });
+  }
+
   rodarRelatorio() {
     this.relatorio = null;
     this.tripulacoes = null;
@@ -91,11 +103,11 @@ export class EscalaDoDiaComponent implements OnInit {
       this.tudoPronto = true;
       //this.relatorio = x.logs;
       this.tripulacoes = x.Tripulacoes;
-      this.todosOsTrilhos = x.todosOsTrilhos;
-      this.turmas = x.turmas;
-      this.extras = x.extras;
-      this.getColunas(x.colunas);
-      this.valorColspan = 7 + x.colunas;
+      this.todosOsTrilhos = x.TodosOsTrilhos;
+      this.turmas = x.Turmas;
+      this.extras = x.Extras;
+      this.getColunas(x.Colunas);
+      this.valorColspan = 7 + x.Colunas;
     })
     .catch(x=>{
       this.tudoPronto = true;

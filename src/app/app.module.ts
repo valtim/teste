@@ -135,7 +135,6 @@ registerLocaleData(localept, 'pt');
     DuplaComponent,
     DuplaDetalheComponent,
     EscalaSemanalComponent,
-
   ],
   imports: [
     BrowserModule,

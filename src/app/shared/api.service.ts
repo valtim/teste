@@ -12,8 +12,8 @@ import { DataUtil } from './../shared/DataUtil';
 
 export class ApiService {
   
-  private httpOptions: any;
-  private url: string;
+  public httpOptions: any;
+  public url: string;
   private permission;
 
   private clienteLogado;
@@ -123,19 +123,7 @@ export class ApiService {
   //     .toPromise();
   // }
 
-  newGuid(): string {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      // tslint:disable-next-line:no-bitwise
-      const r = Math.random() * 16 | 0,
-        // tslint:disable-next-line:no-bitwise
-        v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
-
-  newBlankGuid(): string {
-    return '00000000-0000-0000-0000-000000000000'
-  }
+  
 
   getDiarioById(id: string): Promise<any> {
     return this.http.get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
@@ -190,25 +178,7 @@ export class ApiService {
   }
 
 
-  getEscalaMensal(dataInicio : Date, dataFim: Date): any {
-    return this.http.get(`${this.url}api/escala-mensal/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.httpOptions)
-      .toPromise();
-  }
-
-  getDuplas(dataInicio : Date, dataFim: Date) :any {
-    return this.http.get(`${this.url}api/dupla/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.httpOptions)
-      .toPromise();
-  }
-
-  postDuplas(duplas: any): Promise<any> {
-    return this.http.post(`${this.url}api/dupla`, duplas, this.httpOptions)
-      .toPromise();
-  }
-
-  getListasDupla() : any {
-    return this.http.get(`${this.url}api/dupla/listas`, this.httpOptions)
-      .toPromise();
-  }
+  
 
 
   getAbastecedoras(): any {
@@ -336,8 +306,17 @@ export class ApiService {
     return this.http.get(this.url + `api/trilho/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
+
+  postEscalaPorEmail(data:Date, extras:any){
+    return this.http.post(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, extras, this.httpOptions).toPromise();
+  }
+
   getEscalaDiaria(data:Date): Promise<any> {
     return this.http.get(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
+
+  getEscalaDiariaHTML(data:string): Promise<any> {
+    return this.http.get(this.url + `api/escala-diaria/${data}/html`, this.httpOptions).toPromise();
   }
 
   getEscalaSemanal(data:Date): Promise<any> {

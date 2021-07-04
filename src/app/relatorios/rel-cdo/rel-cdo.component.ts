@@ -82,13 +82,7 @@ export class RelCdoComponent implements OnInit {
     this.consulta_ok = false;
     this.api.getCDO(this.data).then(x => {
       this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(x[0].HTML + x[1].HTML);
-      // this.dadosCliente = x.lista;
-      // this.dadosInterno = x.listaInterna;
-      // this.retorno_data = x.data;
-      // this.observacaoIndisponibilidade = x.observacaoIndisponibilidade;
-      // this.resultado = x.resultado;
       this.consulta_ok = true;
-      // this.updateRowGroupMetaData("Cliente");
     })
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { ApiService } from 'src/app/shared/api.service';
-import { DataUtil } from 'src/app/shared/DataUtil';
+import { GuidUtil } from 'src/app/shared/GuidUtil';
+import { EscalaService } from 'src/app/shared/escala.service';
 
 @Component({
   selector: 'app-dupla',
@@ -26,13 +26,13 @@ export class DuplaComponent implements OnInit {
   resultsBase: any;
   resultsPrefixo: any;
 
-  constructor(private api: ApiService,
+  constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
-    this.locale_pt = this.api.getLocale('pt');
+    //this.locale_pt = this.api.getLocale('pt');
     this.dataInicio = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
 
-    this.api.getListasDupla().then(x => {
+    this.apiEscala.getListasDupla().then(x => {
       this.tripulantes = x.tripulantes;
       this.bases = x.bases;
       this.prefixos = x.prefixos;
@@ -55,7 +55,7 @@ export class DuplaComponent implements OnInit {
 
 
   rodarRelatorio() {
-    this.api.getDuplas(this.dataInicio, this.dataFim).then(x => {
+    this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
       this.duplas = x;
       this.tudoPronto = true;
 
@@ -69,7 +69,7 @@ export class DuplaComponent implements OnInit {
   }
 
   novaLinha() {
-    this.duplas.push({ Id: this.api.newGuid(), Base: undefined, Data: undefined, PIC: undefined, SIC: undefined, Apresentacao: undefined, Observacao: undefined, RepeteAte: undefined });
+    this.duplas.push({ Id: GuidUtil.NewGuid(), Base: undefined, Data: undefined, PIC: undefined, SIC: undefined, Apresentacao: undefined, Observacao: undefined, RepeteAte: undefined });
   }
 
   salvar(teste) {
@@ -82,7 +82,7 @@ export class DuplaComponent implements OnInit {
 
     teste.editingRowKeys = [];
 
-    this.api.postDuplas(editado).then(x => {
+    this.apiEscala.postDuplas(editado).then(x => {
       // this.duplas = x;
 
       // this.duplas.forEach(x => {
@@ -109,7 +109,7 @@ export class DuplaComponent implements OnInit {
 
     editado.forEach(x => x.Ativo = false);
 
-    this.api.postDuplas(editado).then(x => {
+    this.apiEscala.postDuplas(editado).then(x => {
 
       this.duplas = this.duplas.filter(x => !this.linhasSelecionadas.includes(x.Id));
 

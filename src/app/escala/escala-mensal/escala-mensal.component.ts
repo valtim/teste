@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { from } from 'rxjs';
 import { ApiService } from 'src/app/shared/api.service';
+import { EscalaService } from 'src/app/shared/escala.service';
 
 @Component({
   selector: 'app-escala-mensal',
@@ -26,8 +27,8 @@ export class EscalaMensalComponent implements OnInit {
   colunasBalance: any;
   contratos: any;
 
-  constructor(private api: ApiService) {
-    this.locale_pt = this.api.getLocale('pt');
+  constructor(private apiEscala: EscalaService) {
+    // this.locale_pt = this.api.getLocale('pt');
     const date = new Date();
     this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
     this.dataFim = new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -54,7 +55,7 @@ export class EscalaMensalComponent implements OnInit {
 
 
     this.tudoPronto = false;
-    this.api.getEscalaMensal(this.dataInicio, this.dataFim).then(x => {
+    this.apiEscala.getEscalaMensal(this.dataInicio, this.dataFim).then(x => {
       this.dados = x;
 
       this.colunas = x.Colunas;

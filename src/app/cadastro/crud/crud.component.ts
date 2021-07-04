@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/shared/api.service';
 import { MenuItem, MessageService } from 'primeng/api';
 // import { v4 as uuidv4 } from 'uuid';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { GuidUtil } from 'src/app/shared/GuidUtil';
 
 @Component({
   selector: 'app-crud',
@@ -144,7 +145,7 @@ export class CrudComponent implements OnInit {
     for (let i = 0; i < this.todasAsColunas.length; i++) {
 
       if (this.todasAsColunas[i].field == "Id") {
-        novoItem[this.todasAsColunas[i].field] = this.api.newGuid();
+        novoItem[this.todasAsColunas[i].field] = GuidUtil.NewGuid();
         continue;
       }
 

@@ -10,7 +10,7 @@
         [inputStyle]="{'width':'150px'}"></p-calendar>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
         class="p-ml-2"></button>
-    <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir" (click)="imprimir()"
+    <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar por Email" (click)="email()"
         class="p-ml-2"></button>
 </p-card>
 
@@ -40,6 +40,16 @@
                 <textarea id="float-input" [(ngModel)]="extras.Observacoes" rows="5" cols="100"
                     pInputTextarea></textarea>
                 <label for="float-input">Observações</label>
+            </span>
+        </div>
+    </div>
+    <br />
+    <div class="p-grid">
+        <div class="p-col-4">
+            <span class="p-float-label">
+                <textarea id="float-input" [(ngModel)]="extras.Distribuicao" rows="5" cols="100"
+                    pInputTextarea></textarea>
+                <label for="float-input">Lista de Distribuição</label>
             </span>
         </div>
     </div>
@@ -101,7 +111,8 @@
 <table #escala>
     <tr>
         <th [attr.colspan]="valorColspan">
-            <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de Escala
+            <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de
+                Escala
                 do dia {{data | date:'dd/MM/yyyy'}}</span>
         </th>
     </tr>
