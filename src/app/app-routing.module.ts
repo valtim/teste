@@ -55,6 +55,7 @@ import { TrilhoComponent } from './escala/trilho/trilho.component';
 import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
 import { DuplaComponent } from './escala/dupla/dupla.component';
 import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
+import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -246,6 +247,10 @@ const routes: Routes = [
   {
     path: 'escala-semanal',
     component: EscalaSemanalComponent,
+  },
+  {
+    path: 'erros-no-db',
+    component: ErrosNoDbComponent,
   },
 ];
 

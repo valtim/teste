@@ -68,6 +68,8 @@ import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.compo
 import { DuplaComponent } from './escala/dupla/dupla.component';
 import { DuplaDetalheComponent } from './escala/dupla-detalhe/dupla-detalhe.component';
 import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
+import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.component';
+import { RelGenericoComponent } from './relatorios/rel-generico/rel-generico.component';
 
 
 
@@ -135,6 +137,8 @@ registerLocaleData(localept, 'pt');
     DuplaComponent,
     DuplaDetalheComponent,
     EscalaSemanalComponent,
+    ErrosNoDbComponent,
+    RelGenericoComponent,
   ],
   imports: [
     BrowserModule,

@@ -473,6 +473,12 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelConsumoDeCombustivel`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
+
+  postRelErrosNoDb(filtro: any): Promise<any> {
+    return this.http.post(`${this.url}api/RelErrosNoDb`, JSON.stringify(filtro), this.httpOptions).toPromise();
+  }
+  
+
   postRelRDV(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelRdv`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
