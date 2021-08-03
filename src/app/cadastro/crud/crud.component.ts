@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { ApiService } from 'src/app/shared/api.service';
-import { MenuItem, MessageService } from 'primeng/api';
-// import { v4 as uuidv4 } from 'uuid';
 import { FormGroup, FormBuilder } from '@angular/forms';
+// import { v4 as uuidv4 } from 'uuid';
+import { MenuItem, MessageService } from 'primeng/api';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-crud',
@@ -50,9 +50,11 @@ export class CrudComponent implements OnInit {
   
   grupos: FormGroup[];
 
-  constructor(private api: ApiService,
+  constructor(
+    private api: ApiService,
+    private apiGenerico: ApiGenericoService,
     private fb: FormBuilder) {
-      this.locale_pt = this.api.getLocale('pt');
+      
      }
 
 
@@ -102,7 +104,7 @@ export class CrudComponent implements OnInit {
       this.listas = x;
 
 
-      this.api.getGenerico(this.tipo).then(x => {
+      this.apiGenerico.getGenerico(this.tipo).then(x => {
         this.dados = x.lista;
         if ( this.Ordem != undefined )
           this.dados = x.lista.sort(this.Ordem);
@@ -119,7 +121,7 @@ export class CrudComponent implements OnInit {
 
   excluir() {
 
-    this.api.deleteGenerico(this.tipo, this.valoresSelecionados).then(
+    this.apiGenerico.deleteGenerico(this.tipo, this.valoresSelecionados).then(
       () => {
         this.pesquisar();
       }
@@ -128,7 +130,7 @@ export class CrudComponent implements OnInit {
     //throw new Error("Method not implemented.");
   }
   salvar() {
-    this.api.postGenerico(this.tipo, this.dados.filter(x => x.Modificado)).then(
+    this.apiGenerico.postGenerico(this.tipo, this.dados.filter(x => x.Modificado)).then(
       () => {
         this.dados.forEach(x => {
           delete x.Modificado;

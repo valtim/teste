@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { MessageService } from 'primeng/api';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 
 @Component({
   selector: 'app-trilho',
@@ -30,6 +31,7 @@ export class TrilhoComponent implements OnInit {
   resultsTrip: any;
 
   constructor(private api: ApiService,
+    private apiGenerico: ApiGenericoService,
     private messageService: MessageService) {
     this.locale_pt = this.api.getLocale('pt');
   }
@@ -106,7 +108,7 @@ export class TrilhoComponent implements OnInit {
   }
 
   delete() {
-    this.api.deleteGenerico('Trilho', this.linhasSelecionadas).then(
+    this.apiGenerico.deleteGenerico('Trilho', this.linhasSelecionadas).then(
       () => {
         this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Excluído com sucesso!' });
         this.rodarRelatorio();

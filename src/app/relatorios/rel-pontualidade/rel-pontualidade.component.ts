@@ -1,6 +1,7 @@
 import { ApiService } from 'src/app/shared/api.service';
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 
 @Component({
   selector: 'app-rel-pontualidade',
@@ -32,6 +33,7 @@ export class RelPontualidadeComponent implements OnInit {
 
   constructor(    
     private api: ApiService,
+    private apiGenerico: ApiGenericoService,
     private messageService: MessageService
   ) { }
 
@@ -59,7 +61,7 @@ export class RelPontualidadeComponent implements OnInit {
 
 
   salvar() {
-    this.api.postGenerico("AtrasoDoVoo", this.dados.filter(x=>x.Modificado)).then(x => {
+    this.apiGenerico.postGenerico("AtrasoDoVoo", this.dados.filter(x=>x.Modificado)).then(x => {
       this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Status Salvos com sucesso!' });
       this.verBotoes();
       this.rodarRelatorio();

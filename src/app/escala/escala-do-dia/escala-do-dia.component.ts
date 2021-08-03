@@ -94,6 +94,15 @@ export class EscalaDoDiaComponent implements OnInit {
     });
   }
 
+  salvar(){
+    this.tudoPronto = false;
+    this.api.postEscalaNova(this.extras).then(x=>{
+      this.tudoPronto = true;
+      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Escala Salva!' });
+    });
+    
+  }
+
   rodarRelatorio() {
     this.relatorio = null;
     this.tripulacoes = null;

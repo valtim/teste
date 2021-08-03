@@ -25,6 +25,7 @@ export class DuplaComponent implements OnInit {
   resultsTripulante: any;
   resultsBase: any;
   resultsPrefixo: any;
+  cursos: any;
 
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
@@ -56,7 +57,8 @@ export class DuplaComponent implements OnInit {
 
   rodarRelatorio() {
     this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
-      this.duplas = x;
+      this.duplas = x.Duplas;
+      this.cursos = x.Cursos;
       this.tudoPronto = true;
 
       this.duplas.forEach(x => {

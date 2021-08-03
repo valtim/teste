@@ -118,6 +118,13 @@ export class ApiService {
       .toPromise();
   }
 
+
+  
+  postDadosDaEscala(escala: any): Promise<any> {
+    return this.http.post(`${this.url}api/DadosDaEscala`, escala, this.httpOptions)
+      .toPromise();
+  }
+
   // postDiarioVoo(diarioVoo: any): Promise<any> {
   //   return this.http.post(`${this.url}api/novodiario`, diarioVoo, this.httpOptions)
   //     .toPromise();
@@ -427,7 +434,7 @@ export class ApiService {
 
     const promise = new Promise((resolve, reject) => {
 
-      this.http.get(`${this.url}api/Combos-Light`, this.httpOptions).toPromise().then(x => {
+      this.http.get(`${this.url}api/combos-light`, this.httpOptions).toPromise().then(x => {
         localStorage.setItem('Combos', JSON.stringify(x));
         resolve(x);
       });
@@ -564,9 +571,7 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelControleDeHoras`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  postGenerico(tipo: string, dados: any): Promise<any> {
-    return this.http.post(`${this.url}api/salvar/${tipo}`, JSON.stringify(dados), this.httpOptions).toPromise();
-  }
+
 
   postEscalaNova(dados: any): Promise<any> {
     return this.http.post(`${this.url}api/dadosDaEscala`, JSON.stringify(dados), this.httpOptions).toPromise();
@@ -583,21 +588,7 @@ export class ApiService {
   }
 
 
-  getGenerico(tipo: string): Promise<any> {
 
-    if (tipo == 'contrato')
-      return this.getContrato();
-
-    return this.http.get(`${this.url}api/genericoComExemplo/${tipo}`, this.httpOptions).toPromise();
-  }
-
-  deleteGenerico(tipo: string, itens: any[]): Promise<any> {
-
-    //let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-
-    let caminho = `${this.url}api/Generico/delete/${tipo}`;
-    return this.http.post(caminho, itens, this.httpOptions).toPromise();
-  }
 
   postIndisponibilidade(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/relIndisponibilidade`, filtro, this.httpOptions)

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { MenuItem, MessageService } from 'primeng/api';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 
 
 //import { v4 as uuidv4 } from './../../../../node_modules/uuid';
@@ -32,6 +33,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
 
   constructor(
     private api: ApiService,
+    private apiGenerico: ApiGenericoService,
     private messageService: MessageService
   ) { }
 
@@ -80,7 +82,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
     });
   }
   excluir() {
-    this.api.deleteGenerico('StatusDaFrota', this.valoresSelecionados)
+    this.apiGenerico.deleteGenerico('StatusDaFrota', this.valoresSelecionados)
     .then(() => {
       
       this.rodarRelatorio();
