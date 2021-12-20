@@ -1,0 +1,20 @@
+.table td, .table th {
+  vertical-align: middle;
+}
+
+#registro td {
+  background-color: #929199;
+  background-image: url('/assets/img/background-color.png');
+  -webkit-print-color-adjust: exact;
+}
+
+.title-table {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.hr-line {
+  margin: 0;
+  margin-bottom: 10px;
+  border-bottom: solid 2px #555555;
+}

@@ -1,7 +1,8 @@
 <form [formGroup]="fg" class="mt-2">
     <div *ngIf="!completa">
         <button type="button" pButton pRipple label="Data"></button>
-        <input pInputText type="text" formControlName="Data" (focus)="$event.target.select()">
+        <p-calendar formControlName="Data" dateFormat="dd/mm/yy"></p-calendar>
+        <!-- <input pInputText type="text" formControlName="Data" (focus)="$event.target.select()"> -->
         <p-button icon="pi pi-search" iconPos="left" (click)="enviarForm()" class="p-ml-2"></p-button>
     </div>
 
@@ -25,7 +26,8 @@
             <div class="p-col"></div>
             <div class="p-col"><button type="button" pButton pRipple label="Data Inicial"></button></div>
             <div class="p-col">
-                <input type="date" class="form-control" formControlName="DataInicial">
+                <!-- <input type="date" class="form-control" formControlName="DataInicial"> -->
+                <p-calendar formControlName="DataInicial" dateFormat="dd/mm/yy"></p-calendar>
             </div>
             <div class="p-col-9"></div>
         </div>
@@ -38,7 +40,8 @@
                 <button type="button" pButton pRipple label="Data Final"></button>
             </div>
             <div class="p-col">
-                <input type="date" class="form-control" formControlName="DataFinal">
+                <!-- <input type="date" class="form-control" formControlName="DataFinal"> -->
+                <p-calendar formControlName="DataFinal" dateFormat="dd/mm/yy"></p-calendar>
             </div>
             <div class="p-col-9"></div>
         </div>

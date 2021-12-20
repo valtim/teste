@@ -1,0 +1,63 @@
+<app-titulo titulo="Incompatibilidade" [carregando]="(!consulta_ok || !tela_ok)"></app-titulo>
+
+<div class="container d-print-none" *ngIf="tela_ok">
+
+</div>
+
+
+<div *ngIf="consulta_ok">
+
+
+    <p-toast position="top-center"></p-toast>
+
+    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+
+    <p-table [value]="dados" dataKey="Id" editMode="row">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width:50px"></th>
+                <th>Tripulante</th>
+                <th>Incompatibilidades</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-linha>
+            <tr [pEditableRow]="linha">
+                <td>
+                    <p-checkbox [value]="linha.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"
+                        (onChange)="verBotoes()"></p-checkbox>
+                </td>
+
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante1" optionLabel="Trato"
+                                dataKey="Id" placeholder="Selecione um Tripulante"
+                                (onChange)="mudeiAqui($event, linha)"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.Tripulante1.Trato}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante2" optionLabel="Trato"
+                                dataKey="Id" placeholder="Selecione um Tripulante"
+                                (onChange)="mudeiAqui($event, linha)"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.Tripulante2.Trato}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <b>SOL SISTEMAS</b>
+        </ng-template>
+    </p-table>
+
+</div>

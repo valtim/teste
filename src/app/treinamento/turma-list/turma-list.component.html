@@ -1,0 +1,57 @@
+<app-titulo titulo="Turma" [carregando]="loading"></app-titulo>
+
+<div *ngIf="!displayModal">
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <!-- <p-button icon="pi pi-home" styleClass="p-button-success" routerLink="/home"></p-button>         -->
+            <button pButton type="button" label="Nova Turma" icon="pi pi-plus" (click)="novaTurma()"></button>
+            <button pButton type="button" label="Excluir Selecionadas" icon="pi pi-trash" (click)="excluir()" class="p-button-danger p-ml-2"></button>
+        </div>
+        <!-- <div class="p-toolbar-group-right">
+        <p-button icon="pi pi-sign-out" styleClass="p-button-danger" routerLink="/logoff"></p-button>
+    </div> -->
+    </p-toolbar>
+
+
+    <p-card>
+        <button type="button" pButton pRipple label="Data"></button>
+        <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'150px'}"class="p-ml-2"></p-calendar>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            showIcon="true" [inputStyle]="{'width':'150px'}" class="p-ml-2"></p-calendar>
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="p-ml-2"></button>
+    </p-card>
+
+    <p-table [value]="turmas">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:20px"></th>
+                <th>Curso</th>
+                <th>Início</th>
+                <th>Instrutor</th>
+                <th>Alunos</th>
+                <th>Situação</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-treino>
+            <tr>
+                <td><p-checkbox name="groupname" [value]="treino.Id" [(ngModel)]="paraExcluir"></p-checkbox></td>
+                <td (click)="editar(treino.Id)">{{treino.Treinamento != undefined ? treino.Treinamento.Nome : ''}}</td>
+                <td (click)="editar(treino.Id)">{{treino.DataDeInicio | date:'dd/MM/yyyy'}}
+                <td (click)="editar(treino.Id)"><span *ngIf="treino.InstrutorExterno">Externo</span><span *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span></td>
+                <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
+                <td><app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino"></app-turma-status></td>
+                </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+
+
+<div *ngFor="let turma of turmas">
+    <app-turma [turma]="turma" *ngIf="turma.Display" [treinamentos]="treinamentos" [equipamentos]="equipamentos"
+        [instrutores]="instrutores" [tripulantes]="tripulantes" (evento)="ocultar($event)"></app-turma>
+</div>

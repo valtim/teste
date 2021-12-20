@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 // import { v4 as uuidv4 } from 'uuid';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/shared/api.service';
   styleUrls: ['./crud.component.css'],
   providers: [MessageService]
 })
-export class CrudComponent implements OnInit {
+export class CrudComponent implements OnInit, AfterContentChecked  {
 
 
   @Input() tipo: any;
@@ -56,6 +56,9 @@ export class CrudComponent implements OnInit {
     private fb: FormBuilder) {
       
      }
+  ngAfterContentChecked(): void {
+    this.verBotoes()
+  }
 
 
   ngOnInit(): void {

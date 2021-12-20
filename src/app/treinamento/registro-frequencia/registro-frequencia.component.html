@@ -1,0 +1,82 @@
+<div class="content pagebreak">
+
+  <div class="row">
+    <div class="col-md-2">
+      <img src="assets/img/aeroleo.svg" alt="Logo Aéroleo"> <br>
+    </div>
+    <div class="col-md-2 offset-md-8">
+      Revisão: 04 <br>
+      Data: 20/03/2020 <br>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-md-12">
+      <h4>
+        Manual de Procedimentos da Garantia da Qualidade
+      </h4>
+      <hr class="hr-line">
+    </div>
+  </div>
+
+  <table id="registro" class="table table-bordered">
+    <tr>
+      <td class="text-center title-table">Registro de Treinamento</td>
+      <td class="text-center title-table">FORM-GQA-O12</td>
+    </tr>
+  </table>
+
+  <table class="table table-bordered">
+    <tr>
+      <td class="text-center title-table" colspan="4">EVENTO</td>
+      <td class="text-center title-table">PERÍODO / DATA</td>
+    </tr>
+    <tr>
+      <td class="text-center" colspan="4"> {{turma.Treinamento.nome}} </td>
+      <td class="text-center"> {{diasTurma[periodoIndex] | date:'dd/MM/yyyy'}} </td>
+    </tr>
+    <tr>
+      <td class="text-center title-table" colspan="3">LOCAL</td>
+      <td class="text-center title-table">CARGA HORÁRIA</td>
+      <td class="text-center title-table">HORÁRIO</td>
+    </tr>
+    <tr>
+      <td class="text-center" colspan="3"> {{turma.Local}} </td>
+      <td class="text-center"> {{cargaHoraria()}} </td>
+      <td class="text-center"> {{turma.HorasTurma[periodoIndex]?.HoraInicio}} - {{turma.HorasTurma[periodoIndex]?.HoraTermino}} </td>
+    </tr>
+    <tr>
+      <td colspan="5" class="text-center">
+        Obs: Entre cada matéria um intervalo de 10 min e 1 hora de almoço no período.
+      </td>
+    </tr>
+    <tr>
+      <td class="title-table">INSTRUTOR:</td>
+      <td colspan="4"> {{turma.Instrutor.nomeCompleto}} </td>
+    </tr>
+  </table>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center title-table" colspan="5">RELAÇÃO DE PARTICIPANTES</th>
+      </tr>
+      <tr>
+        <th class="text-center title-table">Matricula / Cód. ANAC</th>
+        <th class="text-center title-table">Nome</th>
+        <!-- Nome completo -->
+        <th class="text-center title-table">Setor</th>
+        <th class="text-center title-table">Função</th>
+        <th class="text-center title-table">Visto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aluno of turma.Alunos">
+        <td class="text-center"> {{aluno.codigoANAC}} </td>
+        <td class="text-center"> {{aluno.nomeCompleto}} </td>
+        <td class="text-center"> {{aluno.cht}} </td>
+        <td class="text-center"> {{aluno.cargo.nome}} </td>
+        <td class="text-center">  </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,4 +1,4 @@
-import { Indisponibilidade } from './../../model/Indisponibilidade';
+import { Indisponibilidade } from './../../models/Indisponibilidade';
 import { ApiService } from './../../shared/api.service';
 import { Component, OnInit } from '@angular/core';
 

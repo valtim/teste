@@ -1,3 +1,32 @@
 th {
     text-align: center !important;
 }
+
+.clarinho tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.clarinho tr:nth-child(even) {
+    background-color: #e7e7e7;
+}
+
+.linha_embaixo{
+    border-bottom: 1rem solid #000000;
+}
+
+.clarinho td{
+    white-space: nowrap;
+}
+
+.alinha_direita{
+    text-align: right !important;
+}
+
+.vencido{
+    color: red;
+    font-weight: bolder;
+}
+
+.fadiga{
+    white-space: normal;
+}

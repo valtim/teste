@@ -1,16 +1,17 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { SortEvent } from 'primeng/api/sortevent';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-vencimento-carteira',
   templateUrl: './vencimento-carteira.component.html',
-  styleUrls: ['./vencimento-carteira.component.css']
+  styleUrls: ['./vencimento-carteira.component.css'],
+  providers: [MessageService]
 })
 export class VencimentoCarteiraComponent implements OnInit {
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private messageService: MessageService) { }
 
   public tripulantes: any;
   public certificados: any;
@@ -44,18 +45,19 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!retorno.Confirmado)
       return;
 
-
-    this.api.postVencimento(retorno.Certificado).then(x => {
-
-
+      retorno.Display = false;
+    this.api.postVencimento(retorno.Certificado).then(x => {      
       var item = this.valores.filter(y => y.Trato == x.Tripulante.Trato)[0][x.Certificado.Nome];
-
-
-
+      item.Display = false;
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });      
       item.ValorExibido = x.ValorExibido;
       item.Cor = x.Cor;
-      item.Display = false;
-    })
+    }).catch
+      (e => {
+        
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao salvar, verifique os dados.' });
+
+      })
 
 
 
@@ -79,22 +81,22 @@ export class VencimentoCarteiraComponent implements OnInit {
 
     alert(coluna);
   }
-  salvarVencimento() {
-    if (this.vencimentoListToSave.length) {
-      this.api.postVencimento(this.vencimentoListToSave)
-        .then((response) => {
-          this.vencimentoListToSave = [];
-          document.getElementById('salvar').style.fill = '#000000';
-        })
-        .catch((e) => {
-          alert('erro ao salvar vencimento\n' + e)
+  // salvarVencimento() {
+  //   if (this.vencimentoListToSave.length) {
+  //     this.api.postVencimento(this.vencimentoListToSave)
+  //       .then((response) => {
+  //         this.vencimentoListToSave = [];
+  //         document.getElementById('salvar').style.fill = '#000000';
+  //       })
+  //       .catch((e) => {
+  //         alert('erro ao salvar vencimento\n' + e)
 
-        });
-    }
-  }
+  //       });
+  //   }
+  // }
 
-  comparaDatas(data1, data2) : number {
-    if ( data1 == null || data1 == null )
+  comparaDatas(data1, data2): number {
+    if (data1 == null || data1 == null)
       return -1;
 
     var dataConvertida1 = new Date(data1);
@@ -136,10 +138,6 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   exibir(evento, item) {
 
-
-
-
-
     if (item.Display)
       return;
 
@@ -147,17 +145,12 @@ export class VencimentoCarteiraComponent implements OnInit {
   }
 
   exibirVoos(evento, item) {
-    // var texto = item.UltimosVoos.map(x => {
-
-    //   return x.Data.substring(8,10) +'/'+ x.Data.substring(5,7) +'/'+  x.Data.substring(2,4) + ' - ' + x.Prefixo + ' - ' + x.NumeroDaFolha;
-    // })
 
     this.myDiv.nativeElement.innerHTML = "";
     item.UltimosVoos.forEach(x => {
       this.myDiv.nativeElement.innerHTML += "<a target='_new' href='/rel-rdv/" + x.NumeroDaFolha + "'>" + x.Data.substring(8, 10) + '/' + x.Data.substring(5, 7) + '/' + x.Data.substring(2, 4) + ' - ' + x.Prefixo + ' - ' + x.NumeroDaFolha + '</a><br/>'
     });
 
-    // this.myDiv.nativeElement.innerHTML = texto;
   }
 
 

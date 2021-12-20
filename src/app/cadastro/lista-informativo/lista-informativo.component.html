@@ -1,0 +1,84 @@
+<app-titulo titulo="Informativos" [carregando]="!tudoPronto"></app-titulo>
+
+
+<div class="p-grid p-mt-1">
+    <div class="p-col"></div>
+    <div class="p-col">
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+
+        <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+    </div>
+    <div class="p-col">
+        <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
+            class="p-ml-2"></button>
+    </div>
+    <div class="p-col"></div>
+
+</div>
+
+
+<span class="p-buttonset botoes_salvar">
+    <button pButton type="button" label="Novo" (click)="novaLinha()" icon="pi pi-file"
+        class="p-button-raised p-button-rounded p-button-success" [disabled]="!tudoPronto"></button>
+    <button pButton type="button" label="Salvar" (click)="salvar()" icon="pi pi-check"
+        class="p-button-raised p-button-rounded" [disabled]="!tudoPronto"></button>
+    <button pButton type="button" label="Cancelar" icon="pi pi-times"
+        class="p-button-raised p-button-rounded p-button-warning" [disabled]="!tudoPronto"></button>
+    <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
+        class="p-button-raised p-button-rounded p-button-danger"
+        [disabled]="linhasSelecionadas.length == 0 || !tudoPronto"></button>
+</span>
+
+<div class="card" *ngIf="informativos">
+    <p-table #dt [value]="informativos" dataKey="Id" editMode="row">       
+
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width:5%">
+                <col style="width:70%">
+                <col style="width:25%">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Data Limite</th>
+        </ng-template>
+        <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+            <tr [pEditableRow]="linha">
+                <td>
+                    <p-checkbox [value]="linha.Id" [(ngModel)]="linhasSelecionadas"></p-checkbox>
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input type="text" pInputText [(ngModel)]="linha.Observacao" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.Observacao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single" dateFormat="dd/mm/yy"
+                                showIcon="true"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{linha.RepeteAte | date:'dd/MM/yyyy'}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+            </tr>
+        </ng-template>
+
+
+    </p-table>
+</div>

@@ -1,0 +1,50 @@
+<p-toast position="top-right"></p-toast>
+
+<p-fileUpload name="anexos[]" accept="application/pdf" customUpload="true" chooseLabel="Anexos"
+  [auto]="true" (uploadHandler)="uploadAnexos($event)" maxFileSize="1000000000" multiple="multiple">
+
+  <ng-template pTemplate="toolbar">
+  </ng-template>
+  <ng-template let-file pTemplate="file">
+  </ng-template>
+
+  <ng-template pTemplate="content">
+
+    <p-table [value]="listaArquivos" width="100%">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th>Arquivo</th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-file>
+        <tr>
+          <td (click)="funAbrirArquivo(file.Id)">
+            <i class="pi pi-file-pdf"></i>
+            {{file.FileName}}
+          </td>
+          <td style="width: 200px;">
+            <button pButton icon="pi pi-trash" class="p-button-danger" label="Apagar"
+              (click)="funDeletar(file.Id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-table [value]="listaReadOnly" width="100%">
+
+      <ng-template pTemplate="body" let-file>
+        <tr>
+          <td (click)="funAbrirArquivo(file.Id)">
+            <i class="pi pi-file-pdf"></i>
+            {{file.FileName}}
+          </td>
+          <td style="width: 200px;">
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </ng-template>
+</p-fileUpload>

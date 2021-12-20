@@ -93,6 +93,85 @@ export class DataUtil {
         return ent.toISOString().split("T")[0];
       }
 
+ 
       
+
+
+     
+        private static calcTime() {
+          let city = 'America/Sao_Paulo';
+          let offset = -6;    
+          let d = new Date();
+          let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+          let nd = new Date(utc + (3600000*offset));
+          return nd;
+      }
+      
+        public static Agora(){
+          const dia = this.calcTime();
+          return new Date(dia.getFullYear(), dia.getMonth(),dia.getDate(),dia.getHours(),dia.getMinutes(),dia.getSeconds());
+        }
+      
+
+        public static somarHoras(originalHora: string, horas: number) : string {
+          let hora, minutos;
+          hora = Number(originalHora.split(':')[0]);
+          minutos = Number(originalHora.split(':')[1]);
+          
+          if (this.isInt(horas)) {
+            hora += horas;
+            hora = Math.round(hora);
+          } else {
+            hora += Math.floor(horas);
+            minutos += (horas % 1) * 60;
+            minutos = Math.round(minutos);
+          }
+      
+          let horaStr;
+          let minutoStr;
+      
+          if (minutos % 60 === 0) {
+            horaStr = hora >= 10 ? `${hora}` : `0${hora}`;
+            minutoStr = minutos >= 10 ? `${minutos}` : `0${minutos}`;
+          } else {
+            hora += Math.floor(minutos / 60);
+            horaStr = hora >= 10 ? `${hora}` : `0${hora}`;
+            minutoStr = (minutos % 60) >= 10 ? `${minutos % 60}` : `0${minutos % 60}`;
+          }
+      
+          return `${horaStr}:${minutoStr}`;
+        }
+      
+        private static isInt(n: number) {
+          return n % 1 === 0;
+        }
+      
+        public static horaToMinuto(horaMinuto: string) {
+          const hora = parseInt(horaMinuto.split(':')[0]);
+          const minuto = parseInt(horaMinuto.split(':')[1]);
+          return (hora * 60) + minuto;
+        }
+      
+        public static dateStringToMinutos(date: string) {
+          const data = new Date(date);
+          const hora = data.getHours();
+          const minuto = data.getMinutes();
+          return (hora * 60) + minuto;
+        }
+      
+        public static minutosToTimeStr(minutos: number) {
+          const hora = parseInt((minutos / 60).toString());
+          const minuto = minutos % 60;
+          return `${this.formatHora(hora)}:${this.formatHora(minuto)}:00`;
+        }
+      
+        public static formatHora(hora: number) {
+          if (hora < 10) {
+            return '0' + hora;
+          }
+          return hora;
+        }
+      
+
 
 }

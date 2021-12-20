@@ -1,0 +1,730 @@
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { DataUtil } from '../../shared/DataUtil';
+import { MessageService } from 'primeng/api';
+import { Turma } from 'src/app/models/Turma';
+import { HoraTurma } from 'src/app/models/HoraTurma';
+import { PeriodoDeCurso } from 'src/app/models/PeriodoDeCurso';
+import { ContadorDePeriodos } from 'src/app/models/ContadorDePeriodos';
+import { TurmaAluno } from 'src/app/models/TurmaAluno';
+import { MenuItem } from 'primeng/api';
+import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
+
+
+@Component({
+  selector: 'app-turma',
+  templateUrl: './turma.component.html',
+  styleUrls: ['./turma.component.css'],
+  providers: [MessageService]
+})
+export class TurmaComponent implements OnInit, AfterViewInit {
+
+  /*valtim*/
+  @Input() turma: Turma;
+  @Input() equipamentos = [];
+  @Input() treinamentos = [];
+  @Input() instrutores = [];
+  @Input() tripulantes = [];
+
+  @Output() evento = new EventEmitter<Object>();
+
+  turmaInterna: Turma;
+
+  periodo;
+  comentario: string = '';
+
+  anexosTreinamento = [];
+  alunos = [];
+  turmaAluno = [];
+  PeriodosDeCurso: ContadorDePeriodos = new ContadorDePeriodos;
+  periodosSomados: number = 0;
+
+  enviar(turma: Turma) {
+    this.salvarTurma(turma, () => { });
+  }
+
+  salvarTurma(turma: Turma, callback) {
+
+    // if (turma.Equipamento == null) {
+    //   this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário escolher um Equipamento` });
+    //   return;
+    // }    
+
+    if (turma.Treinamento == null) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário escolher um Treinamento` });
+      return;
+    }
+
+    if (turma.InstrutorExterno) {
+      turma.Instrutor = null;
+    } else {
+      if (turma.Instrutor == null) {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário escolher um Instrutor` });
+        return;
+      }
+    }
+
+    if (this.alunos.length == 0) {
+      this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário adicionar alunos na turma` });
+      return;
+    }
+    turma.TurmaAluno = [];
+    this.alunos.forEach((aluno, index0) => {
+      let ta = new TurmaAluno();
+      ta.Aluno = aluno;
+      ta.Confirmado = true;
+      ta.Avaliado = aluno.Avaliado;
+      ta.Nota = aluno.Nota;
+      ta.Notificado = aluno.Notificado;
+      turma.TurmaAluno.push(ta);
+
+      if (index0 == (this.alunos.length - 1)) {
+        // Alunos transformados
+
+        if (this.PeriodosDeCurso.Periodos.length == 0) {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário adicionar as datas e horas de realização do curso` });
+          return;
+        }
+
+        // if (this.turmaInterna.CargaHoraria != this.periodosSomados) {
+        //   this.messageService.add({ severity: 'error', summary: 'Erro', detail: `A carga horária programada do curso não confere com o carga horária do treinamento` });
+        //   return;
+        // }
+
+        if (this.comentario != '') {
+          turma.TurmasComentarios.push({ Comentario: this.comentario, Usuario: this.usuarioLogado });
+        }
+
+        // 0001-01-01T00:00:00
+        let dataInicio = 30000000999999;
+        let dataInicioStr = '';
+
+        turma.Alunos = this.alunos;
+        turma.Datas = [];
+        turma.HorasTurma = [];
+
+        this.PeriodosDeCurso.Periodos.forEach((periodo, index1) => {
+          let dataStr = periodo.Data.toISOString().split("T")[0];
+          let horaNumerica = periodo.Data.toISOString().split("T")[1];
+          turma.Datas.push({ Data: dataStr + "T" + horaNumerica });
+
+          let dataNumerica = parseInt(
+            dataStr.split("-")[0] +
+            dataStr.split("-")[1] +
+            dataStr.split("-")[2] +
+            horaNumerica.split(":")[0] +
+            horaNumerica.split(":")[1] +
+            horaNumerica.split(":")[2]
+          );
+          if (dataNumerica < dataInicio) {
+            dataInicio = dataNumerica;
+            dataInicioStr = dataStr + "T" + horaNumerica;
+          }
+
+          periodo.Horas.forEach((hora, index2) => {
+            turma.HorasTurma.push(
+              Object.assign(new HoraTurma, ({
+                Data: new Date(dataStr + "T" + horaNumerica),
+                HoraInicio: dataStr + "T" + hora.HoraInicio,
+                HoraTermino: dataStr + "T" + hora.HoraTermino
+              }
+              ))
+            );
+
+            if ((index1 == (this.PeriodosDeCurso.Periodos.length - 1)) && (index2 == (periodo.Horas.length - 1))) {
+
+              /* Fim do Cadastro */
+              turma.DataDeInicio = new Date(dataInicioStr);
+
+              this.api.postTurma(turma).then(x => {
+                Object.assign(this.turmaInterna, x);
+                this.evento.emit(this.turmaInterna);
+                callback();
+              }).catch(x => {
+                console.log(x);
+                this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Erro ao Salvar` });
+                callback();
+              });
+              /* Fim do Cadastro */
+
+            }
+          });
+
+        });
+
+        // Fim - Alunos transformados
+      }
+    });
+  }
+
+  cancelar() {
+    this.statusTurma = [];
+    this.turmaInterna.Cancelado = true;
+    this.evento.emit(this.turmaInterna);
+  }
+
+  mudancaDeData(data) {
+    if (this.PeriodosDeCurso.Periodos.filter(x => x.Data == data).length > 0)
+      return;
+    this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [] });
+  }
+
+  removerData(data) {
+    this.PeriodosDeCurso.Periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data != data);
+    this.calcularDiferenca();
+    this.atualizarStatusTurma(() => { });
+  }
+
+  removerAluno(aluno) {
+    this.alunos = this.alunos.filter(x => x.Id != aluno.Id);
+    this.tripulantes.push(aluno);
+    this.atualizarStatusTurma(() => { });
+  }
+
+  moverAlunos() {
+    this.atualizarStatusTurma(() => { });
+  }
+
+  onInstrutorExterno() {
+    this.api.onLoading();
+    if (!this.turmaInterna.InstrutorExterno) {
+      this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
+        .then(resp => {
+          if (resp.Instrutores.length > 0) {
+            this.instrutores = resp.Instrutores;
+          } else {
+            this.instrutores = [];
+          }
+          this.atualizarStatusTurma(() => {
+            this.api.onLoading();
+          });
+        });
+    } else {
+      this.api.getInstrutores()
+        .then(resp => {
+          this.instrutores = resp.Instrutores;
+          this.atualizarStatusTurma(() => {
+            this.api.onLoading();
+          });
+        });
+    }
+  }
+
+  onNotificar() {
+    let nomeTreinamento = 'Não identificado';
+    if ((this.turmaInterna.Treinamento != undefined) && (this.turmaInterna.Treinamento != null)) {
+      nomeTreinamento = this.turmaInterna.Treinamento.Nome;
+    }
+    let local = 'Não identificado';
+    if ((this.turmaInterna.Local != undefined) && (this.turmaInterna.Local != null) && (this.turmaInterna.Local != '')) {
+      local = this.turmaInterna.Local;
+    }
+    let inicioTreinamento = 'Não identificado';
+    if ((this.turmaInterna.DataDeInicio != undefined) && (this.turmaInterna.DataDeInicio != null)) {
+      inicioTreinamento = new Date(this.turmaInterna.DataDeInicio).toLocaleDateString();
+    }
+
+    this.alunos.forEach((item, index) => {
+      item['inicioTreinamento'] = inicioTreinamento;
+      item['nomeTreinamento'] = nomeTreinamento;
+      item['local'] = local;
+      const envolvido = this.createEmailJson(item);
+      this.api.postNotificarEnvolvidoTurma(envolvido).then(_ => _);
+      item.Notificado = true;
+
+      if (index == (this.alunos.length - 1)) {
+        this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Notificação feita' });
+        this.atualizarStatusTurma(() => { });
+      }
+    });
+  }
+
+  createEmailJson(envolvido) {
+
+    let html = `<h1>Olá ${envolvido.Trato}</h1>`;
+    html += `<p>Você foi matriculado no treinamento <b>${envolvido.nomeTreinamento}</b> `;
+    html += `que ocorrerá em <b>${envolvido.local}</b> `;
+    html += `no dia <b>${envolvido.inicioTreinamento}</b>.</p>`;
+    html += `<p>Atenciosamente, Setor de Treinamentos.</p>`;
+
+    const envolvidoJson = {
+      'To': envolvido.Email,
+      'Subject': `Treinamento: ${envolvido.nomeTreinamento}`,
+      'HTML': html,
+      'Cliente': "Aeroleo"
+    };
+
+    return envolvidoJson;
+  }
+
+  avaliarAluno(aluno) {
+    if (aluno.Nota != '') {
+      aluno.Avaliado = true;
+    }
+  }
+
+  removerHorario(periodo, id) {
+    periodo.Horas = periodo.Horas.filter(x => x.Id != id);
+    this.calcularDiferenca();
+  }
+
+  novaHora(data) {
+    let dia = this.PeriodosDeCurso.Periodos.find(x => x.Data == data);
+    dia.Horas.push(<HoraTurma>{ HoraInicio: '00:00', HoraTermino: '00:00' });
+    this.atualizarStatusTurma(() => { });
+  }
+
+
+  funCalcularHoras() {
+    //alert();
+  }
+
+  /*end valtim*/
+
+  /* inicio guilherme */
+  calcularDiferenca() {
+    if (this.PeriodosDeCurso.Periodos != undefined && this.PeriodosDeCurso.Periodos.length > 0) {
+
+      let soma1 = 0;
+      this.PeriodosDeCurso.Periodos.forEach((periodo, index1) => {
+
+        if (periodo.Horas != undefined && periodo.Horas.length > 0) {
+          let soma2 = 0;
+          periodo.Horas.forEach((hora, index2) => {
+
+            if (hora.HoraInicio != undefined) {
+              if (hora.HoraTermino != undefined) {
+                let horaInicioStr = hora.HoraInicio.split(':');
+                let horaTerminoStr = hora.HoraTermino.split(':');
+                if (parseInt(horaInicioStr[0]) <= parseInt(horaTerminoStr[0])) {
+                  let horas = parseInt(horaTerminoStr[0]) - parseInt(horaInicioStr[0]);
+                  soma2 = soma2 + (horas * 60) - parseInt(horaInicioStr[1]) + parseInt(horaTerminoStr[1]);
+                }
+              }
+            }
+            if (index2 == (periodo.Horas.length - 1)) {
+              soma1 = soma1 + soma2;
+            }
+          });
+        }
+        if (index1 == (this.PeriodosDeCurso.Periodos.length - 1)) {
+          this.periodosSomados = soma1;
+        }
+      });
+    } else {
+      this.periodosSomados = 0;
+    }
+  }
+
+  alterarHoraInicial(index, data, hora) {
+    let periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data == data);
+    if (periodos.length > 0) {
+      periodos[0].Horas[index].HoraInicio = hora;
+    } else {
+      let horaTurma = Object.assign(new HoraTurma, ({ Data: data, HoraInicio: hora }));
+      this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [horaTurma] });
+    }
+    this.calcularDiferenca();
+  }
+
+  alterarHoraFinal(index, data, hora) {
+    let periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data == data);
+    if (periodos.length > 0) {
+      periodos[0].Horas[index].HoraTermino = hora;
+    } else {
+      let horaTurma = Object.assign(new HoraTurma, ({ Data: data, HoraTermino: hora }));
+      this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [horaTurma] });
+    }
+    this.calcularDiferenca();
+  }
+
+  onEquipamentoOptionsSelected(event) {
+    this.api.onLoading();
+    this.api.getTreinamentosByEquipamento(event.value.Id)
+      .then(resp => {
+        if (resp.Treinamentos.length > 0) {
+          this.instrutores = resp.Instrutores;
+          this.treinamentos = resp.Treinamentos;
+        } else {
+          this.instrutores = [];
+          this.treinamentos = [];
+        }
+        this.api.onLoading();
+      });
+  }
+
+  onInstrutorOptionsSelected(event) {
+    this.atualizarStatusTurma(() => { });
+  }
+
+  onTreinamentoOptionsSelected(event) {
+
+    this.api.onLoading();
+    this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(event.value.CargaHoraria);
+    Object.assign(event.value, this.turmaInterna.Treinamento);
+
+    this.api.getInstrutoresByTreinamento(event.value.Id)
+      .then(resp => {
+        if (resp.Instrutores.length > 0) {
+          this.instrutores = resp.Instrutores;
+        } else {
+          this.instrutores = [];
+        }
+        this.api.onLoading();
+      });
+  }
+
+  atualizarStatusTurma(callback) {
+
+    this.indexStatusTurma = 0;
+
+    // Treinamento Agendado
+    if (this.PeriodosDeCurso.Periodos.length > 0) {
+      this.turmaInterna.TurmaStatus[0].Efetivada = true;
+      this.turmaInterna.TurmaStatus[0].DataEvento = DataUtil.Agora();
+    } else {
+      this.turmaInterna.TurmaStatus[0].Efetivada = false;
+      this.turmaInterna.TurmaStatus[0].DataEvento = null;
+    }
+
+    // Instrutor Designado
+    if ((this.turmaInterna.Instrutor != null) || (this.turmaInterna.Instrutor != undefined) || (this.turmaInterna.InstrutorExterno)) {
+      this.turmaInterna.TurmaStatus[1].Efetivada = true;
+      this.turmaInterna.TurmaStatus[1].DataEvento = DataUtil.Agora();
+    } else {
+      this.turmaInterna.TurmaStatus[1].Efetivada = false;
+      this.turmaInterna.TurmaStatus[1].DataEvento = null;
+    }
+
+    // Alunos Matriculados
+    if (this.alunos.length != 0) {
+      this.turmaInterna.TurmaStatus[2].Efetivada = true;
+      this.turmaInterna.TurmaStatus[2].DataEvento = DataUtil.Agora();
+    } else {
+      this.turmaInterna.TurmaStatus[2].Efetivada = false;
+      this.turmaInterna.TurmaStatus[2].DataEvento = null;
+    }
+
+    // Envolvidos Notificados
+    if (this.alunos.length != 0) {
+      let todosEstaoNotificados = true;
+      this.alunos.forEach((turmaAluno, index) => {
+
+        if (!turmaAluno.Notificado) {
+          todosEstaoNotificados = false;
+        }
+
+        if (index == (this.alunos.length - 1)) {
+          // Continua verificacao
+
+          if (todosEstaoNotificados) {
+            this.turmaInterna.TurmaStatus[3].Efetivada = true;
+            this.turmaInterna.TurmaStatus[3].DataEvento = DataUtil.Agora();
+          } else {
+            this.turmaInterna.TurmaStatus[3].Efetivada = false;
+            this.turmaInterna.TurmaStatus[3].DataEvento = null;
+          }
+
+          // NRT Cadastrada
+          if (this.turmaInterna.NRTs.length > 0) {
+            this.turmaInterna.TurmaStatus[4].Efetivada = true;
+            this.turmaInterna.TurmaStatus[4].DataEvento = DataUtil.Agora();
+          } else {
+            this.turmaInterna.TurmaStatus[4].Efetivada = false;
+            this.turmaInterna.TurmaStatus[4].DataEvento = null;
+          }
+
+          if (this.turmaInterna.Concluido) {
+            this.turmaInterna.TurmaStatus[5].Efetivada = true;
+            this.turmaInterna.TurmaStatus[5].DataEvento = DataUtil.Agora();
+          } else {
+            this.turmaInterna.TurmaStatus[5].Efetivada = false;
+            this.turmaInterna.TurmaStatus[5].DataEvento = null;
+          }
+
+          this.atualizarPassos(callback);
+        }
+      });
+    } else {
+      // NRT Cadastrada
+      if (this.turmaInterna.NRTs.length > 0) {
+        this.turmaInterna.TurmaStatus[4].Efetivada = true;
+        this.turmaInterna.TurmaStatus[4].DataEvento = DataUtil.Agora();
+      } else {
+        this.turmaInterna.TurmaStatus[4].Efetivada = false;
+        this.turmaInterna.TurmaStatus[4].DataEvento = null;
+      }
+
+      if (this.turmaInterna.Concluido) {
+        this.turmaInterna.TurmaStatus[5].Efetivada = true;
+        this.turmaInterna.TurmaStatus[5].DataEvento = DataUtil.Agora();
+      } else {
+        this.turmaInterna.TurmaStatus[5].Efetivada = false;
+        this.turmaInterna.TurmaStatus[5].DataEvento = null;
+      }
+
+      this.atualizarPassos(callback);
+    }
+
+  }
+
+  uploadCompleto = (args: any): void => {
+    this.atualizarStatusTurma(() => { });
+  }
+
+  definirStatusTurma() {
+    if ((this.turmaInterna.TurmaStatus == null) || (this.turmaInterna.TurmaStatus == undefined) || (this.turmaInterna.TurmaStatus.length == 0)) {
+      this.turmaInterna.TurmaStatus = [
+        {
+          Ordem: 1,
+          Nome: 'Treinamento Agendado',
+          DataEvento: null,
+          Efetivada: false
+        },
+        {
+          Ordem: 2,
+          Nome: 'Instrutor Designado',
+          DataEvento: null,
+          Efetivada: false
+        },
+        {
+          Ordem: 3,
+          Nome: 'Alunos Matriculados',
+          DataEvento: null,
+          Efetivada: false
+        },
+        {
+          Ordem: 4,
+          Nome: 'Envolvidos Notificados',
+          DataEvento: null,
+          Efetivada: false
+        },
+        {
+          Ordem: 5,
+          Nome: 'NRT Cadastrada',
+          DataEvento: null,
+          Efetivada: false
+        },
+        {
+          Ordem: 6,
+          Nome: 'Treinamento Concluído',
+          DataEvento: null,
+          Efetivada: false
+        }
+      ];
+    }
+
+    this.statusTurma = this.turmaInterna.TurmaStatus.map(s => ({ label: s.Nome }));
+  }
+
+  atualizarPassos(callback) {
+    this.concluirTreinamento = true;
+    if ((this.turmaInterna.TurmaStatus == null) || (this.turmaInterna.TurmaStatus == undefined) || (this.turmaInterna.TurmaStatus.length == 0)) {
+      callback();
+    }
+
+    this.turmaInterna.TurmaStatus.forEach((situacao, index) => {
+      if (!situacao.Efetivada && (index < 5)) {
+        this.concluirTreinamento = false;
+      }
+
+      this.checkPasso(situacao.Efetivada, index, situacao.DataEvento);
+
+      if (index == (this.turmaInterna.TurmaStatus.length - 1)) {
+        callback();
+      }
+    });
+  }
+
+  indexStatusTurma: Number;
+  concluirTreinamento: boolean = false;
+
+  onConcluirTreinamento() {
+    this.api.onLoading();
+    this.turmaInterna.Concluido = true;
+    this.atualizarStatusTurma(() => {
+      this.salvarTurma(this.turmaInterna, () => {
+        this.api.onLoading();
+      });
+    });
+  }
+
+  checkPasso(efetivado, index, data) {
+
+    let valorData = '';
+    if ((data != null) && (data != undefined) && (data != '') && (data != '0001-01-01T00:00:00')) {
+
+      let dataStr = '';
+      let horaStr = '';
+      if (data instanceof Date) {
+        dataStr = data.toISOString().split("T")[0];
+        horaStr = data.toISOString().split("T")[1];
+      } else {
+        dataStr = data.split("T")[0];
+        horaStr = data.split("T")[1];
+      }
+
+      valorData = dataStr.split("-")[2] + '/' + dataStr.split("-")[1] + '/' + dataStr.split("-")[0] +
+        ' às ' + horaStr.split(":")[0] + ':' + horaStr.split(":")[1];
+    }
+
+    let li = document.querySelectorAll('p-steps > div > ul > li');
+    let numero = li.item(index).querySelector('a > span.p-steps-number');
+
+    if (efetivado) {
+      if (!li.item(index).classList.contains("verde")) {
+        li.item(index).classList.add('verde');
+      }
+      numero.innerHTML = '✓';
+      this.indexStatusTurma = index;
+    } else {
+      if (li.item(index).classList.contains("verde")) {
+        li.item(index).classList.remove('verde');
+      }
+      numero.innerHTML = (index + 1);
+    }
+
+    li.item(index).setAttribute('data-before-0' + index, valorData);
+  }
+
+  /* fim guilherme */
+
+
+  mensagem = 'Cadastro realizado com sucesso';
+  ID: string;
+  //turma = this.turmaService.newTurma();
+  aluno: any;
+  status = [];
+  localReservado: boolean;
+  showNovoAluno = false;
+  anexoNRT = false;
+  display = false;
+  showTimeTurma = false;
+  localResults = [];
+  results = [];
+  anexos = [];
+  nrts = [];
+  diasTurma = [];
+  // tripulantes = [];
+  horariosTurma = [];
+  certAluno: any;
+  certTreinamento: any;
+  certShow = false;
+  conteudos = [];
+  perfisUsuario = [];
+  treinamentoId: string;
+  usuarioLogado: any;
+  statusTurma: MenuItem[];
+
+  STATUS_TURMA = {
+    INSTRUTOR_DESIGNADO: 'Instrutor designado',
+    LOCAL_RESERVADO: 'Local do treinamento já foi reservado',
+    NRT_CADASTRADA: 'NRT cadastrada',
+    NOTIFICACAO_ENVIADA: 'Notificação aos envolvidos',
+    TREINAMENTO_ENVIADO_VALIDACAO: 'Treinamento enviado para validação',
+    CONCLUSAO: 'Conclusão'
+  };
+
+  constructor(
+    private api: ApiTurmasService,
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService) {
+    this.usuarioLogado = {
+      ehAdministrador: false,
+      ehInstrutor: false
+    };
+  }
+
+
+  ngOnInit(): void {
+    this.turmaInterna = Object.assign(new Turma, this.turma);
+    this.turmaInterna.CargaHoraria = 0;
+
+    this.definirStatusTurma();
+
+    this.api.getUsuarioLogadoComPermissoes(resp => {
+      this.usuarioLogado = resp;
+
+      this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
+      this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
+      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+
+      let listaPeriodos = this.turmaInterna.Datas.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+      listaPeriodos.forEach((x, index) => {
+        var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
+        if (horas.length == 0) {
+          this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
+        }
+
+        if (this.turmaInterna.Equipamento) {
+          this.turmaInterna.Equipamento = { Id: this.turmaInterna.Equipamento.Id, Nome: this.turmaInterna.Equipamento.Nome };
+
+          this.api.getTreinamentosByEquipamento(this.turmaInterna.Equipamento.Id)
+            .then(resp => {
+              if (resp.Treinamentos.length > 0) {
+                this.instrutores = resp.Instrutores;
+                this.treinamentos = resp.Treinamentos;
+              } else {
+                this.instrutores = [];
+                this.treinamentos = [];
+              }
+            });
+        }
+
+        if (this.turmaInterna.Treinamento) {
+          this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
+          this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
+        }
+
+        if (this.turmaInterna.Instrutor) {
+          this.turmaInterna.Instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
+        }
+
+        this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
+        this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
+        this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+
+        let listaPeriodos = this.turmaInterna.Datas.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+        listaPeriodos.forEach((x, index) => {
+          var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
+
+          if (horas.length == 0) {
+            this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
+            return;
+          }
+          //let horas2 = horas.map(y => Object.assign(new HoraTurma, {Data:new Date(x.Data), HoraInicio:y.HoraInicio, HoraTermino:y.HoraTermino}));
+
+          let periodo = Object.assign(new PeriodoDeCurso, {
+            Data: new Date(x.Data),
+            Horas: horas.map(y => Object.assign(new HoraTurma, {
+              Data: x.Data,
+              HoraInicio: y.HoraInicio.split('T')[1],
+              HoraTermino: y.HoraTermino.split('T')[1]
+            })
+            )
+          });
+
+          this.PeriodosDeCurso.Periodos.push(periodo);
+          // ({ HoraInicio : y.HoraInicio.split("T")[1], HoraTermino : y.HoraTermino.split("T")[1]}))});
+
+          if (index == (listaPeriodos.length - 1)) {
+            this.calcularDiferenca();
+          }
+
+          if (this.turmaInterna.TurmaStatus[5].Efetivada) {
+            this.turmaInterna.Concluido = true;
+          }
+
+        });
+
+      });
+      /* Apos obter o perfil do usuario logado */
+
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => { this.atualizarPassos(() => { }); }, 0);
+    this.cdr.detectChanges();
+  }
+
+}

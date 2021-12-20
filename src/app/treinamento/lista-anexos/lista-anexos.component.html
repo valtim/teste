@@ -1,0 +1,9 @@
+<div class="row anexos">
+  <div class="row lista-anexos">
+    <p *ngFor="let file of listaArquivos">
+      <i class="pi pi-file-pdf"></i> 
+      <a *ngIf="file.FileName" [href]="'https://aeroleo.sistemasol.com.br/api/arquivo/'+file.Id"> {{file.FileName}} </a>
+      <a *ngIf="!file.FileName" [href]="'https://aeroleo.sistemasol.com.br/api/arquivo/'+file.Id"> {{file.Id}} </a>
+    </p>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+body {
+    padding: 0 !important;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.nome-aluno {
+    margin: 1em 0;
+    text-transform: uppercase;
+    font-style: italic;
+}
+p {
+    width: 100%;
+}
+.logo {
+    width: 700px;
+}

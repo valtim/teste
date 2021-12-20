@@ -11,9 +11,9 @@ export class AutorizacaoService {
   Menus: any;
   
   constructor() {
-    this.Authorization = localStorage.getItem('Authorization');
-    this.Rotas = JSON.parse(localStorage.getItem('Rotas'));
-    this.Menus = JSON.parse(localStorage.getItem('Menus'));
+    // this.Authorization = localStorage.getItem('Authorization');
+    // this.Rotas = JSON.parse(localStorage.getItem('Rotas'));
+
   }
   
   setAuthorization(Authorization: string) {
@@ -31,6 +31,7 @@ export class AutorizacaoService {
   }
   
   getMenus() {
+    this.Menus = JSON.parse(localStorage.getItem('Menu'));
     return this.Menus;
   }
 
@@ -40,6 +41,7 @@ export class AutorizacaoService {
   }
   
   getRotas() {
+    this.Rotas = JSON.parse(localStorage.getItem('Rotas'));
     return this.Rotas;
   }
 }

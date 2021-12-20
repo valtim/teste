@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { MsalService } from '@azure/msal-angular';
 
 @Component({
   selector: 'app-logoff',
@@ -9,12 +9,16 @@ import { Router } from '@angular/router';
 export class LogoffComponent implements OnInit {
 
   constructor(
-    private router: Router
+    private authService: MsalService
     ) { }
 
   ngOnInit(): void {
     localStorage.clear();
-    this.router.navigate(['/']);
+    
+    this.authService.logoutRedirect({
+      postLogoutRedirectUri: '/'
+  });
+    //this.router.navigate(['/']);
   }
 
 }

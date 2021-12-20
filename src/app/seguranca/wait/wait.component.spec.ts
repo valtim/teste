@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RelOperacaoDeSoloComponent } from './rel-operacao-de-solo.component';
+import { WaitComponent } from './wait.component';
 
-describe('RelOperacaoDeSoloComponent', () => {
-  let component: RelOperacaoDeSoloComponent;
-  let fixture: ComponentFixture<RelOperacaoDeSoloComponent>;
+describe('WaitComponent', () => {
+  let component: WaitComponent;
+  let fixture: ComponentFixture<WaitComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RelOperacaoDeSoloComponent ]
+      declarations: [ WaitComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RelOperacaoDeSoloComponent);
+    fixture = TestBed.createComponent(WaitComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

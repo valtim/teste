@@ -38,7 +38,7 @@ export class EscalaDoDiaComponent implements OnInit {
 
 
 
-    this.api.getClienteLogado().then(x=> this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
+    this.api.getClienteLogado().then(x => this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
     this.locale_pt = this.api.getLocale('pt');
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.rodarRelatorio();
@@ -49,8 +49,8 @@ export class EscalaDoDiaComponent implements OnInit {
   }
 
 
-  imprimir(){
-    
+  imprimir() {
+
 
     html2canvas(this.escala.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
@@ -59,13 +59,13 @@ export class EscalaDoDiaComponent implements OnInit {
       this.downloadLink.nativeElement.click();
     });
 
-    
+
     alert(this.escala.nativeElement.innerHTML);
 
-    this.api.postEscalaNova(this.extras).then(x=>{
+    this.api.postEscalaNova(this.extras).then(x => {
 
     })
-    
+
     print();
 
 
@@ -82,25 +82,25 @@ export class EscalaDoDiaComponent implements OnInit {
     for (let i = 0; i < numero; i++)
       this.colunas.push(`evento`);
 
-      return this.colunas;
+    return this.colunas;
   }
 
 
-  email(){
+  email() {
     this.tudoPronto = false;
-    this.api.postEscalaPorEmail(this.data, this.extras).then(x=>{
+    this.api.postEscalaPorEmail(this.data, this.extras).then(x => {
       this.tudoPronto = true;
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Escala Enviada!' });
     });
   }
 
-  salvar(){
+  salvar() {
     this.tudoPronto = false;
-    this.api.postEscalaNova(this.extras).then(x=>{
+    this.api.postEscalaNova(this.extras).then(x => {
       this.tudoPronto = true;
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Escala Salva!' });
     });
-    
+
   }
 
   rodarRelatorio() {
@@ -118,10 +118,10 @@ export class EscalaDoDiaComponent implements OnInit {
       this.getColunas(x.Colunas);
       this.valorColspan = 7 + x.Colunas;
     })
-    .catch(x=>{
-      this.tudoPronto = true;
-      this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Escala não pode ser executada!' });
-    })
+      .catch(x => {
+        this.tudoPronto = true;
+        this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Escala não pode ser executada!' });
+      })
 
   }
 

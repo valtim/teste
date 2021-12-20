@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { ApiService } from 'src/app/shared/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-certificado',
@@ -7,20 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CertificadoComponent implements OnInit {
 
-  constructor() { }
+  @Input() certTreinamento: any;
+  @Input() certAluno: any;
+  @Input() certInstrutor: any;
+  @Input() dataConclusao: any;
+  @Input() localCurso: any;
 
-  ordenacao = (a, b): number => {
-    if (a.Ordem != b.Ordem)
-      return a.Ordem - b.Ordem;
-
-    if (a.Nome > b.Nome) {
-      return 1;
-    }
-    return -1;
-
-  }
+  treinamento: any;
+  aluno: any;
+  instrutor: any;
+  conclusao: Date;
+  local: string;
 
   ngOnInit(): void {
+    this.aluno = this.certAluno;
+    this.treinamento = this.certTreinamento;
+    this.instrutor = this.certInstrutor;
+    this.conclusao = this.dataConclusao[1];
+    this.local = this.localCurso;
   }
 
 }

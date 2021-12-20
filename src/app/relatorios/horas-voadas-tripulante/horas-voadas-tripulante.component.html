@@ -15,7 +15,7 @@
     <div class="p-col">
         <button type="button" pButton pRipple label="Tripulantes" class="p-ml-2"></button>
         <p-dropdown [options]="tripulantes" [(ngModel)]="tripulanteSelecionado" [filter]="true"
-            filterBy="Trato" optionLabel="Trato"></p-dropdown>
+            filterBy="Nome" optionLabel="Nome"></p-dropdown>
 
         <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
             class="p-ml-2"></button>

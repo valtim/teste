@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit {
 
 
   @Input() exibir = false;
+  rotas: any;
 
 
   exibirmenu(e) {
@@ -30,12 +31,13 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.urlLogo = this.api.getLogo();
-    this.menu = this.autorizacao.getMenus();
-    this.exibir = this.router.url === '/home';
+    this.menu = JSON.parse(localStorage.getItem('Menu'));;
+    this.rotas = JSON.parse(localStorage.getItem('Rotas'));
+    this.exibir = this.router.url === '/';
   }
 
   isEnable(name: string) {
-    return this.autorizacao.getRotas().includes(name);
+    return this.rotas.includes(name);
   }
 
   logoff(): void {

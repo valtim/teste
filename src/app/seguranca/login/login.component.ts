@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
               this.auth.setMenus(x.Menu);
-              this.api.updateAuthorization();
+              //this.api.updateAuthorization();
 
 
               if (localStorage.getItem('beforeLogin') != null) {

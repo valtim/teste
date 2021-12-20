@@ -11,7 +11,7 @@ export class FadigaComponent implements OnInit {
 
   loadingDados = true;
   loadingPagina = true;
-  data: string;
+  data: Date = new Date(new Date().getFullYear(),new Date().getMonth(), new Date().getDate());
   fadigas = [];
   basico = true;
   tripulantes = [];
@@ -33,11 +33,11 @@ export class FadigaComponent implements OnInit {
 
   ngOnInit() {
     // this.app.setTitle('Fadiga');
-    this.data = new Date().toISOString().split('T')[0];
+    this.data = new Date(new Date().getFullYear(),new Date().getMonth(), new Date().getDate());
 
-    if (this.activatedRoute.snapshot.paramMap.get('data')) {
-      this.data = this.activatedRoute.snapshot.paramMap.get('data');
-    }
+    // if (this.activatedRoute.snapshot.paramMap.get('data')) {
+    //   this.data = this.activatedRoute.snapshot.paramMap.get('data');
+    // }
 
 
     this.caminho = "/comunicar-tripulantes/" + this.data

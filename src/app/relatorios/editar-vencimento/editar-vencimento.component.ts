@@ -1,6 +1,4 @@
-import { DataUtil } from './../../shared/DataUtil';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-editar-vencimento',
@@ -21,7 +19,7 @@ export class EditarVencimentoComponent implements OnInit {
   valorExibido: string;
   mascara: string;
 
-  constructor(private api: ApiService) {
+  constructor() {
 
 
 

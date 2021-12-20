@@ -1,0 +1,8 @@
+p-table{
+    width: 100%;
+}
+td
+{
+    min-width: 100px;
+    min-height: 100px;
+}

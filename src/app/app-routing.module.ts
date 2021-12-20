@@ -21,7 +21,6 @@ import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pont
 import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
 import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
 import { CrudComponent } from './cadastro/crud/crud.component';
-import { RelOperacaoDeSoloComponent } from './relatorios/rel-operacao-de-solo/rel-operacao-de-solo.component';
 import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
@@ -56,9 +55,17 @@ import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.compo
 import { DuplaComponent } from './escala/dupla/dupla.component';
 import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
 import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.component';
+import { ListaInformativoComponent } from './cadastro/lista-informativo/lista-informativo.component';
+import { IncompatibilidadeComponent } from './cadastro/incompatibilidade/incompatibilidade.component';
+import { WaitComponent } from './seguranca/wait/wait.component';
+import { AgendaComponent } from './treinamento/agenda/agenda.component';
+import { TurmaListComponent } from './treinamento/turma-list/turma-list.component';
+import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
+import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: 'troca-senha', component: TrocaSenhaComponent },
   { path: 'logoff', component: LogoffComponent },
@@ -77,14 +84,33 @@ const routes: Routes = [
     component: MotivoDoErroNoPreenchimentoComponent,
     canActivate: [AuthGuardService]
   },
-  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, 
-  { path: 'quadro-de-tripulantes-readonly', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] }, 
+
+
+  {
+    path: 'agenda-de-treinamento',
+    component: AgendaComponent,
+    //canActivate: [AuthGuardService],
+    // children: [
+    // ]
+  },
+  {
+    path: 'turmas', // child route path
+    component: TurmaListComponent, // child route component that the router renders
+  },
+  {
+    path: 'tipo-de-certificado',
+    component: TreinamentoListComponent, // another child route component that the router renders
+  },
+  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] },
+  { path: 'quadro-de-tripulantes-readonly', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] },
+
+
   {
     path: 'fadiga',
     component: FadigaComponent,
     canActivate: [AuthGuardService]
   },
-  { path: 'tipo-de-certificado', component: CertificadoComponent, canActivate: [AuthGuardService] },
+
   {
     path: 'fadiga/:data',
     component: FadigaComponent,
@@ -169,10 +195,6 @@ const routes: Routes = [
     component: RelEscalaPtbrComponent,
   },
   {
-    path: 'rel-operacao-de-solo',
-    component: RelOperacaoDeSoloComponent,
-  },
-  {
     path: 'rel-controle-spot',
     component: RelControleSpotComponent,
   },
@@ -251,6 +273,18 @@ const routes: Routes = [
   {
     path: 'erros-no-db',
     component: ErrosNoDbComponent,
+  },
+  {
+    path: 'informativo',
+    component: ListaInformativoComponent,
+  },
+  {
+    path: 'incompatibilidade',
+    component: IncompatibilidadeComponent,
+  },
+  {
+    path: 'busca-bi',
+    component: BuscaBiComponent,
   },
 ];
 

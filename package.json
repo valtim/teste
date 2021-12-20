@@ -34,7 +34,10 @@
     "tslib": "^1.10.0",
     "uuid": "^8.0.0",
     "xlsx": "^0.16.9",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@azure/msal-angular": "^2.0.2",
+    "@azure/msal-browser": "^2.16.0",
+    "core-js": "^3.8.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",

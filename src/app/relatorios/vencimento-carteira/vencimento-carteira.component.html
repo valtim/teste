@@ -1,4 +1,5 @@
 <app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
+<p-toast position="top-center" key="tc"></p-toast>
 <div class="tabela" *ngIf="valores">
     <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
         scrollHeight="70vh" id="" frozenWidth="280px" frozenHeight="200px" class="tabela"

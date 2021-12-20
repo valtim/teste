@@ -1,0 +1,33 @@
+<app-titulo titulo="Treinamentos" [carregando]="loading"></app-titulo>
+
+<p-table [columns]="cols" [value]="treinamentos" [ngClass]="displayModal?'ocultar':''">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
+                    ariaLabelDesc="Activate to sort in descending order"
+                    ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-treino>
+        <tr>
+            <td (click)="editar(treino.Id)">{{treino.Nome}}</td>
+            <td (click)="editar(treino.Id)">{{treino.CargaHoraria}}</td>
+            <td (click)="editar(treino.Id)">{{treino.Equipamentos}}</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+
+<!-- <p-dialog header="Treinamento" [(visible)]="displayModal" [modal]="true" [baseZIndex]="10000" [maximizable]="true"
+    (onShow)="showDialogMaximized(dialDetail)" #dialDetail> -->
+    <div *ngFor="let item of treinamentos">
+        <app-novo-treinamento [treinamento]="item" *ngIf="item.Display" [tipos]="listaDeTiposDeTreinamento"
+            [equipamentos]="listaDeEquipamentos" [instrutores]="listaDeInstrutores"
+            (newItemEvent)="displayModal = false"></app-novo-treinamento>
+    </div>
+<!-- </p-dialog> -->

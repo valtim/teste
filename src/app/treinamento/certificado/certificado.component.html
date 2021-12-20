@@ -1,1 +1,37 @@
-<app-crud titulo="Tipo de Certificado" tipo="Certificado" camposExibidos="Nome, Ordem, SomenteMes, DataDeRealizacao" [Ordem]="ordenacao"></app-crud>
+<div class="container">
+
+    <div class="row">
+        <h1 class="text-center">CERTIFICADO DE TREINAMENTO</h1>
+    </div>
+    
+    <div class="row" style="margin: 25px 0;">
+        <img class="logo" src="assets/img/aeroleo.svg" alt="Logo Aéroleo">
+    </div>
+
+    <div class="row" style="margin: 15px 0;">
+        <p class="text-center">
+            Certificamos que <b style="text-transform: uppercase;">{{aluno.nomeCompleto}}</b> concluiu com sucesso o curso <b style="text-transform: uppercase;">{{treinamento.nome}}</b>.
+        </p>
+        <p class="text-center">
+            Carga Horária: <b>{{treinamento.cargaHoraria}}</b> H
+        </p>
+    </div>
+
+    <div class="row">
+        <ul>
+            <li *ngFor="let conteudo of treinamento.conteudos">
+                {{conteudo.nome}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="row" style="margin-top: 45px;">
+        <p class="text-center">
+        ____________________________________________________________________<br>
+        
+            <b>{{instrutor.nomeCompleto}}</b> <br>
+            {{conclusao | date: 'dd/MM/yyyy'}} - {{local}}
+        </p>
+    </div>
+
+</div>

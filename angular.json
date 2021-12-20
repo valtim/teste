@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "deployUrl": "./angular/",
             "outputPath": "dist/sol",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -30,8 +31,7 @@
               "node_modules/primeicons/primeicons.css",
               "node_modules/primeflex/primeflex.css"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -67,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sol:build"
+            "browserTarget": "sol:build",
+            "deployUrl": "/"
           },
           "configurations": {
             "production": {

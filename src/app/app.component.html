@@ -1,1 +1,16 @@
-<router-outlet></router-outlet>
+<div class="div-vertical" *ngIf="!loginDisplay && !loadingDisplay">
+    <div class="div-horizontal">
+        <img src="/assets/img/logo_sol.jpg" alt="">
+        <p><input type="button" value="Logar" (click)="login()"></p>
+    </div>
+</div>
+
+<div class="div-vertical" *ngIf="!loginDisplay && loadingDisplay">
+    <div class="div-horizontal">
+        <img src="/assets/img/logo_sol.jpg" alt="">
+        <p>Carregando</p>
+    </div>
+</div>
+
+
+<router-outlet *ngIf="loginDisplay"></router-outlet>

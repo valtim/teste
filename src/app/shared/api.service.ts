@@ -1,8 +1,5 @@
-import { Indisponibilidade } from './../model/Indisponibilidade';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AutorizacaoService } from './autorizacao.service';
-
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DataUtil } from './../shared/DataUtil';
 
 
@@ -10,9 +7,26 @@ import { DataUtil } from './../shared/DataUtil';
   providedIn: 'root'
 })
 
+
+
 export class ApiService {
-  
-  public httpOptions: any;
+
+  public bearerOK = false;
+
+  public get httpOptions(): any {
+    return this.getOptions();
+  }
+
+
+
+  public obj = {
+    get latest() {
+
+      return this.getOptions();
+    }
+  }
+
+
   public url: string;
   private permission;
 
@@ -22,21 +36,38 @@ export class ApiService {
   message: any;
   username: string;
 
-  constructor(private http: HttpClient, private autorizacao: AutorizacaoService) {
-    //this.url = window.location.host === 'localhost:4200' ? 'https://aeroleo.sistemasol.com.br/' : '/';
+
+  gravarToken() {
+    if (!this.bearerOK)
+      for (var i = 0; i < localStorage.length; i++) {
+        var obj = JSON.parse(localStorage[localStorage.key(i)]);
+        if (obj.tokenType) { }
+        //this.setBearer(obj.secret);
+      }
+
+
+    this.getLogin()
+      .then((x) => {
+        //this.setBearer(x.Authorization);
+        localStorage.setItem('Authorization', x.Authorization);
+        localStorage.setItem('Rotas', JSON.stringify(x.Rotas));
+        localStorage.setItem('Menu', JSON.stringify(x.Menu));
+        if (localStorage.getItem('beforeLogin') != null) {
+          var url = localStorage.getItem('beforeLogin');
+          localStorage.removeItem('beforeLogin');
+          window.location.href = url;
+          return;
+        }
+
+        window.location.href = '/';
+      });
+
+    //window.location.href = '/home';
+  }
+
+
+  constructor(private http: HttpClient) {
     this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
-
-    if (localStorage.getItem('Authorization')) {
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('Authorization'),
-        })
-      };
-    }
-
-
-    this.getClienteLogado().then(x=>this.clienteLogado = x);
 
     this.message = {
       show: false,
@@ -47,70 +78,74 @@ export class ApiService {
     };
   }
 
-  SaveSettings(values: any){
+
+  getServer() {
+    return this.url;
+  }
+
+  SaveSettings(values: any) {
     localStorage.setItem(window.location.href, values);
   }
 
-  GetSettings() : any{
+  GetSettings(): any {
     return localStorage.getItem(window.location.href);
   }
 
-  getOptions(lista: []) {
-    if (lista == undefined) {
+  getOptions() {
+
+    if (!localStorage.getItem('Authorization'))
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('Authorization'),
         })
       };
-    }
 
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('Authorization'),
-        'Lista': JSON.stringify(lista)
       })
     };
   }
 
-  async postLogin(username: string, password: string): Promise<any> {
+  getLogin(): Promise<any> {
+    return this.http.get(this.url + 'api/autorizacaoad', this.httpOptions)
+      .toPromise();
+  }
 
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
+
+  postLoginAD(username: string): Promise<any> {
+
+    // this.httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // };
+
+    return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'ad': true }, this.httpOptions)
+      .toPromise();
+  }
+
+  postLogin(username: string, password: string): Promise<any> {
+
+    // this.httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json'
+    //   })
+    // };
 
     return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'password': password }, this.httpOptions)
       .toPromise();
-    // .then((result: any) => {
-    //   this.autorizacao.setAuthorization(result.Authorization);
-    // this.autorizacao.setRotas(result.Rotas);
-    // this.updateAuthorization();
-    // })
-    // .catch();
   }
 
-
-
-  public updateAuthorization(): void {
-    localStorage.setItem('Authorization', this.autorizacao.getAuthorization());
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('Authorization')
-      })
-    };
-  }
 
   getDiarioByDate(date: string): Promise<any> {
     return this.http.get(`${this.url}api/relatorio-de-voo/list/${date}`, this.httpOptions)
       .toPromise();
   }
 
-  getPendenciaDeFadiga(date: string): Promise<any> {
-    return this.http.get(`${this.url}api/PendenciaDaFadiga/${date}`, this.httpOptions)
+  getPendenciaDeFadiga(date: Date): Promise<any> {
+    return this.http.get(`${this.url}api/PendenciaDaFadiga/${date.toString().split('T')[0]}`, this.httpOptions)
       .toPromise();
   }
   postPendenciaDeFadiga(email: any): Promise<any> {
@@ -119,7 +154,7 @@ export class ApiService {
   }
 
 
-  
+
   postDadosDaEscala(escala: any): Promise<any> {
     return this.http.post(`${this.url}api/DadosDaEscala`, escala, this.httpOptions)
       .toPromise();
@@ -130,7 +165,7 @@ export class ApiService {
   //     .toPromise();
   // }
 
-  
+
 
   getDiarioById(id: string): Promise<any> {
     return this.http.get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
@@ -185,11 +220,15 @@ export class ApiService {
   }
 
 
+
   
 
-
-  getAbastecedoras(): any {
+  getAbastecedoras(): any {   
     return JSON.parse(localStorage.getItem('Abastecedora'));
+  }
+
+  getAerodromos(): Promise<any>{
+    return this.http.get(`${this.url}api/vencimento`, this.httpOptions).toPromise()
   }
 
   getPrefixos(): any {
@@ -309,25 +348,29 @@ export class ApiService {
     return this.http.get(this.url + `api/trilho/listas`, this.httpOptions).toPromise();
   }
 
-  getTrilho(data:Date): Promise<any> {
+  getTrilho(data: Date): Promise<any> {
     return this.http.get(this.url + `api/trilho/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
 
-  postEscalaPorEmail(data:Date, extras:any){
+  postEscalaPorEmail(data: Date, extras: any) {
     return this.http.post(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, extras, this.httpOptions).toPromise();
   }
 
-  getEscalaDiaria(data:Date): Promise<any> {
+  getEscalaDiaria(data: Date): Promise<any> {
     return this.http.get(this.url + `api/escala-diaria/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
-  getEscalaDiariaHTML(data:string): Promise<any> {
+  getEscalaDiariaHTML(data: string): Promise<any> {
     return this.http.get(this.url + `api/escala-diaria/${data}/html`, this.httpOptions).toPromise();
   }
 
-  getEscalaSemanal(data:Date): Promise<any> {
+  getEscalaSemanal(data: Date): Promise<any> {
     return this.http.get(this.url + `api/escala-semanal/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  }
+
+  postEscalaSemanal(data: Date, extras: any) {
+    return this.http.post(this.url + `api/escala-semanal/${data.toISOString().split('T')[0]}`, extras, this.httpOptions).toPromise();
   }
 
   postTrilho(trilhos: Array<any>): Promise<any> {
@@ -361,6 +404,13 @@ export class ApiService {
       })
     };
     return this.http.post(`${this.url}api/excel/upload`, data, option).toPromise();
+  }
+
+
+
+
+  getListaDeUsuarios(): Promise<any> {
+    return this.http.get(`${this.url}api/listas/usuario`).toPromise();
   }
 
   getUsuario(): Promise<any> {
@@ -448,10 +498,14 @@ export class ApiService {
   getCombos(): Promise<any> {
 
     const promise = new Promise((resolve, reject) => {
-      if (JSON.parse(localStorage.getItem('Combos')) == null) {
-        this.getCombosServidor().then(() => {
+      if (!localStorage.getItem('Combos')) {
+
+        resolve(
+        this.getCombosServidor().then(x => {
+          localStorage.setItem('Combos', JSON.stringify(x))
           resolve(JSON.parse(localStorage.getItem('Combos')));
         })
+        )
       }
       else {
         resolve(JSON.parse(localStorage.getItem('Combos')));
@@ -484,7 +538,7 @@ export class ApiService {
   postRelErrosNoDb(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelErrosNoDb`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
-  
+
 
   postRelRDV(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelRdv`, JSON.stringify(filtro), this.httpOptions).toPromise();
@@ -510,27 +564,27 @@ export class ApiService {
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
-  getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente: string[]): Promise<any> {
-    let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
-    return this.http.get(caminho, this.httpOptions).toPromise();
-  }
+  //   getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente: string[]): Promise < any > {
+  //   let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
+  //   return this.http.get(caminho, this.httpOptions).toPromise();
+  // }
 
 
-  deleteOperacaoDeSolo(itens: any): Promise<any> {
+  //   deleteOperacaoDeSolo(itens: any): Promise < any > {
 
-    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
 
-    let caminho = `${this.url}api/RelOperacaoDeSolo`;
-    return this.http.delete(caminho, this.getOptions(itens)).toPromise();
-  }
+  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
+  //   return this.http.delete(caminho, this.getOptions(itens)).toPromise();
+  // }
 
-  postOperacaoDeSolo(itens: []): Promise<any> {
+  //   postOperacaoDeSolo(itens: []): Promise < any > {
 
-    let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
+  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
 
-    let caminho = `${this.url}api/RelOperacaoDeSolo`;
-    return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
-  }
+  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
+  //   return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
+  // }
 
   getEscalaPTBR(dataref: Date, dataIni: Date, dataFim: Date, baseDeOperacao: string): Promise<any> {
     let caminho = `${this.url}api/RelEscala/${dataref.toISOString().split("T")[0]}/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}/${baseDeOperacao}`;
@@ -546,18 +600,13 @@ export class ApiService {
     return this.http.post(`${this.url}api/RelHorasPorTripulante`, JSON.stringify(filtro), this.httpOptions).toPromise();
   }
 
-  getCliente(){
+  getCliente() {
     return this.http.get(`${this.url}api/clientelogado`, this.httpOptions).toPromise();
   }
 
   getLogo() {
-      return `${this.url}assets/img/${this.clienteLogado}.png`;
+    return `${this.url}assets/img/${this.clienteLogado}.png`;
   }
-
-  getServer(){
-    return this.url;
-  }
-
 
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();
@@ -642,11 +691,26 @@ export class ApiService {
       .toPromise();
   }
 
-  getConfirmacaoDeJornada(gerente:boolean, id:string): Promise<any> {
-    if ( gerente )
+  getIncompatibilidadeCRUD(): Promise<any> {
+    return this.http.get(`${this.url}api/Incompatibilidade`, this.httpOptions)
+      .toPromise();
+  }
+
+  postIncompatibilidadeCRUD(dados): Promise<any> {
+    return this.http.post(`${this.url}api/Incompatibilidade`, dados, this.httpOptions)
+      .toPromise();
+  }
+
+  deleteIncompatibilidadeCRUD(dados): Promise<any> {
+    return this.http.post(`${this.url}api/Incompatibilidade/delete`, dados, this.httpOptions)
+      .toPromise();
+  }
+
+  getConfirmacaoDeJornada(gerente: boolean, id: string): Promise<any> {
+    if (gerente)
       return this.http.get(`${this.url}api/confirmacaodejornada/gerente/${id}`, this.httpOptions).toPromise();
-      
-      return this.http.get(`${this.url}api/confirmacaodejornada/analista/${id}`, this.httpOptions).toPromise();
+
+    return this.http.get(`${this.url}api/confirmacaodejornada/analista/${id}`, this.httpOptions).toPromise();
 
     //confirmacao-de-jornada/gerente
   }

@@ -1,16 +1,31 @@
-#hamburguer{
+#hamburguer {
     position: absolute;
-    top:5px;
-    left:5px;
+    top: 5px;
+    left: 5px;
     z-index: 20000;
 }
 
-#menu{
+#menu {
     padding-top: 60px;
-    float: left; 
+    float: left;
     width: 300px;
 }
-#conteudo{
+
+#conteudo {
     padding-top: 60px;
-    float: left; 
+    float: left;
+}
+
+.div-vertical {
+    height: 95vh;
+    position: relative;
+}
+
+.div-horizontal {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
