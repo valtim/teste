@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DataUtil } from './../shared/DataUtil';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -479,6 +480,12 @@ export class ApiService {
     return this.http.get(`${this.url}api/TelaConsultaAvRisco`, this.httpOptions).toPromise();
   }
 
+
+  getBI(dataIni: Date, dataFim: Date): Observable<any> {
+    return this.http.get(`${this.url}api/consultabi/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions);
+  }
+
+  
 
   getCombosServidor(): Promise<any> {
 
