@@ -122,6 +122,7 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component';
 import { SOLSharedModule } from './shared/sol.shared.module';
 import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
+import { ControleDeAcessoEditComponent } from './cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -204,6 +205,7 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     VisualizarAnaliseDeRiscoComponent,
     VoosRealizadosComponent,
     BuscaBiComponent,
+    ControleDeAcessoEditComponent,
 
 
 
