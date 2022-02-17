@@ -1,4 +1,4 @@
-<app-titulo titulo="Duplas" [carregando]="!tudoPronto"></app-titulo>
+<app-titulo titulo="Duplas" [carregando]="!(listasOK && duplasOK)"></app-titulo>
 
 
 <p-toast position="center"></p-toast>
@@ -48,20 +48,20 @@
 
 
 
-<div class="card" *ngIf="tudoPronto">
+<div class="card" *ngIf="(listasOK && duplasOK)">
     <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
 
         <ng-template pTemplate="caption">
-            <span class="p-buttonset botoes_salvar">
+            <span class="p-buttonset botoes_salvar"> 
                 <button pButton type="button" label="Novo" (click)="novaLinha()" icon="pi pi-file"
-                    class="p-button-raised p-button-rounded p-button-success" [disabled]="!tudoPronto"></button>
+                    class="p-button-raised p-button-rounded p-button-success" [disabled]="!(listasOK && duplasOK)"></button>
                 <button pButton type="button" label="Salvar" (click)="salvar()" icon="pi pi-check"
-                    class="p-button-raised p-button-rounded" [disabled]="!tudoPronto"></button>
+                    class="p-button-raised p-button-rounded" [disabled]="!(listasOK && duplasOK)"></button>
                 <button pButton type="button" label="Cancelar" icon="pi pi-times"
-                    class="p-button-raised p-button-rounded p-button-warning" [disabled]="!tudoPronto"></button>
+                    class="p-button-raised p-button-rounded p-button-warning" [disabled]="!(listasOK && duplasOK)"></button>
                 <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
                     class="p-button-raised p-button-rounded p-button-danger"
-                    [disabled]="linhasSelecionadas.length == 0 || !tudoPronto"></button>
+                    [disabled]="linhasSelecionadas.length == 0 || !(listasOK && duplasOK)"></button>
             </span>
         </ng-template>
 

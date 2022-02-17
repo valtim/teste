@@ -12,7 +12,7 @@ import { EscalaService } from 'src/app/shared/escala.service';
 export class DuplaComponent implements OnInit {
   locale_pt: any;
 
-  tudoPronto = false;
+  //tudoPronto = false;
 
   linhasSelecionadas = [];
 
@@ -28,6 +28,9 @@ export class DuplaComponent implements OnInit {
   cursos: any;
   vencimentos: any;
   incompatibilidades: any;
+
+  listasOK = false;
+  duplasOK = false;
 
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
@@ -58,16 +61,21 @@ export class DuplaComponent implements OnInit {
 
   rodarRelatorio() {
 
-    let vencimentos = false;
-    let duplas = false;
+    // let vencimentos = false;
+    // let duplas = false;
+
+
+    this.listasOK = false;
+    this.duplasOK = false;
 
     this.apiEscala.getListasDupla(this.dataInicio).then(x => {
       this.tripulantes = x.tripulantes;
       this.bases = x.bases;
       this.prefixos = x.prefixos;
       this.incompatibilidades = x.incompatibilidades;
-      vencimentos = true;
-      this.tudoPronto = duplas && vencimentos;
+      // vencimentos = true;
+      // this.tudoPronto = duplas && vencimentos;
+      this.listasOK = true;
       this.listarPendencias();
     })
 
@@ -80,8 +88,9 @@ export class DuplaComponent implements OnInit {
     this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
       this.duplas = x.Duplas;
       this.cursos = x.Cursos;
-      duplas = true;
-      this.tudoPronto = duplas && vencimentos;
+      // duplas = true;
+      // this.tudoPronto = duplas && vencimentos;
+      this.duplasOK = true;
 
       this.duplas.forEach(x => {
         x.Data = new Date(x.Data);
@@ -91,7 +100,7 @@ export class DuplaComponent implements OnInit {
     });
   }
   listarPendencias() {
-    if (!this.tudoPronto)
+    if (!(this.listasOK || this.duplasOK))
       return;
 
 

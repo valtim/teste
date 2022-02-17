@@ -96,12 +96,14 @@
         <th>Turma</th>
         <th>Instrutor</th>
         <th>Alunos</th>
+        <th>tIPO</th>
     </tr>
     <tr *ngFor="let turma of turmas">
         <td>{{turma.Treinamento.Nome}}</td>
         <td><span *ngIf="turma.Instrutor">{{turma.Instrutor.Trato}}</span><span *ngIf="!turma.Instrutor">EXTERNO</span>
         </td>
         <td>{{turma.AlunosStr}}</td>
+        <td>{{turma.TipoDeTreinamento}}</td>
     </tr>
 </table>
 
