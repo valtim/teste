@@ -206,8 +206,11 @@ export class ApiService {
       .toPromise();
   }
 
+
+
+
   getClienteLogado(): Promise<any> {
-    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise();
+    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise()
   }
 
   getQuadroDeTripulantes(): Promise<any> {
@@ -222,13 +225,13 @@ export class ApiService {
 
 
 
-  
 
-  getAbastecedoras(): any {   
+
+  getAbastecedoras(): any {
     return JSON.parse(localStorage.getItem('Abastecedora'));
   }
 
-  getAerodromos(): Promise<any>{
+  getAerodromos(): Promise<any> {
     return this.http.get(`${this.url}api/vencimento`, this.httpOptions).toPromise()
   }
 
@@ -485,7 +488,7 @@ export class ApiService {
     return this.http.get(`${this.url}api/consultabi/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions);
   }
 
-  
+
 
   getCombosServidor(): Promise<any> {
 
@@ -508,10 +511,10 @@ export class ApiService {
       if (!localStorage.getItem('Combos')) {
 
         resolve(
-        this.getCombosServidor().then(x => {
-          localStorage.setItem('Combos', JSON.stringify(x))
-          resolve(JSON.parse(localStorage.getItem('Combos')));
-        })
+          this.getCombosServidor().then(x => {
+            localStorage.setItem('Combos', JSON.stringify(x))
+            resolve(JSON.parse(localStorage.getItem('Combos')));
+          })
         )
       }
       else {
@@ -611,9 +614,9 @@ export class ApiService {
     return this.http.get(`${this.url}api/clientelogado`, this.httpOptions).toPromise();
   }
 
-  getLogo() {
-    return `${this.url}assets/img/${this.clienteLogado}.png`;
-  }
+  // getLogo() {
+  //   return `${this.url}assets/img/${this.clienteLogado}.png`;
+  // }
 
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/RelPousosPorLocal`, JSON.stringify(filtro), this.httpOptions).toPromise();

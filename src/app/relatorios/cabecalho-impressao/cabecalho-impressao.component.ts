@@ -29,7 +29,9 @@ export class CabecalhoImpressaoComponent implements OnInit {
   ngOnInit() {
     this.ExibirRevisao = (this.revisao != undefined || this.data != undefined || this.form != undefined);
 
-    this.logo = this.api.getLogo();
+    this.api.getClienteLogado().then(x=>{
+      this.logo = `/assets/img/${x}.png`;
+    });
     
   }
 
