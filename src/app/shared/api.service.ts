@@ -29,6 +29,7 @@ export class ApiService {
 
 
   public url: string;
+  public urlApp: string;
   private permission;
 
   private clienteLogado;
@@ -115,15 +116,17 @@ export class ApiService {
   }
 
 
-  postLoginAD(username: string): Promise<any> {
+  postLoginAD(bearer: string): Promise<any> {
 
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json'
-    //   })
-    // };
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
 
-    return this.http.post(this.url + 'api/autorizacao', { 'username': username, 'ad': true }, this.httpOptions)
+
+
+    return this.http.post(this.url + 'api/autorizacao-bearer', { 'bearer' : bearer }, httpOptions)
       .toPromise();
   }
 

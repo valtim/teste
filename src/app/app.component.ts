@@ -23,6 +23,13 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.isIframe = window !== window.parent && !window.opener;
 
+    // if ( window.location.href.indexOf('#') > -1 )
+    // {
+    //   window.location.href = this.api.url;
+    //   return;
+    // }
+
+
     this.broadcastService.inProgress$
       .pipe(
         filter((status: InteractionStatus) => status === InteractionStatus.None),
@@ -39,11 +46,21 @@ export class AppComponent implements OnInit {
 
   setLoginDisplay() {
 
-    if (this.authService.instance.getAllAccounts().length > 0 && !localStorage.getItem('Authorization'))
-    {
+    if (this.authService.instance.getAllAccounts().length > 0 && !localStorage.getItem('Authorization')) {
       this.loadingDisplay = true;
-      this.api.postLoginAD(this.authService.instance.getAllAccounts()[0].username).then(x => {
+      let login = "";
+
+
+      for (let i = 0; i < localStorage.length; i++) {
+        let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        if (!(item.secret && item.credentialType == "AccessToken"))
+          continue;
+        login = item.secret;
+      }
+
+      this.api.postLoginAD(login).then(x => {
         // this.api.setBearer(x.Authorization);
+        //localStorage.clear();
         localStorage.setItem('Authorization', x.Authorization);
         localStorage.setItem('Rotas', JSON.stringify(x.Rotas));
         localStorage.setItem('Menu', JSON.stringify(x.Menu));
@@ -55,13 +72,21 @@ export class AppComponent implements OnInit {
           window.location.href = url;
           return;
         }
-        
+
         window.location.href = "/";
-        
+
       })
     }
 
     this.loginDisplay = this.authService.instance.getAllAccounts().length > 0 && localStorage.getItem('Authorization') != null;
+
+
+    if (this.loginDisplay)
+      return;
+
+
+    if (window.location.href != window.location.origin + '/')
+      window.location.href = window.location.origin;
   }
 
   ngOnDestroy(): void {

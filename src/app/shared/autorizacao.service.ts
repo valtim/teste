@@ -31,6 +31,9 @@ export class AutorizacaoService {
   }
   
   getMenus() {
+
+    localStorage.getItem('Menu')
+
     this.Menus = JSON.parse(localStorage.getItem('Menu'));
     return this.Menus;
   }
