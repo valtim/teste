@@ -1,3 +1,4 @@
+import { PermissoesDeAcessoById } from "./../../models/PermissaoDeAcessoById";
 import { PermissoesDeAcesso } from "./../../models/PermissoesDeAcesso";
 import { Component, EventEmitter, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -12,7 +13,7 @@ import { ApiService } from "src/app/shared/api.service";
   providers: [MessageService],
 })
 export class ContratoComponent implements OnInit {
-  permissoes: PermissoesDeAcesso[];
+  permissoes: Array<PermissoesDeAcesso> = [];
 
   selectedContrato;
 
@@ -32,6 +33,6 @@ export class ContratoComponent implements OnInit {
     this.router.navigate(["/controle-de-acesso/" + event.data.Id]);
   }
   novoCadastro() {
-    this.router.navigate(["/controle-de-acesso/" + ""]);
+    this.router.navigate(["/controle-de-acesso/novo"]);
   }
 }

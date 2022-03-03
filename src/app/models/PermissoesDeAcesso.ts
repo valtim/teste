@@ -1,6 +1,8 @@
-import { Perfis } from "./Perfis";
+import { PerfisHabilitados } from "./PerfisHabilitados";
 export class PermissoesDeAcesso {
   public Id: String;
   public Username: String;
-  public Perfis: Perfis[];
+  public Senha: String;
+  public Email: String;
+  public PerfisHabilitados: PerfisHabilitados[];
 }

@@ -985,9 +985,21 @@ export class ApiService {
       .toPromise();
   }
 
-  getPermissaoById(id: string): Promise<any> {
+  postPermissao(permissao): Promise<any> {
+    return this.http
+      .post(`${this.url}api/permissoes`, permissao, this.httpOptions)
+      .toPromise();
+  }
+
+  getPermissaoById(id: String): Promise<any> {
     return this.http
       .get(`${this.url}api/permissoes/${id}`, this.httpOptions)
+      .toPromise();
+  }
+
+  getTripulantes(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/tripulante`, this.httpOptions)
       .toPromise();
   }
 }

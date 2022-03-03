@@ -299,6 +299,10 @@ const routes: Routes = [
     path: "controle-de-acesso/:Id",
     component: ControleDeAcessoEditComponent,
   },
+  {
+    path: "controle-de-acesso/novo",
+    component: ControleDeAcessoEditComponent,
+  },
 ];
 
 @NgModule({
