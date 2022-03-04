@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
            this.api.getCombosServidor().then(
              () => {
+
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
               this.auth.setMenus(x.Menu);

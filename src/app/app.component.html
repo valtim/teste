@@ -1,4 +1,4 @@
-<div class="div-vertical" *ngIf="!loginDisplay && !loadingDisplay">
+<div class="div-vertical" *ngIf="(loginDisplay && !loadingDisplay) && !ExibirLoginLocal">
     <div class="div-horizontal">
         <img src="/assets/img/logo_sol.jpg" alt="">
         <p><input type="button" value="Logar" (click)="login()"></p>
@@ -12,5 +12,4 @@
     </div>
 </div>
 
-
-<router-outlet *ngIf="loginDisplay"></router-outlet>
+<router-outlet *ngIf="loginDisplay || ExibirLoginLocal"></router-outlet>

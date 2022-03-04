@@ -12,6 +12,9 @@ import { SOLSharedModule } from '../shared/sol.shared.module';
     LoginComponent,
     TrocaSenhaComponent,
     WaitComponent,],
+    exports:[
+      LoginComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,

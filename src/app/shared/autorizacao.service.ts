@@ -40,7 +40,7 @@ export class AutorizacaoService {
 
   setMenus(menus: any) {
     this.Menus = menus;
-    localStorage.setItem('Menus', JSON.stringify(menus));
+    localStorage.setItem('Menu', JSON.stringify(menus));
   }
   
   getRotas() {

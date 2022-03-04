@@ -30,6 +30,7 @@ export class ApiService {
 
   public url: string;
   public urlApp: string;
+  public EhProducao = window.location.host !== "localhost:4200";
   private permission;
 
   private clienteLogado;

@@ -12,26 +12,18 @@ import { AutorizacaoService } from '../shared/autorizacao.service';
 export class HomeComponent implements OnInit {
   public urlLogo: string;
   public exibir = false;
-  clienteLogado = "teste";
   public menu = [];
 
   public loading: boolean;
 
   constructor(
-    private api: ApiService,
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
-   ngOnInit() {
-    
+   ngOnInit() {    
 
     this.menu = this.autorizacao.getMenus();
     this.exibir = true;
-
-    // this.api.getClienteLogado().then(result => {
-    //   //this.urlLogo = this.api.getLogo(result);
-      
-    // });
   }
 
   isEnable(name: string) {

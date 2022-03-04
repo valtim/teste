@@ -17,17 +17,22 @@ export class AppComponent implements OnInit {
   loginDisplay = false;
   loadingDisplay = false;
   private readonly _destroying$ = new Subject<void>();
+  ExibirLoginLocal: any;
 
   constructor(private broadcastService: MsalBroadcastService, private authService: MsalService, private api: ApiService) { }
 
   ngOnInit() {
     this.isIframe = window !== window.parent && !window.opener;
 
-    // if ( window.location.href.indexOf('#') > -1 )
-    // {
-    //   window.location.href = this.api.url;
-    //   return;
-    // }
+    this.ExibirLoginLocal = (!this.api.EhProducao && localStorage.getItem('Authorization') == null);
+
+    if (this.ExibirLoginLocal && window.location.href.indexOf('login') > -1)
+      return;
+
+    if (this.ExibirLoginLocal) {
+      window.location.href = window.location.origin + '/login';
+      return;
+    }
 
 
     this.broadcastService.inProgress$
