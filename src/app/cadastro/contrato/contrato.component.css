@@ -9,8 +9,15 @@ body {
   color: white;
 }
 .botao-novo {
-  position: fixed;
+  position: absolute;
   right: 130px;
+  top: 25px;
+  z-index: 2;
+}
+
+.botao-excel {
+  position: absolute;
+  right: 245px;
   top: 25px;
   z-index: 2;
 }
