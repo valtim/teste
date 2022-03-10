@@ -1,12 +1,10 @@
 import * as FileSaver from "file-saver";
-import { PermissoesDeAcessoById } from "./../../models/PermissaoDeAcessoById";
 import { PermissoesDeAcesso } from "./../../models/PermissoesDeAcesso";
 import { Component, EventEmitter, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { MessageService, MenuItem } from "primeng/api";
-import { element } from "protractor";
+import { MessageService } from "primeng/api";
 import { ApiService } from "src/app/shared/api.service";
-import { jsPDF } from "jspdf";
+import { Workbook } from "exceljs";
 
 @Component({
   selector: "app-contrato",
@@ -16,21 +14,19 @@ import { jsPDF } from "jspdf";
 })
 export class ContratoComponent implements OnInit {
   permissoes: Array<PermissoesDeAcesso> = [];
-
   selectedContrato;
 
   constructor(private api: ApiService, private router: Router) {}
 
   cols: any[];
   exportColumns: any[];
+  data: any[];
 
   ngOnInit(): void {
     this.exibirRelatorio();
     this.cols = [
       { field: "Username", header: "Nome", minWidth: 200 },
       { field: "Perfis", header: "Perfis" },
-
-      //hide: true
     ];
 
     this.exportColumns = this.cols.map((col) => ({
@@ -45,22 +41,13 @@ export class ContratoComponent implements OnInit {
     });
   }
 
-  // exportPdf() {
-  //   import("jspdf").then((jsPDF) => {
-  //     import("jspdf-autotable").then((x) => {
-
-  //       const doc = new jsPDF.default(0, 0);
-  //       doc.autoTable(this.exportColumns, this.permissoes);
-  //       doc.save("products.pdf");
-  //     });
-  //   });
-  // }
-
   exportExcel() {
     import("xlsx").then((xlsx) => {
+      let title = "titulo";
       let element = document.getElementById("dataTable");
       let worksheet = xlsx.utils.table_to_sheet(element);
       let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      worksheet["!cols"] = [{ width: 20 }, { width: 100 }];
       let excelBuffer: any = xlsx.write(workbook, {
         bookType: "xlsx",
         type: "array",
