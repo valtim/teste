@@ -122,6 +122,7 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component';
 import { SOLSharedModule } from './shared/sol.shared.module';
 import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
+import { ControleDeAcessoEditComponent } from './cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component';
 import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.component';
 import { ModificadorComponent } from './cadastro/modificador/modificador.component';
 import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component';
@@ -208,6 +209,7 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     VisualizarAnaliseDeRiscoComponent,
     VoosRealizadosComponent,
     BuscaBiComponent,
+    ControleDeAcessoEditComponent,
     DeslocamentoComponent,
     ModificadorComponent,
     GraficoComponent,

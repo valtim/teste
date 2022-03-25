@@ -1,30 +1,44 @@
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardService } from "./shared/guards/auth-guard.service";
 
-import { AuthGuardService } from './shared/guards/auth-guard.service';
+import { HomeComponent } from "./home/home.component";
+import { LogoffComponent } from "./logoff/logoff.component";
+import { LoginComponent } from "./seguranca/login/login.component";
+import { TrocaSenhaComponent } from "./seguranca/troca-senha/troca-senha.component";
 
-import { HomeComponent } from './home/home.component';
-import { LogoffComponent } from './logoff/logoff.component';
-import { LoginComponent } from './seguranca/login/login.component';
-import { TrocaSenhaComponent } from './seguranca/troca-senha/troca-senha.component';
+// import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
+// import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
+// import { ContratoComponent } from "./cadastro/contrato/contrato.component";
+// import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
+// import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
 
+// import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
+// import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
+// import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
+// import { RelControleSpotComponent } from "./relatorios/rel-controle-spot/rel-controle-spot.component";
+// import { CrudComponent } from "./cadastro/crud/crud.component";
+// import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
+// import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
+// import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
+// import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
 
-import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
-import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
-import { ContratoComponent } from './cadastro/contrato/contrato.component';
-import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
-import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
+// import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
+// import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
+// import { ContratoComponent } from './cadastro/contrato/contrato.component';
+// import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
+// import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
 
-import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
-import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
-import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
-import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
-import { CrudComponent } from './cadastro/crud/crud.component';
-import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
-import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
-import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
-import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
+// import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
+// import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
+// import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
+// import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
+// import { CrudComponent } from './cadastro/crud/crud.component';
+// import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
+// import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
+// import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
+// import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
 
 import { VoosRealizadosComponent } from './relatorios/voos-realizados/voos-realizados.component';
 import { RelListaRdvComponent } from './relatorios/rel-lista-rdv/rel-lista-rdv.component';
@@ -66,71 +80,93 @@ import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.comp
 import { ModificadorComponent } from './cadastro/modificador/modificador.component';
 import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
 
+import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
+import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
+import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
+import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
+import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
+import { RelControleSpotComponent } from "./relatorios/rel-controle-spot/rel-controle-spot.component";
+import { CrudComponent } from "./cadastro/crud/crud.component";
+import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
+import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
+import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
+import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
+import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
+import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
+import { ContratoComponent } from "./cadastro/contrato/contrato.component";
+import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
+
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'troca-senha', component: TrocaSenhaComponent },
-  { path: 'logoff', component: LogoffComponent },
+  { path: "", component: HomeComponent },
+  { path: "login", component: LoginComponent },
+  { path: "home", component: HomeComponent },
+  { path: "troca-senha", component: TrocaSenhaComponent },
+  { path: "logoff", component: LogoffComponent },
   {
-    path: 'fadiga',
+    path: "fadiga",
     component: FadigaComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
-    path: 'observacao-db',
+    path: "observacao-db",
     component: ObservacaoDbComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
-    path: 'motivo-do-erro-no-preenchimento',
+    path: "motivo-do-erro-no-preenchimento",
     component: MotivoDoErroNoPreenchimentoComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
 
-
   {
-    path: 'agenda-de-treinamento',
+    path: "agenda-de-treinamento",
     component: AgendaComponent,
     //canActivate: [AuthGuardService],
     // children: [
     // ]
   },
   {
-    path: 'turmas', // child route path
+    path: "turmas", // child route path
     component: TurmaListComponent, // child route component that the router renders
   },
   {
-    path: 'tipo-de-certificado',
+    path: "tipo-de-certificado",
     component: TreinamentoListComponent, // another child route component that the router renders
   },
-  { path: 'quadro-de-tripulantes', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] },
-  { path: 'quadro-de-tripulantes-readonly', component: VencimentoCarteiraComponent, canActivate: [AuthGuardService] },
-
-
   {
-    path: 'fadiga',
-    component: FadigaComponent,
-    canActivate: [AuthGuardService]
+    path: "quadro-de-tripulantes",
+    component: VencimentoCarteiraComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: "quadro-de-tripulantes-readonly",
+    component: VencimentoCarteiraComponent,
+    canActivate: [AuthGuardService],
   },
 
   {
-    path: 'fadiga/:data',
+    path: "fadiga",
     component: FadigaComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+  },
+
+  {
+    path: "fadiga/:data",
+    component: FadigaComponent,
+    canActivate: [AuthGuardService],
   },
   {
-    path: 'comunicar-tripulantes/:data',
+    path: "comunicar-tripulantes/:data",
     component: ComunicarTripulantesComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
-    path: 'tratamento-da-fadiga/:id',
+    path: "tratamento-da-fadiga/:id",
     component: TratamentoDaFadigaComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
   },
   {
-    path: 'grafico',
+    path: "grafico",
     component: GraficoComponent,
   },
   {
@@ -142,156 +178,168 @@ const routes: Routes = [
     component: AnaliseDeRiscoComponent,
   },
   {
-    path: 'visualizar-analise-de-risco/:id',
+    path: "visualizar-analise-de-risco/:id",
     component: AnaliseDeRiscoComponent,
   },
   {
-    path: 'documento-impresso',
+    path: "documento-impresso",
     component: DocumentoImpressoComponent,
   },
   {
-    path: 'pax-transportados',
+    path: "pax-transportados",
     component: PaxTransportadosComponent,
   },
   {
-    path: 'total-de-pousos',
+    path: "total-de-pousos",
     component: RelPousoComponent,
   },
   {
-    path: 'rel-cons-comb',
+    path: "rel-cons-comb",
     component: RelConsCombComponent,
   },
   {
-    path: 'rel-horas-quinzena',
+    path: "rel-horas-quinzena",
     component: HorasVoadasQuinzenaComponent,
   },
   {
-    path: 'rel-horas-tripulante',
+    path: "rel-horas-tripulante",
     component: HorasVoadasTripulanteComponent,
   },
   {
-    path: 'rel-boca',
+    path: "rel-boca",
     component: RelBocaComponent,
   },
   {
-    path: 'rel-rdv',
+    path: "rel-rdv",
     component: RelListaRdvComponent,
   },
   {
-    path: 'rel-rdv/:id',
+    path: "rel-rdv/:id",
     component: RelRdvComponent,
   },
   {
-    path: 'voos-realizados',
+    path: "voos-realizados",
     component: VoosRealizadosComponent,
   },
   {
-    path: 'status-da-frota',
+    path: "status-da-frota",
     component: RelStatusDaFrotaComponent,
   },
   {
-    path: 'rel-diario-horas-voadas',
+    path: "rel-diario-horas-voadas",
     component: RelDiarioHorasVoadasComponent,
   },
   {
-    path: 'controle-de-tripulantes',
+    path: "controle-de-tripulantes",
     component: ControleDeTripulantesComponent,
   },
   {
-    path: 'rel-escala-ptbr',
+    path: "rel-escala-ptbr",
     component: RelEscalaPtbrComponent,
   },
   {
-    path: 'rel-controle-spot',
+    path: "rel-controle-spot",
     component: RelControleSpotComponent,
   },
   {
-    path: 'crud/:tipo',
+    path: "crud/:tipo",
     component: CrudComponent,
   },
   {
-    path: 'motivo-do-atraso',
+    path: "motivo-do-atraso",
     component: MotivoDoAtrasoComponent,
   },
   {
-    path: 'rel-pontualidade',
+    path: "rel-pontualidade",
     component: RelPontualidadeComponent,
   },
   {
-    path: 'rel-indisponibilidade',
+    path: "rel-indisponibilidade",
     component: RelIndisponibilidadeComponent,
   },
   {
-    path: 'rel-cdo',
+    path: "rel-cdo",
     component: RelCdoComponent,
   },
   {
-    path: 'cad-email-reporte',
+    path: "cad-email-reporte",
     component: CadastroDeEmailReporteComponent,
   },
   {
-    path: 'indisponibilidade',
+    path: "indisponibilidade",
     component: IndisponibilidadeComponent,
   },
   {
-    path: 'motivo-da-indisponibilidade',
+    path: "motivo-da-indisponibilidade",
     component: MotivoDaIndisponibilidadeComponent,
   },
   {
-    path: 'contrato',
+    path: "contrato",
     component: ContratoComponent,
   },
   {
-    path: 'listar-jornada',
+    path: "listar-jornada",
     component: ListarJornadaComponent,
   },
   {
-    path: 'imprimir-jornada',
+    path: "imprimir-jornada",
     component: ImprimirJornadaNovoComponent,
   },
   {
-    path: 'escala-mensal',
+    path: "escala-mensal",
     component: EscalaMensalComponent,
   },
   {
-    path: 'tipo-de-ocorrencia',
+    path: "tipo-de-ocorrencia",
     component: TipoDeOcorrenciaComponent,
   },
   {
-    path: 'quinzena',
+    path: "quinzena",
     component: QuinzenaComponent,
   },
   {
-    path: 'trilho',
+    path: "trilho",
     component: TrilhoComponent,
   },
   {
-    path: 'escala-do-dia',
+    path: "escala-do-dia",
     component: EscalaDoDiaComponent,
   },
   {
-    path: 'dupla',
+    path: "dupla",
     component: DuplaComponent,
   },
   {
-    path: 'escala-semanal',
+    path: "escala-semanal",
     component: EscalaSemanalComponent,
   },
   {
-    path: 'erros-no-db',
+    path: "erros-no-db",
     component: ErrosNoDbComponent,
   },
   {
-    path: 'informativo',
+    path: "informativo",
     component: ListaInformativoComponent,
   },
   {
-    path: 'incompatibilidade',
+    path: "incompatibilidade",
     component: IncompatibilidadeComponent,
   },
   {
-    path: 'busca-bi',
+    path: "busca-bi",
     component: BuscaBiComponent,
+  },
+  {
+    path: "controle-de-acesso",
+    component: ContratoComponent,
+  },
+  {
+    path: "controle-de-acesso/:Id",
+    component: ControleDeAcessoEditComponent,
+  },
+  {
+    path: "controle-de-acesso/novo",
+    component: ControleDeAcessoEditComponent,
   },
   {
     path: 'modificador',
@@ -304,7 +352,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],//, { enableTracing: true })],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)], //, { enableTracing: true })],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

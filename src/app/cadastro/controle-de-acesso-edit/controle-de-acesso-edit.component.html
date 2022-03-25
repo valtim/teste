@@ -1,0 +1,99 @@
+<app-titulo titulo="Controle de Acesso" class="Controle-acesso"></app-titulo>
+<div class="ui-fluid" *ngIf="resp">
+  <p-card>
+    <div class="p-field p-grid">
+      <label for="nome" class="p-col-12 p-md-2">Nome do Usuário</label>
+      <div class="p-col-12 p-md-10">
+        <input type="text" size="50" pInputText [(ngModel)]="resp.Username" />
+      </div>
+    </div>
+    <div class="p-field p-grid">
+      <label for="Senha" class="p-col-12 p-md-2">Senha</label>
+      <div class="p-col-12 p-md-10">
+        <input type="text" size="50" pInputText [(ngModel)]="resp.Senha" />
+      </div>
+    </div>
+    {{ tripulanteSelecionado }}
+    <div class="p-field p-grid">
+      <label for="tripulante" class="p-col-12 p-md-2">Tripulante</label>
+      <div class="p-col-12 p-md-10">
+        <p-dropdown
+          [options]="tripulantes"
+          [(ngModel)]="tripulanteSelecionado"
+          placeholder="Tripulantes"
+          optionLabel="Trato"
+          optionValue="Id"
+          [showClear]="true"
+          [style]="{ width: '390px' }"
+        ></p-dropdown>
+
+        <!-- <p-dropdown
+          [options]="isTripulante() ? resp.Username : null"
+          [(ngModel)]="resp.Username"
+          [style]="{ width: '390px' }"
+          itemSize="50"
+        ></p-dropdown> -->
+        <button
+          pButton
+          type="button"
+          icon="pi pi-times"
+          class="ui-button-danger"
+          disabled="true"
+        ></button>
+      </div>
+    </div>
+
+    <div class="p-field p-grid">
+      <label for="email" class="p-col-12 p-md-2">E-mail (não tripulante)</label>
+      <div class="p-col-12 p-md-10">
+        <input type="text" size="50" pInputText [(ngModel)]="resp.Email" />
+      </div>
+    </div>
+    {{ nomePerfisHabilitados }}
+    <div class="p-field p-grid">
+      <label for="acessos" class="p-col-12 p-md-2">Acessos</label>
+      <div class="p-col-12 p-md-4">
+        <p-listbox
+          [options]="perfis"
+          optionLabel="Nome"
+          multiple="multiple"
+          checkbox="checkbox"
+          optionValue="Id"
+          [(ngModel)]="nomePerfisHabilitados"
+          [listStyle]="{ 'max-height': '200px' }"
+        >
+        </p-listbox>
+      </div>
+    </div>
+  </p-card>
+  <p-toolbar>
+    <div class="ui-toolbar">
+      <button
+        pButton
+        type="button"
+        label="Salvar"
+        icon="pi pi-save"
+        class="p-button-success p-ml-2"
+        (click)="postPerfilDeAcesso()"
+        optionLabel="Name"
+        dataKey="Id"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-warning p-ml-2"
+        (click)="cancelar()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Excluir"
+        icon="pi pi-trash"
+        (click)="deletar()"
+        class="p-button-danger p-ml-2"
+      ></button>
+    </div>
+  </p-toolbar>
+</div>

@@ -1,1 +1,60 @@
-<app-crud titulo="Contrato" tipo="Contrato" camposExibidos="Cliente, PrefixoTitular, NumeroDoContrato, EhBackup, Disponibilidade, InicioDaJornada, BaseDoTripulante" [combos]="[{'Cliente': 'Clientes', 'PrefixoTitular': 'soPrefixo', 'BaseDoTripulante': 'BaseDeOperacao'}]"></app-crud>
+<!-- <app-crud titulo="Contrato" tipo="Contrato" camposExibidos="Cliente, PrefixoTitular, NumeroDoContrato, EhBackup, Disponibilidade, InicioDaJornada, BaseDoTripulante" [combos]="[{'Cliente': 'Clientes', 'PrefixoTitular': 'soPrefixo', 'BaseDoTripulante': 'BaseDeOperacao'}]"></app-crud> -->
+
+<app-titulo id="titulo" titulo="Controle de Acesso" class="controle-acesso">
+</app-titulo>
+<div>
+  <span>
+    <button
+      pButton
+      type="button"
+      label="Novo"
+      icon="pi pi-plus"
+      class="botao-novo p-button-raised"
+      (click)="novoCadastro()"
+      [disabled]="false"
+    ></button>
+    <button
+      type="button"
+      label="Exportar"
+      pButton
+      pRipple
+      icon="pi pi-file-excel"
+      (click)="exportExcel()"
+      class="botao-excel p-button-success mr-2"
+      pTooltip="XLS"
+      tooltipPosition="bottom"
+    ></button>
+  </span>
+</div>
+<div id="dataTable">
+  <p-table
+    #dt
+    [columns]="cols"
+    [value]="permissoes"
+    selectionMode="single"
+    [(selection)]="selectedContrato"
+    dataKey="Id"
+    (onRowSelect)="onRowSelect($event)"
+    responsiveLayout="scroll"
+  >
+    <!-- <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" [style.width]="col.width" />
+      </colgroup>
+    </ng-template> -->
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td *ngFor="let col of columns">
+          {{ rowData[col.field] }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
