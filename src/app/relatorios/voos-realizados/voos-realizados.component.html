@@ -2,81 +2,114 @@
 
 <app-titulo titulo="Voos Realizados" [carregando]="carregando"></app-titulo>
 
-
-
 <div class="p-grid">
-    <div class="p-col"></div>
-    <div class="p-col">
-        <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
-            filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
-            <p-header>
-                Clientes
-            </p-header>
-        </p-listbox>
-    </div>
-    <div class="p-col"> <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-            showIcon="true"></p-calendar><br/>
-            <button type="button" pButton pRipple label="Final"></button>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-            showIcon="true">
-        </p-calendar>
-    </div>
-    <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-            (click)="rodarRelatorio()"></button></div>
-    <div class="p-col"></div>
+  <div class="p-col"></div>
+  <div class="p-col">
+    <p-listbox
+      [options]="clientes"
+      [(ngModel)]="clientesSelecionados"
+      multiple="multiple"
+      checkbox="checkbox"
+      filter="filter"
+      [listStyle]="{ 'max-height': '110px' }"
+      optionLabel="Nome"
+    >
+      <p-header> Clientes </p-header>
+    </p-listbox>
+  </div>
+  <div class="p-col">
+    <button type="button" pButton pRipple label="Inicial"></button>
+    <p-calendar
+      [(ngModel)]="dataInicio"
+      selectionMode="single"
+      dateFormat="dd/mm/yy"
+      [locale]="locale_pt"
+      showIcon="true"
+    ></p-calendar
+    ><br />
+    <button type="button" pButton pRipple label="Final"></button>
+    <p-calendar
+      [(ngModel)]="dataFim"
+      selectionMode="single"
+      dateFormat="dd/mm/yy"
+      [locale]="locale_pt"
+      showIcon="true"
+    >
+    </p-calendar>
+  </div>
+  <div class="p-col">
+    <button
+      pButton
+      type="button"
+      icon="pi pi-search"
+      iconPos="right"
+      label="Perquisar"
+      (click)="rodarRelatorio()"
+    ></button>
+  </div>
+
+  <div class="p-col">
+    <button
+      type="button"
+      label="Exportar"
+      pButton
+      pRipple
+      icon="pi pi-file-excel"
+      (click)="exportExcel()"
+      class="botao-excel p-button-success mr-2"
+      pTooltip="XLS"
+      tooltipPosition="bottom"
+    ></button>
+  </div>
 </div>
 
+<div id="dataTable" *ngIf="!carregando">
+  <p-table [value]="dados" styleClass="p-datatable-striped">
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>Total de voos com {{ item.Item }}</td>
+        <td>{{ item.Valor }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-<div *ngIf="!carregando">
+  <p-table [value]="todosOsVoos" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Data</th>
+        <td>Prefixo</td>
+        <th>NumerodoVoo</th>
+        <th>Origem</th>
+        <th>Status</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+        <td>{{ item.NumerodoVoo }}</td>
+        <td>{{ item.Prefixo }}</td>
+        <td>{{ item.Data }}</td>
+        <td>{{ item.Origem }}</td>
+        <td>{{ item.Status }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 
-    <p-table [value]="dados" styleClass="p-datatable-striped">
-        <ng-template pTemplate="body" let-item>
-            <tr>
-                <td>Total de voos com {{item.Item}}</td>
-                <td>{{item.Valor}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-    <p-table [value]="todosOsVoos" styleClass="p-datatable-striped">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Data</th>
-                <td>Prefixo</td>
-                <th>NumerodoVoo</th>
-                <th>Origem</th>
-                <th>Status</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-item>
-            <tr>
-                <td>{{item.NumerodoVoo}}</td>
-                <td>{{item.Prefixo}}</td>
-                <td>{{item.Data}}</td>
-                <td>{{item.Origem}}</td>
-                <td>{{item.Status}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-
-
-    <p-table [value]="todosOsDiarios" styleClass="p-datatable-striped">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>DataDoDiario</th>
-                <td>Prefixo</td>
-                <th>EhAuditoria</th>
-                <th>NumeroDaFolha</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-item2>
-            <tr>
-                <td>{{item2.Data}}</td>
-                <td>{{item2.Prefixo}}</td>
-                <td>{{item2.EhAuditoria}}</td>
-                <td>{{item2.NumeroDaFolha}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
+  <p-table [value]="todosOsDiarios" styleClass="p-datatable-striped">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>DataDoDiario</th>
+        <td>Prefixo</td>
+        <th>EhAuditoria</th>
+        <th>NumeroDaFolha</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item2>
+      <tr>
+        <td>{{ item2.Data }}</td>
+        <td>{{ item2.Prefixo }}</td>
+        <td>{{ item2.EhAuditoria }}</td>
+        <td>{{ item2.NumeroDaFolha }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

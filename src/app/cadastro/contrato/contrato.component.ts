@@ -43,7 +43,6 @@ export class ContratoComponent implements OnInit {
 
   exportExcel() {
     import("xlsx").then((xlsx) => {
-      let title = "titulo";
       let element = document.getElementById("dataTable");
       let worksheet = xlsx.utils.table_to_sheet(element);
       let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
