@@ -13,6 +13,10 @@ export class TurmaListComponent implements OnInit {
   treinamentos: any;
   equipamentos: any;
   instrutores: any;
+  deslocamentos: any;
+  tripulantes: any;
+
+  
   displayModal = false;
   paraExcluir = [];
 
@@ -20,7 +24,6 @@ export class TurmaListComponent implements OnInit {
   dataFim: Date;
 
   loading = true;
-  tripulantes: any;
   locale_pt: any;
 
   constructor(private api: ApiTurmasService) {
@@ -44,6 +47,7 @@ export class TurmaListComponent implements OnInit {
       this.equipamentos = x.Equipamentos;
       this.instrutores = x.Instrutores;
       this.tripulantes = x.Tripulantes;
+      this.deslocamentos = x.Deslocamentos;
       
       if (x.Turmas.length == 0) {
         this.loading = false;

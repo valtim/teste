@@ -90,7 +90,7 @@
                         </ng-template>
                     </p-cellEditor>
 
-                    <p-cellEditor *ngIf="col.type == 'Double'">
+                    <p-cellEditor *ngIf="col.type == 'Double' || col.type == 'double'">
 
                         <ng-template pTemplate="input">
                             <input pInputText type="text" [(ngModel)]="rowData[col.field]"

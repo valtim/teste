@@ -1,9 +1,6 @@
 <app-titulo titulo="Duplas" [carregando]="!(listasOK && duplasOK)"></app-titulo>
 
-
 <p-toast position="center"></p-toast>
-
-
 
 
 <div class="p-grid p-mt-1">
@@ -43,12 +40,8 @@
     </ng-template>
 </p-table>
 
-
-
-
-
-
 <div class="card" *ngIf="(listasOK && duplasOK)">
+    
     <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
 
         <ng-template pTemplate="caption">
@@ -77,6 +70,7 @@
                 <col style="width:15%">
                 <col style="width:15%">
                 <col style="width:15%">
+                <col style="width:15%">
                 <col style="width:10%">
             </colgroup>
         </ng-template>
@@ -90,6 +84,7 @@
                 <th rowspan="2">Apres</th>
                 <th rowspan="2">Prefixo</th>
                 <th colspan="2">Disponibilidade</th>
+                <th rowspan="2">Deslocamento</th>
                 <th rowspan="2">Observação</th>
                 <th rowspan="2">Repete Até</th>
                 <th></th>
@@ -124,10 +119,6 @@
                                 [showClear]="true" placeholder="Base" [style]="{'width': '130px'}"
                                 (onChange)="mudeiAqui($event, linha)">
                             </p-dropdown>
-                            <!-- <p-autoComplete [(ngModel)]="linha.Base" [suggestions]="resultsBase"
-                                (completeMethod)="searchBase($event)" field="Nome" autoHighlight="true"
-                                [style]="{'width': '120px'}"> 
-                            </p-autoComplete>-->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="linha.Base">{{linha.Base.Nome}}</span>
@@ -142,10 +133,6 @@
                                 [showClear]="true" placeholder="PIC" [style]="{'width': '150px'}"
                                 (onChange)="mudeiAqui($event, linha)">
                             </p-dropdown>
-                            <!-- <p-autoComplete [(ngModel)]="linha.PIC" [suggestions]="resultsTripulante"
-                                (completeMethod)="searchTripulante($event)" field="Trato" autoHighlight="true"
-                                [style]="{'width': '120px'}">
-                            </p-autoComplete> -->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="linha.PIC">{{linha.PIC.Trato}}</span>
@@ -160,10 +147,6 @@
                                 [showClear]="true" placeholder="SIC" [style]="{'width': '150px'}"
                                 (onChange)="mudeiAqui($event, linha)">
                             </p-dropdown>
-                            <!-- <p-autoComplete [(ngModel)]="linha.SIC" [suggestions]="resultsTripulante"
-                                (completeMethod)="searchTripulante($event)" field="Trato" autoHighlight="true"
-                                [style]="{'width': '120px'}">
-                            </p-autoComplete> -->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="linha.SIC">{{linha.SIC.Trato}}</span>
@@ -187,16 +170,10 @@
                 <td pInitEditableRow>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
-
                             <p-dropdown [options]="prefixos" [(ngModel)]="linha.Prefixo" dataKey="Id"
                                 optionLabel="PrefixoCompleto" [showClear]="true" placeholder="Prefixo"
                                 [style]="{'width': '130px'}" (onChange)="mudeiAqui($event, linha)">
                             </p-dropdown>
-
-                            <!-- <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
-                                (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true"
-                                [style]="{'width': '120px'}"> 
-                            </p-autoComplete>-->
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span>
@@ -226,6 +203,20 @@
                         </ng-template>
                         <ng-template pTemplate="output">
                             {{linha.FimVoo}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
+                                optionLabel="Nome" [showClear]="true" placeholder="Deslocamento"
+                                [style]="{'width': '130px'}" (onChange)="mudeiAqui($event, linha)">
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
                         </ng-template>
                     </p-cellEditor>
                 </td>
@@ -284,10 +275,6 @@
                             <td>{{linha.SIC.Vencimentos.ApresentacaoMaisCedo}}</td>
                         </tr>
                     </table>
-
-
-                    <!-- <span *ngIf="linha.PIC">{{linha.PIC | json}}</span> -->
-                    <!-- <span *ngIf="linha.SIC">{{linha.SIC | json}}</span> -->
                 </td>
             </tr>
         </ng-template>

@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import html2canvas from 'html2canvas';
 import { MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
@@ -17,7 +18,10 @@ export class EscalaDoDiaComponent implements OnInit {
   tripulacoes: any;
   todosOsTrilhos: any;
   turmas: any;
-  extras: any;
+  extras: any = {
+    Data : Date,
+    Ativo : Boolean,
+  }
   urlLogo: string;
 
 
@@ -25,50 +29,18 @@ export class EscalaDoDiaComponent implements OnInit {
   divulgado;
   observacoes;
 
-
-
-  @ViewChild('escala') escala: ElementRef;
-  @ViewChild('canvas') canvas: ElementRef;
-  @ViewChild('downloadLink') downloadLink: ElementRef;
+  escalaDoDia: any;
 
   constructor(private api: ApiService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-
-
 
     this.api.getClienteLogado().then(x => this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
     this.locale_pt = this.api.getLocale('pt');
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     this.rodarRelatorio();
-
-    this.extras.Data = this.data;
-    this.extras.Ativo = true;
-
-  }
-
-
-  imprimir() {
-
-
-    html2canvas(this.escala.nativeElement).then(canvas => {
-      this.canvas.nativeElement.src = canvas.toDataURL();
-      this.downloadLink.nativeElement.href = canvas.toDataURL('file/png');
-      this.downloadLink.nativeElement.download = 'marble-diagram.png';
-      this.downloadLink.nativeElement.click();
-    });
-
-
-    alert(this.escala.nativeElement.innerHTML);
-
-    this.api.postEscalaNova(this.extras).then(x => {
-
-    })
-
-    print();
-
-
 
   }
 
@@ -94,6 +66,13 @@ export class EscalaDoDiaComponent implements OnInit {
     });
   }
 
+  getPosicao(trato, evento) {
+    let retorno = "LHS";
+    if ((trato == evento.SIC && evento.PosicaoInvertida) || (trato == evento.PIC && !evento.PosicaoInvertida))
+      retorno = "RHS";
+    return retorno;
+  }
+
   salvar() {
     this.tudoPronto = false;
     this.api.postEscalaNova(this.extras).then(x => {
@@ -108,13 +87,18 @@ export class EscalaDoDiaComponent implements OnInit {
     this.tripulacoes = null;
     this.tudoPronto = false;
 
+    if (!this.data)
+      return;
+
     this.api.getEscalaDiaria(this.data).then(x => {
       this.tudoPronto = true;
+      this.escalaDoDia = this.sanitizer.bypassSecurityTrustHtml(x.HTML);
       //this.relatorio = x.logs;
       this.tripulacoes = x.Tripulacoes;
       this.todosOsTrilhos = x.TodosOsTrilhos;
       this.turmas = x.Turmas;
       this.extras = x.Extras;
+      this.extras.Anexos = [];
       this.getColunas(x.Colunas);
       this.valorColspan = 7 + x.Colunas;
     })

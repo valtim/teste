@@ -31,6 +31,7 @@ export class DuplaComponent implements OnInit {
 
   listasOK = false;
   duplasOK = false;
+  deslocamentos: [];
 
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
@@ -46,7 +47,16 @@ export class DuplaComponent implements OnInit {
   mudeiAqui(e, dados) {
 
 
+    dados.Invalido = false;
+    dados.Ativo = true;
+    if (dados.SIC != null && dados.PIC == null){
+      this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Uma linha não pode ter SIC sem PIC, caso a linha só tenha um Tripulante coloque como PIC. Esta linha não será salva` });
+      dados.Ativo = false;
+      dados.Invalido = true;
+    }
+
     if (dados.PIC && dados.SIC) {
+
       if (dados.PIC.Idade + dados.SIC.Idade > 120)
         this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${dados.PIC.Trato} e ${dados.SIC.Trato} não podem ser escalados juntos por superarem 120 anos na soma das idades` });
 
@@ -55,7 +65,7 @@ export class DuplaComponent implements OnInit {
 
     }
 
-
+    
     dados.Modificado = true;
   }
 
@@ -73,6 +83,7 @@ export class DuplaComponent implements OnInit {
       this.bases = x.bases;
       this.prefixos = x.prefixos;
       this.incompatibilidades = x.incompatibilidades;
+      this.deslocamentos = x.deslocamentos;
       // vencimentos = true;
       // this.tudoPronto = duplas && vencimentos;
       this.listasOK = true;
@@ -116,13 +127,26 @@ export class DuplaComponent implements OnInit {
   }
 
   novaLinha() {
-    this.duplas.push({ Id: GuidUtil.NewGuid(), Base: undefined, Data: undefined, PIC: undefined, SIC: undefined, Apresentacao: undefined, Observacao: undefined, RepeteAte: undefined });
+    this.duplas.push({ Id: GuidUtil.NewGuid(), 
+      Base: undefined, 
+      Data: undefined, 
+      PIC: null, 
+      SIC: null, 
+      Apresentacao: undefined, 
+      Observacao: undefined, 
+      RepeteAte: undefined, 
+      InicioVoo: undefined , 
+      FimVoo: undefined, 
+      InicioDeslocamento: undefined, 
+      FimDeslocamento: undefined,
+      Prefixo: undefined,
+    });
   }
 
   salvar() {
 
 
-    let editado_novo = this.duplas.filter(x => x.Modificado);
+    let editado_novo = this.duplas.filter(x => x.Modificado && !x.Invalido);
 
     this.apiEscala.postDuplas(editado_novo).then(x => {
 

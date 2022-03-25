@@ -10,8 +10,8 @@
         [inputStyle]="{'width':'150px'}"></p-calendar>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
         class="p-ml-2"></button>
-        <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"
-            class="p-ml-2 p-button-success"></button>
+    <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"
+        class="p-ml-2 p-button-success"></button>
     <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar por Email" (click)="email()"
         class="p-ml-2"></button>
 </p-card>
@@ -56,10 +56,14 @@
         </div>
     </div>
 
-
-
-
-
+    <div class="p-grid">
+        <div class="p-field p-col-4">
+            <h2>Anexos da Escala</h2>
+            <div class="p-field">
+                <app-anexos [listaArquivos]='extras.Anexos'></app-anexos>
+            </div>
+        </div>
+    </div>
 
 </p-card>
 
@@ -107,12 +111,9 @@
     </tr>
 </table>
 
-<div id="download">
-    <img #canvas>
-    <a #downloadLink></a>
-</div>
+<object [innerHTML]="escalaDoDia"></object>
 
-<table #escala>
+<!-- <table #escala>
     <tr>
         <th [attr.colspan]="valorColspan">
             <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de
@@ -143,6 +144,7 @@
                 <br />
             </span>
             {{evento.Descricao}}
+            <span *ngIf="evento.Tipo == 'Voo'"><br /><b>{{getPosicao(crew.Trato, evento)}}</b></span>
             <span *ngIf="evento.Tipo == 'Treinamento'"><br />Início: {{evento.Inicio}} / Fim: {{evento.Fim}}</span>
         </td>
         <td>{{crew.LimiteDeCorte}}</td>
@@ -150,6 +152,7 @@
     </tr>
 </table>
 
+-->
 
 <div class="formatted somente-impressora" *ngIf="extras">
     <b>Previsão de escala. Alterações poderão ocorrer devido às nossas operações serem não regulares e/ou por demanda

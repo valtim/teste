@@ -30,7 +30,6 @@ export class ApiService {
 
   public url: string;
   public urlApp: string;
-  public EhProducao = window.location.host !== "localhost:4200";
   private permission;
 
   private clienteLogado;
@@ -127,7 +126,7 @@ export class ApiService {
 
 
 
-    return this.http.post(this.url + 'api/autorizacao-bearer', { 'bearer' : bearer }, httpOptions)
+    return this.http.post(this.url + 'api/autorizacao-bristow', { 'bearer' : bearer }, httpOptions)
       .toPromise();
   }
 
@@ -341,6 +340,10 @@ export class ApiService {
     return this.http.get(this.url + 'api/listas/tripulante', this.httpOptions).toPromise();
   }
 
+  getListaTripulanteCombo(): Promise<any> {
+    return this.http.get(this.url + 'api/listas/tripulantecombo', this.httpOptions).toPromise();
+  }
+
   getLocalidade(tipo: string, perPage: number, currentPage: number, search: string): Promise<any> {
     return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`, this.httpOptions).toPromise();
   }
@@ -356,8 +359,8 @@ export class ApiService {
     return this.http.get(this.url + `api/trilho/listas`, this.httpOptions).toPromise();
   }
 
-  getTrilho(data: Date): Promise<any> {
-    return this.http.get(this.url + `api/trilho/${data.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+  getTrilho(dataIni: Date, dataFim: Date): Promise<any> {
+    return this.http.get(this.url + `api/trilho/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
 
@@ -727,6 +730,11 @@ export class ApiService {
     return this.http.get(`${this.url}api/confirmacaodejornada/analista/${id}`, this.httpOptions).toPromise();
 
     //confirmacao-de-jornada/gerente
+  }
+
+
+  postAnaliseDeFadiga(filtro : any): Promise<any>{
+    return this.http.post(`${this.url}api/analise-de-fadiga/processar`, filtro, this.httpOptions).toPromise();
   }
 
 }

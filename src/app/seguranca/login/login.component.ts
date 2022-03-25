@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ApiService } from 'src/app/shared/api.service';
 import { AutorizacaoService } from './../../shared/autorizacao.service';
 
-import {MessageService} from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,8 +19,19 @@ export class LoginComponent implements OnInit {
   public password: string;
   public loading = false;
 
+
+  jaLogouRemoto = localStorage.length == 4;
+
   ngOnInit() {
-    localStorage.clear();
+    if (localStorage.length == 4) {
+      this.loginRemoto();
+      return;
+    }
+    
+    if (localStorage.getItem["Authorization"] != null && localStorage.length >= 4)
+      return;
+
+    //localStorage.clear();
   }
 
   login() {
@@ -28,11 +39,11 @@ export class LoginComponent implements OnInit {
       this.loading = true;
       this.api.postLogin(this.username, this.password)
         .then((x) => {
-          this.loading = false;
+          // 
           this.api.username = this.username;
 
-           this.api.getCombosServidor().then(
-             () => {
+          this.api.getCombosServidor().then(
+            () => {
 
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
@@ -47,13 +58,14 @@ export class LoginComponent implements OnInit {
                 return;
               }
               //this.router.navigateByUrl('/quadro-de-tripulantes')
+              this.loading = false;
               this.router.navigate(['home']);
 
             }
-           );
+          );
 
 
-              // this.router.navigateByUrl('/quadro-de-tripulantes')
+          // this.router.navigateByUrl('/quadro-de-tripulantes')
 
 
         })
@@ -72,8 +84,8 @@ export class LoginComponent implements OnInit {
             default:
               this.api.error = 'Não foi possível acessar o servidor';
               break;
-          
-            }
+
+          }
         });
     } else {
       this.api.error = 'Usuário ou senha obrigatórios';
@@ -84,4 +96,36 @@ export class LoginComponent implements OnInit {
     this.api.error = '';
   }
 
+  loginRemoto() {
+
+    //this.loadingDisplay = true;
+    let login = "";
+
+    for (let i = 0; i < localStorage.length; i++) {
+      let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      if (!(item.secret && item.credentialType == "AccessToken"))
+        continue;
+      login = item.secret;
+    }
+    console.log(1);
+    this.api.postLoginAD(login).then(x => {
+      console.log(2);
+      localStorage.setItem('Authorization', x.Authorization);
+      localStorage.setItem('Rotas', JSON.stringify(x.Rotas));
+      localStorage.setItem('Menu', JSON.stringify(x.Menu));
+      if (localStorage.getItem('beforeLogin') != null) {
+        var url = localStorage.getItem('beforeLogin');
+        localStorage.removeItem('beforeLogin');
+        window.location.href = url;
+        return;
+      }
+      window.location.href = "/";
+
+    })
+    console.log(3);
+
+  }
+
+
 }
+

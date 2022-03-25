@@ -1,0 +1,50 @@
+<app-titulo></app-titulo>
+
+
+<p-card>
+    <button type="button" pButton pRipple label="Inicio"></button>
+    <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+        [inputStyle]="{'width':'150px'}"></p-calendar>
+    <button type="button" pButton pRipple label="Fim" class="p-ml-2"></button>
+    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+        [inputStyle]="{'width':'150px'}"></p-calendar>
+    <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+        class="p-ml-2"></button>
+</p-card>
+
+<div *ngFor="let trip of tripulantes">
+    <p-checkbox [label]="trip.Trato" [value]="trip.Id" [(ngModel)]="selectedValues"></p-checkbox>
+    <br>
+</div>
+
+
+
+<p-chart *ngIf="data" type="line" [data]="data" (onDataSelect)="selectData($event)" width="98vw" height="80vh">
+</p-chart>
+
+
+<div *ngFor="let trip of resultado">
+
+    <p-table [value]="trip.Analises">
+        <ng-template pTemplate="caption">
+            {{trip.Trato}}
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Data</th>
+                <th>FadigaInicial</th>
+                <th>FadigaFinal</th>
+                <th>AnaliseDaPontuacao</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.Data | date:'dd/MM/yyyy'}}</td>
+                <td>{{product.FadigaInicial}}</td>
+                <td>{{product.FadigaFinal}}</td>
+                <td>{{product.AnaliseDaPontuacao}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

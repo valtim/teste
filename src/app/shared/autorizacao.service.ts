@@ -27,12 +27,12 @@ export class AutorizacaoService {
   }
   
   getAuthorization() {
+    if (!this.Authorization)
+      this.Authorization = localStorage.getItem('Authorization');
     return this.Authorization;
   }
   
   getMenus() {
-
-    localStorage.getItem('Menu')
 
     this.Menus = JSON.parse(localStorage.getItem('Menu'));
     return this.Menus;

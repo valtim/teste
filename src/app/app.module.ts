@@ -122,6 +122,10 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component';
 import { SOLSharedModule } from './shared/sol.shared.module';
 import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
+import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.component';
+import { ModificadorComponent } from './cadastro/modificador/modificador.component';
+import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component';
+import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -204,6 +208,10 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     VisualizarAnaliseDeRiscoComponent,
     VoosRealizadosComponent,
     BuscaBiComponent,
+    DeslocamentoComponent,
+    ModificadorComponent,
+    GraficoComponent,
+    TesteGraficoComponent,
 
 
 
@@ -220,7 +228,7 @@ const rodandoLocal = window.location.host == 'localhost:4200';
       auth: {
         clientId: rodandoLocal ? '48d2da0e-fbf4-4d65-9603-6eeaf26d8e26' : '024988d2-731e-442f-a3a0-875bb1b2881a',
         authority: rodandoLocal ? 'https://login.microsoftonline.com/1e711a1a-50e8-4cd4-a3d5-9acccd8b52eb' : 'https://login.microsoftonline.com/6d722de3-c021-4a75-a539-f83210c2706d',
-        redirectUri: window.location.href
+        redirectUri: 'https://' + window.location.host
       },
       cache: {
         cacheLocation: 'localStorage',

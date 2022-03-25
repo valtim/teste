@@ -62,6 +62,9 @@ import { AgendaComponent } from './treinamento/agenda/agenda.component';
 import { TurmaListComponent } from './treinamento/turma-list/turma-list.component';
 import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
 import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
+import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.component';
+import { ModificadorComponent } from './cadastro/modificador/modificador.component';
+import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -129,6 +132,10 @@ const routes: Routes = [
   {
     path: 'grafico',
     component: GraficoComponent,
+  },
+  {
+    path: 'deslocamento',
+    component: DeslocamentoComponent,
   },
   {
     path: 'analise-de-risco',
@@ -285,6 +292,14 @@ const routes: Routes = [
   {
     path: 'busca-bi',
     component: BuscaBiComponent,
+  },
+  {
+    path: 'modificador',
+    component: ModificadorComponent,
+  },
+  {
+    path: 'grafico-fadiga',
+    component: TesteGraficoComponent,
   },
 ];
 

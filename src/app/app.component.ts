@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MsalService, MsalBroadcastService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -12,37 +12,64 @@ import { ApiService } from './shared/api.service';
 })
 export class AppComponent implements OnInit {
 
-  title = 'msal-angular-tutorial';
-  isIframe = false;
-  loginDisplay = false;
-  loadingDisplay = false;
+  title = 'SOL';
   private readonly _destroying$ = new Subject<void>();
-  ExibirLoginLocal: any;
+  ExibirLoginLocal = false;
+
+  localhost = window.location.href.indexOf('localhost') > -1;
+  usuarioLogado = localStorage.getItem('Authorization') != null;
+  paginaDeLogin = window.location.href.indexOf('/login') > -1;
+  jaLogouRemoto = false;
+
+  public ExibirBotaoLogin = !this.usuarioLogado && !this.paginaDeLogin && !this.jaLogouRemoto;
 
   constructor(private broadcastService: MsalBroadcastService, private authService: MsalService, private api: ApiService) { }
 
+  sleep(ms): Promise<any> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // async function demo() {
+  //     for (let i = 0; i < 5; i++) {
+  //         console.log(`Waiting ${i} seconds...`);
+  //         await sleep(i * 1000);
+  //     }
+  //     console.log('Done');
+  // }
+
   ngOnInit() {
-    this.isIframe = window !== window.parent && !window.opener;
 
-    this.ExibirLoginLocal = (!this.api.EhProducao && localStorage.getItem('Authorization') == null);
+    this.sleep(2000).then(() => {
+      this.jaLogouRemoto = localStorage.length == 4;
 
-    if (this.ExibirLoginLocal && window.location.href.indexOf('login') > -1)
-      return;
+      console.log('pagina de login: ' + this.paginaDeLogin);
 
-    if (this.ExibirLoginLocal) {
-      window.location.href = window.location.origin + '/login';
-      return;
-    }
+      if (this.usuarioLogado)
+        return;
 
 
-    this.broadcastService.inProgress$
-      .pipe(
-        filter((status: InteractionStatus) => status === InteractionStatus.None),
-        takeUntil(this._destroying$)
-      )
-      .subscribe(() => {
-        this.setLoginDisplay();
-      })
+      if (this.localhost && this.paginaDeLogin)
+        return;
+
+      if ((this.jaLogouRemoto && !this.paginaDeLogin) || (!this.usuarioLogado && this.localhost && !this.paginaDeLogin)) {
+        window.location.href = window.location.origin + '/login';
+        return;
+      }
+
+      if (this.localhost && this.jaLogouRemoto)
+        return;
+
+      this.ExibirLoginLocal = (this.localhost && this.usuarioLogado) || !this.localhost;
+      this.broadcastService.inProgress$
+        .pipe(
+          filter((status: InteractionStatus) => status === InteractionStatus.None),
+          takeUntil(this._destroying$)
+        )
+        .subscribe(() => {
+          this.setLoginDisplay();
+        })
+    })
+
   }
 
   login() {
@@ -51,51 +78,13 @@ export class AppComponent implements OnInit {
 
   setLoginDisplay() {
 
-    if (this.authService.instance.getAllAccounts().length > 0 && !localStorage.getItem('Authorization')) {
-      this.loadingDisplay = true;
-      let login = "";
+    this.usuarioLogado = localStorage.getItem('Authorization') != null;
 
 
-      for (let i = 0; i < localStorage.length; i++) {
-        let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        if (!(item.secret && item.credentialType == "AccessToken"))
-          continue;
-        login = item.secret;
-      }
-
-      this.api.postLoginAD(login).then(x => {
-        // this.api.setBearer(x.Authorization);
-        //localStorage.clear();
-        localStorage.setItem('Authorization', x.Authorization);
-        localStorage.setItem('Rotas', JSON.stringify(x.Rotas));
-        localStorage.setItem('Menu', JSON.stringify(x.Menu));
-        this.loadingDisplay = false;
-        this.loginDisplay = true;
-        if (localStorage.getItem('beforeLogin') != null) {
-          var url = localStorage.getItem('beforeLogin');
-          localStorage.removeItem('beforeLogin');
-          window.location.href = url;
-          return;
-        }
-
-        window.location.href = "/";
-
-      })
-    }
-
-    this.loginDisplay = this.authService.instance.getAllAccounts().length > 0 && localStorage.getItem('Authorization') != null;
-
-
-    if (this.loginDisplay)
+    if (!this.localhost)
       return;
-
 
     if (window.location.href != window.location.origin + '/')
       window.location.href = window.location.origin;
-  }
-
-  ngOnDestroy(): void {
-    this._destroying$.next(undefined);
-    this._destroying$.complete();
   }
 }

@@ -37,6 +37,8 @@ export class AnexosComponent implements OnInit {
 
     this.api.postUploadSimples(formData).then((a) => {
 
+      this.listaArquivos = [];
+
       a.forEach((arq, index) => {
         this.listaArquivos.push(arq);
       });

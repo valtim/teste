@@ -8,6 +8,7 @@ import { ContadorDePeriodos } from 'src/app/models/ContadorDePeriodos';
 import { TurmaAluno } from 'src/app/models/TurmaAluno';
 import { MenuItem } from 'primeng/api';
 import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
+import { GuidUtil } from 'src/app/shared/GuidUtil';
 
 
 @Component({
@@ -24,6 +25,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   @Input() treinamentos = [];
   @Input() instrutores = [];
   @Input() tripulantes = [];
+  @Input() deslocamentos = [];
 
   @Output() evento = new EventEmitter<Object>();
 
@@ -31,6 +33,8 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
   periodo;
   comentario: string = '';
+
+  linhasSelecionadas = [];
 
   anexosTreinamento = [];
   alunos = [];
@@ -162,16 +166,33 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.evento.emit(this.turmaInterna);
   }
 
+
+  mudeiAqui(e, dados) {
+    dados.Modificado = true;
+  }
+
   mudancaDeData(data) {
     if (this.PeriodosDeCurso.Periodos.filter(x => x.Data == data).length > 0)
       return;
     this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [] });
   }
 
+  mudancaDeDataDeDeslocamento(data) {
+    if (this.turmaInterna.DatasDeDeslocamento.filter(x => x.getTime() == data.getTime()).length > 0)
+      return;
+    this.turmaInterna.DatasDeDeslocamento.push(data);
+  }
+
   removerData(data) {
     this.PeriodosDeCurso.Periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data != data);
     this.calcularDiferenca();
     this.atualizarStatusTurma(() => { });
+  }
+
+  removerDataDeslocamento(data) {
+    if (this.turmaInterna.Deslocamentos.length > 0)
+      this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x => x.Data.getTime() != data.getTime());
+    this.turmaInterna.DatasDeDeslocamento = this.turmaInterna.DatasDeDeslocamento.filter(x => x.getTime() != data.getTime());
   }
 
   removerAluno(aluno) {
@@ -207,6 +228,14 @@ export class TurmaComponent implements OnInit, AfterViewInit {
           });
         });
     }
+  }
+
+  novoDeslocamento(){
+    this.turmaInterna.Deslocamentos.push({Id: GuidUtil.NewGuid(), Data : new Date(), Deslocamento : { Nome: '' }});
+  }
+
+  excluirDeslocamento(id){
+    this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x=>x.Id != id);
   }
 
   onNotificar() {
@@ -638,37 +667,40 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.turmaInterna = Object.assign(new Turma, this.turma);
     this.turmaInterna.CargaHoraria = 0;
+    this.turmaInterna.Deslocamentos.forEach(x => {
+      x.Data = new Date(x.Data);
+    });
 
     this.definirStatusTurma();
 
     this.api.getUsuarioLogadoComPermissoes(resp => {
       this.usuarioLogado = resp;
 
-      this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
+      this.periodo = this.turmaInterna.HorasTurma.map(a => new Date(a.Data));
       this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
       this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
 
-      let listaPeriodos = this.turmaInterna.Datas.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+      let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
       listaPeriodos.forEach((x, index) => {
         var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
         if (horas.length == 0) {
           this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
         }
 
-        if (this.turmaInterna.Equipamento) {
-          this.turmaInterna.Equipamento = { Id: this.turmaInterna.Equipamento.Id, Nome: this.turmaInterna.Equipamento.Nome };
+        // if (this.turmaInterna.Equipamento) {
+        //   this.turmaInterna.Equipamento = { Id: this.turmaInterna.Equipamento.Id, Nome: this.turmaInterna.Equipamento.Nome };
 
-          this.api.getTreinamentosByEquipamento(this.turmaInterna.Equipamento.Id)
-            .then(resp => {
-              if (resp.Treinamentos.length > 0) {
-                this.instrutores = resp.Instrutores;
-                this.treinamentos = resp.Treinamentos;
-              } else {
-                this.instrutores = [];
-                this.treinamentos = [];
-              }
-            });
-        }
+        //   this.api.getTreinamentosByEquipamento(this.turmaInterna.Equipamento.Id)
+        //     .then(resp => {
+        //       if (resp.Treinamentos.length > 0) {
+        //         this.instrutores = resp.Instrutores;
+        //         this.treinamentos = resp.Treinamentos;
+        //         return;
+        //       }
+        //       this.instrutores = [];
+        //       this.treinamentos = [];
+        //     });
+        // }
 
         if (this.turmaInterna.Treinamento) {
           this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
@@ -683,7 +715,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
         this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
         this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
 
-        let listaPeriodos = this.turmaInterna.Datas.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+        let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
         listaPeriodos.forEach((x, index) => {
           var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
 
@@ -710,9 +742,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
             this.calcularDiferenca();
           }
 
-          if (this.turmaInterna.TurmaStatus[5].Efetivada) {
-            this.turmaInterna.Concluido = true;
-          }
+          //   if (this.turmaInterna.TurmaStatus[5].Efetivada) {
+          //     this.turmaInterna.Concluido = true;
+          //   }
 
         });
 

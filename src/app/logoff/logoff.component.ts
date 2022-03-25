@@ -17,7 +17,7 @@ export class LogoffComponent implements OnInit {
   ngOnInit(): void {
     localStorage.clear();
 
-    if (!this.api.EhProducao){
+    if (window.location.href.indexOf('localhost')){
       window.location.href = window.location.origin;
       return;
     }
