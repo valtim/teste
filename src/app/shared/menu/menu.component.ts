@@ -30,7 +30,9 @@ export class MenuComponent implements OnInit {
     private autorizacao: AutorizacaoService) { }
 
   ngOnInit() {
-    this.urlLogo = this.api.getLogo();
+    this.api.getClienteLogado().then(x=>{
+      this.urlLogo = `/assets/img/${x}.png`;
+    });
     this.menu = JSON.parse(localStorage.getItem('Menu'));;
     this.rotas = JSON.parse(localStorage.getItem('Rotas'));
     this.exibir = this.router.url === '/';

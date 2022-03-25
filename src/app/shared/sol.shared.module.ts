@@ -28,6 +28,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CardModule } from 'primeng/card';
@@ -41,7 +42,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     TabViewModule,
     ToastModule,
     ToolbarModule,
+    RadioButtonModule,
+    ChartModule
   ],
   exports: [
     AccordionModule,
@@ -121,6 +124,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     TabViewModule,
     ToastModule,
     ToolbarModule,
+    ChartModule,
 
 
 
@@ -128,7 +132,7 @@ import { FileUploadModule } from 'primeng/fileupload';
     TituloComponent,
     ConfirmacaoComponent,
     FormataDataPipe,
-
+    RadioButtonModule
   ],
 })
 export class SOLSharedModule { }

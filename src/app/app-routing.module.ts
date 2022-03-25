@@ -8,59 +8,93 @@ import { LogoffComponent } from "./logoff/logoff.component";
 import { LoginComponent } from "./seguranca/login/login.component";
 import { TrocaSenhaComponent } from "./seguranca/troca-senha/troca-senha.component";
 
-import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
-import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
-import { ContratoComponent } from "./cadastro/contrato/contrato.component";
-import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
-import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
+// import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
+// import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
+// import { ContratoComponent } from "./cadastro/contrato/contrato.component";
+// import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
+// import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
 
-import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
-import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
-import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
+// import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
+// import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
+// import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
+// import { RelControleSpotComponent } from "./relatorios/rel-controle-spot/rel-controle-spot.component";
+// import { CrudComponent } from "./cadastro/crud/crud.component";
+// import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
+// import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
+// import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
+// import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
+
+// import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
+// import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
+// import { ContratoComponent } from './cadastro/contrato/contrato.component';
+// import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
+// import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
+
+// import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
+// import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
+// import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
+// import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
+// import { CrudComponent } from './cadastro/crud/crud.component';
+// import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
+// import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
+// import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
+// import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
+
+import { VoosRealizadosComponent } from './relatorios/voos-realizados/voos-realizados.component';
+import { RelListaRdvComponent } from './relatorios/rel-lista-rdv/rel-lista-rdv.component';
+import { RelRdvComponent } from './relatorios/rel-rdv/rel-rdv.component';
+import { RelBocaComponent } from './relatorios/rel-boca/rel-boca.component';
+import { HorasVoadasTripulanteComponent } from './relatorios/horas-voadas-tripulante/horas-voadas-tripulante.component';
+import { HorasVoadasQuinzenaComponent } from './relatorios/horas-voadas-quinzena/horas-voadas-quinzena.component';
+import { RelConsCombComponent } from './relatorios/rel-cons-comb/rel-cons-comb.component';
+import { RelPousoComponent } from './relatorios/rel-pouso/rel-pouso.component';
+import { PaxTransportadosComponent } from './relatorios/pax-transportados/pax-transportados.component';
+import { DocumentoImpressoComponent } from './documento-impresso/documento-impresso.component';
+import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-de-risco.component';
+import { GraficoComponent } from './grafico/grafico.component';
+import { TratamentoDaFadigaComponent } from './controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component';
+import { ComunicarTripulantesComponent } from './controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component';
+import { FadigaComponent } from './controle-da-fadiga/fadiga/fadiga.component';
+import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/vencimento-carteira.component';
+import { MotivoDaIndisponibilidadeComponent } from './cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component';
+import { MotivoDoErroNoPreenchimentoComponent } from './cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component';
+import { ObservacaoDbComponent } from './cadastro/observacao-db/observacao-db.component';
+import { CertificadoComponent } from './treinamento/certificado/certificado.component';
+import { TipoDeOcorrenciaComponent } from './cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component';
+import { EscalaMensalComponent } from './escala/escala-mensal/escala-mensal.component';
+import { ListarJornadaComponent } from './administracao/listar-jornada/listar-jornada.component';
+import { QuinzenaComponent } from './cadastro/quinzena/quinzena.component';
+import { TrilhoComponent } from './escala/trilho/trilho.component';
+import { EscalaDoDiaComponent } from './escala/escala-do-dia/escala-do-dia.component';
+import { DuplaComponent } from './escala/dupla/dupla.component';
+import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
+import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.component';
+import { ListaInformativoComponent } from './cadastro/lista-informativo/lista-informativo.component';
+import { IncompatibilidadeComponent } from './cadastro/incompatibilidade/incompatibilidade.component';
+import { WaitComponent } from './seguranca/wait/wait.component';
+import { AgendaComponent } from './treinamento/agenda/agenda.component';
+import { TurmaListComponent } from './treinamento/turma-list/turma-list.component';
+import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
+import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
+import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.component';
+import { ModificadorComponent } from './cadastro/modificador/modificador.component';
+import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
+
+import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
+import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
+import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
+import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
+import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
 import { RelControleSpotComponent } from "./relatorios/rel-controle-spot/rel-controle-spot.component";
 import { CrudComponent } from "./cadastro/crud/crud.component";
-import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
-import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
-import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
-import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
-
-import { VoosRealizadosComponent } from "./relatorios/voos-realizados/voos-realizados.component";
-import { RelListaRdvComponent } from "./relatorios/rel-lista-rdv/rel-lista-rdv.component";
-import { RelRdvComponent } from "./relatorios/rel-rdv/rel-rdv.component";
-import { RelBocaComponent } from "./relatorios/rel-boca/rel-boca.component";
-import { HorasVoadasTripulanteComponent } from "./relatorios/horas-voadas-tripulante/horas-voadas-tripulante.component";
-import { HorasVoadasQuinzenaComponent } from "./relatorios/horas-voadas-quinzena/horas-voadas-quinzena.component";
-import { RelConsCombComponent } from "./relatorios/rel-cons-comb/rel-cons-comb.component";
-import { RelPousoComponent } from "./relatorios/rel-pouso/rel-pouso.component";
-import { PaxTransportadosComponent } from "./relatorios/pax-transportados/pax-transportados.component";
-import { DocumentoImpressoComponent } from "./documento-impresso/documento-impresso.component";
-import { AnaliseDeRiscoComponent } from "./relatorios/analise-de-risco/analise-de-risco.component";
-import { GraficoComponent } from "./grafico/grafico.component";
-import { TratamentoDaFadigaComponent } from "./controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component";
-import { ComunicarTripulantesComponent } from "./controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component";
-import { FadigaComponent } from "./controle-da-fadiga/fadiga/fadiga.component";
-import { VencimentoCarteiraComponent } from "./relatorios/vencimento-carteira/vencimento-carteira.component";
-import { MotivoDaIndisponibilidadeComponent } from "./cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component";
-import { MotivoDoErroNoPreenchimentoComponent } from "./cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component";
-import { ObservacaoDbComponent } from "./cadastro/observacao-db/observacao-db.component";
-import { CertificadoComponent } from "./treinamento/certificado/certificado.component";
-import { TipoDeOcorrenciaComponent } from "./cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component";
-import { EscalaMensalComponent } from "./escala/escala-mensal/escala-mensal.component";
-import { ListarJornadaComponent } from "./administracao/listar-jornada/listar-jornada.component";
-import { QuinzenaComponent } from "./cadastro/quinzena/quinzena.component";
-import { TrilhoComponent } from "./escala/trilho/trilho.component";
-import { EscalaDoDiaComponent } from "./escala/escala-do-dia/escala-do-dia.component";
-import { DuplaComponent } from "./escala/dupla/dupla.component";
-import { EscalaSemanalComponent } from "./escala/escala-semanal/escala-semanal.component";
-import { ErrosNoDbComponent } from "./relatorios/erros-no-db/erros-no-db.component";
-import { ListaInformativoComponent } from "./cadastro/lista-informativo/lista-informativo.component";
-import { IncompatibilidadeComponent } from "./cadastro/incompatibilidade/incompatibilidade.component";
-import { WaitComponent } from "./seguranca/wait/wait.component";
-import { AgendaComponent } from "./treinamento/agenda/agenda.component";
-import { TurmaListComponent } from "./treinamento/turma-list/turma-list.component";
-import { TreinamentoListComponent } from "./treinamento/treinamento-list/treinamento-list.component";
-import { BuscaBiComponent } from "./bi/busca-bi/busca-bi.component";
-import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
+import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
+import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
+import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
+import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
+import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
+import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
+import { ContratoComponent } from "./cadastro/contrato/contrato.component";
+import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -136,7 +170,11 @@ const routes: Routes = [
     component: GraficoComponent,
   },
   {
-    path: "analise-de-risco",
+    path: 'deslocamento',
+    component: DeslocamentoComponent,
+  },
+  {
+    path: 'analise-de-risco',
     component: AnaliseDeRiscoComponent,
   },
   {
@@ -302,6 +340,14 @@ const routes: Routes = [
   {
     path: "controle-de-acesso/novo",
     component: ControleDeAcessoEditComponent,
+  },
+  {
+    path: 'modificador',
+    component: ModificadorComponent,
+  },
+  {
+    path: 'grafico-fadiga',
+    component: TesteGraficoComponent,
   },
 ];
 

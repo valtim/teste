@@ -20,6 +20,7 @@ export class ApiService {
   };
 
   public url: string;
+  public urlApp: string;
   private permission;
 
   private clienteLogado;
@@ -105,19 +106,18 @@ export class ApiService {
       .toPromise();
   }
 
-  postLoginAD(username: string): Promise<any> {
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json'
-    //   })
-    // };
 
-    return this.http
-      .post(
-        this.url + "api/autorizacao",
-        { username: username, ad: true },
-        this.httpOptions
-      )
+  postLoginAD(bearer: string): Promise<any> {
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+
+
+    return this.http.post(this.url + 'api/autorizacao-bristow', { 'bearer' : bearer }, httpOptions)
       .toPromise();
   }
 
@@ -215,10 +215,11 @@ export class ApiService {
       .toPromise();
   }
 
+
+
+
   getClienteLogado(): Promise<any> {
-    return this.http
-      .get(`${this.url}api/clienteLogado`, this.httpOptions)
-      .toPromise();
+    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise()
   }
 
   getQuadroDeTripulantes(): Promise<any> {
@@ -233,14 +234,16 @@ export class ApiService {
       .toPromise();
   }
 
+
+
+
+
   getAbastecedoras(): any {
-    return JSON.parse(localStorage.getItem("Abastecedora"));
+    return JSON.parse(localStorage.getItem('Abastecedora'));
   }
 
   getAerodromos(): Promise<any> {
-    return this.http
-      .get(`${this.url}api/vencimento`, this.httpOptions)
-      .toPromise();
+    return this.http.get(`${this.url}api/vencimento`, this.httpOptions).toPromise()
   }
 
   getPrefixos(): any {
@@ -363,18 +366,12 @@ export class ApiService {
       .toPromise();
   }
 
-  getLocalidade(
-    tipo: string,
-    perPage: number,
-    currentPage: number,
-    search: string
-  ): Promise<any> {
-    return this.http
-      .get(
-        `${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`,
-        this.httpOptions
-      )
-      .toPromise();
+  getListaTripulanteCombo(): Promise<any> {
+    return this.http.get(this.url + 'api/listas/tripulantecombo', this.httpOptions).toPromise();
+  }
+
+  getLocalidade(tipo: string, perPage: number, currentPage: number, search: string): Promise<any> {
+    return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`, this.httpOptions).toPromise();
   }
 
   getListaLocalidade(): Promise<any> {
@@ -394,13 +391,8 @@ export class ApiService {
       .toPromise();
   }
 
-  getTrilho(data: Date): Promise<any> {
-    return this.http
-      .get(
-        this.url + `api/trilho/${data.toISOString().split("T")[0]}`,
-        this.httpOptions
-      )
-      .toPromise();
+  getTrilho(dataIni: Date, dataFim: Date): Promise<any> {
+    return this.http.get(this.url + `api/trilho/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
   postEscalaPorEmail(data: Date, extras: any) {
@@ -606,6 +598,8 @@ export class ApiService {
     );
   }
 
+
+
   getCombosServidor(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       this.http
@@ -623,13 +617,11 @@ export class ApiService {
     const promise = new Promise((resolve, reject) => {
       if (!localStorage.getItem("Combos")) {
         resolve(
-          this.getCombosServidor().then((x) => {
-            localStorage.setItem("Combos", JSON.stringify(x));
-            resolve(JSON.parse(localStorage.getItem("Combos")));
+          this.getCombosServidor().then(x => {
+            localStorage.setItem('Combos', JSON.stringify(x))
+            resolve(JSON.parse(localStorage.getItem('Combos')));
           })
-        );
-      } else {
-        resolve(JSON.parse(localStorage.getItem("Combos")));
+        )
       }
     });
 
@@ -779,9 +771,9 @@ export class ApiService {
       .toPromise();
   }
 
-  getLogo() {
-    return `${this.url}assets/img/${this.clienteLogado}.png`;
-  }
+  // getLogo() {
+  //   return `${this.url}assets/img/${this.clienteLogado}.png`;
+  // }
 
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http
@@ -1002,4 +994,9 @@ export class ApiService {
       .get(`${this.url}api/tripulante`, this.httpOptions)
       .toPromise();
   }
+
+  postAnaliseDeFadiga(filtro : any): Promise<any>{
+    return this.http.post(`${this.url}api/analise-de-fadiga/processar`, filtro, this.httpOptions).toPromise();
+  }
+
 }

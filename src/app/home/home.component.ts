@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AutorizacaoService } from '../shared/autorizacao.service';
 
 @Component({
@@ -12,26 +12,23 @@ import { AutorizacaoService } from '../shared/autorizacao.service';
 export class HomeComponent implements OnInit {
   public urlLogo: string;
   public exibir = false;
-  clienteLogado = "teste";
   public menu = [];
 
   public loading: boolean;
+  site: string;
+
+
+  link;
 
   constructor(
-    private api: ApiService,
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
-   ngOnInit() {
-    
 
+   ngOnInit() {    
     this.menu = this.autorizacao.getMenus();
+    // this.link = 'http://localhost:4300/' + this.autorizacao.getAuthorization()
     this.exibir = true;
-
-    // this.api.getClienteLogado().then(result => {
-    //   //this.urlLogo = this.api.getLogo(result);
-      
-    // });
   }
 
   isEnable(name: string) {

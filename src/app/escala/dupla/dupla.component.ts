@@ -12,7 +12,7 @@ import { EscalaService } from 'src/app/shared/escala.service';
 export class DuplaComponent implements OnInit {
   locale_pt: any;
 
-  tudoPronto = false;
+  //tudoPronto = false;
 
   linhasSelecionadas = [];
 
@@ -29,6 +29,10 @@ export class DuplaComponent implements OnInit {
   vencimentos: any;
   incompatibilidades: any;
 
+  listasOK = false;
+  duplasOK = false;
+  deslocamentos: [];
+
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
     //this.locale_pt = this.api.getLocale('pt');
@@ -43,7 +47,16 @@ export class DuplaComponent implements OnInit {
   mudeiAqui(e, dados) {
 
 
+    dados.Invalido = false;
+    dados.Ativo = true;
+    if (dados.SIC != null && dados.PIC == null){
+      this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Uma linha não pode ter SIC sem PIC, caso a linha só tenha um Tripulante coloque como PIC. Esta linha não será salva` });
+      dados.Ativo = false;
+      dados.Invalido = true;
+    }
+
     if (dados.PIC && dados.SIC) {
+
       if (dados.PIC.Idade + dados.SIC.Idade > 120)
         this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${dados.PIC.Trato} e ${dados.SIC.Trato} não podem ser escalados juntos por superarem 120 anos na soma das idades` });
 
@@ -52,22 +65,28 @@ export class DuplaComponent implements OnInit {
 
     }
 
-
+    
     dados.Modificado = true;
   }
 
   rodarRelatorio() {
 
-    let vencimentos = false;
-    let duplas = false;
+    // let vencimentos = false;
+    // let duplas = false;
+
+
+    this.listasOK = false;
+    this.duplasOK = false;
 
     this.apiEscala.getListasDupla(this.dataInicio).then(x => {
       this.tripulantes = x.tripulantes;
       this.bases = x.bases;
       this.prefixos = x.prefixos;
       this.incompatibilidades = x.incompatibilidades;
-      vencimentos = true;
-      this.tudoPronto = duplas && vencimentos;
+      this.deslocamentos = x.deslocamentos;
+      // vencimentos = true;
+      // this.tudoPronto = duplas && vencimentos;
+      this.listasOK = true;
       this.listarPendencias();
     })
 
@@ -80,8 +99,9 @@ export class DuplaComponent implements OnInit {
     this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
       this.duplas = x.Duplas;
       this.cursos = x.Cursos;
-      duplas = true;
-      this.tudoPronto = duplas && vencimentos;
+      // duplas = true;
+      // this.tudoPronto = duplas && vencimentos;
+      this.duplasOK = true;
 
       this.duplas.forEach(x => {
         x.Data = new Date(x.Data);
@@ -91,7 +111,7 @@ export class DuplaComponent implements OnInit {
     });
   }
   listarPendencias() {
-    if (!this.tudoPronto)
+    if (!(this.listasOK || this.duplasOK))
       return;
 
 
@@ -107,13 +127,26 @@ export class DuplaComponent implements OnInit {
   }
 
   novaLinha() {
-    this.duplas.push({ Id: GuidUtil.NewGuid(), Base: undefined, Data: undefined, PIC: undefined, SIC: undefined, Apresentacao: undefined, Observacao: undefined, RepeteAte: undefined });
+    this.duplas.push({ Id: GuidUtil.NewGuid(), 
+      Base: undefined, 
+      Data: undefined, 
+      PIC: null, 
+      SIC: null, 
+      Apresentacao: undefined, 
+      Observacao: undefined, 
+      RepeteAte: undefined, 
+      InicioVoo: undefined , 
+      FimVoo: undefined, 
+      InicioDeslocamento: undefined, 
+      FimDeslocamento: undefined,
+      Prefixo: undefined,
+    });
   }
 
   salvar() {
 
 
-    let editado_novo = this.duplas.filter(x => x.Modificado);
+    let editado_novo = this.duplas.filter(x => x.Modificado && !x.Invalido);
 
     this.apiEscala.postDuplas(editado_novo).then(x => {
 

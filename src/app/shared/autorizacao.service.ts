@@ -27,17 +27,20 @@ export class AutorizacaoService {
   }
   
   getAuthorization() {
+    if (!this.Authorization)
+      this.Authorization = localStorage.getItem('Authorization');
     return this.Authorization;
   }
   
   getMenus() {
+
     this.Menus = JSON.parse(localStorage.getItem('Menu'));
     return this.Menus;
   }
 
   setMenus(menus: any) {
     this.Menus = menus;
-    localStorage.setItem('Menus', JSON.stringify(menus));
+    localStorage.setItem('Menu', JSON.stringify(menus));
   }
   
   getRotas() {
