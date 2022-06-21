@@ -80,9 +80,13 @@ export class HorasVoadasTripulanteComponent implements OnInit {
       let title = document.getElementById("title");
       let subtitle = document.getElementById("subtitle");
       let trato = document.getElementById("trato");
-      let element = document.getElementById("dataTable");
 
-      let worksheet = xlsx.utils.table_to_sheet(element);
+      let element = document.getElementById("dataTable");
+      let worksheet = xlsx.utils.table_to_sheet(element, {
+        dateNF: "dd/mm/yyyy;@",
+        cellDates: true,
+        raw: true,
+      });
       let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
 
       let excelBuffer: any = xlsx.write(workbook, {

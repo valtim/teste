@@ -57,7 +57,12 @@ export class VoosRealizadosComponent implements OnInit {
   exportExcel() {
     import("xlsx").then((xlsx) => {
       let element = document.getElementById("dataTable");
-      let worksheet = xlsx.utils.table_to_sheet(element);
+      let worksheet = xlsx.utils.table_to_sheet(element, {
+        dateNF: "dd/mm/yyyy;@",
+        cellDates: true,
+        raw: true,
+      });
+
       let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
       worksheet["!cols"] = [{ width: 50 }];
       let excelBuffer: any = xlsx.write(workbook, {
