@@ -21,7 +21,7 @@ export class RelPousoComponent implements OnInit {
 
   dataInicio: Date;
   dataFim: Date;
-
+  element;
   carregando = true;
   prefixos: any;
   localidades: any;
@@ -79,8 +79,12 @@ export class RelPousoComponent implements OnInit {
 
   exportExcel() {
     import("xlsx").then((xlsx) => {
-      let element = document.getElementById("dataTable");
-      let worksheet = xlsx.utils.table_to_sheet(element);
+      this.element = document.getElementById("dataTable");
+      let worksheet = xlsx.utils.table_to_sheet(this.element.nativeElement, {
+        dateNF: "mm/dd/yyyy;@",
+        cellDates: true,
+        raw: true,
+      });
       let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
       worksheet["!cols"] = [{ width: 20 }];
       let excelBuffer: any = xlsx.write(workbook, {
