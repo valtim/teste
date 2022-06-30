@@ -60,7 +60,7 @@ export class ApiService {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
     this.url =
       window.location.host === "localhost:4200"
-        ? "https://teste.fastapi.com.br/"
+        ? "https://localhost:44343/"
         : "/";
 
     this.message = {
@@ -68,8 +68,15 @@ export class ApiService {
       title: "",
       message: "",
       type: "alert",
-      callBack: () => {},
+      callBack: () => { },
     };
+  }
+
+
+  public EhProducao(): Promise<any> {
+    return this.http
+      .get(this.url + "api/ehproducao", this.httpOptions)
+      .toPromise();
   }
 
   getServer() {
@@ -117,7 +124,7 @@ export class ApiService {
 
 
 
-    return this.http.post(this.url + 'api/autorizacao-bristow', { 'bearer' : bearer }, httpOptions)
+    return this.http.post(this.url + 'api/autorizacao-bristow', { 'bearer': bearer }, httpOptions)
       .toPromise();
   }
 
@@ -247,23 +254,23 @@ export class ApiService {
   }
 
   getPrefixos(): any {
-    return JSON.parse(localStorage.getItem("Combos")).soPrefixo;
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Combos")).soPrefixo);
   }
 
   getNaturezas(): any {
-    return JSON.parse(localStorage.getItem("Natureza"));
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Natureza")));
   }
 
   getFuncaoBordos(): any {
-    return JSON.parse(localStorage.getItem("FuncaoBordo"));
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("FuncaoBordo")));
   }
 
   getClientes(): any {
-    return JSON.parse(localStorage.getItem("Combos")).Cliente;
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Combos")).Cliente);
   }
 
   getTipoDeOperacoes(): any {
-    return JSON.parse(localStorage.getItem("TipoDeOperacao"));
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("TipoDeOperacao")));
   }
 
   getCertificado(): Promise<any> {
@@ -591,8 +598,7 @@ export class ApiService {
 
   getBI(dataIni: Date, dataFim: Date): Observable<any> {
     return this.http.get(
-      `${this.url}api/consultabi/${dataIni.toISOString().split("T")[0]}/${
-        dataFim.toISOString().split("T")[0]
+      `${this.url}api/consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
       }`,
       this.httpOptions
     );
@@ -616,21 +622,19 @@ export class ApiService {
   getCombos(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       if (!localStorage.getItem("Combos")) {
-        resolve(
-          this.getCombosServidor().then(x => {
-            localStorage.setItem('Combos', JSON.stringify(x))
-            resolve(JSON.parse(localStorage.getItem('Combos')));
-          })
+        this.getCombosServidor().then(x => {
+          resolve(x);
+        }
         )
       }
+      else {
+        resolve(JSON.parse(localStorage.getItem('Combos')));
+      }
+
     });
 
     return promise;
   }
-
-  // getCombosEdit(): Promise<any> {
-  //   return this.http.get(`${this.url}api/Combos/Edit`, this.httpOptions).toPromise();
-  // }
 
   postTelaConsultaRisco(filtro: any): Promise<any> {
     return this.http
@@ -707,32 +711,10 @@ export class ApiService {
     baseDeOperacao: string,
     cliente: string[]
   ): Promise<any> {
-    let caminho = `${this.url}api/RelStatusDaFrota/${
-      data.toISOString().split("T")[0]
-    }/${baseDeOperacao}/${cliente}`;
+    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]
+      }/${baseDeOperacao}/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
-
-  //   getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente: string[]): Promise < any > {
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
-  //   return this.http.get(caminho, this.httpOptions).toPromise();
-  // }
-
-  //   deleteOperacaoDeSolo(itens: any): Promise < any > {
-
-  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
-  //   return this.http.delete(caminho, this.getOptions(itens)).toPromise();
-  // }
-
-  //   postOperacaoDeSolo(itens: []): Promise < any > {
-
-  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
-  //   return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
-  // }
 
   getEscalaPTBR(
     dataref: Date,
@@ -740,11 +722,9 @@ export class ApiService {
     dataFim: Date,
     baseDeOperacao: string
   ): Promise<any> {
-    let caminho = `${this.url}api/RelEscala/${
-      dataref.toISOString().split("T")[0]
-    }/${dataIni.toISOString().split("T")[0]}/${
-      dataFim.toISOString().split("T")[0]
-    }/${baseDeOperacao}`;
+    let caminho = `${this.url}api/RelEscala/${dataref.toISOString().split("T")[0]
+      }/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
+      }/${baseDeOperacao}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
@@ -858,8 +838,7 @@ export class ApiService {
   getCDO(data: Date): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/RelControleDiarioDeOperacoes/${
-          data.toISOString().split("T")[0]
+        `${this.url}api/RelControleDiarioDeOperacoes/${data.toISOString().split("T")[0]
         }`,
         this.httpOptions
       )
@@ -995,7 +974,7 @@ export class ApiService {
       .toPromise();
   }
 
-  postAnaliseDeFadiga(filtro : any): Promise<any>{
+  postAnaliseDeFadiga(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/analise-de-fadiga/processar`, filtro, this.httpOptions).toPromise();
   }
 

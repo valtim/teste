@@ -31,17 +31,38 @@ export class DuplaComponent implements OnInit {
 
   listasOK = false;
   duplasOK = false;
-  deslocamentos: [];
+  deslocamentos: any[];
+  deslocamentosDoDia: any;
+
+  turnos = [
+    { Id: 'M', Nome: 'Manhã' },
+    { Id: 'T', Nome: 'Tarde' }
+  ];
+
+  exibeRestricao: boolean = false;
+  restricoesProntas = false;
 
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
     //this.locale_pt = this.api.getLocale('pt');
-    this.dataInicio = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
+    this.dataInicio = this.getAmanha();
+    this.dataFim = this.getAmanha();
 
 
 
     this.rodarRelatorio();
+  }
+
+  getAmanha(){
+    return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
+  }
+
+  novoDeslocamento() {
+    this.deslocamentosDoDia.push({ Id: GuidUtil.NewGuid(), Data: this.getAmanha(), Deslocamento: { Nome: '' }, Tripulante: { Trato: '' } });
+  }
+
+  excluirDeslocamento(id) {
+    this.deslocamentosDoDia = this.deslocamentosDoDia.filter(x => x.Id != id);
   }
 
   mudeiAqui(e, dados) {
@@ -49,7 +70,7 @@ export class DuplaComponent implements OnInit {
 
     dados.Invalido = false;
     dados.Ativo = true;
-    if (dados.SIC != null && dados.PIC == null){
+    if (dados.SIC != null && dados.PIC == null) {
       this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Uma linha não pode ter SIC sem PIC, caso a linha só tenha um Tripulante coloque como PIC. Esta linha não será salva` });
       dados.Ativo = false;
       dados.Invalido = true;
@@ -65,7 +86,7 @@ export class DuplaComponent implements OnInit {
 
     }
 
-    
+
     dados.Modificado = true;
   }
 
@@ -84,10 +105,42 @@ export class DuplaComponent implements OnInit {
       this.prefixos = x.prefixos;
       this.incompatibilidades = x.incompatibilidades;
       this.deslocamentos = x.deslocamentos;
+      this.deslocamentosDoDia = x.deslocamentosDoDia;
       // vencimentos = true;
       // this.tudoPronto = duplas && vencimentos;
       this.listasOK = true;
-      this.listarPendencias();
+      //this.listarPendencias();
+
+      this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
+        this.duplas = x.Duplas;
+        this.cursos = x.Cursos;
+        this.deslocamentosDoDia = x.Deslocamentos;
+        // duplas = true;
+        // this.tudoPronto = duplas && vencimentos;
+        this.duplasOK = true;
+
+        this.duplas.forEach(x => {
+          x.Data = new Date(x.Data);
+        })
+        if (this.deslocamentosDoDia != undefined)
+          this.deslocamentosDoDia.forEach(x => {
+            x.Data = new Date(x.Data);
+          })
+
+
+        this.apiEscala.getRestricoes(this.dataInicio).then(x => {
+
+          x.forEach(y => {
+            this.tripulantes.find(z => z.Id == y.Id).Vencimentos = y.Vencimentos;
+          })
+
+          //this.tripulantes = x;
+          this.restricoesProntas = true;
+        })
+
+        this.listarPendencias();
+      });
+
     })
 
     // this.apiEscala.getVencimentos(this.dataInicio).then(x=>{
@@ -96,29 +149,18 @@ export class DuplaComponent implements OnInit {
     //   this.tudoPronto = duplas && vencimentos;
     // })
 
-    this.apiEscala.getDuplas(this.dataInicio, this.dataFim).then(x => {
-      this.duplas = x.Duplas;
-      this.cursos = x.Cursos;
-      // duplas = true;
-      // this.tudoPronto = duplas && vencimentos;
-      this.duplasOK = true;
 
-      this.duplas.forEach(x => {
-        x.Data = new Date(x.Data);
-      })
-
-      this.listarPendencias();
-    });
   }
   listarPendencias() {
     if (!(this.listasOK || this.duplasOK))
       return;
 
 
-    this.duplas.forEach(d => {
-      if (d.PIC) d.PIC = this.tripulantes.filter(x => x.Id == d.PIC.Id)[0];
-      if (d.SIC) d.SIC = this.tripulantes.filter(x => x.Id == d.SIC.Id)[0];
-    })
+    if (this.duplas != undefined)
+      this.duplas.forEach(d => {
+        if (d.PIC) d.PIC = this.tripulantes.filter(x => x.Id == d.PIC.Id)[0];
+        if (d.SIC) d.SIC = this.tripulantes.filter(x => x.Id == d.SIC.Id)[0];
+      })
 
 
   }
@@ -127,17 +169,18 @@ export class DuplaComponent implements OnInit {
   }
 
   novaLinha() {
-    this.duplas.push({ Id: GuidUtil.NewGuid(), 
-      Base: undefined, 
-      Data: undefined, 
-      PIC: null, 
-      SIC: null, 
-      Apresentacao: undefined, 
-      Observacao: undefined, 
-      RepeteAte: undefined, 
-      InicioVoo: undefined , 
-      FimVoo: undefined, 
-      InicioDeslocamento: undefined, 
+    this.duplas.push({
+      Id: GuidUtil.NewGuid(),
+      Base: undefined,
+      Data: undefined,
+      PIC: null,
+      SIC: null,
+      Apresentacao: undefined,
+      Observacao: undefined,
+      RepeteAte: undefined,
+      InicioVoo: undefined,
+      FimVoo: undefined,
+      InicioDeslocamento: undefined,
       FimDeslocamento: undefined,
       Prefixo: undefined,
     });
@@ -146,36 +189,58 @@ export class DuplaComponent implements OnInit {
   salvar() {
 
 
+    this.duplasOK = false;
     let editado_novo = this.duplas.filter(x => x.Modificado && !x.Invalido);
 
-    this.apiEscala.postDuplas(editado_novo).then(x => {
+    // this.deslocamentosDoDia.forEach((x, i) => {
+    //   x.Turno = x.Turno
+    // });
+
+    let duplasAndDeslocamentos = { data: this.dataInicio, duplas: editado_novo, deslocamentosDoDia: this.deslocamentosDoDia.filter(x => x.Modificado && !x.Invalido) };
+
+    this.apiEscala.postDuplas(duplasAndDeslocamentos).then(x => {
 
 
-      let novos = x;
+
+      //this.duplas = x.duplas;
+      this.deslocamentosDoDia = x.deslocamentosDoDia;
+
+
+      let novos = x.duplas;
 
       novos.forEach(x => {
         x.Data = new Date(x.Data);
+        x.PIC = this.tripulantes.find(y => y.Id == x.PIC.Id);
+        if (x.SIC) x.SIC = this.tripulantes.find(y => y.Id == x.SIC.Id);
       })
 
-      this.duplas.push.apply(this.duplas, novos);
+      this.duplas = novos;
 
-      this.duplas.forEach(x => x.RepeteAte = undefined);
+      //this.duplas.forEach(x => x.RepeteAte = undefined);
 
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
+
+      this.duplasOK = true;
     })
   }
 
   delete() {
 
+    this.duplasOK = false;
     let editado = this.duplas.filter(x => this.linhasSelecionadas.includes(x.Id));
 
     editado.forEach(x => x.Ativo = false);
 
-    this.apiEscala.postDuplas(editado).then(x => {
+
+    let valor = { data: this.dataInicio, duplas: editado, deslocamentosDoDia: this.deslocamentosDoDia.filter(x => x.Modificado && !x.Invalido) };
+
+    this.apiEscala.postDuplas(valor).then(x => {
 
       this.duplas = this.duplas.filter(x => !this.linhasSelecionadas.includes(x.Id));
 
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
+
+      this.duplasOK = true;
     })
 
   }

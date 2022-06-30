@@ -17,7 +17,7 @@
         <div class="p-field p-col-3">
             <div class="p-field">
                 <label for="nome">Equipamentos</label>
-                <p-dropdown (onChange)='onEquipamentoOptionsSelected($event)' [options]="equipamentos"
+                <p-dropdown [options]="equipamentos"
                     optionLabel="Nome" dataKey="Id" placeholder="Selecione um Equipamento"
                     [(ngModel)]="turmaInterna.Equipamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
             </div>
@@ -25,7 +25,7 @@
         <div class="p-field p-col-3">
             <div class="p-field">
                 <label for="nome">Treinamento</label>
-                <p-dropdown (onChange)='onTreinamentoOptionsSelected($event)' [options]="treinamentos"
+                <p-dropdown [options]="treinamentos"
                     optionLabel="Nome" dataKey="Id" placeholder="Selecione um Treinamento"
                     [(ngModel)]="turmaInterna.Treinamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
             </div>
@@ -37,7 +37,7 @@
                     [disabled]="turmaInterna.InstrutorExterno" (onChange)='onInstrutorOptionsSelected($event)'
                     placeholder="Selecione um Instrutor" [(ngModel)]="turmaInterna.Instrutor"
                     emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
-                <p-inputSwitch (click)="onInstrutorExterno()" [(ngModel)]="turmaInterna.InstrutorExterno">
+                <p-inputSwitch [(ngModel)]="turmaInterna.InstrutorExterno">
                 </p-inputSwitch>Instrutor Externo
             </div>
         </div>
@@ -62,20 +62,39 @@
 
             <ng-template pTemplate="colgroup">
                 <colgroup>
-                    <col style="width:45%">
-                    <col style="width:50%">
+                    <col style="width:25%">
+                    <col style="width:25%">
+                    <col style="width:25%">
+                    <col style="width:20%">
                     <col style="width:5%">
                 </colgroup>
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
+                    <th>Tripulante</th>
                     <th>Data</th>
+                    <th>Hora</th>
                     <th>Deslocamento</th>
                     <th></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
                 <tr [pEditableRow]="linha">
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante" [style]="{'width': '100%'}"
+                                    (onChange)="mudeiAqui($event, linha)">
+                                </p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
@@ -85,6 +104,20 @@
                             </ng-template>
                             <ng-template pTemplate="output">
                                 {{linha.Data | date:'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputMask type="tel"
+                                (change)="mudeiAqui($event, linha)"
+                                [(ngModel)]="linha.Hora" mask="99:99" required>
+                            </p-inputMask>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Hora">{{linha.Hora}}</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>

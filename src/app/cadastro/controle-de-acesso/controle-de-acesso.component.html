@@ -1,0 +1,45 @@
+<app-titulo titulo="Controle de Acesso" class="controle-acesso"> </app-titulo>
+<div class="botao-novo">
+  <span class="p-buttonset">
+    <button
+      pButton
+      type="button"
+      label="Novo"
+      icon="pi pi-plus"
+      class="p-button-raised p-button-rounded"
+      (click)="novoCadastro()"
+      [disabled]="false"
+    ></button>
+  </span>
+</div>
+<div>
+  <p-table
+    [value]="permissoes"
+    selectionMode="single"
+    [(selection)]="selectedContrato"
+    dataKey="Id"
+    (onRowSelect)="onRowSelect($event)"
+  >
+    <ng-template pTemplate="colgroup" let-columns>
+      <colgroup>
+        <col *ngFor="let col of columns" [style.width]="col.width" />
+      </colgroup>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Nome</th>
+        <th>Perfis</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr [pSelectableRow]="rowData">
+        <td>
+          {{ rowData.Username }}
+        </td>
+        <td>
+          {{ rowData.Perfis }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

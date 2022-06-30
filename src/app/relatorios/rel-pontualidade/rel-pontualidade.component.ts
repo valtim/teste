@@ -31,7 +31,7 @@ export class RelPontualidadeComponent implements OnInit {
   voos: any;
   motivosDoAtraso: any;
 
-  constructor(    
+  constructor(
     private api: ApiService,
     private apiGenerico: ApiGenericoService,
     private messageService: MessageService
@@ -42,16 +42,14 @@ export class RelPontualidadeComponent implements OnInit {
     this.locale_pt = this.api.getLocale('pt');
 
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
-    this.dataFim = new Date(date.getFullYear(), date.getMonth()+1, 1);
-    this.dataFim.setDate(this.dataFim.getDate() - 1);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    //this.dataFim.setDate(this.dataFim.getDate() - 1);
 
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixo;
       this.clientes = x.Cliente;
-      //this.filtroBase = x.BaseDeOperacao;
       this.carregandoMenu = false;
-      //this.baseDeOperacaoSelecionada  = this.filtroBase[0].value;
 
       this.rodarRelatorio();
     })
@@ -61,7 +59,7 @@ export class RelPontualidadeComponent implements OnInit {
 
 
   salvar() {
-    this.apiGenerico.postGenerico("AtrasoDoVoo", this.dados.filter(x=>x.Modificado)).then(x => {
+    this.apiGenerico.postGenerico("AtrasoDoVoo", this.dados.filter(x => x.Modificado)).then(x => {
       this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Status Salvos com sucesso!' });
       this.verBotoes();
       this.rodarRelatorio();
@@ -71,10 +69,10 @@ export class RelPontualidadeComponent implements OnInit {
     this.carregandoRelatorio = true;
 
     const dados = {
-      prefixos : this.prefixosSelecionados,
-      clientes : this.clientesSelecionados,
-      dataInicio : this.dataInicio,
-      dataFim : this.dataFim,
+      prefixos: this.prefixosSelecionados,
+      clientes: this.clientesSelecionados,
+      dataInicio: this.dataInicio,
+      dataFim: this.dataFim,
       //base : this.baseDeOperacaoSelecionada,  
     }
 
@@ -89,7 +87,7 @@ export class RelPontualidadeComponent implements OnInit {
   }
 
   mudeiAqui(e, valor: any) {
-    
+
     valor.Modificado = true;
     this.verBotoes();
   }

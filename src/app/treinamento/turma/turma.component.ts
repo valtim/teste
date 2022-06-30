@@ -205,37 +205,39 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.atualizarStatusTurma(() => { });
   }
 
-  onInstrutorExterno() {
-    this.api.onLoading();
-    if (!this.turmaInterna.InstrutorExterno) {
-      this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
-        .then(resp => {
-          if (resp.Instrutores.length > 0) {
-            this.instrutores = resp.Instrutores;
-          } else {
-            this.instrutores = [];
-          }
-          this.atualizarStatusTurma(() => {
-            this.api.onLoading();
-          });
-        });
-    } else {
-      this.api.getInstrutores()
-        .then(resp => {
-          this.instrutores = resp.Instrutores;
-          this.atualizarStatusTurma(() => {
-            this.api.onLoading();
-          });
-        });
-    }
+  // onInstrutorExterno() {
+  //   this.api.onLoading();
+  //   if (!this.turmaInterna.InstrutorExterno) {
+  //     this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
+  //       .then(resp => {
+  //         if (resp.Instrutores.length > 0) {
+  //           this.instrutores = resp.Instrutores;
+  //         } else {
+  //           this.instrutores = [];
+  //         }
+  //         this.atualizarStatusTurma(() => {
+  //           this.api.onLoading();
+  //         });
+  //       });
+  //   } else {
+  //     this.api.getInstrutores()
+  //       .then(resp => {
+  //         this.instrutores = resp.Instrutores;
+  //         this.atualizarStatusTurma(() => {
+  //           this.api.onLoading();
+  //         });
+  //       });
+  //   }
+  // }
+
+  novoDeslocamento() {
+    if ( this.turmaInterna.Deslocamentos == undefined)
+      this.turmaInterna.Deslocamentos = [];
+    this.turmaInterna.Deslocamentos.push({ Id: GuidUtil.NewGuid(), Data: new Date(), Deslocamento: { Nome: '' } });
   }
 
-  novoDeslocamento(){
-    this.turmaInterna.Deslocamentos.push({Id: GuidUtil.NewGuid(), Data : new Date(), Deslocamento : { Nome: '' }});
-  }
-
-  excluirDeslocamento(id){
-    this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x=>x.Id != id);
+  excluirDeslocamento(id) {
+    this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x => x.Id != id);
   }
 
   onNotificar() {
@@ -366,20 +368,20 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.calcularDiferenca();
   }
 
-  onEquipamentoOptionsSelected(event) {
-    this.api.onLoading();
-    this.api.getTreinamentosByEquipamento(event.value.Id)
-      .then(resp => {
-        if (resp.Treinamentos.length > 0) {
-          this.instrutores = resp.Instrutores;
-          this.treinamentos = resp.Treinamentos;
-        } else {
-          this.instrutores = [];
-          this.treinamentos = [];
-        }
-        this.api.onLoading();
-      });
-  }
+  // onEquipamentoOptionsSelected(event) {
+  //   this.api.onLoading();
+  //   this.api.getTreinamentosByEquipamento(event.value.Id)
+  //     .then(resp => {
+  //       if (resp.Treinamentos.length > 0) {
+  //         this.instrutores = resp.Instrutores;
+  //         this.treinamentos = resp.Treinamentos;
+  //       } else {
+  //         this.instrutores = [];
+  //         this.treinamentos = [];
+  //       }
+  //       this.api.onLoading();
+  //     });
+  // }
 
   onInstrutorOptionsSelected(event) {
     this.atualizarStatusTurma(() => { });
@@ -391,15 +393,15 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(event.value.CargaHoraria);
     Object.assign(event.value, this.turmaInterna.Treinamento);
 
-    this.api.getInstrutoresByTreinamento(event.value.Id)
-      .then(resp => {
-        if (resp.Instrutores.length > 0) {
-          this.instrutores = resp.Instrutores;
-        } else {
-          this.instrutores = [];
-        }
-        this.api.onLoading();
-      });
+    // this.api.getInstrutoresByTreinamento(event.value.Id)
+    //   .then(resp => {
+    //     if (resp.Instrutores.length > 0) {
+    //       this.instrutores = resp.Instrutores;
+    //     } else {
+    //       this.instrutores = [];
+    //     }
+    //     this.api.onLoading();
+    //   });
   }
 
   atualizarStatusTurma(callback) {
@@ -667,9 +669,10 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.turmaInterna = Object.assign(new Turma, this.turma);
     this.turmaInterna.CargaHoraria = 0;
-    this.turmaInterna.Deslocamentos.forEach(x => {
-      x.Data = new Date(x.Data);
-    });
+    if (this.turmaInterna.Deslocamentos)
+      this.turmaInterna.Deslocamentos.forEach(x => {
+        x.Data = new Date(x.Data);
+      });
 
     this.definirStatusTurma();
 

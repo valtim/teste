@@ -95,6 +95,7 @@ import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-d
 import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
 import { ContratoComponent } from "./cadastro/contrato/contrato.component";
 import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
+import { ControleDeAcessoComponent } from "./cadastro/controle-de-acesso/controle-de-acesso.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -331,7 +332,7 @@ const routes: Routes = [
   },
   {
     path: "controle-de-acesso",
-    component: ContratoComponent,
+    component: ControleDeAcessoComponent,
   },
   {
     path: "controle-de-acesso/:Id",
