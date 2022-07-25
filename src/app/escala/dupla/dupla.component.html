@@ -1,63 +1,220 @@
-<app-titulo titulo="Duplas" [carregando]="!(listasOK && duplasOK)"></app-titulo>
+<div id="tela">
+    <app-titulo titulo="Duplas" [carregando]="!(listasOK && duplasOK)"></app-titulo>
 
-<p-toast position="center"></p-toast>
+    <p-toast position="center"></p-toast>
 
 
 
 
-<div class="p-grid p-mt-1">
-    <div class="p-col">
-        <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-            showIcon="true"></p-calendar>
+    <div class="p-grid p-mt-1">
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Inicial"></button>
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true" (onSelect)="mudarDataInicio()"></p-calendar>
+        </div>
+        <div class="p-col">
+            <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+                showIcon="true"></p-calendar>
+        </div>
+        <div class="p-col">
+            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+                (click)="rodarRelatorio()" class="p-ml-2"></button>
+        </div>
     </div>
-    <div class="p-col">
-        <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-            showIcon="true"></p-calendar>
-    </div>
-    <div class="p-col">
-        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-            class="p-ml-2"></button>
-    </div>
-</div>
 
-<div class="card" *ngIf="(listasOK && duplasOK)">
+    <div class="card" *ngIf="(listasOK && duplasOK)">
 
-    <!-- <p-fieldset legend="Deslocamento" [toggleable]="true"> -->
+        <!-- <p-fieldset legend="Deslocamento" [toggleable]="true"> -->
 
-    <span class="p-buttonset">
-        <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
-            class="p-button-raised p-button-rounded"></button>
-    </span>
+        <span class="p-buttonset">
+            <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
+                class="p-button-raised p-button-rounded"></button>
+        </span>
 
-    <p-card>
-        <p-table #dt2 [value]="deslocamentosDoDia" dataKey="Id" editMode="row">
+        <p-card>
+            <p-table #dt2 [value]="deslocamentosDoDia" dataKey="Id" editMode="row">
+
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width:25%">
+                        <col style="width:25%">
+                        <col style="width:25%">
+                        <col style="width:20%">
+                        <col style="width:5%">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th colspan="5">Deslocamento</th>
+                    </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tripulante</th>
+                        <th>Deslocamento</th>
+                        <th>Turno</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="linha">
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
+                                        [locale]="locale_pt" showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                        (onSelect)="mudeiAqui($event, linha)"></p-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{linha.Data | date:'dd/MM/yyyy'}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                        optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
+                                        [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)">
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
+                                        optionLabel="Nome" [showClear]="true" placeholder="Base"
+                                        [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)">
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <!-- <p-dropdown [options]="turnos" [(ngModel)]="linha.Turno" dataKey="Id"
+                                    optionLabel="Nome" [showClear]="true" placeholder="Turno" [style]="{'width': '100%'}"
+                                    (onChange)="mudeiAqui($event, linha)">
+                                </p-dropdown> -->
+
+                                    <p-radioButton name="turno" value="M" label="Manhã" [(ngModel)]="linha.Turno"
+                                        (onClick)="mudeiAqui($event, linha)"></p-radioButton>
+                                    <p-radioButton name="turno" value="T" label="Tarde" [(ngModel)]="linha.Turno"
+                                        (onClick)="mudeiAqui($event, linha)"></p-radioButton>
+
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Turno">{{linha.Turno == 'M' ? 'Manhã' : 'Tarde'}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
+                            class="p-button-raised p-button-rounded p-button-danger"></button>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+
+
+        <p-card>
+            <p-table [value]="cursos">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th colspan="4">Treinamentos</th>
+                    </tr>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Datas</th>
+                        <th>Instrutor</th>
+                        <th>Alunos</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-turma>
+                    <tr>
+                        <td>{{turma.Treinamento.Nome}}</td>
+                        <td>{{turma.DatasStr}}</td>
+                        <td><span *ngIf="turma.InstrutorExterno">EXTERNO</span><span
+                                *ngIf="!turma.InstrutorExterno">{{turma.Instrutor.Trato}}</span></td>
+                        <td>{{turma.AlunosStr}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-card>
+
+        <p-card>
+            <p-progressSpinner [style]="{width: '25px', height: '25px'}" *ngIf="!restricoesProntas"></p-progressSpinner>
+            <p-checkbox [(ngModel)]="exibeRestricao" label="Exibir Restrições" [binary]="true"
+                [disabled]="!restricoesProntas"></p-checkbox>
+        </p-card>
+
+        <span class="p-buttonset botoes_salvar">
+            <button pButton type="button" label="Novo" (click)="novaLinha()" icon="pi pi-file"
+                class="p-button-raised p-button-rounded p-button-success" [disabled]="!(listasOK && duplasOK)"></button>
+            <button pButton type="button" label="Salvar" (click)="salvar()" icon="pi pi-check"
+                class="p-button-raised p-button-rounded" [disabled]="!(listasOK && duplasOK)"></button>
+            <button pButton type="button" label="Cancelar" icon="pi pi-times"
+                class="p-button-raised p-button-rounded p-button-warning" [disabled]="!(listasOK && duplasOK)"></button>
+            <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
+                class="p-button-raised p-button-rounded p-button-danger"
+                [disabled]="linhasSelecionadas.length == 0 || !(listasOK && duplasOK)"></button>
+        </span>
+
+        <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
+
+
 
             <ng-template pTemplate="colgroup">
                 <colgroup>
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:20%">
                     <col style="width:5%">
+                    <col style="width:7%">
+                    <col style="width:7%">
+                    <col style="width:17%">
+                    <col style="width:17%">
+                    <col style="width:7%">
+                    <col style="width:7%">
+                    <col style="width:7%">
+                    <col style="width:7%">
+                    <col style="width:7%">
+                    <col style="width:12%">
+                    <col style="width:7%">
                 </colgroup>
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th colspan="5">Deslocamento</th>
+                    <th colspan="11">Duplas</th>
                 </tr>
                 <tr>
-                    <th>Data</th>
-                    <th>Tripulante</th>
-                    <th>Deslocamento</th>
-                    <th>Turno</th>
                     <th></th>
+                    <th>Data</th>
+                    <th>Base</th>
+                    <th>PIC</th>
+                    <th>SIC</th>
+                    <th>Apres</th>
+                    <th>Corte</th>
+                    <th>Limite</th>
+                    <th>Prefixo</th>
+                    <th>Cliente</th>
+                    <th>Observação</th>
+                    <th>Repete Até</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
                 <tr [pEditableRow]="linha">
-
+                    <td>
+                        <p-checkbox [value]="linha.Id" [(ngModel)]="linhasSelecionadas"></p-checkbox>
+                    </td>
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
@@ -70,16 +227,17 @@
                             </ng-template>
                         </p-cellEditor>
                     </td>
+
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
-                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
-                                    [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)">
+                                <p-dropdown [options]="bases" [(ngModel)]="linha.Base" dataKey="Id" optionLabel="Nome"
+                                    [showClear]="true" placeholder="Base" [style]="{'width': '130px'}"
+                                    (onChange)="mudeiAqui($event, linha)" [filter]="true">
                                 </p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                                <span *ngIf="linha.Base">{{linha.Base.Nome}}</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -87,13 +245,13 @@
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
-                                    optionLabel="Nome" [showClear]="true" placeholder="Base" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)">
+                                <p-dropdown [options]="tripulantes" [(ngModel)]="linha.PIC" dataKey="Id"
+                                    optionLabel="Trato" [showClear]="true" placeholder="PIC"
+                                    [style]="{'width': '150px'}" (onChange)="mudeiAqui($event, linha)" [filter]="true">
                                 </p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
+                                <span *ngIf="linha.PIC">{{linha.PIC.Trato}}</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -101,295 +259,167 @@
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <!-- <p-dropdown [options]="turnos" [(ngModel)]="linha.Turno" dataKey="Id"
-                                    optionLabel="Nome" [showClear]="true" placeholder="Turno" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)">
-                                </p-dropdown> -->
-
-                                <p-radioButton name="turno" value="M" label="Manhã" [(ngModel)]="linha.Turno" (onClick)="mudeiAqui($event, linha)"></p-radioButton>
-                                <p-radioButton name="turno" value="T" label="Tarde" [(ngModel)]="linha.Turno" (onClick)="mudeiAqui($event, linha)"></p-radioButton>
-
+                                <p-dropdown [options]="tripulantes" [(ngModel)]="linha.SIC" dataKey="Id"
+                                    optionLabel="Trato" [showClear]="true" placeholder="SIC"
+                                    [style]="{'width': '150px'}" (onChange)="mudeiAqui($event, linha)" [filter]="true">
+                                </p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
-                                <span *ngIf="linha.Turno">{{linha.Turno == 'M' ? 'Manhã' : 'Tarde'}}</span>
+                                <span *ngIf="linha.SIC">{{linha.SIC.Trato}}</span>
                             </ng-template>
                         </p-cellEditor>
                     </td>
 
-                    <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
-                        class="p-button-raised p-button-rounded p-button-danger"></button>
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputMask mask="99:99" [(ngModel)]="linha.Apresentacao" [style]="{'width': '80px'}"
+                                    (onComplete)="mudeiApresentacao(linha)">
+                                </p-inputMask>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.Apresentacao}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <span *ngIf="linha.UltimoCorte">{{linha.UltimoCorte}}</span>
+                    </td>
+
+
+                    <td pInitEditableRow>
+                        <span *ngIf="linha.FinalDaJornada">{{linha.FinalDaJornada}}</span>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="prefixos" [(ngModel)]="linha.Prefixo" dataKey="Id"
+                                    optionLabel="PrefixoCompleto" [showClear]="true" placeholder="Prefixo"
+                                    [style]="{'width': '130px'}" (onChange)="mudeiPrefixo($event, linha)"
+                                    [filter]="true">
+                                </p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="clientes" [(ngModel)]="linha.Cliente" dataKey="Id"
+                                    optionLabel="Nome" [showClear]="true" placeholder="Cliente"
+                                    [style]="{'width': '130px'}" (onChange)="mudeiAqui($event, linha)" [filter]="true">
+                                </p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Cliente">{{linha.Cliente.Nome}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input type="text" pInputText [(ngModel)]="linha.Observacao"
+                                    (keyup)="mudeiAqui($event, linha)" />
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.Observacao}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single" dateFormat="dd/mm/yy"
+                                    [locale]="locale_pt" showIcon="true" (onSelect)="mudeiAqui($event, linha)">
+                                </p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.RepeteAte | date:'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
 
                 </tr>
+                <tr *ngIf="exibeRestricao">
+                    <td></td>
+                    <td colspan="10">
+                        <table class="clarinho">
+                            <tr>
+                                <th width="10%">Trip</th>
+                                <th width="35%">Vencendo</th>
+                                <th width="35%">Vencido</th>
+                                <th width="10%">Fadiga</th>
+                                <th width="10%">Recência</th>
+                                <th width="10%">Apresentação à partir de:</th>
+                            </tr>
+                            <tr *ngIf="linha.PIC">
+                                <td>{{linha.PIC.Trato}}</td>
+                                <td><span *ngIf="linha.PIC.Vencimentos.Vencendo"><span
+                                            *ngFor="let item of linha.PIC.Vencimentos.Vencendo">{{item.Formatado}}<BR></span></span>
+                                </td>
+                                <td class="vencido"><span *ngIf="linha.PIC.Vencimentos.Vencidos"><span
+                                            *ngFor="let item of linha.PIC.Vencimentos.Vencidos">{{item.Formatado}}<BR></span></span>
+                                </td>
+                                <td><span *ngIf="linha.PIC.Vencimentos.Fadiga"
+                                        [innerHtml]="linha.PIC.Vencimentos.Fadiga"></span></td>
+                                <td><span *ngIf="linha.PIC" [innerHtml]="linha.PIC.Vencimentos.Recencia"></span></td>
+                                <td>{{linha.PIC.Vencimentos.ApresentacaoMaisCedo}}</td>
+                            </tr>
+                            <tr *ngIf="linha.SIC">
+                                <td>{{linha.SIC.Trato}}</td>
+                                <td><span *ngIf="linha.SIC.Vencimentos.Vencendo"><span
+                                            *ngFor="let item of linha.SIC.Vencimentos.Vencendo">{{item.Formatado}}<BR></span></span>
+                                </td>
+                                <td class="vencido"><span *ngIf="linha.SIC.Vencimentos.Vencidos"><span
+                                            *ngFor="let item of linha.SIC.Vencimentos.Vencidos">{{item.Formatado}}<BR></span></span>
+                                </td>
+                                <td><span *ngIf="linha.SIC.Vencimentos.Fadiga"
+                                        [innerHtml]="linha.SIC.Vencimentos.Fadiga"></span></td>
+                                <td><span *ngIf="linha.SIC" [innerHtml]="linha.SIC.Vencimentos.Recencia"></span></td>
+                                <td>{{linha.SIC.Vencimentos.ApresentacaoMaisCedo}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </ng-template>
+
+
         </p-table>
-    </p-card>
+    </div>
 
+</div>
 
-    <p-card>
-        <p-table [value]="cursos">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th colspan="4">Treinamentos</th>
-                </tr>
-                <tr>
-                    <th>Nome</th>
-                    <th>Datas</th>
-                    <th>Instrutor</th>
-                    <th>Alunos</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-turma>
-                <tr>
-                    <td>{{turma.Treinamento.Nome}}</td>
-                    <td>{{turma.DatasStr}}</td>
-                    <td><span *ngIf="turma.InstrutorExterno">EXTERNO</span><span
-                            *ngIf="!turma.InstrutorExterno">{{turma.Instrutor.Trato}}</span></td>
-                    <td>{{turma.AlunosStr}}</td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-card>
+<div id="printer" *ngIf="(listasOK && duplasOK)">
 
-    <p-card>
-        <p-progressSpinner [style]="{width: '25px', height: '25px'}" *ngIf="!restricoesProntas"></p-progressSpinner>
-        <p-checkbox [(ngModel)]="exibeRestricao" label="Exibir Restrições" [binary]="true"
-            [disabled]="!restricoesProntas"></p-checkbox>
-    </p-card>
-
-    <span class="p-buttonset botoes_salvar">
-        <button pButton type="button" label="Novo" (click)="novaLinha()" icon="pi pi-file"
-            class="p-button-raised p-button-rounded p-button-success" [disabled]="!(listasOK && duplasOK)"></button>
-        <button pButton type="button" label="Salvar" (click)="salvar()" icon="pi pi-check"
-            class="p-button-raised p-button-rounded" [disabled]="!(listasOK && duplasOK)"></button>
-        <button pButton type="button" label="Cancelar" icon="pi pi-times"
-            class="p-button-raised p-button-rounded p-button-warning" [disabled]="!(listasOK && duplasOK)"></button>
-        <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
-            class="p-button-raised p-button-rounded p-button-danger"
-            [disabled]="linhasSelecionadas.length == 0 || !(listasOK && duplasOK)"></button>
-    </span>
-
-    <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
-
-
-
-        <ng-template pTemplate="colgroup">
-            <colgroup>
-                <col style="width:5%">
-                <col style="width:10%">
-                <col style="width:12%">
-                <col style="width:20%">
-                <col style="width:20%">
-                <col style="width:15%">
-                <col style="width:15%">
-                <col style="width:15%">
-                <col style="width:15%">
-                <col style="width:15%">
-                <col style="width:10%">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th colspan="11">Duplas</th>
-            </tr>
-            <tr>
-                <th rowspan="2"></th>
-                <th rowspan="2">Data</th>
-                <th rowspan="2">Base</th>
-                <th rowspan="2">PIC</th>
-                <th rowspan="2">SIC</th>
-                <th rowspan="2">Apres</th>
-                <th rowspan="2">Prefixo</th>
-                <th colspan="2">Disponibilidade</th>
-                <th rowspan="2">Observação</th>
-                <th rowspan="2">Repete Até</th>
-                <th></th>
-            </tr>
-            <tr>
-                <th>Inicio</th>
-                <th>Fim</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
-            <tr [pEditableRow]="linha">
-                <td>
-                    <p-checkbox [value]="linha.Id" [(ngModel)]="linhasSelecionadas"></p-checkbox>
-                </td>
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                [locale]="locale_pt" showIcon="true" (onInput)="mudeiAqui($event, linha)"
-                                (onSelect)="mudeiAqui($event, linha)"></p-calendar>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.Data | date:'dd/MM/yyyy'}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown [options]="bases" [(ngModel)]="linha.Base" dataKey="Id" optionLabel="Nome"
-                                [showClear]="true" placeholder="Base" [style]="{'width': '130px'}"
-                                (onChange)="mudeiAqui($event, linha)">
-                            </p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            <span *ngIf="linha.Base">{{linha.Base.Nome}}</span>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown [options]="tripulantes" [(ngModel)]="linha.PIC" dataKey="Id" optionLabel="Trato"
-                                [showClear]="true" placeholder="PIC" [style]="{'width': '150px'}"
-                                (onChange)="mudeiAqui($event, linha)">
-                            </p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            <span *ngIf="linha.PIC">{{linha.PIC.Trato}}</span>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown [options]="tripulantes" [(ngModel)]="linha.SIC" dataKey="Id" optionLabel="Trato"
-                                [showClear]="true" placeholder="SIC" [style]="{'width': '150px'}"
-                                (onChange)="mudeiAqui($event, linha)">
-                            </p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            <span *ngIf="linha.SIC">{{linha.SIC.Trato}}</span>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-inputMask mask="99:99" [(ngModel)]="linha.Apresentacao" [style]="{'width': '80px'}"
-                                (onKeydown)="mudeiAqui($event, linha)">
-                            </p-inputMask>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.Apresentacao}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-dropdown [options]="prefixos" [(ngModel)]="linha.Prefixo" dataKey="Id"
-                                optionLabel="PrefixoCompleto" [showClear]="true" placeholder="Prefixo"
-                                [style]="{'width': '130px'}" (onChange)="mudeiAqui($event, linha)">
-                            </p-dropdown>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            <span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span>
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-inputMask mask="99:99" [(ngModel)]="linha.InicioVoo" [style]="{'width': '130px'}"
-                                (onKeydown)="mudeiAqui($event, linha)">
-                            </p-inputMask>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.InicioVoo}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-inputMask mask="99:99" [(ngModel)]="linha.FimVoo" [style]="{'width': '130px'}"
-                                (onKeydown)="mudeiAqui($event, linha)">
-                            </p-inputMask>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.FimVoo}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" pInputText [(ngModel)]="linha.Observacao"
-                                (keyup)="mudeiAqui($event, linha)" />
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.Observacao}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pInitEditableRow>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single" dateFormat="dd/mm/yy"
-                                [locale]="locale_pt" showIcon="true" (onChange)="mudeiAqui($event, linha)"></p-calendar>
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            {{linha.RepeteAte | date:'dd/MM/yyyy'}}
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-
-
-            </tr>
-            <tr *ngIf="exibeRestricao">
-                <td></td>
-                <td colspan="10">
-                    <table class="clarinho">
-                        <tr>
-                            <th width="10%">Trip</th>
-                            <th width="35%">Vencendo</th>
-                            <th width="35%">Vencido</th>
-                            <th width="10%">Fadiga</th>
-                            <th width="10%">Recência</th>
-                            <th width="10%">Apresentação à partir de:</th>
-                        </tr>
-                        <tr *ngIf="linha.PIC">
-                            <td>{{linha.PIC.Trato}}</td>
-                            <td><span *ngIf="linha.PIC.Vencimentos.Vencendo"><span
-                                        *ngFor="let item of linha.PIC.Vencimentos.Vencendo">{{item.Formatado}}<BR></span></span>
-                            </td>
-                            <td class="vencido"><span *ngIf="linha.PIC.Vencimentos.Vencidos"><span
-                                        *ngFor="let item of linha.PIC.Vencimentos.Vencidos">{{item.Formatado}}<BR></span></span>
-                            </td>
-                            <td><span *ngIf="linha.PIC.Vencimentos.Fadiga"
-                                    [innerHtml]="linha.PIC.Vencimentos.Fadiga"></span></td>
-                            <td><span *ngIf="linha.PIC" [innerHtml]="linha.PIC.Vencimentos.Recencia"></span></td>
-                            <td>{{linha.PIC.Vencimentos.ApresentacaoMaisCedo}}</td>
-                        </tr>
-                        <tr *ngIf="linha.SIC">
-                            <td>{{linha.SIC.Trato}}</td>
-                            <td><span *ngIf="linha.SIC.Vencimentos.Vencendo"><span
-                                        *ngFor="let item of linha.SIC.Vencimentos.Vencendo">{{item.Formatado}}<BR></span></span>
-                            </td>
-                            <td class="vencido"><span *ngIf="linha.SIC.Vencimentos.Vencidos"><span
-                                        *ngFor="let item of linha.SIC.Vencimentos.Vencidos">{{item.Formatado}}<BR></span></span>
-                            </td>
-                            <td><span *ngIf="linha.SIC.Vencimentos.Fadiga"
-                                    [innerHtml]="linha.SIC.Vencimentos.Fadiga"></span></td>
-                            <td><span *ngIf="linha.SIC" [innerHtml]="linha.SIC.Vencimentos.Recencia"></span></td>
-                            <td>{{linha.SIC.Vencimentos.ApresentacaoMaisCedo}}</td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-        </ng-template>
-
-
-    </p-table>
+    <table>
+        <tr>
+            <th colspan="7">Escala de {{dataInicio | date:'dd-MM-yyyy'}}</th>
+        </tr>
+        <tr>
+            <th>Matrícula</th>
+            <th>PIC</th>
+            <th>SIC</th>
+            <th>Apres</th>
+            <th>Últ.Corte</th>
+            <th>Térm.Jorn.</th>
+            <th>Base/Cliente/OBS</th>
+        </tr>
+        <tr *ngFor="let linha of duplas">
+            <td><span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span></td>
+            <td><span *ngIf="linha.PIC">{{linha.PIC.Trato}}</span></td>
+            <td><span *ngIf="linha.SIC">{{linha.SIC.Trato}}</span></td>
+            <td>{{linha.Apresentacao}}</td>
+            <td>{{linha.UltimoCorte}}</td>
+            <td>{{linha.FinalDaJornada}}</td>
+            <td><span *ngIf="linha.Base">{{linha.Base.Nome}} </span> <span
+                    *ngIf="linha.Cliente">{{linha.Cliente.Nome}}</span> {{linha.Observacao}}</td>
+        </tr>
+    </table>
 </div>

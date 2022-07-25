@@ -1,5 +1,14 @@
+import { getLocaleDateTimeFormat } from "@angular/common"
+
 export class DataUtil {
 
+
+
+  public static TimeSpanURL(timespan : string ):string {
+    let hoje = new Date();
+    let data = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDay(), parseInt(timespan.split(':')[0]), parseInt(timespan.split(':')[1]))
+    return `{ "data" : "${data.toISOString()}"}`;
+  }
 
   public static Hoje(){
     return new Date(new Date().getFullYear(), new Date().getMonth(),new Date().getDate());

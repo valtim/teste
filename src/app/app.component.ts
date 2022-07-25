@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   private readonly _destroying$ = new Subject<void>();
   ExibirLoginLocal = false;
 
-  localhost = window.location.href.indexOf('localhost') > -1;
+  localhost = window.location.href.indexOf('localhost') > -1 || window.location.href.indexOf('fastapi') > -1;
   usuarioLogado = localStorage.getItem('Authorization') != null;
   paginaDeLogin = window.location.href.indexOf('/login') > -1;
   jaLogouRemoto = false;
@@ -43,6 +43,8 @@ export class AppComponent implements OnInit {
       this.jaLogouRemoto = localStorage.length == 4;
 
       console.log('pagina de login: ' + this.paginaDeLogin);
+
+      console.log(this.ExibirBotaoLogin);
 
       if (this.usuarioLogado)
         return;

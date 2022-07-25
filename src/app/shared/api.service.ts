@@ -60,7 +60,8 @@ export class ApiService {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
     this.url =
       window.location.host === "localhost:4200"
-        ? "https://localhost:44343/"
+         ? "https://localhost:44343/"
+        //? "https://teste.fastapi.com.br/"
         : "/";
 
     this.message = {

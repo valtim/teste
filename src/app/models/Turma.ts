@@ -24,10 +24,10 @@ export class Turma {
   public TurmasComentarios: any[] = [];
   public HorasTurma: Array<HoraTurma> = [];
   public TurmaStatus: any[];  
-  public PeriodosDeCurso: any[];
+  public PeriodosDeCurso: any[] = [];
   public Cancelado: boolean = false;
 
-  public Deslocamentos: any[];
+  public Deslocamentos: any[] = [];
 
   public Avanco: number = 0;
   public DataDeInicio: Date;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AutorizacaoService } from './autorizacao.service';
 import { BehaviorSubject } from 'rxjs';
+import { WindowScrollController } from '@fullcalendar/core';
 
 
 @Injectable({
@@ -51,8 +52,8 @@ export class ApiTurmasService {
     this.loadingSource.next(this.defaulLoading);
   }
 
-  getOptions(lista : []){
-    if ( lista == undefined ){
+  getOptions(lista: []) {
+    if (lista == undefined) {
       return {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -95,14 +96,20 @@ export class ApiTurmasService {
     });
   }
 
-  newBlankGuid():string{
-    return '00000000-0000-0000-0000-000000000000'           
+  newBlankGuid(): string {
+    return '00000000-0000-0000-0000-000000000000'
   }
 
   getUsuarioLogadoComPermissoes(callback) {
     this.getUsuarioLogado().then(resp => {
-      resp.ehAdministrador = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => ["gtr","adm","atr"].includes(y)).length > 0);
-      resp.ehInstrutor = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => y == "ins").length > 0);      
+
+      if (resp == null) {
+        window.location.href = "/logoff";
+        return;
+      }
+
+      resp.ehAdministrador = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => ["gtr", "adm", "atr"].includes(y)).length > 0);
+      resp.ehInstrutor = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => y == "ins").length > 0);
       callback(resp);
     });
   }
@@ -114,12 +121,12 @@ export class ApiTurmasService {
 
   getListOfAnexos(referencia: string): Promise<any> {
     const url = this.URLCORE + `api/lista_arquivo/${referencia}`;
-    return this.http.get( url, this.httpOptions).toPromise();
+    return this.http.get(url, this.httpOptions).toPromise();
   }
 
   deleteAnexo(id: string): Promise<any> {
     const url = this.URLCORE + `api/arquivo/${id}/delete`;
-    return this.http.get( url, this.httpOptions).toPromise();
+    return this.http.get(url, this.httpOptions).toPromise();
   }
 
   postUploadAnexo(id: any, files: any): Promise<any> {
@@ -211,7 +218,7 @@ export class ApiTurmasService {
     return this.http.get(`${this.URLCORE}api/turma/usuario`, this.httpOptions).toPromise();
 
   }
-  getTurmasByData(dataIni :Date, dataFim: Date): Promise<any> {
+  getTurmasByData(dataIni: Date, dataFim: Date): Promise<any> {
     return this.http.get(`${this.URLCORE}api/turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
@@ -219,26 +226,26 @@ export class ApiTurmasService {
     return this.http.get(`${this.URLCORE}api/turma/${id}`, this.httpOptions).toPromise();
   }
 
-/*
-valtim
-*/
+  /*
+  valtim
+  */
 
-getTreinamentoPorEquipamento(): Promise<any> {
-  return this.http.get(`${this.URLCORE}api/TreinamentoPorEquipamento`, this.httpOptions).toPromise();
-}
+  getTreinamentoPorEquipamento(): Promise<any> {
+    return this.http.get(`${this.URLCORE}api/TreinamentoPorEquipamento`, this.httpOptions).toPromise();
+  }
 
 
-getInsumosTurmas(): Promise<any> {
-  return this.http.get(`${this.URLCORE}api/turma/comListas`, this.httpOptions).toPromise();
-}
+  getInsumosTurmas(): Promise<any> {
+    return this.http.get(`${this.URLCORE}api/turma/comListas`, this.httpOptions).toPromise();
+  }
 
-deleteTurmas(id: string[]): Promise<any> {
-  return this.http.post(`${this.URLCORE}api/turma/delete`, id, this.httpOptions).toPromise();
-}
+  deleteTurmas(id: string[]): Promise<any> {
+    return this.http.post(`${this.URLCORE}api/turma/delete`, id, this.httpOptions).toPromise();
+  }
 
-/*
-fim valtim
-*/
+  /*
+  fim valtim
+  */
 
 
 
@@ -302,7 +309,7 @@ fim valtim
 
   sendEmail(email: any): Promise<any> {
     return this.http.post('https://log.fastapi.com.br/api/mail', email).toPromise();
-  }  
+  }
 
   getComentariosByTurma(turma: string): Promise<any> {
     return this.http.get(`${this.URLCORE}api/TurmaComentario/${turma}`, this.httpOptions).toPromise();

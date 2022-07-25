@@ -1,32 +1,77 @@
-th {
-    text-align: center !important;
+@media screen {
+
+    th {
+        text-align: center !important;
+    }
+
+    .clarinho tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+
+    .clarinho tr:nth-child(even) {
+        background-color: #e7e7e7;
+    }
+
+    .linha_embaixo {
+        border-bottom: 1rem solid #000000;
+    }
+
+    .clarinho td {
+        white-space: nowrap;
+    }
+
+    .alinha_direita {
+        text-align: right !important;
+    }
+
+    .vencido {
+        color: red;
+        font-weight: bolder;
+    }
+
+    .fadiga {
+        white-space: normal;
+    }
+
+    #tela {
+        display: inline;
+    }
+
+    #printer {
+        display: none;
+    }
+
 }
 
-.clarinho tr:nth-child(odd) {
-    background-color: #ffffff;
-}
+@media print {
 
-.clarinho tr:nth-child(even) {
-    background-color: #e7e7e7;
-}
+    #tela {
+        display: none;
+    }
 
-.linha_embaixo{
-    border-bottom: 1rem solid #000000;
-}
+    #printer {
+        display: inline;
+    }
 
-.clarinho td{
-    white-space: nowrap;
-}
+    table {
+        font-family: Arial, Helvetica, sans-serif;
+        width: 100vw;
+    }
 
-.alinha_direita{
-    text-align: right !important;
-}
+    table td {
+        border: 1px solid #000000;
+        padding: 2px;
+    }
 
-.vencido{
-    color: red;
-    font-weight: bolder;
-}
+    table th {
+        border: 1px solid #000000;
+    }
 
-.fadiga{
-    white-space: normal;
+    tr:nth-child(even) {
+        background: #FFF
+    }
+
+    tr:nth-child(odd) {
+        background: rgb(180, 179, 179)
+    }
 }
