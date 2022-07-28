@@ -1,0 +1,20 @@
+<app-titulo id="titulo" titulo="Cadastro de ficha de avaliação"> </app-titulo>
+
+<div id="cadastro">
+  <p-card>
+    <label>Ficha: </label>
+
+    <input pInputText id="novaFicha" [(ngModel)]="nome" />
+
+    <button
+      pButton
+      type="button"
+      label="Salvar"
+      icon="pi pi-check"
+      class="p-button-raised"
+      [disabled]="false"
+      (click)="salvar(nome)"
+    ></button>
+  </p-card>
+</div>
+<br />

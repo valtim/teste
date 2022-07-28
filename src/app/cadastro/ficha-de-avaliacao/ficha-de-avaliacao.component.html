@@ -1,0 +1,53 @@
+<app-titulo id="titulo" titulo="Fichas de avaliação"> </app-titulo>
+
+<div id="cadastro">
+  <p-toolbar>
+    <div class="p-toolbar-group-left">
+      <button
+        pButton
+        type="button"
+        label="Nova Ficha"
+        icon="pi pi-plus"
+        (click)="novaFicha()"
+      ></button>
+    </div>
+  </p-toolbar>
+</div>
+
+<div id="dataTable">
+  <p-table
+    [value]="fichas"
+    styleClass="p-datatable-striped"
+    responsiveLayout="scroll"
+    sortModle="single"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="Name">
+          <p-sortIcon field="Name"> </p-sortIcon>Fichas cadastradas
+        </th>
+        <th style="width: 75px">Excluir</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr (click)="editar(item.Id)">
+        <td>
+          {{ item.Nome }}
+        </td>
+        <td>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-text"
+            (click)="excluir(item)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <b>SOL SISTEMAS</b>
+    </ng-template>
+  </p-table>
+</div>
