@@ -91,6 +91,10 @@ import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component
 import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
 
 import { ControleDeAcessoComponent } from './cadastro/controle-de-acesso/controle-de-acesso.component';
+import { GrupoDePerguntaComponent } from './cadastro/grupo-de-pergunta/grupo-de-pergunta.component';
+import { FichaDeAvaliacaoComponent } from './cadastro/ficha-de-avaliacao/ficha-de-avaliacao.component';
+import { FichaDeAvaliacaoEditComponent } from './cadastro/ficha-de-avaliacao-edit/ficha-de-avaliacao-edit.component';
+import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component';
 
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -180,6 +184,10 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     GraficoComponent,
     TesteGraficoComponent,
     ControleDeAcessoComponent,
+    GrupoDePerguntaComponent,
+    FichaDeAvaliacaoComponent,
+    FichaDeAvaliacaoEditComponent,
+    FichaDeAvaliacaoItemComponent,
   ],
   imports: [
     AppRoutingModule,
