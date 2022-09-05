@@ -72,13 +72,13 @@ export class DuplaComponent implements OnInit {
   }
   mudeiApresentacao(dados) {
 
+    dados.Modificado = true;
     this.apiEscala.postFinalDeJornada(DataUtil.TimeSpanURL(dados.Apresentacao)).then(x => {
       dados.UltimoCorte = x.UltimoCorte;
       dados.FinalDaJornada = x.FinalDaJornada;
 
       dados.Invalido = false;
       dados.Ativo = true;
-      dados.Modificado = true;
     })
   }
 
