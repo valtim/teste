@@ -96,6 +96,7 @@ import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indispo
 import { ContratoComponent } from "./cadastro/contrato/contrato.component";
 import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
 import { ControleDeAcessoComponent } from "./cadastro/controle-de-acesso/controle-de-acesso.component";
+import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -349,6 +350,10 @@ const routes: Routes = [
   {
     path: 'grafico-fadiga',
     component: TesteGraficoComponent,
+  },
+  {
+    path: 'instrutor',
+    component: InstrutorComponent,
   },
 ];
 

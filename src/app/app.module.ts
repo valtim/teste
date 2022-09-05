@@ -91,6 +91,7 @@ import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component
 import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
 
 import { ControleDeAcessoComponent } from './cadastro/controle-de-acesso/controle-de-acesso.component';
+import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
 
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -180,6 +181,7 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     GraficoComponent,
     TesteGraficoComponent,
     ControleDeAcessoComponent,
+    InstrutorComponent,
   ],
   imports: [
     AppRoutingModule,

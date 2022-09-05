@@ -210,6 +210,10 @@ export class DuplaComponent implements OnInit {
     });
   }
 
+  print(){
+    window.print();
+  }
+
   salvar() {
 
 

@@ -169,6 +169,9 @@
             <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
                 class="p-button-raised p-button-rounded p-button-danger"
                 [disabled]="linhasSelecionadas.length == 0 || !(listasOK && duplasOK)"></button>
+                <button pButton type="button" label="Imprimir" icon="pi pi-print" (click)="print()"
+                    class="p-button-raised p-button-rounded p-button-success"
+                    [disabled]="!(listasOK && duplasOK)"></button>
         </span>
 
         <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
