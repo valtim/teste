@@ -274,6 +274,10 @@ export class ApiService {
     return this.getCombos().then(() => JSON.parse(localStorage.getItem("TipoDeOperacao")));
   }
 
+  getTripulantesCache(): any {
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Tripulante")));
+  }
+
   getCertificado(): Promise<any> {
     return this.http
       .get(`${this.url}api/certificado`, this.httpOptions)
@@ -974,6 +978,13 @@ export class ApiService {
       .get(`${this.url}api/tripulante`, this.httpOptions)
       .toPromise();
   }
+
+  getTripulantesLight(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/tripulante-light`, this.httpOptions)
+      .toPromise();
+  }
+  
 
   postAnaliseDeFadiga(filtro: any): Promise<any> {
     return this.http.post(`${this.url}api/analise-de-fadiga/processar`, filtro, this.httpOptions).toPromise();

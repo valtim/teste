@@ -18,7 +18,7 @@ export class ControleDeAcessoEditComponent implements OnInit {
     private api: ApiService,
     private router: Router,
     private messageService: MessageService
-  ) {}
+  ) { }
 
   @Input() permissoes: PermissoesDeAcessoById;
 
@@ -36,6 +36,7 @@ export class ControleDeAcessoEditComponent implements OnInit {
   resp;
   tripulantes;
   tripulanteSelecionado;
+  clienteLogado;
 
   getUsuario() {
     let lista = this.router.url.split("/");
@@ -53,14 +54,18 @@ export class ControleDeAcessoEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api.getPerfis().then((response) => {
-      this.perfis = response;
+    this.api.getClienteLogado().then(x => {
+      this.clienteLogado = x.toLowerCase();
 
-      this.api.getTripulantes().then((rsp) => {
-        this.tripulantes = rsp;
-        this.getUsuario();
+      this.api.getPerfis().then((response) => {
+        this.perfis = response;
+
+        this.api.getTripulantesLight().then((rsp) => {
+          this.tripulantes = rsp;
+          this.getUsuario();
+        });
       });
-    });
+    })
   }
 
   getAllTripulantes() {
@@ -96,7 +101,7 @@ export class ControleDeAcessoEditComponent implements OnInit {
     this.nomePerfisHabilitados.forEach((x) => {
       this.resp.PerfisHabilitados.push({ Id: x });
     });
-    this.tripulanteSelecionado = this.tripulantes;
+    // this.tripulanteSelecionado = this.tripulantes;
     this.api
       .postPermissao(this.resp)
       .then(() => {
