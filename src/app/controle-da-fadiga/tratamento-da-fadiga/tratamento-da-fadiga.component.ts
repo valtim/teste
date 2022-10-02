@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
   public titulo = "Tratamento";
 
 
-  fg: FormGroup;
+  fg: UntypedFormGroup;
 
   public tratamento: any;
   public historicos: any;
@@ -41,7 +41,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private api: ApiService,
     public router: Router,
-    private fb: FormBuilder
+    private fb: UntypedFormBuilder
   ) { }
 
 
@@ -73,13 +73,13 @@ export class TratamentoDaFadigaComponent implements OnInit {
 
 
     //let group = {}
-    this.fg = new FormGroup({});
-    this.fg.addControl('Comentario', new FormControl('', Validators.required));
+    this.fg = new UntypedFormGroup({});
+    this.fg.addControl('Comentario', new UntypedFormControl('', Validators.required));
 
     if (this.faseChefe || this.faseGerente) {
 
-      this.fg.addControl('Liberado', new FormControl('', Validators.required));
-      this.fg.addControl('Acao', new FormControl('', Validators.required));
+      this.fg.addControl('Liberado', new UntypedFormControl('', Validators.required));
+      this.fg.addControl('Acao', new UntypedFormControl('', Validators.required));
 
       // this.fg.addControl('Liberado', new FormControl());
       // this.fg.addControl('Acao', new FormControl());
@@ -98,7 +98,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
 
     if (this.faseGSO) {
 
-      this.fg.addControl('Liberado', new FormControl());
+      this.fg.addControl('Liberado', new UntypedFormControl());
       this.fg.patchValue({
         Liberado: this.resposta.Liberado,
         Comentario: this.resposta.Comentario,
@@ -106,7 +106,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
     }
 
     if (this.faseCoord)
-      this.fg.addControl('ResponsavelEscala', new FormControl('', Validators.required));
+      this.fg.addControl('ResponsavelEscala', new UntypedFormControl('', Validators.required));
 
 
 

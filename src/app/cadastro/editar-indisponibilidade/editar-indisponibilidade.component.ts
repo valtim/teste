@@ -1,5 +1,5 @@
 import { Component, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, UntypedFormArray } from '@angular/forms';
 import { ApiService } from 'src/app/shared/api.service';
 
 import { DataUtil } from './../../shared/DataUtil';
@@ -12,11 +12,11 @@ import { DataUtil } from './../../shared/DataUtil';
 })
 export class EditarIndisponibilidadeComponent implements AfterViewInit {
 
-  fg: FormGroup;
+  fg: UntypedFormGroup;
 
-  fg2: FormGroup;
+  fg2: UntypedFormGroup;
 
-  fg3: FormGroup;
+  fg3: UntypedFormGroup;
 
 
   @Input() indisponibilidade;
@@ -28,15 +28,15 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
 
   @Output() retorno = new EventEmitter();
 
-  grupos: FormGroup[];
+  grupos: UntypedFormGroup[];
 
-  constructor(private api: ApiService, private fb: FormBuilder) { }
+  constructor(private api: ApiService, private fb: UntypedFormBuilder) { }
   ngAfterViewInit(): void {
     this.locale_pt = this.api.getLocale('pt');
     this.createForm();
   }
 
-  createMemberGroup(member: any): FormGroup {
+  createMemberGroup(member: any): UntypedFormGroup {
     return this.fb.group({
       ...member,
     });
@@ -81,12 +81,12 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
     })
   }
 
-  get tbIndisponibilidades(): FormArray {
-    return this.fg2.get('tbIndisponibilidades') as FormArray;
+  get tbIndisponibilidades(): UntypedFormArray {
+    return this.fg2.get('tbIndisponibilidades') as UntypedFormArray;
   }
 
-  get tbObs(): FormArray {
-    return this.fg3.get('tbObs') as FormArray;
+  get tbObs(): UntypedFormArray {
+    return this.fg3.get('tbObs') as UntypedFormArray;
   }
 
   addNewRow(tabela: string): void {

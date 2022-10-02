@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 
@@ -9,7 +9,7 @@ import { ApiService } from 'src/app/shared/api.service';
 })
 export class PesquisaBasicaComponent implements OnInit {
 
-  fg: FormGroup;
+  fg: UntypedFormGroup;
 
   @Output() retorno = new EventEmitter();
 
@@ -30,7 +30,7 @@ export class PesquisaBasicaComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private fb: FormBuilder) { }
+    private fb: UntypedFormBuilder) { }
 
   ngOnInit() {
     this.initForm();
@@ -38,9 +38,9 @@ export class PesquisaBasicaComponent implements OnInit {
   }
 
   initForm() {
-    this.fg = new FormGroup({});
+    this.fg = new UntypedFormGroup({});
     if ( !this.completa){
-      this.fg.addControl('Data', new FormControl('', Validators.required));
+      this.fg.addControl('Data', new UntypedFormControl('', Validators.required));
       this.fg.patchValue({ Data: this.data });
       this.enviarForm();
       return;
@@ -55,15 +55,15 @@ export class PesquisaBasicaComponent implements OnInit {
 
     
     
-    this.fg.addControl('DataInicial', new FormControl('', Validators.required));
+    this.fg.addControl('DataInicial', new UntypedFormControl('', Validators.required));
     this.fg.patchValue({ DataInicial: this.data });
-    this.fg.addControl('DataFinal', new FormControl('', Validators.required));
+    this.fg.addControl('DataFinal', new UntypedFormControl('', Validators.required));
     this.fg.patchValue({ DataFinal: this.data });
 
 
     
-    this.fg.addControl('Tripulantes', new FormControl('', Validators.required));
-    this.fg.addControl('Niveis', new FormControl('', Validators.required));
+    this.fg.addControl('Tripulantes', new UntypedFormControl('', Validators.required));
+    this.fg.addControl('Niveis', new UntypedFormControl('', Validators.required));
     // this.tripulantes.forEach(t => {
     //   this.fg.addControl(t.Id, new FormControl(true));
     // });
