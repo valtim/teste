@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { TipoDeOcorrenciaComponent } from './tipo-de-ocorrencia.component';
 
@@ -6,7 +6,7 @@ describe('TipoDeOcorrenciaComponent', () => {
   let component: TipoDeOcorrenciaComponent;
   let fixture: ComponentFixture<TipoDeOcorrenciaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ TipoDeOcorrenciaComponent ]
     })

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ErrosNoDbComponent } from './erros-no-db.component';
 
@@ -6,7 +6,7 @@ describe('ErrosNoDbComponent', () => {
   let component: ErrosNoDbComponent;
   let fixture: ComponentFixture<ErrosNoDbComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ErrosNoDbComponent ]
     })

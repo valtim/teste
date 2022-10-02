@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EscalaMensalComponent } from './escala-mensal.component';
 
@@ -6,7 +6,7 @@ describe('EscalaMensalComponent', () => {
   let component: EscalaMensalComponent;
   let fixture: ComponentFixture<EscalaMensalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EscalaMensalComponent ]
     })

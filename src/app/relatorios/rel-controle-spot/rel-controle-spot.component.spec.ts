@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RelControleSpotComponent } from './rel-controle-spot.component';
 
@@ -6,7 +6,7 @@ describe('RelControleSpotComponent', () => {
   let component: RelControleSpotComponent;
   let fixture: ComponentFixture<RelControleSpotComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RelControleSpotComponent ]
     })

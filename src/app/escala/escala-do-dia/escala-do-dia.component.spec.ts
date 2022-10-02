@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EscalaDoDiaComponent } from './escala-do-dia.component';
 
@@ -6,7 +6,7 @@ describe('EscalaDoDiaComponent', () => {
   let component: EscalaDoDiaComponent;
   let fixture: ComponentFixture<EscalaDoDiaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EscalaDoDiaComponent ]
     })

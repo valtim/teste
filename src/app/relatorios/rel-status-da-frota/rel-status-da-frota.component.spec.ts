@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RelStatusDaFrotaComponent } from './rel-status-da-frota.component';
 
@@ -6,7 +6,7 @@ describe('RelStatusDaFrotaComponent', () => {
   let component: RelStatusDaFrotaComponent;
   let fixture: ComponentFixture<RelStatusDaFrotaComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RelStatusDaFrotaComponent ]
     })
