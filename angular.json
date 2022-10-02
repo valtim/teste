@@ -74,8 +74,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sol:build",
-            "deployUrl": "/"
+            "browserTarget": "sol:build"
           },
           "configurations": {
             "production": {
@@ -105,19 +104,6 @@
             ],
             "scripts": [
               "./node_modules/chart.js/dist/Chart.js"
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
             ]
           }
         },

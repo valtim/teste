@@ -1,4 +1,3 @@
-import { ThrowStmt } from "@angular/compiler";
 import { ValueConverter } from "@angular/compiler/src/render3/view/template";
 import { Turma } from "./Turma";
 
