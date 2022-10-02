@@ -28,6 +28,6 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "strictPropertyInitialization" : false,
+    "strictPropertyInitialization" : false
   }
 }
