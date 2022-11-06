@@ -41,6 +41,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   turmaAluno = [];
   PeriodosDeCurso: ContadorDePeriodos = new ContadorDePeriodos;
   periodosSomados: number = 0;
+  todasAsPessoas: any[];
 
   enviar(turma: Turma) {
     this.salvarTurma(turma, () => { });
@@ -84,7 +85,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       if (index0 == (this.alunos.length - 1)) {
         // Alunos transformados
 
-        if (this.PeriodosDeCurso.Periodos.length == 0) {
+        if (this.turmaInterna.PeriodosDeCurso.length == 0) {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário adicionar as datas e horas de realização do curso` });
           return;
         }
@@ -106,54 +107,36 @@ export class TurmaComponent implements OnInit, AfterViewInit {
         turma.Datas = [];
         turma.HorasTurma = [];
 
-        this.PeriodosDeCurso.Periodos.forEach((periodo, index1) => {
-          let dataStr = periodo.Data.toISOString().split("T")[0];
-          let horaNumerica = periodo.Data.toISOString().split("T")[1];
-          turma.Datas.push({ Data: dataStr + "T" + horaNumerica });
+        this.turmaInterna.PeriodosDeCurso.forEach(x => {
+          let dataStr = "";
 
-          let dataNumerica = parseInt(
-            dataStr.split("-")[0] +
-            dataStr.split("-")[1] +
-            dataStr.split("-")[2] +
-            horaNumerica.split(":")[0] +
-            horaNumerica.split(":")[1] +
-            horaNumerica.split(":")[2]
-          );
-          if (dataNumerica < dataInicio) {
-            dataInicio = dataNumerica;
-            dataInicioStr = dataStr + "T" + horaNumerica;
-          }
+          if (typeof x.Data == 'object')
+            dataStr = x.Data.toISOString().split("T")[0];
+          else
+            dataStr = x.Data.split("T")[0];
 
-          periodo.Horas.forEach((hora, index2) => {
+          x.Horas.forEach(y => {
             turma.HorasTurma.push(
               Object.assign(new HoraTurma, ({
-                Data: new Date(dataStr + "T" + horaNumerica),
-                HoraInicio: dataStr + "T" + hora.HoraInicio,
-                HoraTermino: dataStr + "T" + hora.HoraTermino
-              }
-              ))
-            );
-
-            if ((index1 == (this.PeriodosDeCurso.Periodos.length - 1)) && (index2 == (periodo.Horas.length - 1))) {
-
-              /* Fim do Cadastro */
-              turma.DataDeInicio = new Date(dataInicioStr);
-
-              this.api.postTurma(turma).then(x => {
-                Object.assign(this.turmaInterna, x);
-                this.evento.emit(this.turmaInterna);
-                callback();
-              }).catch(x => {
-                console.log(x);
-                this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Erro ao Salvar` });
-                callback();
-              });
-              /* Fim do Cadastro */
-
-            }
+                Data: new Date(dataStr + "T" + "00:00"),
+                HoraInicio: new Date(dataStr + "T" + y.HoraInicio),
+                HoraTermino: new Date(dataStr + "T" + y.HoraTermino)
+              }))
+            )
           });
 
         });
+
+        this.api.postTurma(turma).then(x => {
+          Object.assign(this.turmaInterna, x);
+          this.evento.emit(this.turmaInterna);
+          callback();
+        }).catch(x => {
+          console.log(x);
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Erro ao Salvar` });
+          callback();
+        });
+
 
         // Fim - Alunos transformados
       }
@@ -172,9 +155,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   }
 
   mudancaDeData(data) {
-    if (this.PeriodosDeCurso.Periodos.filter(x => x.Data == data).length > 0)
+    if (this.turmaInterna.PeriodosDeCurso.filter(x => x.Data == data).length > 0)
       return;
-    this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [] });
+    this.turmaInterna.PeriodosDeCurso.push(<PeriodoDeCurso>{ Data: data, Horas: [] });
   }
 
   mudancaDeDataDeDeslocamento(data) {
@@ -184,7 +167,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   }
 
   removerData(data) {
-    this.PeriodosDeCurso.Periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data != data);
+    this.turmaInterna.PeriodosDeCurso = this.turmaInterna.PeriodosDeCurso.filter(x => x.Data != data);
     this.calcularDiferenca();
     this.atualizarStatusTurma(() => { });
   }
@@ -205,37 +188,39 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.atualizarStatusTurma(() => { });
   }
 
-  onInstrutorExterno() {
-    this.api.onLoading();
-    if (!this.turmaInterna.InstrutorExterno) {
-      this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
-        .then(resp => {
-          if (resp.Instrutores.length > 0) {
-            this.instrutores = resp.Instrutores;
-          } else {
-            this.instrutores = [];
-          }
-          this.atualizarStatusTurma(() => {
-            this.api.onLoading();
-          });
-        });
-    } else {
-      this.api.getInstrutores()
-        .then(resp => {
-          this.instrutores = resp.Instrutores;
-          this.atualizarStatusTurma(() => {
-            this.api.onLoading();
-          });
-        });
-    }
+  // onInstrutorExterno() {
+  //   this.api.onLoading();
+  //   if (!this.turmaInterna.InstrutorExterno) {
+  //     this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
+  //       .then(resp => {
+  //         if (resp.Instrutores.length > 0) {
+  //           this.instrutores = resp.Instrutores;
+  //         } else {
+  //           this.instrutores = [];
+  //         }
+  //         this.atualizarStatusTurma(() => {
+  //           this.api.onLoading();
+  //         });
+  //       });
+  //   } else {
+  //     this.api.getInstrutores()
+  //       .then(resp => {
+  //         this.instrutores = resp.Instrutores;
+  //         this.atualizarStatusTurma(() => {
+  //           this.api.onLoading();
+  //         });
+  //       });
+  //   }
+  // }
+
+  novoDeslocamento() {
+    if (this.turmaInterna.Deslocamentos == undefined)
+      this.turmaInterna.Deslocamentos = [];
+    this.turmaInterna.Deslocamentos.push({ Id: GuidUtil.NewGuid(), Data: new Date(), Deslocamento: { Nome: '' } });
   }
 
-  novoDeslocamento(){
-    this.turmaInterna.Deslocamentos.push({Id: GuidUtil.NewGuid(), Data : new Date(), Deslocamento : { Nome: '' }});
-  }
-
-  excluirDeslocamento(id){
-    this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x=>x.Id != id);
+  excluirDeslocamento(id) {
+    this.turmaInterna.Deslocamentos = this.turmaInterna.Deslocamentos.filter(x => x.Id != id);
   }
 
   onNotificar() {
@@ -279,7 +264,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       'To': envolvido.Email,
       'Subject': `Treinamento: ${envolvido.nomeTreinamento}`,
       'HTML': html,
-      'Cliente': "Aeroleo"
+      'Cliente': "Bristow"
     };
 
     return envolvidoJson;
@@ -297,7 +282,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   }
 
   novaHora(data) {
-    let dia = this.PeriodosDeCurso.Periodos.find(x => x.Data == data);
+    let dia = this.turmaInterna.PeriodosDeCurso.find(x => x.Data == data);
     dia.Horas.push(<HoraTurma>{ HoraInicio: '00:00', HoraTermino: '00:00' });
     this.atualizarStatusTurma(() => { });
   }
@@ -366,20 +351,20 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.calcularDiferenca();
   }
 
-  onEquipamentoOptionsSelected(event) {
-    this.api.onLoading();
-    this.api.getTreinamentosByEquipamento(event.value.Id)
-      .then(resp => {
-        if (resp.Treinamentos.length > 0) {
-          this.instrutores = resp.Instrutores;
-          this.treinamentos = resp.Treinamentos;
-        } else {
-          this.instrutores = [];
-          this.treinamentos = [];
-        }
-        this.api.onLoading();
-      });
-  }
+  // onEquipamentoOptionsSelected(event) {
+  //   this.api.onLoading();
+  //   this.api.getTreinamentosByEquipamento(event.value.Id)
+  //     .then(resp => {
+  //       if (resp.Treinamentos.length > 0) {
+  //         this.instrutores = resp.Instrutores;
+  //         this.treinamentos = resp.Treinamentos;
+  //       } else {
+  //         this.instrutores = [];
+  //         this.treinamentos = [];
+  //       }
+  //       this.api.onLoading();
+  //     });
+  // }
 
   onInstrutorOptionsSelected(event) {
     this.atualizarStatusTurma(() => { });
@@ -391,15 +376,15 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(event.value.CargaHoraria);
     Object.assign(event.value, this.turmaInterna.Treinamento);
 
-    this.api.getInstrutoresByTreinamento(event.value.Id)
-      .then(resp => {
-        if (resp.Instrutores.length > 0) {
-          this.instrutores = resp.Instrutores;
-        } else {
-          this.instrutores = [];
-        }
-        this.api.onLoading();
-      });
+    // this.api.getInstrutoresByTreinamento(event.value.Id)
+    //   .then(resp => {
+    //     if (resp.Instrutores.length > 0) {
+    //       this.instrutores = resp.Instrutores;
+    //     } else {
+    //       this.instrutores = [];
+    //     }
+    //     this.api.onLoading();
+    //   });
   }
 
   atualizarStatusTurma(callback) {
@@ -665,11 +650,15 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
+    this.todasAsPessoas = this.tripulantes.concat(this.instrutores);
+
     this.turmaInterna = Object.assign(new Turma, this.turma);
     this.turmaInterna.CargaHoraria = 0;
-    this.turmaInterna.Deslocamentos.forEach(x => {
-      x.Data = new Date(x.Data);
-    });
+    if (this.turmaInterna.Deslocamentos)
+      this.turmaInterna.Deslocamentos.forEach(x => {
+        x.Data = new Date(x.Data);
+      });
 
     this.definirStatusTurma();
 
@@ -680,75 +669,103 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
       this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
 
-      let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
-      listaPeriodos.forEach((x, index) => {
-        var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
-        if (horas.length == 0) {
-          this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
-        }
 
-        // if (this.turmaInterna.Equipamento) {
-        //   this.turmaInterna.Equipamento = { Id: this.turmaInterna.Equipamento.Id, Nome: this.turmaInterna.Equipamento.Nome };
+      // var groupBy = function (xs, key) {
+      //   return xs.reduce(function (rv, x) {
+      //     (rv[x[key]] = rv[x[key]] || []).push(x);
+      //     return rv;
+      //   }, {});
+      // };
 
-        //   this.api.getTreinamentosByEquipamento(this.turmaInterna.Equipamento.Id)
-        //     .then(resp => {
-        //       if (resp.Treinamentos.length > 0) {
-        //         this.instrutores = resp.Instrutores;
-        //         this.treinamentos = resp.Treinamentos;
-        //         return;
-        //       }
-        //       this.instrutores = [];
-        //       this.treinamentos = [];
-        //     });
-        // }
+      // console.log(groupBy(this.turmaInterna.PeriodosDeCurso, 'Data'));
 
-        if (this.turmaInterna.Treinamento) {
-          this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
-          this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
-        }
+      // let teste = groupBy(this.turmaInterna.PeriodosDeCurso, 'Data');
 
-        if (this.turmaInterna.Instrutor) {
-          this.turmaInterna.Instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
-        }
+      // teste.forEach(x => {
 
-        this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
-        this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
-        this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+      //   let data = <PeriodoDeCurso>{ Data: new Date(x.Data), Horas: [] };
 
-        let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
-        listaPeriodos.forEach((x, index) => {
-          var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
+      //   x.Horas.forEach(y => {
+      //     //data.Horas.push( new HoraTurma() {HoraInicio =y.Id})
+      //   })
 
-          if (horas.length == 0) {
-            this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
-            return;
-          }
-          //let horas2 = horas.map(y => Object.assign(new HoraTurma, {Data:new Date(x.Data), HoraInicio:y.HoraInicio, HoraTermino:y.HoraTermino}));
+      /*
+      public Id : string;
+      public Data : string;
+      public HoraInicio : string;
+      public HoraTermino : string;
+      */
 
-          let periodo = Object.assign(new PeriodoDeCurso, {
-            Data: new Date(x.Data),
-            Horas: horas.map(y => Object.assign(new HoraTurma, {
-              Data: x.Data,
-              HoraInicio: y.HoraInicio.split('T')[1],
-              HoraTermino: y.HoraTermino.split('T')[1]
-            })
-            )
-          });
+      // data.HoraInicio =  y.HoraInicio.split('T')[1],
+      // HoraTermino: y.HoraTermino.split('T')[1]
 
-          this.PeriodosDeCurso.Periodos.push(periodo);
-          // ({ HoraInicio : y.HoraInicio.split("T")[1], HoraTermino : y.HoraTermino.split("T")[1]}))});
+      // this.PeriodosDeCurso.Periodos.push(data);
+      // })
 
-          if (index == (listaPeriodos.length - 1)) {
-            this.calcularDiferenca();
-          }
 
-          //   if (this.turmaInterna.TurmaStatus[5].Efetivada) {
-          //     this.turmaInterna.Concluido = true;
-          //   }
 
-        });
+      // let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+      // listaPeriodos.forEach((x, index) => {
+      //   var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
+      //   if (horas.length == 0) {
+      //     this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
+      //   }
 
-      });
+      if (this.turmaInterna.Treinamento) {
+        this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
+        this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
+      }
+
+      if (this.turmaInterna.Instrutor) {
+        this.turmaInterna.Instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
+      }
+
+      this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
+      this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
+      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+
+
+      // this.turmaInterna.PeriodosDeCurso.forEach(x => {
+      //   x.Horas.forEach(y => {
+      //     y.HoraInicio = y.HoraInicio.split('T')[1]
+      //     y.HoraTermino = y.HoraTermino.split('T')[1]
+      //   })
+      // })
+
+      // let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
+      // listaPeriodos.forEach((x, index) => {
+      //   var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
+
+      //   if (horas.length == 0) {
+      //     this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
+      //     return;
+      //   }
+      //   //let horas2 = horas.map(y => Object.assign(new HoraTurma, {Data:new Date(x.Data), HoraInicio:y.HoraInicio, HoraTermino:y.HoraTermino}));
+
+      //   let periodo = Object.assign(new PeriodoDeCurso, {
+      //     Data: new Date(x.Data),
+      //     Horas: horas.map(y => Object.assign(new HoraTurma, {
+      //       Data: x.Data,
+      //       HoraInicio: y.HoraInicio.split('T')[1],
+      //       HoraTermino: y.HoraTermino.split('T')[1]
+      //     })
+      //     )
+      //   });
+
+      //   this.PeriodosDeCurso.Periodos.push(periodo);
+      // ({ HoraInicio : y.HoraInicio.split("T")[1], HoraTermino : y.HoraTermino.split("T")[1]}))});
+
+      // if (index == (listaPeriodos.length - 1)) {
+      //   this.calcularDiferenca();
+      // }
+
+      //   if (this.turmaInterna.TurmaStatus[5].Efetivada) {
+      //     this.turmaInterna.Concluido = true;
+      //   }
+
+      // });
+
+      // });
       /* Apos obter o perfil do usuario logado */
 
     });

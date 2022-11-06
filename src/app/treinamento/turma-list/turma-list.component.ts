@@ -16,7 +16,7 @@ export class TurmaListComponent implements OnInit {
   deslocamentos: any;
   tripulantes: any;
 
-  
+
   displayModal = false;
   paraExcluir = [];
 
@@ -34,8 +34,9 @@ export class TurmaListComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.dataIni = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
-    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth() + 2, 0);
+    this.dataIni = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth() + 3, 1);
+    this.dataFim.setDate(this.dataFim.getDate() - 1);
 
     this.rodarRelatorio();
   }
@@ -48,19 +49,22 @@ export class TurmaListComponent implements OnInit {
       this.instrutores = x.Instrutores;
       this.tripulantes = x.Tripulantes;
       this.deslocamentos = x.Deslocamentos;
-      
-      if (x.Turmas.length == 0) {
-        this.loading = false;
-      } else {
-        x.Turmas.forEach((turma,index) => {
-          turma.indexStatus = 'index' + index;                
-          turma.Carregada = true;        
-          if (index == (x.Turmas.length - 1)) {
-            this.turmas = x.Turmas;
-            this.loading = false;
-          }
-        });
-      }      
+
+      this.turmas = [];
+      this.turmas = x.Turmas;
+      this.loading = false;
+
+
+      // if (x.Turmas.length == 0) {
+      //   this.loading = false;
+      // } else {
+      //   x.Turmas.forEach((turma, index) => {
+      //     turma.indexStatus = 'index' + index;
+      //     turma.Carregada = true;
+      //     if (index == (x.Turmas.length - 1)) {
+      //     }
+      //   });
+      // }
     })
   }
 
@@ -69,14 +73,14 @@ export class TurmaListComponent implements OnInit {
     turma.Id = this.api.newGuid()
     turma.Display = true;
     turma.Novo = true;
-    
+
     this.turmas.push(turma);
     this.editar(turma.Id);
     //this.displayModal = true;
   }
 
-  excluir(){
-    this.api.deleteTurmas(this.paraExcluir).then(x=> {
+  excluir() {
+    this.api.deleteTurmas(this.paraExcluir).then(x => {
       alert('Turmas Excluídas com sucesso');
     })
   }
@@ -97,7 +101,7 @@ export class TurmaListComponent implements OnInit {
     }
     if (e.Novo == true) {
       this.turmas = this.turmas.filter(x => x.Id != e.Id);
-    }    
+    }
   }
 
 }

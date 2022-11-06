@@ -60,7 +60,8 @@ export class ApiService {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
     this.url =
       window.location.host === "localhost:4200"
-        ? "https://teste.fastapi.com.br/"
+         ? "https://localhost:44343/"
+        //? "https://teste.fastapi.com.br/"
         : "/";
 
     this.message = {
@@ -70,6 +71,12 @@ export class ApiService {
       type: "alert",
       callBack: () => {},
     };
+  }
+
+  public EhProducao(): Promise<any> {
+    return this.http
+      .get(this.url + "api/ehproducao", this.httpOptions)
+      .toPromise();
   }
 
   getServer() {
@@ -106,18 +113,19 @@ export class ApiService {
       .toPromise();
   }
 
-
   postLoginAD(bearer: string): Promise<any> {
-
     let httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        "Content-Type": "application/json",
+      }),
     };
 
-
-
-    return this.http.post(this.url + 'api/autorizacao-bristow', { 'bearer' : bearer }, httpOptions)
+    return this.http
+      .post(
+        this.url + "api/autorizacao-bristow",
+        { bearer: bearer },
+        httpOptions
+      )
       .toPromise();
   }
 
@@ -215,11 +223,10 @@ export class ApiService {
       .toPromise();
   }
 
-
-
-
   getClienteLogado(): Promise<any> {
-    return this.http.get(`${this.url}api/clienteLogado`, this.httpOptions).toPromise()
+    return this.http
+      .get(`${this.url}api/clienteLogado`, this.httpOptions)
+      .toPromise();
   }
 
   getQuadroDeTripulantes(): Promise<any> {
@@ -234,36 +241,48 @@ export class ApiService {
       .toPromise();
   }
 
-
-
-
-
   getAbastecedoras(): any {
-    return JSON.parse(localStorage.getItem('Abastecedora'));
+    return JSON.parse(localStorage.getItem("Abastecedora"));
   }
 
   getAerodromos(): Promise<any> {
-    return this.http.get(`${this.url}api/vencimento`, this.httpOptions).toPromise()
+    return this.http
+      .get(`${this.url}api/vencimento`, this.httpOptions)
+      .toPromise();
   }
 
   getPrefixos(): any {
-    return JSON.parse(localStorage.getItem("Combos")).soPrefixo;
+    return this.getCombos().then(
+      () => JSON.parse(localStorage.getItem("Combos")).soPrefixo
+    );
   }
 
   getNaturezas(): any {
-    return JSON.parse(localStorage.getItem("Natureza"));
+    return this.getCombos().then(() =>
+      JSON.parse(localStorage.getItem("Natureza"))
+    );
   }
 
   getFuncaoBordos(): any {
-    return JSON.parse(localStorage.getItem("FuncaoBordo"));
+    return this.getCombos().then(() =>
+      JSON.parse(localStorage.getItem("FuncaoBordo"))
+    );
   }
 
   getClientes(): any {
-    return JSON.parse(localStorage.getItem("Combos")).Cliente;
+    return this.getCombos().then(
+      () => JSON.parse(localStorage.getItem("Combos")).Cliente
+    );
   }
 
   getTipoDeOperacoes(): any {
-    return JSON.parse(localStorage.getItem("TipoDeOperacao"));
+    return this.getCombos().then(() =>
+      JSON.parse(localStorage.getItem("TipoDeOperacao"))
+    );
+  }
+
+  getTripulantesCache(): any {
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Tripulante")));
   }
 
   getCertificado(): Promise<any> {
@@ -367,11 +386,23 @@ export class ApiService {
   }
 
   getListaTripulanteCombo(): Promise<any> {
-    return this.http.get(this.url + 'api/listas/tripulantecombo', this.httpOptions).toPromise();
+    return this.http
+      .get(this.url + "api/listas/tripulantecombo", this.httpOptions)
+      .toPromise();
   }
 
-  getLocalidade(tipo: string, perPage: number, currentPage: number, search: string): Promise<any> {
-    return this.http.get(`${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`, this.httpOptions).toPromise();
+  getLocalidade(
+    tipo: string,
+    perPage: number,
+    currentPage: number,
+    search: string
+  ): Promise<any> {
+    return this.http
+      .get(
+        `${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`,
+        this.httpOptions
+      )
+      .toPromise();
   }
 
   getListaLocalidade(): Promise<any> {
@@ -392,7 +423,15 @@ export class ApiService {
   }
 
   getTrilho(dataIni: Date, dataFim: Date): Promise<any> {
-    return this.http.get(this.url + `api/trilho/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+    return this.http
+      .get(
+        this.url +
+          `api/trilho/${dataIni.toISOString().split("T")[0]}/${
+            dataFim.toISOString().split("T")[0]
+          }`,
+        this.httpOptions
+      )
+      .toPromise();
   }
 
   postEscalaPorEmail(data: Date, extras: any) {
@@ -598,8 +637,6 @@ export class ApiService {
     );
   }
 
-
-
   getCombosServidor(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       this.http
@@ -616,21 +653,16 @@ export class ApiService {
   getCombos(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       if (!localStorage.getItem("Combos")) {
-        resolve(
-          this.getCombosServidor().then(x => {
-            localStorage.setItem('Combos', JSON.stringify(x))
-            resolve(JSON.parse(localStorage.getItem('Combos')));
-          })
-        )
+        this.getCombosServidor().then((x) => {
+          resolve(x);
+        });
+      } else {
+        resolve(JSON.parse(localStorage.getItem("Combos")));
       }
     });
 
     return promise;
   }
-
-  // getCombosEdit(): Promise<any> {
-  //   return this.http.get(`${this.url}api/Combos/Edit`, this.httpOptions).toPromise();
-  // }
 
   postTelaConsultaRisco(filtro: any): Promise<any> {
     return this.http
@@ -712,27 +744,6 @@ export class ApiService {
     }/${baseDeOperacao}/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
-
-  //   getOperacaoDeSolo(data: Date, baseDeOperacao: string, cliente: string[]): Promise < any > {
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo/${data.toISOString().split("T")[0]}/${cliente}/${baseDeOperacao}`;
-  //   return this.http.get(caminho, this.httpOptions).toPromise();
-  // }
-
-  //   deleteOperacaoDeSolo(itens: any): Promise < any > {
-
-  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
-  //   return this.http.delete(caminho, this.getOptions(itens)).toPromise();
-  // }
-
-  //   postOperacaoDeSolo(itens: []): Promise < any > {
-
-  //   let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
-
-  //   let caminho = `${this.url}api/RelOperacaoDeSolo`;
-  //   return this.http.post(caminho, JSON.stringify(itens), this.httpOptions).toPromise();
-  // }
 
   getEscalaPTBR(
     dataref: Date,
@@ -995,8 +1006,44 @@ export class ApiService {
       .toPromise();
   }
 
-  postAnaliseDeFadiga(filtro : any): Promise<any>{
-    return this.http.post(`${this.url}api/analise-de-fadiga/processar`, filtro, this.httpOptions).toPromise();
+  getTripulantesLight(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/tripulante-light`, this.httpOptions)
+      .toPromise();
+  }
+  
+
+  postAnaliseDeFadiga(filtro: any): Promise<any> {
+    return this.http
+      .post(
+        `${this.url}api/analise-de-fadiga/processar`,
+        filtro,
+        this.httpOptions
+      )
+      .toPromise();
   }
 
+  getGrupoDeFicha(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/grupodeficha`, this.httpOptions)
+      .toPromise();
+  }
+
+  postGrupoDeFicha(grupo): Promise<any> {
+    return this.http
+      .post(`${this.url}api/grupodeficha`, grupo, this.httpOptions)
+      .toPromise();
+  }
+
+  getFichaDeAvaliacao(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/fichadeavaliacao`, this.httpOptions)
+      .toPromise();
+  }
+
+  postFichaDeAvaliacao(ficha): Promise<any> {
+    return this.http
+      .post(`${this.url}api/fichadeavaliacao`, ficha, this.httpOptions)
+      .toPromise();
+  }
 }

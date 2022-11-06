@@ -42,7 +42,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo", "Int32"];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo","Tripulante", "Int32"];
   listas: any[];
 
 

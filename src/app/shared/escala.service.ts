@@ -16,6 +16,14 @@ export class EscalaService {
 
   constructor(private api: ApiService, private http: HttpClient) { }
 
+
+
+  public postFinalDeJornada(apresentacao: string): Promise<any>{
+    return this.http
+      .post(`${this.api.url}api/dupla/TerminoDeJornada`, apresentacao, this.api.httpOptions)
+      .toPromise();
+  }
+
   getVencimentos(referencia: Date): Promise<any> {
     return this.http.get(`${this.api.url}api/somentevencimento/${referencia.toISOString().split('T')[0]}`).toPromise();
   }
@@ -30,8 +38,14 @@ export class EscalaService {
       .toPromise();
   }
 
+  getRestricoes(data: Date): any {
+    return this.http.get(`${this.api.url}api/restricoes/${data.toISOString().split("T")[0]}`, this.api.httpOptions)
+      .toPromise();
+  }
+
   postDuplas(duplas: any): Promise<any> {
-    return this.http.post(`${this.api.url}api/dupla`, duplas, this.api.httpOptions)
+    return this.http.post(`${this.api.url}api/duplasAndDeslocamento`, duplas, this.api.httpOptions)
+    //return this.http.post(`${this.api.url}api/dupla`, duplas, this.api.httpOptions)
       .toPromise();
   }
 

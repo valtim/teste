@@ -1,0 +1,15 @@
+#cadastro,
+#dataTable {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+}
+
+#novaFicha,
+#novaPergunta {
+  width: 800px;
+}
+
+.p-button-rounded {
+  color: red;
+}

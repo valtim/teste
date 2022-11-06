@@ -13,16 +13,23 @@ import { ApiService } from 'src/app/shared/api.service';
   providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
+  ehProducao = true;
 
   constructor(private router: Router, public api: ApiService, private auth: AutorizacaoService) { }
   public username: string;
   public password: string;
   public loading = false;
 
-
   jaLogouRemoto = localStorage.length == 4;
 
   ngOnInit() {
+
+
+
+    
+    this.api.EhProducao().then(x=>{
+      this.ehProducao = x;
+    })
     if (localStorage.length == 4) {
       this.loginRemoto();
       return;

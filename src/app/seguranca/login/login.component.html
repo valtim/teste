@@ -1,4 +1,4 @@
-<p-fieldset legend="Login">
+<p-fieldset legend="Login" *ngIf="!ehProducao">
 
   <h4>Usuário</h4>
   <input type="text" pInputText [(ngModel)]="username">

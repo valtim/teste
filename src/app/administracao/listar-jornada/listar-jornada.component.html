@@ -4,7 +4,8 @@
     <div class="p-col"></div>
     <div class="p-col">
         <button type="button" pButton pRipple label="Data"></button>
-        <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030" [locale]="locale_pt"></p-calendar>
+        <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
+            [locale]="locale_pt"></p-calendar>
         <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy" [locale]="locale_pt" showIcon="true"
             [inputStyle]="{'width':'100px'}"></p-calendar> -->
 
@@ -42,20 +43,24 @@
                 <td>
                     {{rowData['DataDeFim'] | date:'dd/MM/yyyy'}}
                 </td>
-                <td>                    
+                <td>
                     <span *ngIf="rowData['Alertas'] == 0 ">válido</span>
                     <span *ngIf="rowData['Alertas'] > 0">{{rowData['Alertas']}} alertas</span>
                 </td>
                 <td>
-                    <span *ngIf="rowData['ConfirmacaoDoTripulante']">{{rowData['ConfirmacaoDoTripulante'] | date:'dd/MM/yyyy'}}</span>
+                    <span *ngIf="rowData['ConfirmacaoDoTripulante']">{{rowData['ConfirmacaoDoTripulante'] |
+                        date:'dd/MM/yyyy'}}</span>
                 </td>
                 <td>
-                    <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] | date:'dd/MM/yyyy'}}</span>
+                    <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] |
+                        date:'dd/MM/yyyy'}}</span>
                 </td>
                 <td>
-                    <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] | date:'dd/MM/yyyy'}}</span>
+                    <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] |
+                        date:'dd/MM/yyyy'}}</span>
                 </td>
-                <td><button pButton type="button" icon="pi pi-print" iconPos="left" (click)="imprimir(rowData.Id)"></button></td>
+                <td><button pButton type="button" icon="pi pi-print" iconPos="left"
+                        (click)="imprimir(rowData.Id)"></button></td>
             </tr>
         </ng-template>
 

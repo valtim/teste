@@ -1,37 +1,3 @@
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ListboxModule } from 'primeng/listbox';
-import { CalendarModule } from 'primeng/calendar';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { TableModule } from 'primeng/table';
-import { AccordionModule } from 'primeng/accordion';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { DropdownModule } from 'primeng/dropdown';
-import { InputMaskModule } from 'primeng/inputmask';
-import { MenubarModule } from 'primeng/menubar';
-import { ToastModule } from 'primeng/toast';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { CardModule } from 'primeng/card';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { PickListModule } from 'primeng/picklist';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { FieldsetModule } from 'primeng/fieldset';
-import { MessagesModule } from 'primeng/messages';
-import { MessageModule } from 'primeng/message';
-import { TabViewModule } from 'primeng/tabview';
-import { InputTextModule } from 'primeng/inputtext';
-import { StepsModule } from 'primeng/steps';
-import { FileUploadModule } from 'primeng/fileupload';
-
 import { NgModule } from '@angular/core';
 
 import { SegurancaModule } from './seguranca/seguranca.module';
@@ -93,7 +59,6 @@ import { DuplaComponent } from './escala/dupla/dupla.component';
 import { DuplaDetalheComponent } from './escala/dupla-detalhe/dupla-detalhe.component';
 import { EscalaSemanalComponent } from './escala/escala-semanal/escala-semanal.component';
 import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.component';
-import { RelGenericoComponent } from './relatorios/rel-generico/rel-generico.component';
 import { InformativoComponent } from './cadastro/informativo/informativo.component';
 import { ListaInformativoComponent } from './cadastro/lista-informativo/lista-informativo.component';
 import { IncompatibilidadeComponent } from './cadastro/incompatibilidade/incompatibilidade.component';
@@ -117,9 +82,6 @@ import { TurmaStatusComponent } from './treinamento/turma-status/turma-status.co
 
 import { MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
 import { PublicClientApplication } from '@azure/msal-browser';
-import { TituloComponent } from './shared/titulo/titulo.component';
-import { MenuComponent } from './shared/menu/menu.component';
-import { ConfirmacaoComponent } from './shared/confirmacao/confirmacao.component';
 import { SOLSharedModule } from './shared/sol.shared.module';
 import { BuscaBiComponent } from './bi/busca-bi/busca-bi.component';
 import { ControleDeAcessoEditComponent } from './cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component';
@@ -127,6 +89,14 @@ import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.comp
 import { ModificadorComponent } from './cadastro/modificador/modificador.component';
 import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component';
 import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
+
+import { ControleDeAcessoComponent } from './cadastro/controle-de-acesso/controle-de-acesso.component';
+import { GrupoDePerguntaComponent } from './cadastro/grupo-de-pergunta/grupo-de-pergunta.component';
+import { FichaDeAvaliacaoComponent } from './cadastro/ficha-de-avaliacao/ficha-de-avaliacao.component';
+import { FichaDeAvaliacaoEditComponent } from './cadastro/ficha-de-avaliacao-edit/ficha-de-avaliacao-edit.component';
+import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component';
+import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
+
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -214,9 +184,12 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     ModificadorComponent,
     GraficoComponent,
     TesteGraficoComponent,
-
-
-
+    ControleDeAcessoComponent,
+    GrupoDePerguntaComponent,
+    FichaDeAvaliacaoComponent,
+    FichaDeAvaliacaoEditComponent,
+    FichaDeAvaliacaoItemComponent,
+    InstrutorComponent,
   ],
   imports: [
     AppRoutingModule,
