@@ -100,6 +100,7 @@ import { GrupoDePerguntaComponent } from "./cadastro/grupo-de-pergunta/grupo-de-
 import { FichaDeAvaliacaoComponent } from "./cadastro/ficha-de-avaliacao/ficha-de-avaliacao.component";
 import { FichaDeAvaliacaoEditComponent } from "./cadastro/ficha-de-avaliacao-edit/ficha-de-avaliacao-edit.component";
 import { FichaDeAvaliacaoItemComponent } from "./cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component";
+import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -373,11 +374,16 @@ const routes: Routes = [
   {
     path: "ficha-de-avaliacao-item/:Id",
     component: FichaDeAvaliacaoItemComponent,
+
   },
+  {
+    path: 'instrutor',
+    component: InstrutorComponent,
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)], //, { enableTracing: true })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

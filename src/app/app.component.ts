@@ -15,12 +15,9 @@ export class AppComponent implements OnInit {
   private readonly _destroying$ = new Subject<void>();
   ExibirLoginLocal = false;
 
-  localhost =
-    window.location.href.indexOf("localhost") > -1 ||
-    window.location.href.indexOf("fastapi") > -1;
-  // localhost = window.location.href.indexOf("localhost") > -1;
-  usuarioLogado = localStorage.getItem("Authorization") != null;
-  paginaDeLogin = window.location.href.indexOf("/login") > -1;
+  localhost = window.location.href.indexOf('localhost') > -1 || window.location.href.indexOf('fastapi') > -1;
+  usuarioLogado = localStorage.getItem('Authorization') != null;
+  paginaDeLogin = window.location.href.indexOf('/login') > -1;
   jaLogouRemoto = false;
 
   public ExibirBotaoLogin =
@@ -50,7 +47,10 @@ export class AppComponent implements OnInit {
 
       console.log("pagina de login: " + this.paginaDeLogin);
 
-      if (this.usuarioLogado) return;
+      console.log(this.ExibirBotaoLogin);
+
+      if (this.usuarioLogado)
+        return;
 
       if (this.localhost && this.paginaDeLogin) return;
 

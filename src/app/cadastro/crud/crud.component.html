@@ -115,6 +115,20 @@
                         </ng-template>
                     </p-cellEditor>
 
+
+
+                    <p-cellEditor *ngIf="col.type == 'Tripulante'">
+
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="listas['Tripulante']" [(ngModel)]="rowData[col.field]" [filter]="true"
+                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome" filterBy="Nome"  dataKey="Id"
+                                [showClear]="true"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="rowData[col.field] != null">{{rowData[col.field].Trato}}</span>
+                        </ng-template>
+                    </p-cellEditor>
+
                     <!-- <p-cellEditor *ngIf="col.type == 'BaseDoTripulante'">
 
                         <ng-template pTemplate="input">

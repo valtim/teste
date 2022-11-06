@@ -95,6 +95,7 @@ import { GrupoDePerguntaComponent } from './cadastro/grupo-de-pergunta/grupo-de-
 import { FichaDeAvaliacaoComponent } from './cadastro/ficha-de-avaliacao/ficha-de-avaliacao.component';
 import { FichaDeAvaliacaoEditComponent } from './cadastro/ficha-de-avaliacao-edit/ficha-de-avaliacao-edit.component';
 import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component';
+import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
 
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -188,6 +189,7 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     FichaDeAvaliacaoComponent,
     FichaDeAvaliacaoEditComponent,
     FichaDeAvaliacaoItemComponent,
+    InstrutorComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
 import { EscalaService } from 'src/app/shared/escala.service';
+import { DataUtil } from 'src/app/shared/DataUtil';
 
 @Component({
   selector: 'app-dupla',
@@ -41,6 +42,7 @@ export class DuplaComponent implements OnInit {
 
   exibeRestricao: boolean = false;
   restricoesProntas = false;
+  clientes: any;
 
   constructor(private apiEscala: EscalaService,
     private messageService: MessageService) {
@@ -53,7 +55,7 @@ export class DuplaComponent implements OnInit {
     this.rodarRelatorio();
   }
 
-  getAmanha(){
+  getAmanha() {
     return new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
   }
 
@@ -63,6 +65,26 @@ export class DuplaComponent implements OnInit {
 
   excluirDeslocamento(id) {
     this.deslocamentosDoDia = this.deslocamentosDoDia.filter(x => x.Id != id);
+  }
+
+  mudarDataInicio() {
+    this.dataFim = this.dataInicio;
+  }
+  mudeiApresentacao(dados) {
+
+    dados.Modificado = true;
+    this.apiEscala.postFinalDeJornada(DataUtil.TimeSpanURL(dados.Apresentacao)).then(x => {
+      dados.UltimoCorte = x.UltimoCorte;
+      dados.FinalDaJornada = x.FinalDaJornada;
+
+      dados.Invalido = false;
+      dados.Ativo = true;
+    })
+  }
+
+  mudeiPrefixo(e, dados) {
+    dados.Cliente = dados.Prefixo.Cliente;
+    this.mudeiAqui(e, dados);
   }
 
   mudeiAqui(e, dados) {
@@ -106,6 +128,7 @@ export class DuplaComponent implements OnInit {
       this.incompatibilidades = x.incompatibilidades;
       this.deslocamentos = x.deslocamentos;
       this.deslocamentosDoDia = x.deslocamentosDoDia;
+      this.clientes = x.clientes;
       // vencimentos = true;
       // this.tudoPronto = duplas && vencimentos;
       this.listasOK = true;
@@ -169,21 +192,26 @@ export class DuplaComponent implements OnInit {
   }
 
   novaLinha() {
+
     this.duplas.push({
       Id: GuidUtil.NewGuid(),
-      Base: undefined,
-      Data: undefined,
+      Base: null,
+      Data: new Date(this.dataInicio.getFullYear(), this.dataInicio.getMonth(), this.dataInicio.getDate()),
       PIC: null,
       SIC: null,
-      Apresentacao: undefined,
-      Observacao: undefined,
-      RepeteAte: undefined,
-      InicioVoo: undefined,
-      FimVoo: undefined,
-      InicioDeslocamento: undefined,
-      FimDeslocamento: undefined,
-      Prefixo: undefined,
+      Apresentacao: null,
+      Observacao: null,
+      RepeteAte: null,
+      InicioVoo: null,
+      FimVoo: null,
+      InicioDeslocamento: null,
+      FimDeslocamento: null,
+      Prefixo: null,
     });
+  }
+
+  print(){
+    window.print();
   }
 
   salvar() {
@@ -219,6 +247,12 @@ export class DuplaComponent implements OnInit {
       //this.duplas.forEach(x => x.RepeteAte = undefined);
 
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
+
+
+
+      for (let i = 0; i < x.mensagensDeErro.length; i++)
+        this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: x.mensagensDeErro[i] });
+
 
       this.duplasOK = true;
     })

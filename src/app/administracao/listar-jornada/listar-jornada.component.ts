@@ -42,7 +42,7 @@ export class ListarJornadaComponent implements OnInit {
   }
 
   imprimir(id : string){
-    window.open(`https://aeroleo.controledafadiga.com.br/imprimir-jornada/${id}`);
+    window.open(`https://${this.api.getClienteLogado()}.controledafadiga.com.br/imprimir-jornada/${id}`);
   }
 
 }

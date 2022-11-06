@@ -84,9 +84,9 @@
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                <p-dropdown [options]="todasAsPessoas" [(ngModel)]="linha.Tripulante" dataKey="Id"
                                     optionLabel="Trato" [showClear]="true" placeholder="Tripulante" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)">
+                                    (onChange)="mudeiAqui($event, linha)" filter="true">
                                 </p-dropdown>
                             </ng-template>
                             <ng-template pTemplate="output">
@@ -160,7 +160,7 @@
             <!-- </div> -->
             <!-- <div class="p-field  p-col-7"> -->
             <div class="p-col">
-                <div *ngFor="let item of PeriodosDeCurso.Periodos">{{item.Data | date:'dd/MM/yyyy'}}
+                <div *ngFor="let item of turmaInterna.PeriodosDeCurso">{{item.Data | date:'dd/MM/yyyy'}}
                     <button pButton type="button" label="Adicionar Horário" icon="pi pi-plus"
                         class="p-button-raised p-button-rounded" (click)="novaHora(item.Data)"></button>
                     <button pButton type="button" label="Remover Dia" icon="pi pi-trash"

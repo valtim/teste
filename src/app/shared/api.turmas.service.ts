@@ -1,7 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { AutorizacaoService } from "./autorizacao.service";
-import { BehaviorSubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { AutorizacaoService } from './autorizacao.service';
+import { BehaviorSubject } from 'rxjs';
+import { WindowScrollController } from '@fullcalendar/core';
+
 
 @Injectable({
   providedIn: "root",
@@ -107,18 +109,19 @@ export class ApiTurmasService {
   }
 
   newBlankGuid(): string {
-    return "00000000-0000-0000-0000-000000000000";
+    return '00000000-0000-0000-0000-000000000000'
   }
 
   getUsuarioLogadoComPermissoes(callback) {
-    this.getUsuarioLogado().then((resp) => {
-      resp.ehAdministrador =
-        resp.PerfisHabilitados.map((x) => x.Sigla).filter((y) =>
-          ["gtr", "adm", "atr"].includes(y)
-        ).length > 0;
-      resp.ehInstrutor =
-        resp.PerfisHabilitados.map((x) => x.Sigla).filter((y) => y == "ins")
-          .length > 0;
+    this.getUsuarioLogado().then(resp => {
+
+      if (resp == null) {
+        window.location.href = "/logoff";
+        return;
+      }
+
+      resp.ehAdministrador = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => ["gtr", "adm", "atr"].includes(y)).length > 0);
+      resp.ehInstrutor = (resp.PerfisHabilitados.map(x => x.Sigla).filter(y => y == "ins").length > 0);
       callback(resp);
     });
   }
@@ -282,14 +285,7 @@ export class ApiTurmasService {
       .toPromise();
   }
   getTurmasByData(dataIni: Date, dataFim: Date): Promise<any> {
-    return this.http
-      .get(
-        `${this.URLCORE}api/turmaPorData/${
-          dataIni.toISOString().split("T")[0]
-        }/${dataFim.toISOString().split("T")[0]}`,
-        this.httpOptions
-      )
-      .toPromise();
+    return this.http.get(`${this.URLCORE}api/turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
   }
 
   getTurmaById(id: string): Promise<any> {
@@ -323,6 +319,7 @@ valtim
   /*
 fim valtim
 */
+
 
   getTreinamentos(): Promise<any> {
     return this.http

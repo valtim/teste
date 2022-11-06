@@ -50,18 +50,21 @@ export class TurmaListComponent implements OnInit {
       this.tripulantes = x.Tripulantes;
       this.deslocamentos = x.Deslocamentos;
 
-      if (x.Turmas.length == 0) {
-        this.loading = false;
-      } else {
-        x.Turmas.forEach((turma, index) => {
-          turma.indexStatus = 'index' + index;
-          turma.Carregada = true;
-          if (index == (x.Turmas.length - 1)) {
-            this.turmas = x.Turmas;
-            this.loading = false;
-          }
-        });
-      }
+      this.turmas = [];
+      this.turmas = x.Turmas;
+      this.loading = false;
+
+
+      // if (x.Turmas.length == 0) {
+      //   this.loading = false;
+      // } else {
+      //   x.Turmas.forEach((turma, index) => {
+      //     turma.indexStatus = 'index' + index;
+      //     turma.Carregada = true;
+      //     if (index == (x.Turmas.length - 1)) {
+      //     }
+      //   });
+      // }
     })
   }
 

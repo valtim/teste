@@ -60,7 +60,8 @@ export class ApiService {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
     this.url =
       window.location.host === "localhost:4200"
-        ? "https://teste.fastapi.com.br/"
+         ? "https://localhost:44343/"
+        //? "https://teste.fastapi.com.br/"
         : "/";
 
     this.message = {
@@ -278,6 +279,10 @@ export class ApiService {
     return this.getCombos().then(() =>
       JSON.parse(localStorage.getItem("TipoDeOperacao"))
     );
+  }
+
+  getTripulantesCache(): any {
+    return this.getCombos().then(() => JSON.parse(localStorage.getItem("Tripulante")));
   }
 
   getCertificado(): Promise<any> {
@@ -1000,6 +1005,13 @@ export class ApiService {
       .get(`${this.url}api/tripulante`, this.httpOptions)
       .toPromise();
   }
+
+  getTripulantesLight(): Promise<any> {
+    return this.http
+      .get(`${this.url}api/tripulante-light`, this.httpOptions)
+      .toPromise();
+  }
+  
 
   postAnaliseDeFadiga(filtro: any): Promise<any> {
     return this.http
