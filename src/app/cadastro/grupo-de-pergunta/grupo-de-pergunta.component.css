@@ -1,0 +1,14 @@
+#cadastro,
+#dataTable {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+}
+
+#novoGrupo {
+  width: 600px;
+}
+
+.p-button-rounded {
+  color: red;
+}

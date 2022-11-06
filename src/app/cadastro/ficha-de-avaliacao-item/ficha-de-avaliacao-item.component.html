@@ -1,0 +1,127 @@
+<app-titulo id="titulo" [titulo]="titulo"> </app-titulo>
+<div>
+  <div>
+    <span class="p-buttonset botoes_salvar">
+      <button
+        pButton
+        type="button"
+        label="Salvar"
+        (click)="salvar(ficha)"
+        icon="pi pi-check"
+        class="p-button-raised p-button-rounded"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        (click)="cancelar()"
+        icon="pi pi-times"
+        class="p-button-raised p-button-rounded p-button-warning"
+      ></button>
+    </span>
+  </div>
+
+  <div id="grupo">
+    <p-card>
+      <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col-12">
+          <div class="p-field">
+            <label for="nome">Nome da Ficha</label>
+            <input id="nome" type="text" [(ngModel)]="ficha.Nome" pInputText />
+          </div>
+        </div>
+        <p-fieldset legend="Perguntas">
+          <span class="p-buttonset">
+            <button
+              pButton
+              type="button"
+              label="Novo"
+              (click)="novaPergunta()"
+              icon="pi pi-plus"
+              class="p-button-raised p-button-rounded"
+            ></button>
+          </span>
+
+          <p-table #dt [value]="itens" dataKey="Id" editMode="row">
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col style="width: 6%" />
+                <col style="width: 39%" />
+                <col style="width: 39%" />
+                <col style="width: 10%" />
+                <col style="width: 6%" />
+              </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Ordenar</th>
+                <th>Grupo</th>
+                <th>Pergunta</th>
+                <th>Ordem</th>
+                <th>Excluir</th>
+              </tr>
+            </ng-template>
+            <ng-template
+              pTemplate="body"
+              let-linha
+              let-editing="editing"
+              let-ri="rowIndex"
+              let-index="rowIndex"
+            >
+              <tr
+                [pEditableRow]="linha"
+                [pSelectableRow]="linha"
+                [pReorderableRow]="index"
+              >
+                <td>
+                  <span class="pi pi-bars" pReorderableRowHandle></span>
+                </td>
+                <td pInitEditableRow>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <p-dropdown
+                        [options]="grupos"
+                        [(ngModel)]="linha.Grupo"
+                        optionLabel="Nome"
+                        dataKey="Id"
+                        [showClear]="true"
+                        [style]="{ width: '100%' }"
+                        placeholder="Selecione o grupo"
+                      ></p-dropdown>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      <span *ngIf="linha.Grupo">{{ linha.Grupo.Nome }}</span>
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+
+                <td pEditableColumn>
+                  <p-cellEditor>
+                    <ng-template pTemplate="input">
+                      <input pInputText type="text" [(ngModel)]="linha.Texto" />
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                      {{ linha.Texto }}
+                    </ng-template>
+                  </p-cellEditor>
+                </td>
+                <td id="index">
+                  {{ index }}
+                </td>
+                <td>
+                  <button
+                    pButton
+                    icon="pi pi-trash"
+                    class="p-button-danger"
+                    (click)="excluirItem(ficha, linha)"
+                  ></button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-fieldset>
+      </div>
+    </p-card>
+  </div>
+  <br />
+</div>

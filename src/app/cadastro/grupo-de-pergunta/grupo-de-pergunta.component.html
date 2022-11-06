@@ -1,0 +1,70 @@
+<app-titulo id="titulo" titulo="Cadastro de grupos das fichas de avaliação">
+</app-titulo>
+
+<div id="cadastro">
+  <p-card>
+    <label>Novo Grupo: </label>
+
+    <input pInputText id="novoGrupo" [(ngModel)]="nome" />
+
+    <button
+      pButton
+      type="button"
+      label="Salvar"
+      icon="pi pi-check"
+      class="p-button-raised"
+      [disabled]="false"
+      (click)="salvar(nome)"
+    ></button>
+  </p-card>
+</div>
+<br />
+
+<div id="dataTable">
+  <p-table
+    [value]="grupos"
+    styleClass="p-datatable-striped"
+    responsiveLayout="scroll"
+    (onRowReorder)="onRowReorder($event)"
+  >
+    <ng-template pTemplate="caption"> Grupos Cadastrados </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 100px">Reordenar</th>
+
+        <th>Nome</th>
+
+        <th>Ordem</th>
+
+        <th style="width: 75px">Excluir</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-index="rowIndex">
+      <tr [pSelectableRow]="item" [pReorderableRow]="index">
+        <td>
+          <span class="pi pi-bars" pReorderableRowHandle></span>
+        </td>
+        <td>
+          {{ item.Nome }}
+        </td>
+        <td>
+          {{ item.Ordem ? item[item.Ordem] : index }}
+        </td>
+        <td>
+          <button
+            pButton
+            pRipple
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-text"
+            (click)="excluir(item)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <b>SOL SISTEMAS</b>
+    </ng-template>
+  </p-table>
+</div>
+<pre>{{ log | json }}</pre>
