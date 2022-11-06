@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 // import { v4 as uuidv4 } from 'uuid';
 import { MenuItem, MessageService } from 'primeng/api';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
@@ -48,12 +48,12 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
 
   //fg: FormGroup;
   
-  grupos: FormGroup[];
+  grupos: UntypedFormGroup[];
 
   constructor(
     private api: ApiService,
     private apiGenerico: ApiGenericoService,
-    private fb: FormBuilder) {
+    private fb: UntypedFormBuilder) {
       
      }
   ngAfterContentChecked(): void {
@@ -68,7 +68,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
 
   }
 
-  createMemberGroup(member: any): FormGroup {
+  createMemberGroup(member: any): UntypedFormGroup {
     return this.fb.group({
       ...member,
     });
