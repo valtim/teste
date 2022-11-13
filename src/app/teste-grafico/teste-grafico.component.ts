@@ -10,10 +10,13 @@ export class TesteGraficoComponent implements OnInit {
 
 
   tripulantes;
-  selectedValues;
+  selectedValues : any[] = [];
 
-  dataIni = new Date(2022, 1, 1);
-  dataFim = new Date(2022, 2, 1);
+
+  hoje = new Date();
+
+  dataIni = new Date();
+  dataFim = new Date();
 
   data: any;
 
@@ -21,6 +24,9 @@ export class TesteGraficoComponent implements OnInit {
   resultado: any;
 
   constructor(private api: ApiService) {
+    this.dataIni = new Date(this.hoje.getFullYear(), this.hoje.getMonth(), 1);
+    this.dataFim = new Date(this.hoje.getFullYear(), this.hoje.getMonth() + 1, 1);
+    this.dataFim.setDate(this.dataFim.getDate() - 1);
     // this.data = {
     //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     //   datasets: [
@@ -77,14 +83,17 @@ export class TesteGraficoComponent implements OnInit {
     this.api.getListaTripulanteCombo().then(x => {
       this.tripulantes = x;
     })
+
   }
 
+
+  
   rodarRelatorio() {
 
     let filtro = {
       inicio: this.dataIni.toISOString().split('T')[0],
       termino: this.dataFim.toISOString().split('T')[0],
-      tripulantes: this.selectedValues,
+      tripulantes: this.selectedValues.map(x=>x.Id),
     }
 
     this.api.postAnaliseDeFadiga(filtro).then(x => {
