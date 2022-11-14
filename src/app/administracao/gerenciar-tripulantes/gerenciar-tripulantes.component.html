@@ -1,0 +1,57 @@
+<app-titulo titulo="GERENCIAR TRIPULANTES" [carregando]="carregando"></app-titulo>
+
+<div class="p-grid p-mt-1">    
+    <div class="p-col">        
+        <button type="button" pButton pRipple label="FIltrar"></button>
+        <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato ou ANAC">
+    </div>
+    <div class="p-col div-checkbox">
+        <input type="checkbox" [(ngModel)]="bolinhaCinza" (change)="filtrarBolinhas()">
+        <div class="bolinha" ngClass="cinza"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaVermelha" (change)="filtrarBolinhas()">
+        <div class="bolinha" ngClass="vermelha"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaAmarela" (change)="filtrarBolinhas()">
+        <div class="bolinha" ngClass="amarela"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaVerde" (change)="filtrarBolinhas()">
+        <div class="bolinha" ngClass="verde"></div>
+    </div>
+</div>
+
+<div class="tabela" *ngIf="tripulantes">
+
+    <p-table [columns]="colunas" [value]="tripulantes" [scrollable]="true"
+        scrollHeight="70vh" id="" frozenHeight="200px" class="tabela">        
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of columns; let i = index" class="coluna">
+                    {{col}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+            <tr>
+                <td>{{rowData.Trato}}</td>
+                <td>{{rowData.CodigoANAC}}</td>
+                <td><div class="bolinha" ngClass="{{rowData.Cor}}"></div></td>
+                <td>
+                    <button pButton type="button" icon="pi pi-arrow-right" label="Acessar" [routerLink]="['/logoff']" routerLinkActive="router-link-active" ></button>
+                    <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="exibirDialogoExclusao(rowData)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+<p-dialog header="Excluir Tripulante" [(visible)]="exibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoExclusao()">    
+    <h5>
+        Realmente deseja excluir o Tripulante {{tratoTripulanteSelecionado()}}?
+    </h5>
+    <div class="botoes">
+        <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light" (click)="ocultarDialogoExclusao()"></button>
+        <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="excluirTripulante()"></button>
+    </div>
+</p-dialog>

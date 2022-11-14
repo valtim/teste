@@ -1,0 +1,83 @@
+div > input[type=text] {
+    width: 350px;
+}
+
+div.bolinha {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+div.div-checkbox::after {
+    height: 0;
+    content: '';
+    clear: both;
+    display: block;
+}
+
+div.div-checkbox > div.bolinha {
+    display: block;
+    float: left;
+    margin-top: 7px;
+}
+
+div.div-checkbox > input[type=checkbox] {
+    display: block;
+    float: left;
+    margin-top: 13px;
+    margin-left: 10px;
+}
+
+div.div-checkbox > input[type=checkbox]:first-child {
+    margin-left: 0;
+}
+
+p-dialog h5 {
+    margin-top: 0;
+}
+
+p-dialog div.botoes {
+    height: 0;
+    content: '';
+    clear: both;
+    display: block;
+}
+
+p-dialog div.botoes > button:nth-child(1) {
+    display: block;
+    float: left;
+}
+
+p-dialog div.botoes > button:nth-child(2) {
+    display: block;
+    float: right;
+}
+
+tr:hover {
+    background-color: #e9ecef;
+}
+
+tr > th:nth-child(4), tr > td:nth-child(4) {
+    width: 40%;
+}
+
+tr > td > button:nth-child(2) {
+    margin-left: 10px;
+}
+
+div.cinza {
+    background-color: gray;
+}
+
+div.vermelha {
+    background-color: red;
+}
+
+div.amarela {
+    background-color: yellow;
+}
+
+div.verde {
+    background-color: green;
+}
