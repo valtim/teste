@@ -25,7 +25,7 @@
     <p-message *ngIf="selectedValues.length == 0" severity="warn" text="*Obrigatório selecionar ao menos um tripulante"
         class="p-d-block p-mb-2 p-mt-4"></p-message>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-        class="p-ml-2" [disabled]="selectedValues.length == 0"></button>
+        class="p-mt-2" [disabled]="selectedValues.length == 0"></button>
 </p-card>
 
 <p-chart *ngIf="data" type="line" [data]="data" (onDataSelect)="selectData($event)" width="98vw" height="80vh">
