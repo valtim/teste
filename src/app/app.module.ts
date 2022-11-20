@@ -97,6 +97,7 @@ import { FichaDeAvaliacaoEditComponent } from './cadastro/ficha-de-avaliacao-edi
 import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component';
 import { GerenciarTripulantesComponent } from './administracao/gerenciar-tripulantes/gerenciar-tripulantes.component';
 import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
+import { EditarGerenciarTripulantesComponent } from './administracao/editar-gerenciar-tripulantes.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -192,7 +193,8 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     FichaDeAvaliacaoEditComponent,
     FichaDeAvaliacaoItemComponent,
     GerenciarTripulantesComponent,
-    InstrutorComponent,  
+    InstrutorComponent,
+    EditarGerenciarTripulantesComponent,  
   ],
   imports: [
     AppRoutingModule,

@@ -2,8 +2,8 @@
 
 <div class="p-grid p-mt-1">    
     <div class="p-col">        
-        <button type="button" pButton pRipple label="FIltrar"></button>
-        <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato ou ANAC">
+        <button type="button" pButton pRipple label="Filtrar"></button>
+        <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato, ANAC ou Matrícula">
     </div>
     <div class="p-col div-checkbox">
         <input type="checkbox" [(ngModel)]="bolinhaCinza" (change)="filtrarBolinhas()">
@@ -35,9 +35,10 @@
             <tr>
                 <td>{{rowData.Trato}}</td>
                 <td>{{rowData.CodigoANAC}}</td>
+                <td>{{rowData.Matricula}}</td>                
                 <td><div class="bolinha" ngClass="{{rowData.Cor}}"></div></td>
                 <td>
-                    <button pButton type="button" icon="pi pi-arrow-right" label="Acessar" [routerLink]="['/logoff']" routerLinkActive="router-link-active" ></button>
+                    <button pButton type="button" icon="pi pi-arrow-right" label="Editar" (click)="exibirDialogoEdicao(rowData)"></button>
                     <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="exibirDialogoExclusao(rowData)"></button>
                 </td>
             </tr>
@@ -54,4 +55,9 @@
         <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light" (click)="ocultarDialogoExclusao()"></button>
         <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="excluirTripulante()"></button>
     </div>
+</p-dialog>
+
+<p-dialog *ngIf="exibirEdicao" header="EDITAR TRIPULANTES" [(visible)]="exibirEdicao" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoEdicao()">
+    <app-editar-gerenciar-tripulantes [tripulante]="tripulanteSelecionado" (retorno)="ocultarDialogoEdicao()">
+    </app-editar-gerenciar-tripulantes>
 </p-dialog>

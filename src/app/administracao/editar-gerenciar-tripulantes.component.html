@@ -1,0 +1,100 @@
+<div class="p-grid editar-tripulantes">    
+    
+    <button (click)="salvar()" type="button" class="p-button-success salvar-tripulante" icon="pi pi-check" pButton pRipple label="Salvar"></button>
+
+    <div class="p-col-3">        
+        <button type="button" class="label-fixo" pButton pRipple label="STATUS"></button>            
+    </div>
+    <div class="p-col-3 div-checkbox">
+        <input type="checkbox" [(ngModel)]="bolinhaCinza" (change)="marcarBolinhas('bolinhaCinza')">
+        <div class="bolinha" ngClass="cinza"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaVermelha" (change)="marcarBolinhas('bolinhaVermelha')">
+        <div class="bolinha" ngClass="vermelha"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaAmarela" (change)="marcarBolinhas('bolinhaAmarela')">
+        <div class="bolinha" ngClass="amarela"></div>
+
+        <input type="checkbox" [(ngModel)]="bolinhaVerde" (change)="marcarBolinhas('bolinhaVerde')">
+        <div class="bolinha" ngClass="verde"></div>
+    </div>
+    <div class="p-col-6">
+        <button type="button" class="label-justificativa" pButton pRipple label="Justificativa"></button>
+        <textarea [(ngModel)]="tripulante.Justificativa"></textarea>
+    </div>
+
+    <div class="p-col-12">        
+        <button type="button" class="label-fixo" pButton pRipple label="Nome Completo"></button>
+        <input pInputText type="text" class="input-fixo" [(ngModel)]="tripulante.NomeCompleto">            
+    </div>
+
+    <div class="p-col-12">        
+        <button type="button" class="label-fixo" pButton pRipple label="E-Mail"></button>
+        <input pInputText type="text" class="input-fixo" [(ngModel)]="tripulante.Email">                    
+    </div>
+
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Trato"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Trato">                    
+    </div>
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Código ANAC"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.CodigoANAC">                    
+    </div>
+
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="CPF"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.CPF">                    
+    </div>
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="SISPAT"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.CodigoPetrobras">                    
+    </div>
+
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Data Nascimento"></button>
+        <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="dataNascimento" selectionMode="single" dateFormat="dd/mm/yy"
+            showIcon="true"></p-calendar>                    
+    </div>
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Licença"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Licenca">                    
+    </div>
+
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Data Admissão"></button>
+        <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="dataAdmissao" selectionMode="single" dateFormat="dd/mm/yy"
+            showIcon="true"></p-calendar>                    
+    </div>
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Quinzena"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Quinzena">                    
+    </div>
+
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Base Contratual"></button>
+        <p-dropdown [options]="basesTripulante" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
+                    [showClear]="true" [(ngModel)]="tripulante.Base" [style]="{'width':'200px'}" ></p-dropdown>                   
+    </div>
+    <div class="p-col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Cargo"></button>
+        <p-dropdown [options]="cargos" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
+                    [showClear]="true" [(ngModel)]="tripulante.Cargo" [style]="{'width':'200px'}" ></p-dropdown>                            
+    </div>
+
+    <div class="p-col-1">        
+        <button type="button" pButton pRipple label="Peso"></button>                            
+    </div>
+    <div class="p-col-5">
+        <input pInputText type="text" [style]="{'width':'86px', 'margin-left': '8px'}" [(ngModel)]="ultimoPesoLb" (input)="ajustarValorQuilos()">
+        <button type="button" pButton pRipple label="Lb"></button>
+
+        <input readonly="true" disabled="true" pInputText type="text" [style]="{'width':'86px', 'margin-left': '10px'}" [(ngModel)]="ultimoPesoKg">
+        <button type="button" pButton pRipple label="Kg"></button>
+    </div>
+    <div class="p-col-6">
+        <button type="button" class="label-fixo-2" pButton pRipple label="Matrícula"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Matricula">
+    </div>
+
+</div>

@@ -17,13 +17,14 @@ export class GerenciarTripulantesComponent implements OnInit {
   cacheTripulantes;
   colunas;
   exibirDialogo;
+  exibirEdicao;
   tripulanteSelecionado;
 
   filtro;
-  bolinhaCinza;
-  bolinhaVermelha;
-  bolinhaAmarela;
-  bolinhaVerde;
+  bolinhaCinza = true;
+  bolinhaVermelha = true;
+  bolinhaAmarela = true;
+  bolinhaVerde = true;
 
   constructor(private api: ApiService, private router: Router, private messageService: MessageService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -31,9 +32,10 @@ export class GerenciarTripulantesComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregando = true;
-    this.colunas = ['Trato', 'ANAC', 'Status', 'Ações'];
+    this.colunas = ['Trato', 'ANAC', 'Matrícula', 'Status', 'Ações'];
     this.filtro = '';
     this.exibirDialogo = false;
+    this.exibirEdicao = false;
     this.tripulanteSelecionado = null;    
 
     this.obterTripulantesDoServidor();
@@ -49,11 +51,15 @@ export class GerenciarTripulantesComponent implements OnInit {
 
   filtrarTripulantes(): void {
     this.tripulantes = this.cacheTripulantes.filter(
-      t => (t.Trato.includes(this.filtro) || String(t.CodigoANAC).includes(this.filtro)) &&
-      ( (this.bolinhaCinza && t.Cor == 'cinza') || !this.bolinhaCinza ) &&
-      ( (this.bolinhaVermelha && t.Cor == 'vermelha') || !this.bolinhaVermelha ) &&
-      ( (this.bolinhaAmarela && t.Cor == 'amarela') || !this.bolinhaAmarela ) &&
-      ( (this.bolinhaVerde && t.Cor == 'verde') || !this.bolinhaVerde )
+      t => (
+          t.Trato.includes(this.filtro) || 
+          String(t.CodigoANAC).includes(this.filtro) ||
+          String(t.Matricula).includes(this.filtro)
+        ) &&
+      ( (!this.bolinhaCinza && t.Cor != 'cinza') || this.bolinhaCinza ) &&
+      ( (!this.bolinhaVermelha && t.Cor != 'vermelha') || this.bolinhaVermelha ) &&
+      ( (!this.bolinhaAmarela && t.Cor != 'amarela') || this.bolinhaAmarela ) &&
+      ( (!this.bolinhaVerde && t.Cor != 'verde') || this.bolinhaVerde )
     );
   }
 
@@ -66,12 +72,25 @@ export class GerenciarTripulantesComponent implements OnInit {
   }
 
   exibirDialogoExclusao(tripulante): void {
-    this.exibirDialogo = true;
     this.tripulanteSelecionado = tripulante;
+    this.exibirDialogo = true;
+  }
+
+  exibirDialogoEdicao(tripulante): void {
+    this.tripulanteSelecionado = tripulante;
+    this.exibirEdicao = true;
   }
 
   ocultarDialogoExclusao(): void {
     this.exibirDialogo = false;    
+  }
+
+  ocultarDialogoEdicao(): void {
+    this.tripulanteSelecionado = null;
+    this.exibirEdicao = false;
+    
+    this.obterTripulantesDoServidor();
+    this.filtrarTripulantes();
   }
 
   excluirTripulante(): void {
