@@ -98,6 +98,7 @@ import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-ite
 import { GerenciarTripulantesComponent } from './administracao/gerenciar-tripulantes/gerenciar-tripulantes.component';
 import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
 import { EditarGerenciarTripulantesComponent } from './administracao/editar-gerenciar-tripulantes.component';
+import { DuplaAdmComponent } from './escala/dupla-adm/dupla-adm.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -194,7 +195,8 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     FichaDeAvaliacaoItemComponent,
     GerenciarTripulantesComponent,
     InstrutorComponent,
-    EditarGerenciarTripulantesComponent,  
+    EditarGerenciarTripulantesComponent,
+    DuplaAdmComponent,
   ],
   imports: [
     AppRoutingModule,
