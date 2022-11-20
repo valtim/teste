@@ -101,6 +101,7 @@ import { FichaDeAvaliacaoComponent } from "./cadastro/ficha-de-avaliacao/ficha-d
 import { FichaDeAvaliacaoEditComponent } from "./cadastro/ficha-de-avaliacao-edit/ficha-de-avaliacao-edit.component";
 import { FichaDeAvaliacaoItemComponent } from "./cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component";
 import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component";
+import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -379,6 +380,10 @@ const routes: Routes = [
   {
     path: 'instrutor',
     component: InstrutorComponent,
+  },
+  {
+    path: 'dupla-adm',
+    component: DuplaAdmComponent,
   }
 ];
 

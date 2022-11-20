@@ -27,39 +27,6 @@ export class TesteGraficoComponent implements OnInit {
     this.dataIni = new Date(this.hoje.getFullYear(), this.hoje.getMonth(), 1);
     this.dataFim = new Date(this.hoje.getFullYear(), this.hoje.getMonth() + 1, 1);
     this.dataFim.setDate(this.dataFim.getDate() - 1);
-    // this.data = {
-    //   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    //   datasets: [
-    //     {
-    //       label: 'First Dataset',
-    //       data: [65, 59, 80, 81, 56, 55, 40],
-    //       fill: false,
-    //       borderColor: '#42A5F5'
-    //     },
-    //     {
-    //       label: 'Vermelho',
-    //       data: [70, 70, 70, 70, 70, 70, 70],
-    //       fill: true,
-    //       borderColor: 'red',
-    //       backgroundColor: 'red'
-    //     },
-    //     {
-    //       label: 'Amarelo',
-    //       data: [80, 80, 80, 80, 80, 80, 80],
-    //       fill: true,
-    //       borderColor: 'yellow',
-    //       backgroundColor: 'yellow'
-    //     },
-    //     {
-    //       label: 'Laranja',
-    //       data: [85, 85, 85, 85, 85, 85, 85],
-    //       fill: true,
-    //       borderColor: 'orange',
-    //       backgroundColor: 'orange'
-    //     },
-    //   ]
-    // }
-
     this.options = {
       title: {
         display: true,
@@ -73,10 +40,7 @@ export class TesteGraficoComponent implements OnInit {
   }
 
   selectData(event) {
-    //event.dataset = Selected dataset
-    //event.element = Selected element
-    //event.element._datasetIndex = Index of the dataset in data
-    //event.element._index = Index of the data in dataset
+    
   }
 
   ngOnInit(): void {
@@ -89,6 +53,9 @@ export class TesteGraficoComponent implements OnInit {
 
   
   rodarRelatorio() {
+
+    this.data = undefined;
+    this.resultado = undefined;
 
     let filtro = {
       inicio: this.dataIni.toISOString().split('T')[0],

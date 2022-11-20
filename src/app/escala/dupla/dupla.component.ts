@@ -193,7 +193,7 @@ export class DuplaComponent implements OnInit {
 
   novaLinha() {
 
-    this.duplas.push({
+    this.duplas.unshift({
       Id: GuidUtil.NewGuid(),
       Base: null,
       Data: new Date(this.dataInicio.getFullYear(), this.dataInicio.getMonth(), this.dataInicio.getDate()),

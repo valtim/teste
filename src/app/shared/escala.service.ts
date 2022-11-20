@@ -38,6 +38,11 @@ export class EscalaService {
       .toPromise();
   }
 
+  getDuplasAdm(dataInicio: Date, dataFim: Date): any {
+    return this.http.get(`${this.api.url}api/dupla-adm/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.api.httpOptions)
+      .toPromise();
+  }
+
   getRestricoes(data: Date): any {
     return this.http.get(`${this.api.url}api/restricoes/${data.toISOString().split("T")[0]}`, this.api.httpOptions)
       .toPromise();
