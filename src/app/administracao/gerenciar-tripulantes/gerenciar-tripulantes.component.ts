@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from "primeng/api";
 import { ApiService } from 'src/app/shared/api.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-gerenciar-tripulantes',
@@ -74,6 +75,37 @@ export class GerenciarTripulantesComponent implements OnInit {
   exibirDialogoExclusao(tripulante): void {
     this.tripulanteSelecionado = tripulante;
     this.exibirDialogo = true;
+  }
+
+  obterNovoTripulante(): any {
+    let novo = {
+      "Id": uuidv4(),
+      "Ativo": true,
+      "NomeCompleto": "",
+      "Trato": "",
+      "CodigoANAC": 0,
+      "CargoStr": null,
+      "Bolinha": "cinza",
+      "Justificativa": null,
+      "Matricula": null,
+      "CodigoPetrobras": null,
+      "CPF": "",
+      "Nascimento": null,
+      "Licenca": null,
+      "Email": null,
+      "Admissao": null,
+      "UltimoPeso": 0,
+      "Cargo": null,
+      "Base": null,
+      "Quinzena": null,
+      "Cor": "cinza"
+    };
+    return novo;
+  }
+
+  exibirDialogoNovo(): void {
+    this.tripulanteSelecionado = this.obterNovoTripulante();
+    this.exibirEdicao = true;
   }
 
   exibirDialogoEdicao(tripulante): void {

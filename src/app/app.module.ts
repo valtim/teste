@@ -97,7 +97,7 @@ import { FichaDeAvaliacaoEditComponent } from './cadastro/ficha-de-avaliacao-edi
 import { FichaDeAvaliacaoItemComponent } from './cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component';
 import { GerenciarTripulantesComponent } from './administracao/gerenciar-tripulantes/gerenciar-tripulantes.component';
 import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
-import { EditarGerenciarTripulantesComponent } from './administracao/editar-gerenciar-tripulantes.component';
+import { EditarGerenciarTripulantesComponent } from './administracao/editar-tripulantes/editar-gerenciar-tripulantes.component';
 import { DuplaAdmComponent } from './escala/dupla-adm/dupla-adm.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;

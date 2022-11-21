@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService } from "primeng/api";
 import { ApiService } from 'src/app/shared/api.service';
@@ -11,8 +11,13 @@ import { ApiService } from 'src/app/shared/api.service';
 })
 export class EditarGerenciarTripulantesComponent implements OnInit {
 
-  @Input() tripulante: any;
+  @Input() tripulanteSelecionado: any;
   @Output() retorno = new EventEmitter();
+
+  tripulante: any;
+  liberarBotaoSalvar = true;
+  cpfEstaValido = true;
+  mostrarLoading = false;
 
   bolinhaCinza;
   bolinhaVermelha;
@@ -31,7 +36,8 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
   constructor(private api: ApiService, private router: Router, private messageService: MessageService) {}
 
   ngOnInit(): void {
-    console.log(this.tripulante);
+    /* Clonar tripulante para não afetar a lista original */
+    this.tripulante = JSON.parse(JSON.stringify(this.tripulanteSelecionado));
 
     this.api.getCombos().then((x) => {
       this.cargos = x.Cargo;
@@ -103,7 +109,87 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
     this.bolinhaVerde = (marcado == 'bolinhaVerde');
   }
 
+  validarValores(): void {
+    if ((this.tripulante.NomeCompleto != '') && (this.tripulante.Trato != '')) {
+      if (this.cpfEstaValido) {
+        this.liberarBotaoSalvar = true;
+      } else {
+        this.liberarBotaoSalvar = false;  
+      }          
+    } else {
+      this.liberarBotaoSalvar = false;
+    }
+  }
+
+  validarValorCPF(): void {
+    if ((this.tripulante.CPF != '') && (this.tripulante.CPF != null)) {
+      let cpf = document.getElementById('input_cpf_mask');
+      if (this.validarCPF(this.tripulante.CPF)) {                            
+        if (cpf.classList.contains('cpf-invalido')) {
+          cpf.classList.remove('cpf-invalido');          
+          this.cpfEstaValido = true;
+          this.validarValores();
+        }                  
+      } else {          
+        if (!cpf.classList.contains('cpf-invalido')) {
+          cpf.classList.add('cpf-invalido');
+          this.cpfEstaValido = false;
+          this.validarValores();
+        }
+      }
+    }
+  }
+
+  validarCPF(cpf: string): boolean {
+    if (cpf == null) return true;
+    cpf = cpf.replace(/[^\d]+/g,'');    	
+    if(cpf == '') return true;	
+    // Elimina CPFs invalidos conhecidos	
+    if (cpf.length != 11 || 
+      cpf == "00000000000" || 
+      cpf == "11111111111" || 
+      cpf == "22222222222" || 
+      cpf == "33333333333" || 
+      cpf == "44444444444" || 
+      cpf == "55555555555" || 
+      cpf == "66666666666" || 
+      cpf == "77777777777" || 
+      cpf == "88888888888" || 
+      cpf == "99999999999")
+        return false;		
+    // Valida 1o digito	
+    let add = 0;	
+    for (let i=0; i < 9; i ++)		
+      add += parseInt(cpf.charAt(i)) * (10 - i);	
+      let rev = 11 - (add % 11);	
+      if (rev == 10 || rev == 11)		
+        rev = 0;	
+      if (rev != parseInt(cpf.charAt(9)))		
+        return false;		
+    // Valida 2o digito	
+    add = 0;	
+    for (let i = 0; i < 10; i ++)		
+      add += parseInt(cpf.charAt(i)) * (11 - i);	
+    rev = 11 - (add % 11);	
+    if (rev == 10 || rev == 11)	
+      rev = 0;	
+    if (rev != parseInt(cpf.charAt(10)))
+      return false;		
+    return true;   
+  }
+
   salvar(): void {
+    this.mostrarLoading = true;
+    this.liberarBotaoSalvar = false;
+
+    if (isNaN(+this.tripulante.CodigoANAC)) {
+      this.tripulante.CodigoANAC = 0;
+    }
+
+    if (isNaN(+this.tripulante.UltimoPeso)) {
+      this.tripulante.UltimoPeso = 0;
+    }
+
     let cor = 'cinza';
     if (this.bolinhaVermelha) cor = 'vermelha';
     if (this.bolinhaAmarela) cor = 'amarela';
@@ -119,6 +205,7 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
     this.api.postNTripulantes([this.tripulante]).then(x => {              
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Tripulante atualizado com sucesso!' });          
       console.log('Tripulante salvo com sucesso!');
+      this.mostrarLoading = false;
       this.retorno.emit();
     }).catch((x) => {
       console.error(x);

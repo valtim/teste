@@ -1,5 +1,10 @@
+button.novo-tripulante {
+    display: inline-block;
+    margin-left: -24px;
+}
+
 div > input[type=text] {
-    width: 350px;
+    width: 200px;
 }
 
 div.bolinha {
