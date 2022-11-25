@@ -2,7 +2,17 @@ import { getLocaleDateTimeFormat } from "@angular/common"
 
 export class DataUtil {
 
-
+  private static padTo2Digits(num) {
+    return num.toString().padStart(2, '0');
+  }
+  
+  public static formatDateBR(date) {
+    return [
+      this.padTo2Digits(date.getDate()),
+      this.padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
+    ].join('/');
+  }
 
   public static TimeSpanURL(timespan : string ):string {
     let hoje = new Date();

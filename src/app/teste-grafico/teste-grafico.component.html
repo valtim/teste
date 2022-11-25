@@ -49,7 +49,7 @@
             <tr>
                 <td>{{product.Data | date:'dd/MM/yyyy'}}</td>
                 <td>{{product.FadigaInicial}}</td>
-                <td>{{product.FadigaFinal}}</td>
+                <td>{{product.FadigaFinal}}<span *ngIf="product.Simulado">*</span></td>
                 <td>{{product.AnaliseDaPontuacao}}</td>
             </tr>
         </ng-template>

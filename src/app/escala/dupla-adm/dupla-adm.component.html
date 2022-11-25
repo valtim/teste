@@ -36,7 +36,54 @@
     </p-button>
     
 
-    <p-table [value]="duplas" dataKey="Id" editMode="row" styleClass="p-datatable-striped" >
+    <p-table [value]="cursos" styleClass="p-datatable-striped p-mt-2" >
+
+        <ng-template pTemplate="colgroup">
+            <colgroup>
+                <col style="width:20%">
+                <col style="width:20%">
+                <col style="width:20%">
+                <col style="width:20%">
+                <col style="width:20%">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th colspan="5">Treinamentos</th>
+            </tr>
+            <tr>
+                <th>Nome</th>
+                <th>Local</th>
+                <th>Instrutor</th>
+                <th>Alunos</th>
+                <th>Datas</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+            <tr *ngIf="linha.Exibir">
+                <td>
+                    {{linha.Nome}}
+                </td>
+                <td>
+                    {{linha.Local}}
+                </td>
+                <td>
+                    <div *ngIf="linha.InstrutorExterno">Externo</div><div *ngIf="!linha.InstrutorExterno">{{linha.Instrutor}}</div>
+                </td>
+                <td>
+                    {{linha.AlunosStr}}
+                </td>
+                <td>
+                    {{linha.DatasStr}}
+                </td>
+            </tr>
+        </ng-template>
+
+
+    </p-table>
+
+
+    <p-table [value]="duplas" dataKey="Id" editMode="row" styleClass="p-datatable-striped p-mt-2" >
 
         <ng-template pTemplate="colgroup">
             <colgroup>

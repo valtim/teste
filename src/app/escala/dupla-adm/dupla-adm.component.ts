@@ -1,6 +1,7 @@
 import { ɵsetRootDomAdapter } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { DataUtil } from 'src/app/shared/DataUtil';
 import { EscalaService } from 'src/app/shared/escala.service';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
 
@@ -30,6 +31,12 @@ export class DuplaAdmComponent implements OnInit {
     this.dataSelecionada = data;
     this.duplas.forEach(x=>x.Exibir = false);
     this.duplas.filter(x=>x.Data.toISOString() == data.toISOString()).forEach(x=>x.Exibir = true);
+
+
+    let dataStr = DataUtil.formatDateBR(data);
+
+    this.cursos.forEach(x=>x.Exibir = false);
+    this.cursos.filter(x=>x.DatasStr.includes(dataStr)).forEach(x=>x.Exibir = true);
   }
 
   mudarDataInicio() {
@@ -90,12 +97,13 @@ export class DuplaAdmComponent implements OnInit {
       //this.listarPendencias();
 
       this.apiEscala.getDuplasAdm(this.dataInicio, this.dataFim).then(x => {
-        this.duplas = x.Duplas;
         this.datas = x.Datas.map(x => new Date(x));
+        this.duplas = x.Duplas;
         this.duplas.forEach(x => {
           x.Data = new Date(x.Data)
           x.Exibir = true;
         });
+        this.cursos = x.Cursos;
         this.filtrar(this.dataInicio);
         this.listasOK = true;
       })
