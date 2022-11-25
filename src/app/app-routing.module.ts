@@ -63,6 +63,7 @@ import { CertificadoComponent } from "./treinamento/certificado/certificado.comp
 import { TipoDeOcorrenciaComponent } from "./cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component";
 import { EscalaMensalComponent } from "./escala/escala-mensal/escala-mensal.component";
 import { ListarJornadaComponent } from "./administracao/listar-jornada/listar-jornada.component";
+import { GerenciarTripulantesComponent } from "./administracao/gerenciar-tripulantes/gerenciar-tripulantes.component";
 import { QuinzenaComponent } from "./cadastro/quinzena/quinzena.component";
 import { TrilhoComponent } from "./escala/trilho/trilho.component";
 import { EscalaDoDiaComponent } from "./escala/escala-do-dia/escala-do-dia.component";
@@ -287,6 +288,10 @@ const routes: Routes = [
   {
     path: "listar-jornada",
     component: ListarJornadaComponent,
+  },
+  {
+    path: "gerenciar-tripulantes",
+    component: GerenciarTripulantesComponent,
   },
   {
     path: "imprimir-jornada",

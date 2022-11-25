@@ -1,0 +1,114 @@
+div.editar-tripulantes {
+    width: 800px;
+    min-height: 400px;
+}
+
+button.salvar-tripulante {
+    position: absolute;
+    top: 20px;
+    right: 66px;
+}
+
+div.bolinha {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+div.div-checkbox::after {
+    height: 0;
+    content: '';
+    clear: both;
+    display: block;
+}
+
+div.div-checkbox > div.bolinha {
+    display: block;
+    float: left;
+    margin-top: 7px;
+}
+
+div.div-checkbox > input[type=checkbox] {
+    display: block;
+    float: left;
+    margin-top: 13px;
+    margin-left: 10px;
+}
+
+div button.label-fixo {
+    width: 160px;
+    box-sizing: border-box;
+}
+
+div button.label-fixo-2 {
+    width: 160px;
+    box-sizing: border-box;
+}
+
+div input[type=text].input-fixo {
+    width: 600px;
+    box-sizing: border-box;
+}
+
+div.div-checkbox > input[type=checkbox]:first-child {
+    margin-left: -20px;
+}
+
+div.cinza {
+    background-color: gray;
+}
+
+div.vermelha {
+    background-color: red;
+}
+
+div.amarela {
+    background-color: yellow;
+}
+
+div.verde {
+    background-color: green;
+}
+
+textarea {
+    width: 360px;
+    height: 60px;
+}
+
+div button.label-justificativa {
+    width: 360px;
+    display: block;
+    box-sizing: border-box;
+}
+
+.p-inputtext.ng-dirty.ng-invalid {    
+    border: 1px solid #f44336;
+    background-color: #e4cdcc;
+}
+
+:host ::ng-deep .cpf-invalido {
+    border: 1px solid #f44336 !important;
+    background-color: #e4cdcc !important;
+}
+
+div.mostrar-loading {
+    display: block !important;
+}
+
+div.div-loading {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 1;
+}
+
+div.div-loading > svg {
+    width: 50px;
+    height: 50px;
+}
