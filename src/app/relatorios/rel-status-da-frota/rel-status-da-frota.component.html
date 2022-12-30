@@ -10,7 +10,11 @@
         </div>
         <div class="p-col">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
-                filterBy="Nome" optionLabel="Nome"></p-dropdown>
+                filterBy="Nome" optionValue="Id" optionLabel="Nome"></p-dropdown>
+        </div>
+        <div class="p-col">
+            <p-dropdown [options]="clientes" [(ngModel)]="clienteSelecionado" [filter]="true"
+                filterBy="Nome" optionValue="Id" optionLabel="Nome"></p-dropdown>
         </div>
         <div class="p-col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button></div>
@@ -27,7 +31,7 @@
 
     <p-menubar [model]="botoes" class="nao-imprimir"></p-menubar>
 
-    <app-cabecalho-impressao titulo="Status das Aeronaves Contratadas Pela Petrobras" class="d-print">
+    <app-cabecalho-impressao titulo="Status das Aeronaves Contratadas Pela {{cliente}}" class="d-print">
     </app-cabecalho-impressao>
 
     <p-table [value]="dados">

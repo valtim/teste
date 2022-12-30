@@ -736,12 +736,11 @@ export class ApiService {
 
   getRelStatusDaFrota(
     data: Date,
-    baseDeOperacao: string,
-    cliente: string[]
+    cliente: string
   ): Promise<any> {
     let caminho = `${this.url}api/RelStatusDaFrota/${
       data.toISOString().split("T")[0]
-    }/${baseDeOperacao}/${cliente}`;
+    }/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 

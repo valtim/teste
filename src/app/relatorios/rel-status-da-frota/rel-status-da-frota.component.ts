@@ -30,6 +30,9 @@ export class RelStatusDaFrotaComponent implements OnInit {
   tiposDeOperacao: any;
   disponibilidade: { value: any; label: string; }[];
   valoresSelecionados = [];
+  clienteSelecionado: any;
+  clientes: any[];
+  cliente: string;
 
   constructor(
     private api: ApiService,
@@ -73,22 +76,24 @@ export class RelStatusDaFrotaComponent implements OnInit {
 
       this.disponibilidade = x.Disponibilidade;
       this.prefixos = x.Prefixo;
+      this.clientes = x.Cliente;
       this.tiposDeOperacao = x.TipoDeOperacao;
       this.baseDeOperacao = x.BaseDeOperacao;
       this.baseDeOperacaoSelecionada = x.BaseDeOperacao[0];
       this.tela_ok = true;
-      this.rodarRelatorio();
+      //this.rodarRelatorio();
+      this.consulta_ok = true;
 
     });
   }
   excluir() {
     this.apiGenerico.deleteGenerico('StatusDaFrota', this.valoresSelecionados)
-    .then(() => {
-      
-      this.rodarRelatorio();
-    });
+      .then(() => {
+
+        this.rodarRelatorio();
+      });
   }
-  
+
   novoItem() {
     let nova =
     {
@@ -118,9 +123,10 @@ export class RelStatusDaFrotaComponent implements OnInit {
   }
   rodarRelatorio() {
     this.consulta_ok = false;
-    this.api.getRelStatusDaFrota(this.data, this.baseDeOperacaoSelecionada.Id, ['31965f5a-e078-11e7-a923-0026b94bb39e', 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998']).then(x => {
+    this.api.getRelStatusDaFrota(this.data, this.clienteSelecionado).then(x => {
       this.consulta_ok = true;
-      this.dados = x;
+      this.dados = x.Lista;
+      this.cliente = x.Cliente;
     })
   }
 
