@@ -51,17 +51,19 @@ export class GerenciarTripulantesComponent implements OnInit {
   }
 
   filtrarTripulantes(): void {
-    this.tripulantes = this.cacheTripulantes.filter(
-      t => (
-          t.Trato.includes(this.filtro) || 
-          String(t.CodigoANAC).includes(this.filtro) ||
-          String(t.Matricula).includes(this.filtro)
-        ) &&
-      ( (!this.bolinhaCinza && t.Cor != 'cinza') || this.bolinhaCinza ) &&
-      ( (!this.bolinhaVermelha && t.Cor != 'vermelha') || this.bolinhaVermelha ) &&
-      ( (!this.bolinhaAmarela && t.Cor != 'amarela') || this.bolinhaAmarela ) &&
-      ( (!this.bolinhaVerde && t.Cor != 'verde') || this.bolinhaVerde )
-    );
+    if ((this.cacheTripulantes != undefined) && (this.cacheTripulantes != null)) {
+      this.tripulantes = this.cacheTripulantes.filter(
+        t => (
+            t.Trato.includes(this.filtro) || 
+            String(t.CodigoANAC).includes(this.filtro) ||
+            String(t.Matricula).includes(this.filtro)
+          ) &&
+        ( (!this.bolinhaCinza && t.Cor != 'cinza') || this.bolinhaCinza ) &&
+        ( (!this.bolinhaVermelha && t.Cor != 'vermelha') || this.bolinhaVermelha ) &&
+        ( (!this.bolinhaAmarela && t.Cor != 'amarela') || this.bolinhaAmarela ) &&
+        ( (!this.bolinhaVerde && t.Cor != 'verde') || this.bolinhaVerde )
+      );
+    }
   }
 
   filtrar(e) {
@@ -98,7 +100,8 @@ export class GerenciarTripulantesComponent implements OnInit {
       "Cargo": null,
       "Base": null,
       "Quinzena": null,
-      "Cor": "cinza"
+      "Cor": "cinza",
+      "Usuario": null
     };
     return novo;
   }
