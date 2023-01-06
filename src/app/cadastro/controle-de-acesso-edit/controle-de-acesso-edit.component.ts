@@ -130,6 +130,7 @@ export class ControleDeAcessoEditComponent implements OnInit {
       .postPermissao(this.resp)
       .then(() => {
         alert("Perfil desativado com sucesso");
+        this.router.navigate(["/controle-de-acesso"]);
       })
       .catch((x) => {
         console.log(x);
@@ -139,6 +140,6 @@ export class ControleDeAcessoEditComponent implements OnInit {
           detail: `Erro ao Desativar perfil`,
         });
       });
-    this.router.navigate(["/controle-de-acesso"]);
+    
   }
 }
