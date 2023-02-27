@@ -15,8 +15,6 @@ export class PesquisaBasicaComponent implements OnInit {
 
   @Output() comeco = new EventEmitter();
 
-
-
   @Input() data;
 
   @Input() completa;
@@ -24,7 +22,6 @@ export class PesquisaBasicaComponent implements OnInit {
   @Input() tripulantes;
 
   @Input() niveis;
-
 
   locale_pt: any;
 
@@ -39,7 +36,7 @@ export class PesquisaBasicaComponent implements OnInit {
 
   initForm() {
     this.fg = new UntypedFormGroup({});
-    if ( !this.completa){
+    if (!this.completa) {
       this.fg.addControl('Data', new UntypedFormControl('', Validators.required));
       this.fg.patchValue({ Data: this.data });
       this.enviarForm();
@@ -53,15 +50,15 @@ export class PesquisaBasicaComponent implements OnInit {
     //   Tripulantes: this.fb.array(this.tripulantes.map(s => this.fb.control(true)))
     // })
 
-    
-    
+
+
     this.fg.addControl('DataInicial', new UntypedFormControl('', Validators.required));
     this.fg.patchValue({ DataInicial: this.data });
     this.fg.addControl('DataFinal', new UntypedFormControl('', Validators.required));
     this.fg.patchValue({ DataFinal: this.data });
 
 
-    
+
     this.fg.addControl('Tripulantes', new UntypedFormControl('', Validators.required));
     this.fg.addControl('Niveis', new UntypedFormControl('', Validators.required));
     // this.tripulantes.forEach(t => {
@@ -82,11 +79,16 @@ export class PesquisaBasicaComponent implements OnInit {
     //let obj =  
 
     this.comeco.emit(this.fg.value.Data ? this.fg.value.Data : this.fg.value.DataInicial);
-    
-    this.api.postGerenciaFadiga(Object.assign({}, this.fg.value)).then((response) => {
 
-      this.retorno.emit(response);
-    });
+    this.api.postGerenciaFadiga(Object.assign({}, this.fg.value))
+      .then((response) => {
+        if (response.retorno.StatusCode == 401)
+          window.location.href = '/logoff';
+        this.retorno.emit(response);
+      })
+      .catch((e) => {
+        window.location.href = '/logoff'
+      });
   }
 
 }

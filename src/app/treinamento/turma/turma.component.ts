@@ -605,7 +605,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
   mensagem = 'Cadastro realizado com sucesso';
   ID: string;
-  //turma = this.turmaService.newTurma();
   aluno: any;
   status = [];
   localReservado: boolean;
@@ -618,7 +617,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   anexos = [];
   nrts = [];
   diasTurma = [];
-  // tripulantes = [];
   horariosTurma = [];
   certAluno: any;
   certTreinamento: any;
@@ -669,48 +667,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
       this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
 
-
-      // var groupBy = function (xs, key) {
-      //   return xs.reduce(function (rv, x) {
-      //     (rv[x[key]] = rv[x[key]] || []).push(x);
-      //     return rv;
-      //   }, {});
-      // };
-
-      // console.log(groupBy(this.turmaInterna.PeriodosDeCurso, 'Data'));
-
-      // let teste = groupBy(this.turmaInterna.PeriodosDeCurso, 'Data');
-
-      // teste.forEach(x => {
-
-      //   let data = <PeriodoDeCurso>{ Data: new Date(x.Data), Horas: [] };
-
-      //   x.Horas.forEach(y => {
-      //     //data.Horas.push( new HoraTurma() {HoraInicio =y.Id})
-      //   })
-
-      /*
-      public Id : string;
-      public Data : string;
-      public HoraInicio : string;
-      public HoraTermino : string;
-      */
-
-      // data.HoraInicio =  y.HoraInicio.split('T')[1],
-      // HoraTermino: y.HoraTermino.split('T')[1]
-
-      // this.PeriodosDeCurso.Periodos.push(data);
-      // })
-
-
-
-      // let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
-      // listaPeriodos.forEach((x, index) => {
-      //   var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
-      //   if (horas.length == 0) {
-      //     this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
-      //   }
-
       if (this.turmaInterna.Treinamento) {
         this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
         this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
@@ -721,52 +677,10 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       }
 
       this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
-      this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
-      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+      this.alunos = this.turmaInterna.TurmaAluno
+      .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
+      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y['Id']).indexOf(x['Id']) == -1);
 
-
-      // this.turmaInterna.PeriodosDeCurso.forEach(x => {
-      //   x.Horas.forEach(y => {
-      //     y.HoraInicio = y.HoraInicio.split('T')[1]
-      //     y.HoraTermino = y.HoraTermino.split('T')[1]
-      //   })
-      // })
-
-      // let listaPeriodos = this.turmaInterna.PeriodosDeCurso.sort(function (a, b) { if (new Date(b.Data) < new Date(a.Data)) return 1; else return -1; });
-      // listaPeriodos.forEach((x, index) => {
-      //   var horas = this.turmaInterna.HorasTurma.filter(y => y.Data.split('T')[0] == x.Data.split('T')[0]);
-
-      //   if (horas.length == 0) {
-      //     this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: new Date(x.Data) });
-      //     return;
-      //   }
-      //   //let horas2 = horas.map(y => Object.assign(new HoraTurma, {Data:new Date(x.Data), HoraInicio:y.HoraInicio, HoraTermino:y.HoraTermino}));
-
-      //   let periodo = Object.assign(new PeriodoDeCurso, {
-      //     Data: new Date(x.Data),
-      //     Horas: horas.map(y => Object.assign(new HoraTurma, {
-      //       Data: x.Data,
-      //       HoraInicio: y.HoraInicio.split('T')[1],
-      //       HoraTermino: y.HoraTermino.split('T')[1]
-      //     })
-      //     )
-      //   });
-
-      //   this.PeriodosDeCurso.Periodos.push(periodo);
-      // ({ HoraInicio : y.HoraInicio.split("T")[1], HoraTermino : y.HoraTermino.split("T")[1]}))});
-
-      // if (index == (listaPeriodos.length - 1)) {
-      //   this.calcularDiferenca();
-      // }
-
-      //   if (this.turmaInterna.TurmaStatus[5].Efetivada) {
-      //     this.turmaInterna.Concluido = true;
-      //   }
-
-      // });
-
-      // });
-      /* Apos obter o perfil do usuario logado */
 
     });
   }

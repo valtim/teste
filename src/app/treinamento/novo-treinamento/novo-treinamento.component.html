@@ -6,7 +6,7 @@
 </span>
 <p-card>
     <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-8">
+        <div class="p-field p-col-6">
             <div class="p-field">
                 <label for="nome">Nome</label>
                 <input id="nome" type="text" [(ngModel)]="treinamentoInterno.Nome" pInputText>
@@ -15,6 +15,11 @@
         <div class="p-field  p-col-4">
             <label for="nome">Validade</label>
             <p-inputMask type="tel" [(ngModel)]="treinamentoInterno.ValidadeEmDias" mask="999"></p-inputMask>
+        </div>
+        
+        <div class="p-field p-col-2">
+            <label for="horasdevoo">Paga Horas de Voo</label>
+            <p-inputSwitch id="horasdevoo" [(ngModel)]="treinamentoInterno.HorasDeVoo"></p-inputSwitch>
         </div>
     </div>
     <div class="p-fluid p-formgrid p-grid">

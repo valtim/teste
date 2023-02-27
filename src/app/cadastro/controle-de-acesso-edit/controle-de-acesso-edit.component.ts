@@ -1,5 +1,3 @@
-import { filter } from "rxjs/operators";
-import { PerfisHabilitados } from "./../../models/PerfisHabilitados";
 import { Component, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";

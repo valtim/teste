@@ -125,9 +125,6 @@ import { ChartModule } from 'primeng/chart';
     ToastModule,
     ToolbarModule,
     ChartModule,
-
-
-
     MenuComponent,
     TituloComponent,
     ConfirmacaoComponent,

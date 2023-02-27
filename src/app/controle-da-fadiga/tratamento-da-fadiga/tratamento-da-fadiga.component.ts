@@ -19,7 +19,7 @@ export class TratamentoDaFadigaComponent implements OnInit {
 
   public tratamento: any;
   public historicos: any;
-  public loading = false;
+  public loading = true;
   public exibirPesquisa = true;
   public liberado: boolean = false;
   public encerrado: boolean = false;
@@ -108,18 +108,6 @@ export class TratamentoDaFadigaComponent implements OnInit {
     if (this.faseCoord)
       this.fg.addControl('ResponsavelEscala', new UntypedFormControl('', Validators.required));
 
-
-
-    // this.fg = this.fb.group({
-    //   Comentario: ['', Validators.required],
-    //   Liberado: ['', Validators.required],
-    //   Acao: ['', Validators.required],
-    //   ResponsavelEscala: ['', Validators.required],
-    //   //ResponsavelEscala: this.fb.array(this.resposta.ResponsavelEscala.map(s => this.fb.control(false)))
-    // })
-
-    //Object.assign(this.fg.value, this.resposta);
-
     this.loading = false;
 
   }
@@ -135,16 +123,6 @@ export class TratamentoDaFadigaComponent implements OnInit {
     this.loading = true;
     this.api.postTratamentoFadiga(this.tratamento.Pesquisa.Id, this.resposta).then(() => {
       this.loading = false;
-      // this.app.setTitle('Escala de Trabalho');
-      //this.formatarDiario();
-      // this.api.message = {
-      //   show: true,
-      //   type: 'success',
-      //   title: 'Sucesso',
-      //   message: 'Tratamento Salvo com Sucesso.',
-      //   callBack: () => { this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0, 10)]); }
-      // };
-
       alert('Tratamento Salvo com sucesso!');
       this.router.navigate(['/fadiga/' + this.tratamento.Pesquisa.Data.substring(0, 10)]);
 

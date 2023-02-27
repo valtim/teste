@@ -195,7 +195,7 @@
                                         <ng-template pTemplate="input">
                                             <p-inputMask type="tel"
                                                 (change)="alterarHoraFinal(rowIndex, item.Data, $event.target.value)"
-                                                [(ngModel)]="hora.HoraTermino" mask="99:99" required></p-inputMask>
+                                                [(ngModel)]="hora.HoraTermino" mask="99:99" [required]="true"></p-inputMask>
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{hora.HoraTermino}}
@@ -327,7 +327,7 @@
 
     <p-fieldset legend="Comentários" [toggleable]="true">
 
-        <textarea [rows]="5" style="width:100%" pInputTextarea autoResize="autoResize"
+        <textarea [rows]="5" style="width:100%" pInputTextarea [autoResize]="true"
             [(ngModel)]="comentario"></textarea>
 
         <div *ngFor="let item of turmaInterna.TurmasComentarios">

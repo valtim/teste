@@ -12,7 +12,7 @@
 
     <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
 
-    <p-table [value]="dados" [columns]="colunas">
+    <p-table [value]="dados" [columns]="colunas" (sortFunction)="customSort($event)" [customSort]="true">
 
         <ng-template pTemplate="caption">
             {{titulo}}
@@ -20,7 +20,7 @@
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width:50px"></th>
-                <th *ngFor="let col of colunas">
+                <th [pSortableColumn]="col.field" *ngFor="let col of colunas"><p-sortIcon field="code"></p-sortIcon>
                     {{col.header}}
                 </th>
             </tr>

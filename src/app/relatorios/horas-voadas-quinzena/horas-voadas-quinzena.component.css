@@ -1,10 +1,38 @@
 @media print {
     @page {
-        size: landscape;        
+        size: landscape;
     }
 }
 
-th, td {
-    text-align: center;    
-    font-size: smaller;
+table, tr, td {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    text-align: center;
 }
+
+
+tr {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: smaller;
+    background-color: white;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tr:nth-child(even) {
+    background-color: #cccccc;
+}
+
+
+thead {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 5rem;
+    background-color: white;
+}
+
+/* .layout-news-active :host ::ng-deep .p-datatable tr > th {
+    top: 7rem;
+} */

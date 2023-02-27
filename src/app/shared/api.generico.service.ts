@@ -14,7 +14,8 @@ export class ApiGenericoService {
   ) {
     this.url =
       window.location.host === "localhost:4200"
-        ? "https://teste.fastapi.com.br/"
+      ? "https://localhost:44343/"
+     //? "https://teste.fastapi.com.br/"
         : "/";
     if (localStorage.getItem("Authorization")) {
       this.httpOptions = {

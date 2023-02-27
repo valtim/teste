@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterContentChecked } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 // import { v4 as uuidv4 } from 'uuid';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService, SortEvent } from 'primeng/api';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
 import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 import { ApiService } from 'src/app/shared/api.service';
@@ -44,6 +44,30 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
 
   tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo","Tripulante", "Int32"];
   listas: any[];
+
+
+
+  customSort(event: SortEvent) {
+    event.data.sort((data1, data2) => {
+        let value1 = data1[event.field];
+        let value2 = data2[event.field];
+        let result =  null;
+
+        if (value1 == null && value2 != null)
+            result = -1;
+        else if (value1 != null && value2 == null)
+            result = 1;
+        else if (value1 == null && value2 == null)
+            result = 0;
+        else if (typeof value1 === 'string' && typeof value2 === 'string')
+            result = value1.localeCompare(value2);
+        else
+            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+
+        return (event.order * result);
+    });
+
+  }
 
 
   //fg: FormGroup;

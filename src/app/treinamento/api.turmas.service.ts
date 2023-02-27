@@ -24,7 +24,8 @@ export class ApiService {
   ) {
     this.URLCORE =
       window.location.host == "localhost:4300"
-        ? "https://teste.fastapi.com.br/"
+      ? "https://localhost:44343/"
+     //? "https://teste.fastapi.com.br/"
         : "/";
 
     if (localStorage.getItem("Authorization")) {

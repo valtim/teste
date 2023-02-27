@@ -17,6 +17,7 @@
             <td (click)="editar(treino.Id)">{{treino.Nome}}</td>
             <td (click)="editar(treino.Id)">{{treino.CargaHoraria}}</td>
             <td (click)="editar(treino.Id)">{{treino.Equipamentos}}</td>
+            <td (click)="editar(treino.Id)"><span *ngIf="treino.HorasDeVoo">SIM</span><span *ngIf="!treino.HorasDeVoo">NÃO</span></td>
         </tr>
     </ng-template>
 </p-table>

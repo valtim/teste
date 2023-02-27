@@ -53,18 +53,11 @@ export class TurmaListComponent implements OnInit {
       this.turmas = [];
       this.turmas = x.Turmas;
       this.loading = false;
-
-
-      // if (x.Turmas.length == 0) {
-      //   this.loading = false;
-      // } else {
-      //   x.Turmas.forEach((turma, index) => {
-      //     turma.indexStatus = 'index' + index;
-      //     turma.Carregada = true;
-      //     if (index == (x.Turmas.length - 1)) {
-      //     }
-      //   });
-      // }
+    })
+    .catch((e) => {
+      this.treinamentos = null;
+      this.loading = false;
+      alert('Erro ao Rodar Consulta no Banco\n' + e.message);
     })
   }
 
@@ -99,9 +92,9 @@ export class TurmaListComponent implements OnInit {
     if (e.DialogResult == 'OK') {
       Object.assign(turma, e);
     }
-    if (e.Novo == true) {
-      this.turmas = this.turmas.filter(x => x.Id != e.Id);
-    }
+    // if (e.Novo == true) {
+    //   this.turmas = this.turmas.filter(x => x.Id != e.Id);
+    // }
   }
 
 }

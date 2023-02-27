@@ -1,6 +1,7 @@
 import { ApiService } from "./../../shared/api.service";
 import { Component, OnInit } from "@angular/core";
 import * as FileSaver from "file-saver";
+import { Coluna } from "src/app/coluna";
 
 @Component({
   selector: "app-horas-voadas-quinzena",
@@ -11,15 +12,18 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
   locale_pt;
   tudoPronto = false;
   dados;
-  cols;
 
   filtroRetorno;
 
   dataInicio: Date;
   dataFim: Date;
   dadosInstrucao: any;
+  detalhado: any;
+  colunas: any;
 
-  constructor(private api: ApiService) {}
+
+
+  constructor(private api: ApiService) { }
 
   ngOnInit(): void {
     const date = new Date();
@@ -32,6 +36,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
   }
 
   rodarRelatorio() {
+    this.dados = undefined;
     this.tudoPronto = false;
     this.api
       .postRelHorasQuinzena({
@@ -40,25 +45,38 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
       })
       .then((x) => {
         //colunas = colunas, filtro = filtro, listas = listas
-        this.cols = x.colunas;
-        this.dados = x.valores;
+        this.colunas = x.colunas;
+        this.dados = x.tabela;
         this.dadosInstrucao = x.valoresInstrucao;
         this.filtroRetorno = x.filtro;
+
+
+        this.dados.forEach(l => {
+          Object.keys(l).forEach(x => {
+            l[x] = this.transformTimeSpan(l[x], true);
+          })
+        })
+
         this.tudoPronto = true;
-      });
+      })
+      .catch((e) => {
+        this.dados = null;
+        this.tudoPronto = true;
+        alert('Erro ao Rodar Consulta no Banco\n' + e.message);
+      })
   }
 
   ajustarMatricula(matricula: string): string {
     // Matricula -> pega os últimos 5. Se tiver 4 coloca o 0 na frente, se não deixa como esta
     let matriculaFormatada = '';
-    
+
     if (matricula.length > 5) {
       matriculaFormatada = matricula.substring(0, 5);
     } else {
       if (matricula.length == 5) {
         matriculaFormatada = matricula;
       } else {
-        matriculaFormatada = matricula.padStart(5,"0");
+        matriculaFormatada = matricula.padStart(5, "0");
       }
     }
 
@@ -66,18 +84,23 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
   }
 
   formatarData(data: Date): string {
-    
+
     let dataBase = data;
     if (data == null) {
       let date = new Date();
       dataBase = new Date(date.getFullYear(), date.getMonth(), 1);
     }
-    
-    let dataFormatada = ('' + data.getDate()).padStart(2,"0") + ('' + (data.getMonth() + 1)).padStart(2,"0") + data.getFullYear();
+
+    let dataFormatada = ('' + data.getDate()).padStart(2, "0") + ('' + (data.getMonth() + 1)).padStart(2, "0") + data.getFullYear();
     return dataFormatada;
   }
 
-  obterValorPorCodigo(codigo,linha): string {
+  formatBristow(valor: string): string {
+    return valor.substring(0, valor.length - 3).padStart(6, '0');
+  }
+
+
+  obterValorPorCodigo(codigo, linha): Array<string> {
     /*
       8018 => Dias Úteis Diurno
       8019 => Dias Úteis Noturno
@@ -88,51 +111,102 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
       8024 => Treinamento Dias Úteis Noturno
       8025 => Treinamento Domingos Feriados Diurno
       8044 => Treinamento Domingos Feriados Noturno
+
+      0861 => Adicional 1/3 Horas Instrução
+      0868 => AD.NOTURNO 20%
+
     */
 
-    if (linha == null) {
-      return '000:00';
-    } else {
-      if (codigo == '8018') {
-        return linha.TotalDiurnoUtil.padStart(6,"0");
-      } else if (codigo == '8019') {
-        return linha.TotalNoturnoUtil.padStart(6,"0");
-      } else if (codigo == '8020') {
-        return linha.TotalDiurnoFeriado.padStart(6,"0");
-      } else if (codigo == '8021') {
-        return linha.TotalNoturnoFeriado.padStart(6,"0");
-      } else {
-        return '000:00';
-      }
+    if (linha == null) return [];
+
+    if (codigo == '8018' && linha.DiurnoUtil != '00:00:00')
+      return ['8018' + this.formatBristow(linha.DiurnoUtil)];
+
+    if (codigo == '8019' && linha.NoturnoUtil != '00:00:00')
+      return ['8018' + this.formatBristow(linha.NoturnoUtil), '8019' + this.formatBristow(linha.NoturnoUtil)];
+
+    if (codigo == '8020' && linha.DiurnoFeriado != '00:00:00')
+      return ['8018' + this.formatBristow(linha.DiurnoFeriado), '8020' + this.formatBristow(linha.DiurnoFeriado)];
+
+    if (codigo == '8021' && linha.NoturnoFeriado != '00:00:00')
+      return ['8018' + this.formatBristow(linha.NoturnoFeriado), '8020' + this.formatBristow(linha.NoturnoFeriado), '8019' + this.formatBristow(linha.NoturnoFeriado)];
+
+
+    if (codigo == '8023' && linha.TreinamentoDiurnoUtil != '00:00:00')
+      return ['8023' + this.formatBristow(linha.TreinamentoDiurnoUtil)];
+
+    if (codigo == '8024' && linha.TreinamentoNoturnoUtil != '00:00:00')
+      return ['8023' + this.formatBristow(linha.TreinamentoNoturnoUtil), '8024' + this.formatBristow(linha.TreinamentoNoturnoUtil)];
+
+    if (codigo == '8025' && linha.TreinamentoDiurnoFeriado != '00:00:00')
+      return ['8023' + this.formatBristow(linha.TreinamentoDiurnoFeriado), '8025' + this.formatBristow(linha.TreinamentoDiurnoFeriado)];
+
+    if (codigo == '8044' && linha.TreinamentoNoturnoFeriado != '00:00:00')
+      return ['8023' + this.formatBristow(linha.TreinamentoNoturnoFeriado), '8025' + this.formatBristow(linha.TreinamentoNoturnoUtil), '8024' + this.formatBristow(linha.TreinamentoNoturnoUtil)];
+
+
+
+    if (codigo == '0861' && linha.TotalPagamentoInstrucao != '00:00:00')
+      return ['0861' + this.formatBristow(linha.TotalPagamentoInstrucao)];
+
+    if (codigo == '0868' && linha.HorasNoturnoComAdicional != '00:00:00')
+      return ['0868' + this.formatBristow(linha.HorasNoturnoComAdicional)];
+
+    return [];
+
+  }
+
+
+  transformTimeSpan(value: string, segundos: boolean = false): string {
+    if (value == undefined) return '';
+    if (value == null) return '';
+    if (value == '') return '';
+
+    if (value.indexOf(':') == -1) return value;
+
+    let pedacos = value.split(':');
+
+    if (pedacos[0].indexOf('.') > -1) {
+      let ponto = pedacos[0].split('.');
+
+      let dias: number = Number(ponto[0]) * 24;
+      let horas: number = Number(ponto[1]);
+
+      horas += dias;
+
+      pedacos[0] = horas.toString();
     }
+    if (segundos)
+      return pedacos[0] + ':' + pedacos[1] + ':00';
+    return pedacos[0] + ':' + pedacos[1];
   }
 
   gerarTXT() {
-    if ( (this.dados != undefined) && (this.dados != null) && (this.dados.length > 0) ) {
+    if ((this.dados != undefined) && (this.dados != null) && (this.dados.length > 0)) {
       let linhas = [];
       let dataFormatada = this.formatarData(this.dataFim);
-      let codigosArquivo = ['8018','8019','8020','8021','8023','8024','8025','8044']; 
+      let codigosArquivo = ['8018', '8019', '8020', '8021', '8023', '8024', '8025', '8044'];
 
-      this.dados.forEach((linha,index_dados) => {
+      this.dados.forEach((linha, index_dados) => {
         if (linha.Matricula != null) {
-          
-          let linhaBase = '';
 
-          let matricula = this.ajustarMatricula(linha.Matricula);
-          linhaBase += matricula;
-          linhaBase += dataFormatada;
+          codigosArquivo.forEach((codigo, index_codigos) => {
 
-          codigosArquivo.forEach((codigo,index_codigos)=>{
-            let valor = this.obterValorPorCodigo(codigo,linha);
-            let linhaFormatada = linhaBase + valor + '           0,00           0,00            0,00N';
-            linhas.push(linhaFormatada);
+
+            let linhaBase = '';
+            linhaBase += this.ajustarMatricula(linha.Matricula) + '           ';
+            linhaBase += dataFormatada;
+            this.obterValorPorCodigo(codigo, linha)
+              .forEach(x => {
+                linhas.push(linhaBase + x + '           0,00           0,00            0,00N')
+              });
 
             if (index_codigos == (codigosArquivo.length - 1)) {
               if (index_dados == (this.dados.length - 1)) {
                 this.exportTXT(linhas);
               }
             }
-          });          
+          });
         }
       });
     }
@@ -140,7 +214,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
   exportTXT(linhas) {
     let conteudoArquivo = '';
-    linhas.forEach((linha,index)=>{
+    linhas.forEach((linha, index) => {
       conteudoArquivo += linha + '\r\n';
 
       if (index == (linhas.length - 1)) {

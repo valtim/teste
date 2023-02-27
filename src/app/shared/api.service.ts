@@ -710,6 +710,12 @@ export class ApiService {
       .toPromise();
   }
 
+  getRDV(folha:string): Promise<any> {
+    return this.http
+      .get(`${this.url}api/RelRdv/`+folha, this.httpOptions)
+      .toPromise();
+  }
+
   postRelHorasQuinzena(filtro: any): Promise<any> {
     return this.http
       .post(

@@ -24,6 +24,7 @@ export class TreinamentoListComponent implements OnInit {
     { field: 'Nome', header: 'Nome' },
     { field: 'CargaHoraria', header: 'Carga Horária' },
     { field: 'Equipamentos', header: 'Equipamentos' },
+    { field: 'HorasDeVoo', header: 'Horas de Voo' },
   ];
 
   editar(id){

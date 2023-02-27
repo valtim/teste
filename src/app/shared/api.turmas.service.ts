@@ -26,7 +26,8 @@ export class ApiTurmasService {
   ) {
     this.URLCORE =
       window.location.host == "localhost:4200"
-        ? "https://teste.fastapi.com.br/"
+      ? "https://localhost:44343/"
+     //? "https://teste.fastapi.com.br/"
         : "/";
 
     if (localStorage.getItem("Authorization")) {

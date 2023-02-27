@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./rel-rdv.component.css']
 })
 export class RelRdvComponent implements OnInit {
+  semErros: any;
 
-  constructor(private api : ApiService, private router: Router) { }
+  constructor(private api: ApiService, private router: Router) { }
 
   rdv;
 
@@ -21,26 +22,28 @@ export class RelRdvComponent implements OnInit {
   id_busca;
 
   ngOnInit(): void {
-    this.api.getClienteLogado().then(x=>{
+    this.api.getClienteLogado().then(x => {
       this.urlLogo = `/assets/img/${x}.png`;
     });
 
     const lista = this.router.url.split('/');
 
-    this.id_busca = lista[lista.length -1];
+    this.id_busca = lista[lista.length - 1];
 
 
     this.tudoPronto = false;
-    this.api.postRelRDV (
+    this.api.getRDV(this.id_busca).then(x => {
+      this.rdv = x;
+      this.tudoPronto = true;
+      this.semErros = true;
+    }).catch((e) => {
+      if ( e.status == 404)
       {
-        rdv : this.id_busca,
-      }).then(x => {
-        this.rdv = x.valores[0];
-        // this.rdv.Linhas.forEach(x => {
-        //   x.
-        // });
+        this.semErros = false;
         this.tudoPronto = true;
-      })
+        alert('db não encontrado no banco');
+      }
+    })
 
 
   }

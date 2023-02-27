@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiService } from 'src/app/shared/api.service';
 import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
 
 @Component({
@@ -20,10 +19,14 @@ export class ListaAnexosComponent implements OnInit {
 
   constructor(
     private api: ApiTurmasService
-  ) { }
+  ) {
+
+    this.turma = '';
+
+  }
 
   ngOnInit() {
-      setTimeout(this.getListOfFile.bind(this), 2000);
+    setTimeout(this.getListOfFile.bind(this), 2000);
   }
 
 }

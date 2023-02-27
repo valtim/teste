@@ -8,38 +8,6 @@ import { LogoffComponent } from "./logoff/logoff.component";
 import { LoginComponent } from "./seguranca/login/login.component";
 import { TrocaSenhaComponent } from "./seguranca/troca-senha/troca-senha.component";
 
-// import { ImprimirJornadaNovoComponent } from "./administracao/validar-jornada/validar-jornada.component";
-// import { RelCdoComponent } from "./relatorios/rel-cdo/rel-cdo.component";
-// import { ContratoComponent } from "./cadastro/contrato/contrato.component";
-// import { IndisponibilidadeComponent } from "./cadastro/indisponibilidade/indisponibilidade.component";
-// import { CadastroDeEmailReporteComponent } from "./controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component";
-
-// import { RelIndisponibilidadeComponent } from "./relatorios/rel-indisponibilidade/rel-indisponibilidade.component";
-// import { RelPontualidadeComponent } from "./relatorios/rel-pontualidade/rel-pontualidade.component";
-// import { MotivoDoAtrasoComponent } from "./cadastro/motivo-do-atraso/motivo-do-atraso.component";
-// import { RelControleSpotComponent } from "./relatorios/rel-controle-spot/rel-controle-spot.component";
-// import { CrudComponent } from "./cadastro/crud/crud.component";
-// import { RelEscalaPtbrComponent } from "./relatorios/rel-escala-ptbr/rel-escala-ptbr.component";
-// import { ControleDeTripulantesComponent } from "./relatorios/controle-de-tripulantes/controle-de-tripulantes.component";
-// import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
-// import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
-
-// import { ImprimirJornadaNovoComponent } from './administracao/validar-jornada/validar-jornada.component';
-// import { RelCdoComponent } from './relatorios/rel-cdo/rel-cdo.component';
-// import { ContratoComponent } from './cadastro/contrato/contrato.component';
-// import { IndisponibilidadeComponent } from './cadastro/indisponibilidade/indisponibilidade.component';
-// import { CadastroDeEmailReporteComponent } from './controle-da-fadiga/cadastro-de-email-reporte/cadastro-de-email-reporte.component';
-
-// import { RelIndisponibilidadeComponent } from './relatorios/rel-indisponibilidade/rel-indisponibilidade.component';
-// import { RelPontualidadeComponent } from './relatorios/rel-pontualidade/rel-pontualidade.component';
-// import { MotivoDoAtrasoComponent } from './cadastro/motivo-do-atraso/motivo-do-atraso.component';
-// import { RelControleSpotComponent } from './relatorios/rel-controle-spot/rel-controle-spot.component';
-// import { CrudComponent } from './cadastro/crud/crud.component';
-// import { RelEscalaPtbrComponent } from './relatorios/rel-escala-ptbr/rel-escala-ptbr.component';
-// import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
-// import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
-// import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
-
 import { VoosRealizadosComponent } from "./relatorios/voos-realizados/voos-realizados.component";
 import { RelListaRdvComponent } from "./relatorios/rel-lista-rdv/rel-lista-rdv.component";
 import { RelRdvComponent } from "./relatorios/rel-rdv/rel-rdv.component";
@@ -59,7 +27,6 @@ import { VencimentoCarteiraComponent } from "./relatorios/vencimento-carteira/ve
 import { MotivoDaIndisponibilidadeComponent } from "./cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component";
 import { MotivoDoErroNoPreenchimentoComponent } from "./cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component";
 import { ObservacaoDbComponent } from "./cadastro/observacao-db/observacao-db.component";
-import { CertificadoComponent } from "./treinamento/certificado/certificado.component";
 import { TipoDeOcorrenciaComponent } from "./cadastro/tipo-de-ocorrencia/tipo-de-ocorrencia.component";
 import { EscalaMensalComponent } from "./escala/escala-mensal/escala-mensal.component";
 import { ListarJornadaComponent } from "./administracao/listar-jornada/listar-jornada.component";
@@ -72,7 +39,6 @@ import { EscalaSemanalComponent } from "./escala/escala-semanal/escala-semanal.c
 import { ErrosNoDbComponent } from "./relatorios/erros-no-db/erros-no-db.component";
 import { ListaInformativoComponent } from "./cadastro/lista-informativo/lista-informativo.component";
 import { IncompatibilidadeComponent } from "./cadastro/incompatibilidade/incompatibilidade.component";
-import { WaitComponent } from "./seguranca/wait/wait.component";
 import { AgendaComponent } from "./treinamento/agenda/agenda.component";
 import { TurmaListComponent } from "./treinamento/turma-list/turma-list.component";
 import { TreinamentoListComponent } from "./treinamento/treinamento-list/treinamento-list.component";
@@ -103,6 +69,7 @@ import { FichaDeAvaliacaoEditComponent } from "./cadastro/ficha-de-avaliacao-edi
 import { FichaDeAvaliacaoItemComponent } from "./cadastro/ficha-de-avaliacao-item/ficha-de-avaliacao-item.component";
 import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component";
 import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
+import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -389,11 +356,15 @@ const routes: Routes = [
   {
     path: 'dupla-adm',
     component: DuplaAdmComponent,
+  },
+  {
+    path: 'bloco',
+    component: BlocoComponent,
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })], //, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes)], //, { enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule { }

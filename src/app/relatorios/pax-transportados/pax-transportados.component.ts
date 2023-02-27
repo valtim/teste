@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "src/app/shared/api.service";
-import * as FileSaver from "file-saver";
+// import * as FileSaver from "file-saver";
+import { keys } from 'lodash-es';
 
 @Component({
   selector: "app-pax-transportados",
@@ -79,7 +80,7 @@ export class PaxTransportadosComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(
+    keys.saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

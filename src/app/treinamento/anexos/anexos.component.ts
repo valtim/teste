@@ -50,54 +50,10 @@ export class AnexosComponent implements OnInit {
       this.messageService.add({severity:'success', summary:'Upload de Arquivos', detail:message});
       this.callbackFunction(true);
   return;
-    //   if (this.prefix) {
-    //     this.api.postTurmaStatus({
-    //       nome: 'NRT cadastrada',
-    //       completo: true,
-    //       TurmaId: this.turma,
-    //     }).then((rsp) => {
-    //       console.log(rsp);
-    //     });
-    //   }
-    // }).finally(() => {
-    //   this.getListOfFile();
-    //   const regex = new RegExp('^NRT-');
-    //   const teste = this.listaArquivos.filter( element => {
-    //     if (regex.test(element)) {
-    //       return element;
-    //     }
-    //   });
     });
   }
 
-  // filterListOfFiles(resp) {
-  //   let listFiles = [];
-  //   if (this.prefix) {
-  //     resp.forEach(element => {
-  //       const regex = new RegExp('^' + this.prefix);
-  //       if (regex.test(element.FileName)) {
-  //         listFiles.push(element);
-  //       }
-  //     });
-  //   } else if (this.ignorePrefix) {
-  //     resp.forEach(element => {
-  //       const regex = new RegExp('^' + this.ignorePrefix);
-  //       if (!regex.test(element.FileName)) {
-  //         listFiles.push(element);
-  //       }
-  //     });
-  //   } else {
-  //     listFiles = resp;
-  //   }
-  //   this.listaArquivos = listFiles;
-  // }
-
-  // getListOfFile() {
-  //   this.api.getListOfAnexos(this.turma).then(resp => this.filterListOfFiles(resp));
-  // }
-
-
-  funDeletar(id){
+  funDeletar(id : string){
     this.api.deleteAnexo(id).then(() => { 
 
       let deletado = this.listaArquivos.find(x=>x.Id != id);
@@ -109,7 +65,7 @@ export class AnexosComponent implements OnInit {
   }
 
 
-  funAbrirArquivo(id){
+  funAbrirArquivo(id : string){
     window.open(this.api.URLCORE + 'api/arquivo/'+id,'_blank');
   }
   constructor(private api: ApiTurmasService, private messageService: MessageService ) { }

@@ -1,6 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import html2canvas from 'html2canvas';
 import { MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
 
@@ -32,8 +30,7 @@ export class EscalaDoDiaComponent implements OnInit {
   escalaDoDia: any;
 
   constructor(private api: ApiService,
-    private messageService: MessageService,
-    private sanitizer: DomSanitizer) { }
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
 
@@ -92,7 +89,7 @@ export class EscalaDoDiaComponent implements OnInit {
 
     this.api.getEscalaDiaria(this.data).then(x => {
       this.tudoPronto = true;
-      this.escalaDoDia = this.sanitizer.bypassSecurityTrustHtml(x.HTML);
+      this.escalaDoDia = x.HTML;
       //this.relatorio = x.logs;
       this.tripulacoes = x.Tripulacoes;
       this.todosOsTrilhos = x.TodosOsTrilhos;

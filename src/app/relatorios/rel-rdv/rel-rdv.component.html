@@ -1,6 +1,6 @@
 <app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
 
-<div *ngIf="tudoPronto">
+<div *ngIf="tudoPronto && semErros">
 
     <table *ngIf="rdv" id="titulo">
         <tr>
@@ -17,18 +17,18 @@
             <td>{{rdv.NumeroDaFolha}}</td>
         </tr>
         <tr>
-            <td rowspan="2">{{rdv.TipoDaAeronave}}</td>
-            <td rowspan="2">{{rdv.Prefixo}}</td>
-            <td rowspan="2">{{rdv.IdentificadorCliente}}</td>
-            <td rowspan="2">{{rdv.Base}}</td>
+            <td rowspan="2">{{rdv.Prefixo.TipoDeAeronave.Nome}}</td>
+            <td rowspan="2">{{rdv.Prefixo.PrefixoCompleto}}</td>
+            <td rowspan="2">{{rdv.Prefixo.IdentificadorCliente}}</td>
+            <td rowspan="2">{{rdv.Linhas[0].Origem.Nome}}</td>
             <td rowspan="2">{{rdv.DataDoDiario |date:'dd/MM/yyyy'}}</td>
             <th>Nº VOO</th>
-            <td>{{rdv.NumeroDoVoo}}</td>
+            <td>{{rdv.Linhas[0].NumeroDoVoo}}</td>
 
         </tr>
         <tr>
             <th>CLIENTE</th>
-            <td>{{rdv.Cliente}}</td>
+            <td>{{rdv.Linhas[0].Cliente.Nome}}</td>
         </tr>
     </table>
 
@@ -62,8 +62,8 @@
         </tr>
         <tr *ngFor="let item of rdv.Linhas; let i = index">
             <td>{{i+1}}</td>
-            <td>{{item.Origem}}</td>
-            <td>{{item.Destino}}</td>
+            <td>{{item.Origem.Nome}}</td>
+            <td>{{item.Destino.Nome}}</td>
             <td>{{item.Partida | date: 'HH:mm'}}</td>
             <td>{{item.Decolagem | date: 'HH:mm'}}</td>
             <td>{{item.Pouso | date: 'HH:mm'}}</td>
@@ -72,7 +72,7 @@
             <td>{{item.Pousos}}</td>
             <td>{{item.VFR| slice:0:5}}</td>
             <td>{{item.IFR| slice:0:5}}</td>
-            <td>{{item.Noturno| slice:0:5}}</td>
+            <td>{{item.Noturno| date: 'HH:mm'}}</td>
             <td>{{item.Total| slice:0:5}}</td>
             <td>{{item.Pax}}</td>
             <td>{{item.Carga}}</td>
@@ -82,12 +82,12 @@
         <tr>
             <th colspan="3">TOTAIS</th>
             <td>{{rdv.Partidas}}</td>
-            <th colspan="4">Pri Dec/Ulti Pou: {{rdv.HorasDepArr}}</th>
+            <th colspan="4">Pri Dec/Ulti Pou: {{rdv.HorasDepArrComTratamento|timespan : 'HH:mm'}}</th>
             <td>{{rdv.Pousos}}</td>
-            <td>{{rdv.VFR| slice:0:5}}</td>
-            <td>{{rdv.IFR| slice:0:5}}</td>
-            <td>{{rdv.Noturno| slice:0:5}}</td>
-            <td>{{rdv.Total| slice:0:5}}</td>
+            <td>{{rdv.VFR|timespan : 'HH:mm'}}</td>
+            <td>{{rdv.IFR|timespan : 'HH:mm'}}</td>
+            <td>{{rdv.Noturno|timespan : 'HH:mm'}}</td>
+            <td>{{rdv.Total|timespan : 'HH:mm'}}</td>
             <td>{{rdv.Pax}}</td>
             <td>---</td>
             <th>CONSUMO:</th>
@@ -110,7 +110,7 @@
                     <th>Nº DA NOTA(CE)</th>
                     <th>VOLUME</th>
                 </tr>
-                <tr *ngFor="let item of rdv.Abastecimento">
+                <tr *ngFor="let item of rdv.NotasDeAbastecimento">
                     <td>{{item.Local}}</td>
                     <td>{{item.Abastecedora.Nome}}</td>
                     <td>{{item.Nota}}</td>
@@ -132,17 +132,17 @@
                     <th>RUBRICAS</th>
                 </tr>
                 <tr>
-                    <td>{{rdv.FuncaoPIC}}({{rdv.SiglaPIC}})</td>
-                    <td>{{rdv.PIC}}</td>
-                    <td>{{rdv.PICANAC}}</td>
-                    <td>{{rdv.PICCLIENTE}}</td>
+                    <td>{{rdv.Linhas[0].FuncaoTrip1.Nome}}({{rdv.Linhas[0].FuncaoTrip1.Sigla}})</td>
+                    <td>{{rdv.Linhas[0].Comandante.Trato}}</td>
+                    <td>{{rdv.Linhas[0].Comandante.CodigoANAC}}</td>
+                    <td>{{rdv.Linhas[0].Comandante.CodigoPetrobras}}</td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td>{{rdv.FuncaoSIC}}({{rdv.SiglaSIC}})</td>
-                    <td>{{rdv.SIC}}</td>
-                    <td>{{rdv.SICANAC}}</td>
-                    <td>{{rdv.SICCLIENTE}}</td>
+                    <td>{{rdv.Linhas[0].FuncaoTrip2.Nome}}({{rdv.Linhas[0].FuncaoTrip2.Sigla}})</td>
+                    <td>{{rdv.Linhas[0].PrimeiroOficial.Trato}}</td>
+                    <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoANAC}}</td>
+                    <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoPetrobras}}</td>
                     <td></td>
                 </tr>
                 <tr>
@@ -160,14 +160,16 @@
             <th>OBSERVAÇÕES</th>
         </tr>
         <tr>
-            <td style="text-align: left;" [innerHTML]="rdv.Observacoes">
+            <td style="text-align: left;" [innerHTML]="rdv.ObservacoesCompleta | toHTML">
+                
             </td>
-        </tr> 
-        <tr>
+        </tr>
+        <tr *ngIf="rdv.Rota">
             <th>ROTA:</th>
         </tr>
-        <tr>
-            <td style="text-align: left;">voo.Rota
+        <tr *ngIf="rdv.Rota">
+            <td style="text-align: left;">
+                {{rdv.Rota}}
             </td>
         </tr>
     </table>

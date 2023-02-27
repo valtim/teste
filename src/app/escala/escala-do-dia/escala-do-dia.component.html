@@ -111,7 +111,7 @@
     </tr>
 </table>
 
-<object [innerHTML]="escalaDoDia"></object>
+<div [innerHtml]="escalaDoDia | safeHtml"></div>
 
 <!-- <table #escala>
     <tr>
