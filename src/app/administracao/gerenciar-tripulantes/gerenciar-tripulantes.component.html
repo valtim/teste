@@ -1,11 +1,11 @@
 <app-titulo titulo="GERENCIAR TRIPULANTES" [carregando]="carregando"></app-titulo>
 
-<div class="p-grid p-mt-1">    
-    <div class="p-col-4">        
+<div class="row p-mt-1">    
+    <div class="col-4">        
         <button type="button" pButton pRipple label="Filtrar"></button>
         <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato, ANAC ou Matrícula">
     </div>
-    <div class="p-col-4 div-checkbox">
+    <div class="col-4 div-checkbox">
         <input type="checkbox" [(ngModel)]="bolinhaCinza" (change)="filtrarBolinhas()">
         <div class="bolinha" ngClass="cinza"></div>
 
@@ -18,7 +18,7 @@
         <input type="checkbox" [(ngModel)]="bolinhaVerde" (change)="filtrarBolinhas()">
         <div class="bolinha" ngClass="verde"></div>
     </div>
-    <div class="p-col-3">
+    <div class="col-3">
         <button class="novo-tripulante" pButton type="button" icon="pi pi-plus" label="Novo Tripulante" (click)="exibirDialogoNovo()"></button>
     </div>
 </div>

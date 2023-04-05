@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "src/app/shared/api.service";
-// import * as FileSaver from "file-saver";
+import { saveAs } from 'file-saver-es'
 import { keys } from 'lodash-es';
 
 @Component({

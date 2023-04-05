@@ -21,7 +21,7 @@
         <hr>
 
 
-        <div class="row" *ngIf="itemSelecionado.TipoDeOcorrencia.ExibeHora">
+        <div class="grid" *ngIf="itemSelecionado.TipoDeOcorrencia.ExibeHora">
             <div class="col-6">
                 <label for="txt_inicio">Início</label>
                 <p-inputMask id="txt_inicio" mask="99:99" [(ngModel)]="itemSelecionado.HrInicio"></p-inputMask>
@@ -31,7 +31,7 @@
                 <p-inputMask id="txt_fim" mask="99:99" [(ngModel)]="itemSelecionado.HrFim"></p-inputMask>
             </div>
         </div>
-        <div class="row">
+        <div class="grid">
             <label for="txt_descricao">Descrição</label>
             <div id="txt_descricao" class="col-12"><textarea *ngIf="itemSelecionado"
                     [(ngModel)]="itemSelecionado.Descricao" cols="70" rows="5"></textarea></div>

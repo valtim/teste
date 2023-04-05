@@ -1,8 +1,8 @@
 <app-titulo titulo="Horas Voadas" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="p-grid p-mt-1">
-  <div class="p-col"></div>
-  <div class="p-col">
+<div class="row p-mt-1">
+  <div class="col"></div>
+  <div class="col">
     <button type="button" pButton pRipple label="Inicial"></button>
     <p-calendar
       [(ngModel)]="dataInicio"
@@ -23,7 +23,7 @@
       [inputStyle]="{ width: '100px' }"
     ></p-calendar>
   </div>
-  <div class="p-col">
+  <div class="col">
     <button
       type="button"
       pButton
@@ -48,7 +48,7 @@
       class="p-ml-2"
     ></button>
   </div>
-  <div class="p-col">
+  <div class="col">
     <button
       type="button"
       label="Exportar"

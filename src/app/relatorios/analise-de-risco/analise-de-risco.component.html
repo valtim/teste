@@ -1,8 +1,8 @@
 <app-titulo [titulo]="titulo" [carregando]="carregando"></app-titulo>
 
-<div class="p-grid">
-    <div class="p-col"></div>
-    <div class="p-col">
+<div class="grid">
+    <div class="col"></div>
+    <div class="col">
 
         <p-listbox [options]="tripulantes" [(ngModel)]="tripulantesSelecionados" multiple="multiple" checkbox="checkbox"
             filter="Nome" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
@@ -12,7 +12,7 @@
         </p-listbox>
 
     </div>
-    <div class="p-col">
+    <div class="col">
 
         <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
             filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
@@ -22,14 +22,14 @@
         </p-listbox>
 
     </div>
-    <div class="p-col">
+    <div class="col">
 
 
         <p-calendar [(ngModel)]="dates" selectionMode="multiple" [inline]="true" [locale]="locale_pt"
             [inputStyle]="{'width':'100px'}"></p-calendar>
 
     </div>
-    <div class="p-col">
+    <div class="col">
 
         <button pButton type="button" label="Pesquisar" (click)="pesquisar()"></button>
 

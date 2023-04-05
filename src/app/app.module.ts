@@ -99,10 +99,11 @@ import { GerenciarTripulantesComponent } from './administracao/gerenciar-tripula
 import { InstrutorComponent } from './treinamento/instrutor/instrutor.component';
 import { EditarGerenciarTripulantesComponent } from './administracao/editar-tripulantes/editar-gerenciar-tripulantes.component';
 import { DuplaAdmComponent } from './escala/dupla-adm/dupla-adm.component';
-import { TimespanPipe } from './shared/pipe/timespan.pipe';
 import { HTMLPipe } from './shared/pipe/toHTML';
 import { SafeHtmlPipe } from './shared/pipe/safeHTML';
 import { BlocoComponent } from './cadastro/bloco/bloco.component';
+import { RelVencimentoTreinamentoComponent } from './relatorios/rel-vencimento-treinamento/rel-vencimento-treinamento.component';
+import { LoginLdapComponent } from './login-ldap/login-ldap.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -112,8 +113,6 @@ const rodandoLocal = window.location.host == 'localhost:4200';
   ],
   declarations: [
     AppComponent,
-
-
     AgendaComponent,
     AnexosComponent,
     CertificadoComponent,
@@ -128,8 +127,6 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     NovoTreinamentoComponent,
     TurmaListComponent,
     TurmaStatusComponent,
-
-
     AnaliseDeRiscoComponent,
     CabecalhoImpressaoComponent,
     CadastroDeEmailReporteComponent,
@@ -201,10 +198,11 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     InstrutorComponent,
     EditarGerenciarTripulantesComponent,
     DuplaAdmComponent,
-    TimespanPipe,
     HTMLPipe,
     SafeHtmlPipe,
-    BlocoComponent
+    BlocoComponent,
+    RelVencimentoTreinamentoComponent,
+    LoginLdapComponent
   ],
   imports: [
     AppRoutingModule,

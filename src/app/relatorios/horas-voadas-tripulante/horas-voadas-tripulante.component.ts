@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../../shared/api.service";
-import * as FileSaver from "file-saver";
+import { saveAs } from 'file-saver-es'
 import { Workbook } from "exceljs";
 import { wordBreak } from "html2canvas/dist/types/css/property-descriptors/word-break";
 
@@ -104,7 +104,7 @@ export class HorasVoadasTripulanteComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(
+    saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

@@ -5,11 +5,11 @@
 <button type="button" pButton pRipple label="Salvar" (click)="salvar()" class="p-button-success"
     id="btnSalvar"></button>
 
-<div class="container d-print-none" *ngIf="!carregandoMenu">
+<div class="d-print-none" *ngIf="!carregandoMenu">
 
-    <div class="p-grid">
-        <div class="p-col"></div>
-        <div class="p-col">
+    <div class="grid">
+        <div class="col"></div>
+        <div class="col">
             <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
                 checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
                 <p-header>
@@ -17,7 +17,7 @@
                 </p-header>
             </p-listbox>
         </div>
-        <div class="p-col">
+        <div class="col">
             <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
                 checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
                 <p-header>
@@ -26,12 +26,12 @@
             </p-listbox>
         </div>
 
-        <div class="p-col"></div>
+        <div class="col"></div>
     </div>
 
-    <div class="p-grid">
-        <div class="p-col"></div>
-        <div class="p-col">
+    <div class="grid">
+        <div class="col"></div>
+        <div class="col">
 
             <button type="button" pButton pRipple label="Inicial" class="p-ml-2"></button>
             <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
@@ -39,19 +39,19 @@
 
         </div>
 
-        <div class="p-col">
+        <div class="col">
             <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
             <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
                 showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
 
         </div>
 
-        <div class="p-col">
+        <div class="col">
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" class="p-ml-2"
                 (click)="rodarRelatorio()"></button>
         </div>
 
-        <div class="p-col"></div>
+        <div class="col"></div>
 
     </div>
 

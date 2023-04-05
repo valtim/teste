@@ -1,9 +1,9 @@
 <app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
 
 
-<div class="p-grid">    
-    <div class="p-col"></div>
-    <div class="p-col">
+<div class="grid">    
+    <div class="col"></div>
+    <div class="col">
         <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
             filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
             <p-header>
@@ -11,7 +11,7 @@
             </p-header>
         </p-listbox>
     </div>
-    <div class="p-col">
+    <div class="col">
         <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
             filter="filter" [listStyle]="{'max-height':'110px'}" optionLabel="Nome">
             <p-header>
@@ -19,7 +19,7 @@
             </p-header>
         </p-listbox>
     </div>
-    <div class="p-col">
+    <div class="col">
         <p-listbox [options]="naturezas" [(ngModel)]="naturezasSelecionadas" multiple="multiple" checkbox="checkbox"
             filter="filter" optionLabel="Nome" [listStyle]="{'max-height':'110px'}">
             <p-header>
@@ -28,7 +28,7 @@
         </p-listbox>
 
     </div>
-    <div class="p-col">
+    <div class="col">
         <button type="button" pButton pRipple label="Inicial"></button>
 
         <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
@@ -39,14 +39,14 @@
         <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
             showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
     </div>
-    <div class="p-col">
+    <div class="col">
         <button type="button" pButton pRipple label="Nº do RDV"></button>
         <input type="text" pInputText [(ngModel)]="rdv"></div>
-    <div class="p-col">
+    <div class="col">
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
             (click)="rodarRelatorio()"></button>
     </div>
-    <div class="p-col"></div>
+    <div class="col"></div>
 
 </div>
 

@@ -23,20 +23,23 @@ export class LoginComponent implements OnInit {
   jaLogouRemoto = localStorage.length == 4;
 
   ngOnInit() {
-
-
-
     
     this.api.EhProducao().then(x=>{
       this.ehProducao = x;
+      if (localStorage.length == 4) {
+        this.loginRemoto();
+        return;
+      }
+      
+      if (localStorage.getItem["Authorization"] != null && localStorage.length >= 4)
+        return;
+
+
+
     })
-    if (localStorage.length == 4) {
-      this.loginRemoto();
-      return;
-    }
+
+
     
-    if (localStorage.getItem["Authorization"] != null && localStorage.length >= 4)
-      return;
 
     //localStorage.clear();
   }
@@ -126,7 +129,7 @@ export class LoginComponent implements OnInit {
         window.location.href = url;
         return;
       }
-      window.location.href = "/";
+      window.location.href = "/home";
 
     })
     console.log(3);

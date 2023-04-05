@@ -1,4 +1,4 @@
-<div class="container" *ngIf="grupos">
+<div class="" *ngIf="grupos">
 
     <app-cabecalho-impressao titulo="AVALIAÇÃO DE RISCO" form="FORM-OPE-040" revisao="02" data="07/05/19"
         registro="CHE 0604-01/ANAC"></app-cabecalho-impressao>
@@ -9,21 +9,21 @@
         <div class="col-6 border border-dark"><b>Assinatura PIC</b></div>
     </div>
 
-    <div class="row">
+    <div class="grid">
         <div class="col-2 azul_clarinho border border-dark"><b>Matrícula</b></div>
         <div class="col-4 azul_clarinho border border-dark"><b>Piloto em Comando (PIC)</b></div>
         <div class="col-4 azul_clarinho border border-dark"><b>Segundo em Comando (SIC)</b></div>
         <div class="col-2 azul_clarinho border border-dark"><b>Pontos Totais</b></div>
     </div>
 
-    <div class="row">
+    <div class="grid">
         <div class="col-2 border border-dark">{{analise.Prefixo}}</div>
         <div class="col-4 border border-dark">{{analise.PIC}}</div>
         <div class="col-4 border border-dark">{{analise.SIC}}</div>
         <div class="col-2 border border-dark">{{analise.NotaFinal}}</div>
     </div>
 
-    <div class="row">
+    <div class="grid">
         <div class="col-6 border border-dark">Inserir todos os fatores aplicáveis nas colunas abaixo</div>
         <div class="col-6 border border-dark">O voo não será autorizado se: <br>- Qualquer seção exceder o limite de
             pontos;<br>- Total da pontuação exceder 32 pontos; </div>
@@ -33,25 +33,25 @@
     <div *ngFor="let grupo of grupos">
         <div class="row border border-dark">
             <div class="col-12">
-                <div class="row">
+                <div class="grid">
                     <div class="col-12 azul_clarinho border border-dark">{{grupo.Nome}}</div>
                 </div>
 
-                <div *ngIf="grupo.Crew" class="row">
+                <div *ngIf="grupo.Crew" class="grid">
                     <div class="col-6 azul_clarinho border border-dark"></div>
                     <div class="col-2 azul_clarinho border border-dark">PIC</div>
                     <div class="col-2 azul_clarinho border border-dark">SIC</div>
                     <div class="col-2 azul_clarinho border border-dark">&nbsp;</div>
                 </div>
 
-                <div class="row" *ngFor="let pergunta of grupo.Perguntas">
+                <div class="grid" *ngFor="let pergunta of grupo.Perguntas">
                     <div class="col-6 border border-dark">{{pergunta.Nome}}</div>
                     <div class="col-2 border border-dark">{{pergunta.Valor1}}</div>
                     <div class="col-2 border border-dark">{{pergunta.Valor2}}</div>
                     <div class="col-2 border border-dark">{{pergunta.PIC + pergunta.SIC}}</div>
                 </div>
 
-                <div class="row">
+                <div class="grid">
                     <div class="col-6 azul_clarinho border border-dark">Pontuação máxima permitida para esta seção:
                         {{grupo.Limite}}</div>
                     <div class="col-4 azul_clarinho border border-dark">Total da Seção</div>

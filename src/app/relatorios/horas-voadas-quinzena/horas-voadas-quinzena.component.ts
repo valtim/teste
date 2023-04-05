@@ -1,6 +1,6 @@
 import { ApiService } from "./../../shared/api.service";
 import { Component, OnInit } from "@angular/core";
-import * as FileSaver from "file-saver";
+import { saveAs } from 'file-saver-es'
 import { Coluna } from "src/app/coluna";
 
 @Component({
@@ -20,6 +20,9 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
   dadosInstrucao: any;
   detalhado: any;
   colunas: any;
+  memoriaDeCalculo: any;
+
+  exibirMemoria = false;
 
 
 
@@ -51,6 +54,8 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
         this.filtroRetorno = x.filtro;
 
 
+        this.memoriaDeCalculo = x.memoriaDeCalculo;
+
         this.dados.forEach(l => {
           Object.keys(l).forEach(x => {
             l[x] = this.transformTimeSpan(l[x], true);
@@ -71,7 +76,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     let matriculaFormatada = '';
 
     if (matricula.length > 5) {
-      matriculaFormatada = matricula.substring(0, 5);
+      matriculaFormatada = matricula.substring(matricula.length-5, matricula.length);
     } else {
       if (matricula.length == 5) {
         matriculaFormatada = matricula;
@@ -185,7 +190,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     if ((this.dados != undefined) && (this.dados != null) && (this.dados.length > 0)) {
       let linhas = [];
       let dataFormatada = this.formatarData(this.dataFim);
-      let codigosArquivo = ['8018', '8019', '8020', '8021', '8023', '8024', '8025', '8044'];
+      let codigosArquivo = ['8018', '8019', '8020', '8021', '8023', '8024', '8025', '8044', '8061', '0868'];
 
       this.dados.forEach((linha, index_dados) => {
         if (linha.Matricula != null) {
@@ -219,7 +224,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
       if (index == (linhas.length - 1)) {
         var data = new Blob([conteudoArquivo], { type: 'text/plain;charset=utf-8' });
-        FileSaver.saveAs(data, 'horasVoadasQuinzena.txt');
+        saveAs(data, 'horasVoadasQuinzena.txt');
       }
     });
   }
@@ -245,7 +250,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(
+    saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

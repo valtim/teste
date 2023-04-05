@@ -1,10 +1,10 @@
-import * as FileSaver from "file-saver";
 import { PermissoesDeAcesso } from "./../../models/PermissoesDeAcesso";
 import { Component, EventEmitter, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { ApiService } from "src/app/shared/api.service";
 import { Workbook } from "exceljs";
+import { saveAs } from 'file-saver-es'
 
 @Component({
   selector: "app-controle-de-acesso",
@@ -62,7 +62,7 @@ export class ControleDeAcessoComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(
+    saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

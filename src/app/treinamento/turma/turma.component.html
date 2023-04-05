@@ -13,8 +13,8 @@
 <p-card>
     <p-steps id="status-geral" [model]="statusTurma" [readonly]="true" [activeIndex]="indexStatusTurma"></p-steps>
 
-    <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-3">
+    <div class="p-fluid p-formgrid row">
+        <div class="p-field col-3">
             <div class="p-field">
                 <label for="nome">Equipamentos</label>
                 <p-dropdown [options]="equipamentos"
@@ -22,7 +22,7 @@
                     [(ngModel)]="turmaInterna.Equipamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
             </div>
         </div>
-        <div class="p-field p-col-3">
+        <div class="p-field col-3">
             <div class="p-field">
                 <label for="nome">Treinamento</label>
                 <p-dropdown [options]="treinamentos"
@@ -30,7 +30,7 @@
                     [(ngModel)]="turmaInterna.Treinamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
             </div>
         </div>
-        <div class="p-field p-col-3">
+        <div class="p-field col-3">
             <div class="p-field">
                 <label for="nome">Instrutor</label>
                 <p-dropdown [options]="instrutores" dataKey="Id" optionLabel="Trato" [filter]="true"
@@ -41,7 +41,7 @@
                 </p-inputSwitch>Instrutor Externo
             </div>
         </div>
-        <div class="p-field p-col-3">
+        <div class="p-field col-3">
             <div class="p-field">
                 <label for="nome">Local</label>
                 <input pInputText type="text" [(ngModel)]="turmaInterna.Local">
@@ -145,9 +145,9 @@
     </p-fieldset>
 
     <p-fieldset legend="Programação" [toggleable]="true">
-        <div class="p-grid">
-            <!-- <div class="p-field  p-col-5"> -->
-            <div class="p-col-fixed" style="width:450px">
+        <div class="grid">
+            <!-- <div class="p-field  col-5"> -->
+            <div class="col-fixed" style="width:450px">
                 <label for="nome">Período</label>
                 <p-calendar dateFormat="dd/mm/yy" [inline]="true" (onSelect)="mudancaDeData($event)"
                     (onBlur)="mudancaDeData($event)">
@@ -158,8 +158,8 @@
                 </div>
             </div>
             <!-- </div> -->
-            <!-- <div class="p-field  p-col-7"> -->
-            <div class="p-col">
+            <!-- <div class="p-field  col-7"> -->
+            <div class="col">
                 <div *ngFor="let item of turmaInterna.PeriodosDeCurso">{{item.Data | date:'dd/MM/yyyy'}}
                     <button pButton type="button" label="Adicionar Horário" icon="pi pi-plus"
                         class="p-button-raised p-button-rounded" (click)="novaHora(item.Data)"></button>
@@ -221,8 +221,8 @@
 
 
     <p-fieldset legend="Participantes" [toggleable]="true">
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col-12">
+        <div class="p-fluid p-formgrid row">
+            <div class="p-field col-12">
                 <p-pickList [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos" targetHeader="Alunos"
                     filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
                     [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
@@ -236,11 +236,11 @@
                 </p-pickList>
             </div>
         </div>
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col-6">
+        <div class="p-fluid p-formgrid row">
+            <div class="p-field col-6">
                 <div class="p-field"></div>
             </div>
-            <div class="p-field p-col">
+            <div class="p-field col">
                 <div class="p-field"><button pButton (click)="onNotificar()" type="button" label="Notificar Envolvidos"
                         icon="pi pi-send" class="p-button-raised p-button-rounded"></button></div>
             </div>
@@ -295,27 +295,27 @@
     </p-fieldset>
 
     <p-fieldset legend="Anexos" [toggleable]="true">
-        <div class="p-fluid p-formgrid p-grid">
-            <div class="p-field p-col-6">
+        <div class="p-fluid p-formgrid row">
+            <div class="p-field col-6">
                 <h2>Anexos da Turma</h2>
                 <div class="p-field">
                     <app-anexos [listaArquivos]='turmaInterna.Anexos'></app-anexos>
                 </div>
             </div>
-            <div class="p-field  p-col-6">
+            <div class="p-field  col-6">
                 <h2>NRT</h2>
                 <app-anexos [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompleto"></app-anexos>
             </div>
         </div>
         <div *ngIf="turmaInterna.Treinamento">
-            <div class="p-fluid p-formgrid p-grid" *ngIf="turmaInterna.Treinamento.Pratico">
-                <div class="p-field p-col-6">
+            <div class="p-fluid p-formgrid row" *ngIf="turmaInterna.Treinamento.Pratico">
+                <div class="p-field col-6">
                     <h2>SAE</h2>
                     <div class="p-field">
                         <app-anexos [listaArquivos]='turmaInterna.SAEs'></app-anexos>
                     </div>
                 </div>
-                <div class="p-field  p-col-6">
+                <div class="p-field  col-6">
                     <h2>NEC</h2>
                     <app-anexos [listaArquivos]='turmaInterna.NECs'></app-anexos>
                 </div>

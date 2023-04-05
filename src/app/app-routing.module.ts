@@ -1,3 +1,5 @@
+import { LoginLdapComponent } from './login-ldap/login-ldap.component';
+import { RelVencimentoTreinamentoComponent } from './relatorios/rel-vencimento-treinamento/rel-vencimento-treinamento.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 
@@ -72,9 +74,10 @@ import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
 import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 
 const routes: Routes = [
-  { path: "", component: HomeComponent },
-  { path: "login", component: LoginComponent },
+  { path: "", component: LoginLdapComponent },
   { path: "home", component: HomeComponent },
+  { path: "login", component: LoginComponent },
+  // { path: "home", component: HomeComponent },
   { path: "troca-senha", component: TrocaSenhaComponent },
   { path: "logoff", component: LogoffComponent },
   {
@@ -360,6 +363,10 @@ const routes: Routes = [
   {
     path: 'bloco',
     component: BlocoComponent,
+  },
+  {
+    path: 'vencimento-treinamento',
+    component: RelVencimentoTreinamentoComponent,
   }
 ];
 

@@ -2,9 +2,9 @@
 
 <app-titulo titulo="Voos Realizados" [carregando]="carregando"></app-titulo>
 
-<div class="p-grid">
-  <div class="p-col"></div>
-  <div class="p-col">
+<div class="grid">
+  <div class="col"></div>
+  <div class="col">
     <p-listbox
       [options]="clientes"
       [(ngModel)]="clientesSelecionados"
@@ -17,7 +17,7 @@
       <p-header> Clientes </p-header>
     </p-listbox>
   </div>
-  <div class="p-col">
+  <div class="col">
     <button type="button" pButton pRipple label="Inicial"></button>
     <p-calendar
       [(ngModel)]="dataInicio"
@@ -37,7 +37,7 @@
     >
     </p-calendar>
   </div>
-  <div class="p-col">
+  <div class="col">
     <button
       pButton
       type="button"
@@ -48,7 +48,7 @@
     ></button>
   </div>
 
-  <div class="p-col">
+  <div class="col">
     <button
       type="button"
       label="Exportar"

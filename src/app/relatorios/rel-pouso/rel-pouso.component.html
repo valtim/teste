@@ -3,10 +3,10 @@
   [carregando]="carregando"
 ></app-titulo>
 <div id="dataTable">
-  <div class="container d-print-none" *ngIf="prefixos">
-    <div class="p-grid">
-      <div class="p-col"></div>
-      <div class="p-col">
+  <div class=" d-print-none" *ngIf="prefixos">
+    <div class="grid">
+      <div class="col"></div>
+      <div class="col">
         <p-listbox
           [options]="localidades"
           [(ngModel)]="localidadesSelecionados"
@@ -19,7 +19,7 @@
           <p-header> Localidades </p-header>
         </p-listbox>
       </div>
-      <div class="p-col">
+      <div class="col">
         <p-listbox
           [options]="prefixos"
           [(ngModel)]="prefixosSelecionados"
@@ -32,7 +32,7 @@
           <p-header> Prefixos </p-header>
         </p-listbox>
       </div>
-      <div class="p-col">
+      <div class="col">
         <p-listbox
           [options]="clientes"
           [(ngModel)]="clientesSelecionados"
@@ -45,7 +45,7 @@
           <p-header> Clientes </p-header>
         </p-listbox>
       </div>
-      <div class="p-col">
+      <div class="col">
         <button type="button" pButton pRipple label="Inicial"></button>
         <p-calendar
           [(ngModel)]="dataInicio"
@@ -65,7 +65,7 @@
           [inputStyle]="{ width: '100px' }"
         ></p-calendar>
       </div>
-      <div class="p-col">
+      <div class="col">
         <button
           pButton
           type="button"
@@ -85,7 +85,7 @@
           tooltipPosition="bottom"
         ></button>
       </div>
-      <div class="p-col"></div>
+      <div class="col"></div>
     </div>
   </div>
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataUtil } from "./../shared/DataUtil";
-import { Observable } from "rxjs";
+import { Observable, lastValueFrom } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -60,7 +60,7 @@ export class ApiService {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
     this.url =
       window.location.host === "localhost:4200"
-         ? "https://localhost:44343/"
+        ? "https://localhost:44343/"
         //? "https://teste.fastapi.com.br/"
         : "/";
 
@@ -69,7 +69,7 @@ export class ApiService {
       title: "",
       message: "",
       type: "alert",
-      callBack: () => {},
+      callBack: () => { },
     };
   }
 
@@ -426,9 +426,8 @@ export class ApiService {
     return this.http
       .get(
         this.url +
-          `api/trilho/${dataIni.toISOString().split("T")[0]}/${
-            dataFim.toISOString().split("T")[0]
-          }`,
+        `api/trilho/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
+        }`,
         this.httpOptions
       )
       .toPromise();
@@ -630,8 +629,7 @@ export class ApiService {
 
   getBI(dataIni: Date, dataFim: Date): Observable<any> {
     return this.http.get(
-      `${this.url}api/consultabi/${dataIni.toISOString().split("T")[0]}/${
-        dataFim.toISOString().split("T")[0]
+      `${this.url}api/consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
       }`,
       this.httpOptions
     );
@@ -710,9 +708,9 @@ export class ApiService {
       .toPromise();
   }
 
-  getRDV(folha:string): Promise<any> {
+  getRDV(folha: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/RelRdv/`+folha, this.httpOptions)
+      .get(`${this.url}api/RelRdv/` + folha, this.httpOptions)
       .toPromise();
   }
 
@@ -744,9 +742,8 @@ export class ApiService {
     data: Date,
     cliente: string
   ): Promise<any> {
-    let caminho = `${this.url}api/RelStatusDaFrota/${
-      data.toISOString().split("T")[0]
-    }/${cliente}`;
+    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]
+      }/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
@@ -756,11 +753,9 @@ export class ApiService {
     dataFim: Date,
     baseDeOperacao: string
   ): Promise<any> {
-    let caminho = `${this.url}api/RelEscala/${
-      dataref.toISOString().split("T")[0]
-    }/${dataIni.toISOString().split("T")[0]}/${
-      dataFim.toISOString().split("T")[0]
-    }/${baseDeOperacao}`;
+    let caminho = `${this.url}api/RelEscala/${dataref.toISOString().split("T")[0]
+      }/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
+      }/${baseDeOperacao}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
@@ -874,8 +869,7 @@ export class ApiService {
   getCDO(data: Date): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/RelControleDiarioDeOperacoes/${
-          data.toISOString().split("T")[0]
+        `${this.url}api/RelControleDiarioDeOperacoes/${data.toISOString().split("T")[0]
         }`,
         this.httpOptions
       )
@@ -1016,7 +1010,7 @@ export class ApiService {
       .get(`${this.url}api/tripulante-light`, this.httpOptions)
       .toPromise();
   }
-  
+
 
   postAnaliseDeFadiga(filtro: any): Promise<any> {
     return this.http
@@ -1050,5 +1044,12 @@ export class ApiService {
     return this.http
       .post(`${this.url}api/fichadeavaliacao`, ficha, this.httpOptions)
       .toPromise();
+  }
+
+  async getProximosVencimentos(): Promise<any> {
+    return await lastValueFrom(
+      this.http
+        .get(`${this.url}api/ultimosVencimentos`, this.httpOptions)
+    );
   }
 }

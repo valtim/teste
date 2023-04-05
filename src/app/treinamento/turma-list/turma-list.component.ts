@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { HoraTurma } from 'src/app/models/HoraTurma';
 import { Turma } from 'src/app/models/Turma';
 import { _ClasseBasica } from 'src/app/models/_ClasseBasica';
@@ -32,13 +32,26 @@ export class TurmaListComponent implements OnInit {
 
   turmas: Array<Turma> = [];
 
+  turmasFiltro: Array<Turma> = [];
+
   ngOnInit(): void {
 
     this.dataIni = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth() + 3, 1);
     this.dataFim.setDate(this.dataFim.getDate() - 1);
 
+    if (isDevMode()) {
+      this.dataIni = new Date(2023, 0, 1);
+      this.dataFim = new Date(2023, 0, 31);
+    }
+
     this.rodarRelatorio();
+  }
+
+  filtro = '';
+
+  filtrar(event) {
+    this.turmasFiltro = this.turmas.filter(x => x.Filtro.indexOf(this.filtro.toUpperCase()) > -1);
   }
 
   rodarRelatorio() {
@@ -52,13 +65,14 @@ export class TurmaListComponent implements OnInit {
 
       this.turmas = [];
       this.turmas = x.Turmas;
+      this.turmasFiltro = x.Turmas;
       this.loading = false;
     })
-    .catch((e) => {
-      this.treinamentos = null;
-      this.loading = false;
-      alert('Erro ao Rodar Consulta no Banco\n' + e.message);
-    })
+      .catch((e) => {
+        this.treinamentos = null;
+        this.loading = false;
+        alert('Erro ao Rodar Consulta no Banco\n' + e.message);
+      })
   }
 
   novaTurma() {

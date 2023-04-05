@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { PermissoesDeAcessoById } from "src/app/models/PermissaoDeAcessoById";
 import { ApiService } from "src/app/shared/api.service";
-import * as EventEmitter from "events";
+// import * as EventEmitter from "events";
 
 @Component({
   selector: "app-controle-de-acesso-edit",

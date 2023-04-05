@@ -1,9 +1,9 @@
 <app-titulo titulo="CONTROLE DIÁRIO DE HORAS VOADAS" [carregando]="!relatorio_ok"></app-titulo>
 
 
-<div class="p-grid">
-    <div class="p-col"></div>
-    <div class="p-col v-no-wrap"><button type="button" pButton pRipple label="Data"></button>
+<div class="grid">
+    <div class="col"></div>
+    <div class="col v-no-wrap"><button type="button" pButton pRipple label="Data"></button>
         <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
         showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
@@ -11,7 +11,7 @@
     </div>
 
 
-    <div class="p-col"></div>
+    <div class="col"></div>
 </div>
 
 <div *ngIf="relatorio_ok">

@@ -37,15 +37,15 @@
       <div *ngIf="!tratamento.Pesquisa.ReporteVoluntario">
 
         <p-card *ngFor="let info of tratamento.Resultado">
-          <div class="p-grid">
-            <div class="p-col-12">
+          <div class="grid">
+            <div class="col-12">
               <h5>{{info.Titulo}}</h5>
             </div>
-            <div class="p-col-6">Pergunta</div>
-            <div class="p-col-6">Resposta</div>
+            <div class="col-6">Pergunta</div>
+            <div class="col-6">Resposta</div>
             <ng-container *ngFor="let perg of info.Perguntas">
-              <div class="p-col-6">{{perg.Pergunta}}</div>
-              <div class="p-col-6">{{perg.Resposta}}
+              <div class="col-6">{{perg.Pergunta}}</div>
+              <div class="col-6">{{perg.Resposta}}
                 <span *ngIf="info.Pagina === 2">
                   <img *ngIf="perg.Pergunta.indexOf('/') > 0" style="width: 30px"
                     src="/assets/img/emoticon{{perg.Resposta}}.png" alt="emoticon">
@@ -84,8 +84,8 @@
 
 
             <p-card *ngIf="resposta && faseCoord">
-              <div class="p-grid">
-                <div class="p-col-12" *ngFor="let resp of resposta.ResponsavelEscala; let i = index">
+              <div class="grid">
+                <div class="col-12" *ngFor="let resp of resposta.ResponsavelEscala; let i = index">
                   <input type="radio" [id]="i" formControlName="ResponsavelEscala" [value]="resp.Email" />
                   <label [for]="i"> {{ resp.Trato}} - {{ resp.Email }} </label>
                 </div>

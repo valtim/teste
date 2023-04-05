@@ -1,0 +1,60 @@
+<app-titulo [titulo]="titulo" [carregando]="(!consulta_ok)"></app-titulo>
+
+<p-table [value]="dados" (sortFunction)="customSort($event)" [customSort]="true" styleClass="p-datatable-striped">
+
+    <ng-template pTemplate="caption">
+        {{titulo}}
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <!-- <th style="width:50px"></th> -->
+            <th pSortableColumn="Nome"><p-sortIcon field="code"></p-sortIcon>
+                Curso
+            </th>
+            <th pSortableColumn="Trato"><p-sortIcon field="code"></p-sortIcon>
+                Tripulante
+            </th>
+            <th pSortableColumn="DataDeVencimento"><p-sortIcon field="code"></p-sortIcon>
+                Vencimento
+            </th>
+
+        </tr>
+        <tr>
+            <th>
+                <p-columnFilter type="text" field="Nome">Curso</p-columnFilter>
+            </th>
+            <th>
+                <p-columnFilter type="text" field="Trato">Tripulante</p-columnFilter>
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+            <!-- <td>
+                <p-checkbox [value]="rowData.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"
+                    (click)="verBotoes()"></p-checkbox>
+            </td> -->
+
+            <td>
+                {{rowData["Nome"]}}
+            </td>
+
+
+            <td>
+                {{rowData["Trato"]}}
+            </td>
+
+
+            <td>
+                {{rowData["DataDeVencimento"]| date:"dd/MM/yyyy"}}
+            </td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <b>SOL SISTEMAS</b>
+    </ng-template>
+</p-table>

@@ -1,16 +1,16 @@
 <app-titulo titulo="Escala Mensal" [carregando]="!tudoPronto"></app-titulo>
-<div class="p-grid p-mt-1">
-    <div class="p-col">
+<div class="row p-mt-1">
+    <div class="col">
         <button type="button" pButton pRipple label="Inicial"></button>
         <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
             showIcon="true"></p-calendar>
     </div>
-    <div class="p-col">
+    <div class="col">
         <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
         <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
             showIcon="true"></p-calendar>
     </div>
-    <div class="p-col">
+    <div class="col">
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
             class="p-ml-2"></button>
         <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"

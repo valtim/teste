@@ -1,14 +1,14 @@
-<div class="container">
+<div class="">
 
-    <div class="row">
+    <div class="grid">
         <h1 class="text-center">CERTIFICADO DE TREINAMENTO</h1>
     </div>
     
-    <div class="row" style="margin: 25px 0;">
+    <div class="grid" style="margin: 25px 0;">
         <img class="logo" src="assets/img/aeroleo.svg" alt="Logo Aéroleo">
     </div>
 
-    <div class="row" style="margin: 15px 0;">
+    <div class="grid" style="margin: 15px 0;">
         <p class="text-center">
             Certificamos que <b style="text-transform: uppercase;">{{aluno.nomeCompleto}}</b> concluiu com sucesso o curso <b style="text-transform: uppercase;">{{treinamento.nome}}</b>.
         </p>
@@ -17,7 +17,7 @@
         </p>
     </div>
 
-    <div class="row">
+    <div class="grid">
         <ul>
             <li *ngFor="let conteudo of treinamento.conteudos">
                 {{conteudo.nome}}
@@ -25,7 +25,7 @@
         </ul>
     </div>
 
-    <div class="row" style="margin-top: 45px;">
+    <div class="grid" style="margin-top: 45px;">
         <p class="text-center">
         ____________________________________________________________________<br>
         

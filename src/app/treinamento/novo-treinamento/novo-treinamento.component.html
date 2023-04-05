@@ -5,25 +5,25 @@
         class="p-button-raised p-button-rounded p-button-warning"></button>
 </span>
 <p-card>
-    <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-6">
+    <div class="p-fluid p-formgrid row">
+        <div class="p-field col-6">
             <div class="p-field">
                 <label for="nome">Nome</label>
                 <input id="nome" type="text" [(ngModel)]="treinamentoInterno.Nome" pInputText>
             </div>
         </div>
-        <div class="p-field  p-col-4">
+        <div class="p-field  col-4">
             <label for="nome">Validade</label>
             <p-inputMask type="tel" [(ngModel)]="treinamentoInterno.ValidadeEmDias" mask="999"></p-inputMask>
         </div>
         
-        <div class="p-field p-col-2">
+        <div class="p-field col-2">
             <label for="horasdevoo">Paga Horas de Voo</label>
             <p-inputSwitch id="horasdevoo" [(ngModel)]="treinamentoInterno.HorasDeVoo"></p-inputSwitch>
         </div>
     </div>
-    <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-6">
+    <div class="p-fluid p-formgrid row">
+        <div class="p-field col-6">
             <label for="tipotreinamento">Tipo de Treinamento</label>
             <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" id="tipotreinamento"
                 [options]="tipos" [(ngModel)]="treinamentoInterno.TiposTreinamento" optionLabel="Nome"
@@ -31,7 +31,7 @@
             </p-multiSelect>
         </div>
 
-        <div class="p-field p-col-6">
+        <div class="p-field col-6">
             <label for="nome">Equipamento</label>
             <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" name="tipoEquipamento"
                 [options]="equipamentos" [(ngModel)]="treinamentoInterno.TiposDeEquipamento" optionLabel="Nome"
@@ -39,8 +39,8 @@
         </div>
     </div>
 
-    <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-12">
+    <div class="p-fluid p-formgrid row">
+        <div class="p-field col-12">
             <label for="nome">Instrutor</label>
             <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" name="tipoEquipamento"
                 [options]="instrutores" [(ngModel)]="treinamentoInterno.Instrutores" optionLabel="Trato"
@@ -48,8 +48,8 @@
         </div>
     </div>
 
-    <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-6">
+    <div class="p-fluid p-formgrid row">
+        <div class="p-field col-6">
             <p-fieldset legend="Conteúdo Programático">
                 <button pButton (click)="addConteudoProgramatico()" label="Adicionar" icon="pi pi-plus"></button>
 
@@ -96,7 +96,7 @@
             </p-fieldset>
         </div>
 
-        <div class="p-field p-col-6">
+        <div class="p-field col-6">
 
             <p-fieldset legend="Anexos">
                 <app-anexos [listaArquivos]="treinamentoInterno.Anexos"></app-anexos>

@@ -1,9 +1,9 @@
 <app-titulo titulo="DAILY FLIGHT TIME CONTROL" [carregando]="(!consulta_ok)"></app-titulo>
 
 
-<div class="p-grid p-mt-1 nao-imprimir">
-    <div class="p-col"></div>
-    <div class="p-col">
+<div class="row p-mt-1 nao-imprimir">
+    <div class="col"></div>
+    <div class="col">
         <div class="p-inputgroup">
             <button type="button" pButton pRipple label="Data"></button>
             <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
@@ -14,8 +14,8 @@
                 class="p-ml-2"></button>
         </div>
     </div>
-    <div class="p-col"></div>
+    <div class="col"></div>
 
 </div>
 
-<div class="container_html" *ngIf="consulta_ok" [innerHTML]="htmlContent"></div>
+<div class="_html" *ngIf="consulta_ok" [innerHTML]="htmlContent"></div>

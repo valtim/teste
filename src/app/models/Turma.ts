@@ -29,6 +29,7 @@ export class Turma {
 
   public Avanco: number = 0;
   public DataDeInicio: Date;
+  public Filtro: String = "";
 
   /*
   get diferenca(): number {

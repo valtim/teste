@@ -1,7 +1,7 @@
 import { Indisponibilidade } from "./../../models/Indisponibilidade";
 import { ApiService } from "./../../shared/api.service";
 import { Component, OnInit } from "@angular/core";
-import * as FileSaver from "file-saver";
+import { saveAs } from 'file-saver-es'
 
 @Component({
   selector: "app-rel-indisponibilidade",
@@ -83,7 +83,7 @@ export class RelIndisponibilidadeComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(
+    saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

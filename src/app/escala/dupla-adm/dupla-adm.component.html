@@ -15,17 +15,17 @@
             [disabled]="linhasSelecionadas.length == 0 || !(listasOK && listasOK)"></button>
     </span>
 
-    <div class="p-grid p-mt-1">
-        <div class="p-col">
+    <div class="row p-mt-1">
+        <div class="col">
             <button type="button" pButton pRipple label="Inicial"></button>
             <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
                 (onSelect)="mudarDataInicio()"></p-calendar>
         </div>
-        <div class="p-col">
+        <div class="col">
             <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
             <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
         </div>
-        <div class="p-col">
+        <div class="col">
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()" class="p-ml-2"></button>
         </div>

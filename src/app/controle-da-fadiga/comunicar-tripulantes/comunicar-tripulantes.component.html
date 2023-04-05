@@ -1,6 +1,6 @@
 <app-titulo titulo="Comunicado"></app-titulo>
 
-<div class="container" *ngIf="!exibirMensagem">
+<div class="" *ngIf="!exibirMensagem">
     <h4>Destinatários:</h4>
     <div>
         <span class="text-nowrap" *ngFor="let trip of tripulantes"><input type="checkbox" [value]="trip.Trato" [(ngModel)]="trip.Marcado">&nbsp;{{trip.Trato}}

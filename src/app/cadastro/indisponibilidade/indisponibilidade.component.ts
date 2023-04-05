@@ -29,7 +29,9 @@ export class IndisponibilidadeComponent implements OnInit {
   botoes: { label: string; icon: string; command: () => void; }[];
   motivosIndisponibilidade: any;
 
-
+  fechar(){
+    
+  }
 
   constructor(private api: ApiService, private messageService: MessageService) { }
 

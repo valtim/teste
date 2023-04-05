@@ -1,3 +1,4 @@
+import { TimespanPipe } from './pipe/timespan.pipe';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
@@ -49,6 +50,7 @@ import { ChartModule } from 'primeng/chart';
     TituloComponent,
     ConfirmacaoComponent,
     FormataDataPipe,
+    TimespanPipe,
     MenuComponent
   ],
   imports: [
@@ -129,6 +131,7 @@ import { ChartModule } from 'primeng/chart';
     TituloComponent,
     ConfirmacaoComponent,
     FormataDataPipe,
+    TimespanPipe,    
     RadioButtonModule
   ],
 })

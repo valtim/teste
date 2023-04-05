@@ -1,5 +1,19 @@
 @media print {
     @page {
-        size: landscape
+        size: landscape;
+        transform: scale(.5);
+    }
+    
+    body {transform: scale(.5);}
+    th {
+        font-size: 10px;
+        text-align: center;
+    }
+    td {
+        font-size: 8px;
+        text-align: center;
+    }
+    .fonte-titulo {
+        font-size: 20px;
     }
 }

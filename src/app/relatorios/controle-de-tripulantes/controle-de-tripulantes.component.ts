@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
-
+import { saveAs } from 'file-saver-es'
 //import { ExcelService } from "./../../services/excel-service";
 
 @Component({
@@ -57,7 +57,7 @@ export class ControleDeTripulantesComponent implements OnInit {
   }
 
   saveAsExcelFile(buffer: any, fileName: string): void {
-    import("file-saver").then(FileSaver => {
+    saveAs.then(FileSaver => {
         let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
         let EXCEL_EXTENSION = '.xlsx';
         const data: Blob = new Blob([buffer], {
