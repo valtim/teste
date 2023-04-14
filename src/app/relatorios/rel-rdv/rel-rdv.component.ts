@@ -12,14 +12,11 @@ export class RelRdvComponent implements OnInit {
 
   constructor(private api: ApiService, private router: Router) { }
 
-  rdv;
-
+  rdv: any;
   tudoPronto = false;
-
-  urlLogo;
-
-
-  id_busca;
+  urlLogo: string;
+  id_busca: string;
+  cancelada: boolean = false;
 
   ngOnInit(): void {
     this.api.getClienteLogado().then(x => {
@@ -36,6 +33,7 @@ export class RelRdvComponent implements OnInit {
       this.rdv = x;
       this.tudoPronto = true;
       this.semErros = true;
+      this.cancelada = this.rdv.Cancelada;
     }).catch((e) => {
       if ( e.status == 404)
       {

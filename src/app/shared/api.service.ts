@@ -1052,4 +1052,9 @@ export class ApiService {
         .get(`${this.url}api/ultimosVencimentos`, this.httpOptions)
     );
   }
+  async postAtualizaVencimento(vencimento: any): Promise<any> {
+    return await lastValueFrom(
+      this.http.post(`${this.url}api/AtulizarVencimento`, vencimento, this.httpOptions)
+    );
+  }
 }

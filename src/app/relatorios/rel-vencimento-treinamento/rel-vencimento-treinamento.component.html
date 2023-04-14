@@ -1,5 +1,37 @@
 <app-titulo [titulo]="titulo" [carregando]="(!consulta_ok)"></app-titulo>
 
+
+<p-dialog [(visible)]="vencimentoEditado" [style]="{width: '450px'}" header="Vencimento" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <h4>{{vencimentoEditado.Trato}}</h4>
+        <h4>{{vencimentoEditado.Nome}}</h4>
+        <div class="input-group mb-3">
+            <div class="input-group-append">
+                <span class="input-group-text">Vencimento</span>
+            </div>
+            <p-inputMask [mask]="vencimentoEditado.Mascara" [(ngModel)]="vencimentoEditado.ValorExibido" [disabled]="vencimentoEditado.NaoControlado"></p-inputMask>
+    
+        </div>
+    
+    
+        <div class="input-group mb-3">
+    
+            <div class="input-group-append">
+                <span class="input-group-text">N/A</span>
+                <p-inputSwitch [(ngModel)]="vencimentoEditado.NaoControlado"></p-inputSwitch>
+            </div>
+            <input type="text" pInputText [(ngModel)]="vencimentoEditado.ValorExibido" />
+    
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hide()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    </ng-template>
+</p-dialog>
 <p-table [value]="dados" (sortFunction)="customSort($event)" [customSort]="true" styleClass="p-datatable-striped">
 
     <ng-template pTemplate="caption">
@@ -38,19 +70,21 @@
                     (click)="verBotoes()"></p-checkbox>
             </td> -->
 
-            <td>
+            <td (click)="editarVencimento(rowData)">
                 {{rowData["Nome"]}}
             </td>
 
 
-            <td>
+            <td (click)="editarVencimento(rowData)">
                 {{rowData["Trato"]}}
             </td>
 
 
-            <td>
-                {{rowData["DataDeVencimento"]| date:"dd/MM/yyyy"}}
+            <td (click)="editarVencimento(rowData)">
+                {{rowData["ValorExibido"]}}
             </td>
+
+
 
         </tr>
     </ng-template>

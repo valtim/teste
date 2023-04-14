@@ -13,7 +13,7 @@
 <p-card>
     <p-steps id="status-geral" [model]="statusTurma" [readonly]="true" [activeIndex]="indexStatusTurma"></p-steps>
 
-    <div class="p-fluid p-formgrid row">
+    <div class="p-fluid p-formgrid grid">
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="nome">Equipamentos</label>
@@ -26,7 +26,7 @@
             <div class="p-field">
                 <label for="nome">Treinamento</label>
                 <p-dropdown [options]="treinamentos"
-                    optionLabel="Nome" dataKey="Id" placeholder="Selecione um Treinamento"
+                    optionLabel="Nome" dataKey="Id" placeholder="Selecione um Treinamento" [filter]="true"
                     [(ngModel)]="turmaInterna.Treinamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
             </div>
         </div>
@@ -221,7 +221,7 @@
 
 
     <p-fieldset legend="Participantes" [toggleable]="true">
-        <div class="p-fluid p-formgrid row">
+        <div class="p-fluid p-formgrid grid">
             <div class="p-field col-12">
                 <p-pickList [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos" targetHeader="Alunos"
                     filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
@@ -236,7 +236,7 @@
                 </p-pickList>
             </div>
         </div>
-        <div class="p-fluid p-formgrid row">
+        <div class="p-fluid p-formgrid grid">
             <div class="p-field col-6">
                 <div class="p-field"></div>
             </div>
@@ -295,7 +295,7 @@
     </p-fieldset>
 
     <p-fieldset legend="Anexos" [toggleable]="true">
-        <div class="p-fluid p-formgrid row">
+        <div class="p-fluid p-formgrid grid">
             <div class="p-field col-6">
                 <h2>Anexos da Turma</h2>
                 <div class="p-field">
@@ -308,7 +308,7 @@
             </div>
         </div>
         <div *ngIf="turmaInterna.Treinamento">
-            <div class="p-fluid p-formgrid row" *ngIf="turmaInterna.Treinamento.Pratico">
+            <div class="p-fluid p-formgrid grid" *ngIf="turmaInterna.Treinamento.Pratico">
                 <div class="p-field col-6">
                     <h2>SAE</h2>
                     <div class="p-field">

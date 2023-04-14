@@ -41,8 +41,8 @@ export class TurmaListComponent implements OnInit {
     this.dataFim.setDate(this.dataFim.getDate() - 1);
 
     if (isDevMode()) {
-      this.dataIni = new Date(2023, 0, 1);
-      this.dataFim = new Date(2023, 0, 31);
+      this.dataIni = new Date(2023, 1, 1);
+      this.dataFim = new Date(2023, 1, 28);
     }
 
     this.rodarRelatorio();

@@ -5,7 +5,7 @@
         class="p-button-raised p-button-rounded p-button-warning"></button>
 </span>
 <p-card>
-    <div class="p-fluid p-formgrid row">
+    <div class="p-fluid p-formgrid grid">
         <div class="p-field col-6">
             <div class="p-field">
                 <label for="nome">Nome</label>
@@ -22,7 +22,7 @@
             <p-inputSwitch id="horasdevoo" [(ngModel)]="treinamentoInterno.HorasDeVoo"></p-inputSwitch>
         </div>
     </div>
-    <div class="p-fluid p-formgrid row">
+    <div class="p-fluid p-formgrid grid">
         <div class="p-field col-6">
             <label for="tipotreinamento">Tipo de Treinamento</label>
             <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" id="tipotreinamento"
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div class="p-fluid p-formgrid row">
+    <div class="p-fluid p-formgrid grid">
         <div class="p-field col-12">
             <label for="nome">Instrutor</label>
             <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" name="tipoEquipamento"
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="p-fluid p-formgrid row">
+    <div class="p-fluid p-formgrid grid">
         <div class="p-field col-6">
             <p-fieldset legend="Conteúdo Programático">
                 <button pButton (click)="addConteudoProgramatico()" label="Adicionar" icon="pi pi-plus"></button>

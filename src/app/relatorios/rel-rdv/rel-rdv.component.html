@@ -20,157 +20,164 @@
             <td rowspan="2">{{rdv.Prefixo.TipoDeAeronave.Nome}}</td>
             <td rowspan="2">{{rdv.Prefixo.PrefixoCompleto}}</td>
             <td rowspan="2">{{rdv.Prefixo.IdentificadorCliente}}</td>
-            <td rowspan="2">{{rdv.Linhas[0].Origem.Nome}}</td>
+            <td rowspan="2"><span *ngIf="!cancelada">{{rdv.Linhas[0].Origem.Nome}}</span></td>
             <td rowspan="2">{{rdv.DataDoDiario |date:'dd/MM/yyyy'}}</td>
             <th>Nº VOO</th>
-            <td>{{rdv.Linhas[0].NumeroDoVoo}}</td>
+            <td><span *ngIf="!cancelada">{{rdv.Linhas[0].NumeroDoVoo}}</span></td>
 
         </tr>
         <tr>
             <th>CLIENTE</th>
-            <td>{{rdv.Linhas[0].Cliente.Nome}}</td>
+            <td><span *ngIf="!cancelada">{{rdv.Linhas[0].Cliente.Nome}}</span></td>
         </tr>
     </table>
 
     <br>
 
-    <table *ngIf="rdv">
-        <tr>
-            <th rowspan="2">ETAPA</th>
-            <th colspan="2">LOCAL</th>
-            <th colspan="5">HORÁRIOS</th>
-            <th rowspan="2">Nº POUSOS</th>
-            <th colspan="4">HORAS DE VOO</th>
-            <th rowspan="2">Nº PAX</th>
-            <th rowspan="2">CARGA</th>
-            <th colspan="2">COMBUSTÍVEL</th>
-        </tr>
-        <tr>
-            <th>ORIGEM</th>
-            <th>DESTINO</th>
-            <th>PARTIDA</th>
-            <th>DECOLAGEM</th>
-            <th>POUSO</th>
-            <th>CORTE</th>
-            <th>DEC/POU</th>
-            <th>VFR</th>
-            <th>IFR</th>
-            <th>NOT</th>
-            <th>TOT</th>
-            <th>PARTIDA</th>
-            <th>CHEGADA</th>
-        </tr>
-        <tr *ngFor="let item of rdv.Linhas; let i = index">
-            <td>{{i+1}}</td>
-            <td>{{item.Origem.Nome}}</td>
-            <td>{{item.Destino.Nome}}</td>
-            <td>{{item.Partida | date: 'HH:mm'}}</td>
-            <td>{{item.Decolagem | date: 'HH:mm'}}</td>
-            <td>{{item.Pouso | date: 'HH:mm'}}</td>
-            <td>{{item.Corte | date: 'HH:mm'}}</td>
-            <td>{{item.DecAtePou| slice:0:5}}</td>
-            <td>{{item.Pousos}}</td>
-            <td>{{item.VFR| slice:0:5}}</td>
-            <td>{{item.IFR| slice:0:5}}</td>
-            <td>{{item.Noturno| date: 'HH:mm'}}</td>
-            <td>{{item.Total| slice:0:5}}</td>
-            <td>{{item.Pax}}</td>
-            <td>{{item.Carga}}</td>
-            <td>{{item.FuelDec}}</td>
-            <td>{{item.FuelPou}}</td>
-        </tr>
-        <tr>
-            <th colspan="3">TOTAIS</th>
-            <td>{{rdv.Partidas}}</td>
-            <th colspan="4">Pri Dec/Ulti Pou: {{rdv.HorasDepArrComTratamento|timespan : 'HH:mm'}}</th>
-            <td>{{rdv.Pousos}}</td>
-            <td>{{rdv.VFR|timespan : 'HH:mm'}}</td>
-            <td>{{rdv.IFR|timespan : 'HH:mm'}}</td>
-            <td>{{rdv.Noturno|timespan : 'HH:mm'}}</td>
-            <td>{{rdv.Total|timespan : 'HH:mm'}}</td>
-            <td>{{rdv.Pax}}</td>
-            <td>---</td>
-            <th>CONSUMO:</th>
-            <td>{{rdv.Consumo | number}}</td>
-        </tr>
-    </table>
+    <p-card *ngIf="cancelada">
+        Folha Cancelada
+    </p-card>
 
-    <div *ngIf="rdv.Linhas.length < 8">
-        <br *ngFor="let item of [].constructor(8 - rdv.Linhas.length)">
-    </div>
+    <span *ngIf="rdv && !cancelada">
+        <table>
+            <tr>
+                <th rowspan="2">ETAPA</th>
+                <th colspan="2">LOCAL</th>
+                <th colspan="5">HORÁRIOS</th>
+                <th rowspan="2">Nº POUSOS</th>
+                <th colspan="4">HORAS DE VOO</th>
+                <th rowspan="2">Nº PAX</th>
+                <th rowspan="2">CARGA</th>
+                <th colspan="2">COMBUSTÍVEL</th>
+            </tr>
+            <tr>
+                <th>ORIGEM</th>
+                <th>DESTINO</th>
+                <th>PARTIDA</th>
+                <th>DECOLAGEM</th>
+                <th>POUSO</th>
+                <th>CORTE</th>
+                <th>DEC/POU</th>
+                <th>VFR</th>
+                <th>IFR</th>
+                <th>NOT</th>
+                <th>TOT</th>
+                <th>PARTIDA</th>
+                <th>CHEGADA</th>
+            </tr>
+            <tr *ngFor="let item of rdv.Linhas; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{item.Origem.Nome}}</td>
+                <td>{{item.Destino.Nome}}</td>
+                <td>{{item.Partida | date: 'HH:mm'}}</td>
+                <td>{{item.Decolagem | date: 'HH:mm'}}</td>
+                <td>{{item.Pouso | date: 'HH:mm'}}</td>
+                <td>{{item.Corte | date: 'HH:mm'}}</td>
+                <td>{{item.DecAtePou| slice:0:5}}</td>
+                <td>{{item.Pousos}}</td>
+                <td>{{item.VFR| slice:0:5}}</td>
+                <td>{{item.IFR| slice:0:5}}</td>
+                <td>{{item.Noturno| date: 'HH:mm'}}</td>
+                <td>{{item.Total| slice:0:5}}</td>
+                <td>{{item.Pax}}</td>
+                <td>{{item.Carga}}</td>
+                <td>{{item.FuelDec}}</td>
+                <td>{{item.FuelPou}}</td>
+            </tr>
+            <tr>
+                <th colspan="3">TOTAIS</th>
+                <td>{{rdv.Partidas}}</td>
+                <th colspan="4">Pri Dec/Ulti Pou: {{rdv.HorasDepArrComTratamento|timespan : 'HH:mm'}}</th>
+                <td>{{rdv.Pousos}}</td>
+                <td>{{rdv.VFR|timespan : 'HH:mm'}}</td>
+                <td>{{rdv.IFR|timespan : 'HH:mm'}}</td>
+                <td>{{rdv.Noturno|timespan : 'HH:mm'}}</td>
+                <td>{{rdv.Total|timespan : 'HH:mm'}}</td>
+                <td>{{rdv.Pax}}</td>
+                <td>---</td>
+                <th>CONSUMO:</th>
+                <td>{{rdv.Consumo | number}}</td>
+            </tr>
+        </table>
 
-    <br>
-
-    <div *ngIf="rdv" class="grid">
-        <div class="col-3">
-            <table>
-                <tr>
-                    <th>LOCAL</th>
-                    <th>CIA</th>
-                    <th>Nº DA NOTA(CE)</th>
-                    <th>VOLUME</th>
-                </tr>
-                <tr *ngFor="let item of rdv.NotasDeAbastecimento">
-                    <td>{{item.Local}}</td>
-                    <td>{{item.Abastecedora.Nome}}</td>
-                    <td>{{item.Nota}}</td>
-                    <td>{{item.QuantidadeAbastecida | number}}</td>
-                </tr>
-            </table>
+        <div *ngIf="rdv.Linhas.length < 8">
+            <br *ngFor="let item of [].constructor(8 - rdv.Linhas.length)">
         </div>
 
-        <div class="col-9">
-            <table>
-                <tr>
-                    <th colspan="5">TRIPULAÇÃO</th>
-                </tr>
-                <tr>
-                    <th>CATEGORIA</th>
-                    <th>NOME</th>
-                    <th>ANAC</th>
-                    <th>SISPAT</th>
-                    <th>RUBRICAS</th>
-                </tr>
-                <tr>
-                    <td>{{rdv.Linhas[0].FuncaoTrip1.Nome}}({{rdv.Linhas[0].FuncaoTrip1.Sigla}})</td>
-                    <td>{{rdv.Linhas[0].Comandante.Trato}}</td>
-                    <td>{{rdv.Linhas[0].Comandante.CodigoANAC}}</td>
-                    <td>{{rdv.Linhas[0].Comandante.CodigoPetrobras}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>{{rdv.Linhas[0].FuncaoTrip2.Nome}}({{rdv.Linhas[0].FuncaoTrip2.Sigla}})</td>
-                    <td>{{rdv.Linhas[0].PrimeiroOficial.Trato}}</td>
-                    <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoANAC}}</td>
-                    <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoPetrobras}}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th colspan="2">ASSINATURA DO REPRESENTANTE<BR>DO CLIENTE E CARIMBO</th>
-                    <td colspan="3"></td>
-                </tr>
-            </table>
+        <br>
+
+        <div *ngIf="rdv" class="grid">
+            <div class="col-3">
+                <table>
+                    <tr>
+                        <th>LOCAL</th>
+                        <th>CIA</th>
+                        <th>Nº DA NOTA(CE)</th>
+                        <th>VOLUME</th>
+                    </tr>
+                    <tr *ngFor="let item of rdv.NotasDeAbastecimento">
+                        <td>{{item.Local}}</td>
+                        <td>{{item.Abastecedora.Nome}}</td>
+                        <td>{{item.Nota}}</td>
+                        <td>{{item.QuantidadeAbastecida | number}}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-9">
+                <table>
+                    <tr>
+                        <th colspan="5">TRIPULAÇÃO</th>
+                    </tr>
+                    <tr>
+                        <th>CATEGORIA</th>
+                        <th>NOME</th>
+                        <th>ANAC</th>
+                        <th>SISPAT</th>
+                        <th>RUBRICAS</th>
+                    </tr>
+                    <tr>
+                        <td>{{rdv.Linhas[0].FuncaoTrip1.Nome}}({{rdv.Linhas[0].FuncaoTrip1.Sigla}})</td>
+                        <td>{{rdv.Linhas[0].Comandante.Trato}}</td>
+                        <td>{{rdv.Linhas[0].Comandante.CodigoANAC}}</td>
+                        <td>{{rdv.Linhas[0].Comandante.CodigoPetrobras}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>{{rdv.Linhas[0].FuncaoTrip2.Nome}}({{rdv.Linhas[0].FuncaoTrip2.Sigla}})</td>
+                        <td>{{rdv.Linhas[0].PrimeiroOficial.Trato}}</td>
+                        <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoANAC}}</td>
+                        <td>{{rdv.Linhas[0].PrimeiroOficial.CodigoPetrobras}}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">ASSINATURA DO REPRESENTANTE<BR>DO CLIENTE E CARIMBO</th>
+                        <td colspan="3"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <br>
+        <br>
 
-    <table *ngIf="rdv">
-        <tr>
-            <th>OBSERVAÇÕES</th>
-        </tr>
-        <tr>
-            <td style="text-align: left;" [innerHTML]="rdv.ObservacoesCompleta | toHTML">
-                
-            </td>
-        </tr>
-        <tr *ngIf="rdv.Rota">
-            <th>ROTA:</th>
-        </tr>
-        <tr *ngIf="rdv.Rota">
-            <td style="text-align: left;">
-                {{rdv.Rota}}
-            </td>
-        </tr>
-    </table>
+        <table>
+            <tr>
+                <th>OBSERVAÇÕES</th>
+            </tr>
+            <tr>
+                <td style="text-align: left;" [innerHTML]="rdv.ObservacoesCompleta | toHTML">
+
+                </td>
+            </tr>
+            <tr *ngIf="rdv.Rota">
+                <th>ROTA:</th>
+            </tr>
+            <tr *ngIf="rdv.Rota">
+                <td style="text-align: left;">
+                    {{rdv.Rota}}
+                </td>
+            </tr>
+        </table>
+
+    </span>
 </div>

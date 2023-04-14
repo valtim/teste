@@ -5,7 +5,7 @@
 
     <div *ngIf="!resp.Tripulante">
 
-      <div class="p-field row">
+      <div class="p-field grid">
         <label for="email" class="col-12 p-md-2">E-mail (caso não tripulante)</label>
         <div class="col-12 p-md-10">
           <input type="text" size="50" pInputText [(ngModel)]="resp.Email" />
@@ -13,14 +13,14 @@
       </div>
 
 
-      <!-- <div class="p-field row">
+      <!-- <div class="p-field grid">
         <label for="nome" class="col-12 p-md-2">Nome do Usuário</label>
         <div class="col-12 p-md-10">
           <input type="text" size="50" pInputText [(ngModel)]="resp.Username" />
         </div>
       </div> -->
       <div *ngIf="clienteLogado != 'bristow'">
-        <div class="p-field row">
+        <div class="p-field grid">
           <label for="Senha" class="col-12 p-md-2">Senha</label>
           <div class="col-12 p-md-10">
             <input type="text" size="50" pInputText [(ngModel)]="resp.Senha" />
@@ -30,7 +30,7 @@
 
     </div>
 
-    <div class="p-field row">
+    <div class="p-field grid">
       <label for="tripulante" class="col-12 p-md-2">Tripulante</label>
       <div class="col-12 p-md-10">
         <p-dropdown [options]="tripulantes" [(ngModel)]="resp.Tripulante" placeholder="Tripulantes" optionLabel="Trato"
@@ -46,7 +46,7 @@
       </div>
     </div>
     <!-- {{ nomePerfisHabilitados }} -->
-    <div class="p-field row">
+    <div class="p-field grid">
       <label for="acessos" class="col-12 p-md-2">Acessos</label>
       <div class="col-12 p-md-4">
         <p-listbox [options]="perfis" optionLabel="Nome" multiple="multiple" checkbox="checkbox" optionValue="Id"

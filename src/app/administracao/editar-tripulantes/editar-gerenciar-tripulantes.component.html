@@ -1,4 +1,4 @@
-<div class="row editar-tripulantes">    
+<div class="grid editar-tripulantes">    
 
     <div class="div-loading" [class.mostrar-loading]="mostrarLoading">
         <svg viewBox="25 25 50 50" class="p-progress-spinner-svg" style="animation-duration: 2s;"><circle cx="50" cy="50" r="20" stroke-miterlimit="10" class="p-progress-spinner-circle" fill="none" stroke-width="2"></circle></svg>
@@ -54,15 +54,23 @@
         <button type="button" class="label-fixo-2" pButton pRipple label="SISPAT"></button>
         <input pInputText type="text"[(ngModel)]="tripulante.CodigoPetrobras">                    
     </div>
-
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Matrícula (TOTVS)"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.MatriculaInterna">                    
+    </div>
+    <div class="col-6">
+        <button type="button" class="label-fixo-2" pButton pRipple label="Matrícula"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Matricula">
+    </div>
+    
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Licença"></button>
+        <input pInputText type="text"[(ngModel)]="tripulante.Licenca">                    
+    </div>
     <div class="col-6">        
         <button type="button" class="label-fixo" pButton pRipple label="Data Nascimento"></button>
         <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="dataNascimento" selectionMode="single" dateFormat="dd/mm/yy"
             showIcon="true"></p-calendar>                    
-    </div>
-    <div class="col-6">        
-        <button type="button" class="label-fixo-2" pButton pRipple label="Licença"></button>
-        <input pInputText type="text"[(ngModel)]="tripulante.Licenca">                    
     </div>
 
     <div class="col-6">        
@@ -95,10 +103,6 @@
 
         <input readonly="true" disabled="true" pInputText type="text" [style]="{'width':'86px', 'margin-left': '10px'}" [(ngModel)]="ultimoPesoKg">
         <button type="button" pButton pRipple label="Kg"></button>
-    </div>
-    <div class="col-6">
-        <button type="button" class="label-fixo-2" pButton pRipple label="Matrícula"></button>
-        <input pInputText type="text"[(ngModel)]="tripulante.Matricula">
     </div>
 
 </div>

@@ -101,7 +101,8 @@ export class GerenciarTripulantesComponent implements OnInit {
       "Base": null,
       "Quinzena": null,
       "Cor": "cinza",
-      "Usuario": null
+      "Usuario": null,
+      MatriculaInterna : 0,
     };
     return novo;
   }
