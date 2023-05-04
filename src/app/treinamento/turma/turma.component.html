@@ -1,4 +1,6 @@
 <p-toast position="top-center"></p-toast>
+<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
+<p-messages [(value)]="messages" [enableService]="false" [closable]="true" class="mensagens_de_erro"></p-messages>
 
 <span class="p-buttonset botoes_salvar">
     <button pButton type="button" label="Salvar" (click)="enviar(turmaInterna)" icon="pi pi-check"
@@ -16,27 +18,26 @@
     <div class="p-fluid p-formgrid grid">
         <div class="p-field col-3">
             <div class="p-field">
-                <label for="nome">Equipamentos</label>
-                <p-dropdown [options]="equipamentos"
-                    optionLabel="Nome" dataKey="Id" placeholder="Selecione um Equipamento"
-                    [(ngModel)]="turmaInterna.Equipamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
+                <label for="Nome">Equipamentos</label>
+                <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
+                    (completeMethod)="buscar($event, equipamentos, 'Nome')" field="Nome" autoHighlight="true"
+                    appendTo="body" />
             </div>
         </div>
         <div class="p-field col-3">
             <div class="p-field">
-                <label for="nome">Treinamento</label>
-                <p-dropdown [options]="treinamentos"
-                    optionLabel="Nome" dataKey="Id" placeholder="Selecione um Treinamento" [filter]="true"
-                    [(ngModel)]="turmaInterna.Treinamento" emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
+                <label for="Nome">Treinamento</label>
+                <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
+                    (completeMethod)="buscar($event, treinamentos, 'Nome')" field="Nome" autoHighlight="true"
+                    appendTo="body" />
             </div>
         </div>
         <div class="p-field col-3">
             <div class="p-field">
-                <label for="nome">Instrutor</label>
-                <p-dropdown [options]="instrutores" dataKey="Id" optionLabel="Trato" [filter]="true"
-                    [disabled]="turmaInterna.InstrutorExterno" (onChange)='onInstrutorOptionsSelected($event)'
-                    placeholder="Selecione um Instrutor" [(ngModel)]="turmaInterna.Instrutor"
-                    emptyFilterMessage="Nenhum registro encontrado"></p-dropdown>
+                <label for="Trato">Instrutor</label>
+                <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
+                    [suggestions]="autoCompleteResults" (completeMethod)="buscar($event, instrutores, 'Trato')"
+                    field="Trato" autoHighlight="true" appendTo="body" />
                 <p-inputSwitch [(ngModel)]="turmaInterna.InstrutorExterno">
                 </p-inputSwitch>Instrutor Externo
             </div>
@@ -51,98 +52,6 @@
         </div>
     </div>
 
-    <p-fieldset legend="Deslocamento" [toggleable]="true">
-
-        <span class="p-buttonset">
-            <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
-                class="p-button-raised p-button-rounded"></button>
-        </span>
-
-        <p-table #dt [value]="turmaInterna.Deslocamentos" dataKey="Id" editMode="row">
-
-            <ng-template pTemplate="colgroup">
-                <colgroup>
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:20%">
-                    <col style="width:5%">
-                </colgroup>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Tripulante</th>
-                    <th>Data</th>
-                    <th>Hora</th>
-                    <th>Deslocamento</th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="linha">
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown [options]="todasAsPessoas" [(ngModel)]="linha.Tripulante" dataKey="Id"
-                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)" filter="true">
-                                </p-dropdown>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                    showIcon="true" (onInput)="mudeiAqui($event, linha)"
-                                    (onSelect)="mudeiAqui($event, linha)"></p-calendar>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{linha.Data | date:'dd/MM/yyyy'}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-inputMask type="tel"
-                                (change)="mudeiAqui($event, linha)"
-                                [(ngModel)]="linha.Hora" mask="99:99" required>
-                            </p-inputMask>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Hora">{{linha.Hora}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
-                                    optionLabel="Nome" [showClear]="true" placeholder="Base" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)">
-                                </p-dropdown>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
-                        class="p-button-raised p-button-rounded p-button-danger"></button>
-
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-fieldset>
 
     <p-fieldset legend="Programação" [toggleable]="true">
         <div class="grid">
@@ -151,14 +60,11 @@
                 <label for="nome">Período</label>
                 <p-calendar dateFormat="dd/mm/yy" [inline]="true" (onSelect)="mudancaDeData($event)"
                     (onBlur)="mudancaDeData($event)">
-                    <!-- (onClose)="onSelectHoraTurma()" -->
                 </p-calendar>
                 <div>
                     {{turmaInterna.CargaHoraria}} minutos / {{periodosSomados}} minutos
                 </div>
             </div>
-            <!-- </div> -->
-            <!-- <div class="p-field  col-7"> -->
             <div class="col">
                 <div *ngFor="let item of turmaInterna.PeriodosDeCurso">{{item.Data | date:'dd/MM/yyyy'}}
                     <button pButton type="button" label="Adicionar Horário" icon="pi pi-plus"
@@ -172,6 +78,8 @@
                             <tr>
                                 <th>Início</th>
                                 <th>Fim</th>
+                                <th>Descrição</th>
+                                <th>Remunerado</th>
                                 <th style="width: 20px;"></th>
                             </tr>
                         </ng-template>
@@ -195,10 +103,32 @@
                                         <ng-template pTemplate="input">
                                             <p-inputMask type="tel"
                                                 (change)="alterarHoraFinal(rowIndex, item.Data, $event.target.value)"
-                                                [(ngModel)]="hora.HoraTermino" mask="99:99" [required]="true"></p-inputMask>
+                                                [(ngModel)]="hora.HoraTermino" mask="99:99"
+                                                [required]="true"></p-inputMask>
                                         </ng-template>
                                         <ng-template pTemplate="output">
                                             {{hora.HoraTermino}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td pEditableColumn>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <input pInputText type="text" [(ngModel)]="hora.Descricao" required>
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{hora.Descricao}}
+                                        </ng-template>
+                                    </p-cellEditor>
+                                </td>
+                                <td pEditableColumn>
+                                    <p-cellEditor>
+                                        <ng-template pTemplate="input">
+                                            <p-checkbox [(ngModel)]="hora.ParaPagamento" [binary]="true"
+                                                inputId="binary"></p-checkbox>
+                                        </ng-template>
+                                        <ng-template pTemplate="output">
+                                            {{hora.ParaPagamento ? "SIM" : "NÃO"}}
                                         </ng-template>
                                     </p-cellEditor>
                                 </td>
@@ -220,17 +150,19 @@
     </p-fieldset>
 
 
+
+
     <p-fieldset legend="Participantes" [toggleable]="true">
         <div class="p-fluid p-formgrid grid">
             <div class="p-field col-12">
-                <p-pickList [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos" targetHeader="Alunos"
+                <p-pickList #picklist [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos" targetHeader="Alunos"
                     filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
                     [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
                     (onMoveToTarget)="moverAlunos()" (onMoveToSource)="moverAlunos()"
-                    (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()">
+                    (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()" (onSourceFilter)="confirmaInclusao($event)">
                     <ng-template let-item pTemplate="item">
                         <div>
-                            <b>{{item.Trato}} / {{item.CodigoANAC}} / {{item.Cargo}} / {{item.Licenca}}</b>
+                            <b>{{item.Trato}} / {{item.CodigoANAC}}</b>
                         </div>
                     </ng-template>
                 </p-pickList>
@@ -293,6 +225,98 @@
             </ng-template>
         </p-table>
     </p-fieldset>
+    <p-fieldset legend="Deslocamento" [toggleable]="true">
+
+        <span class="p-buttonset">
+            <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
+                class="p-button-raised p-button-rounded"></button>
+        </span>
+
+        <p-table #dt [value]="turmaInterna.Deslocamentos" dataKey="Id" editMode="row">
+
+            <ng-template pTemplate="colgroup">
+                <colgroup>
+                    <col style="width:25%">
+                    <col style="width:25%">
+                    <col style="width:25%">
+                    <col style="width:20%">
+                    <col style="width:5%">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Tripulante</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Deslocamento</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+                <tr [pEditableRow]="linha">
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="todasAsPessoas" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
+                                    [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)" filter="true">
+                                </p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
+                                    showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                    (onSelect)="mudeiAqui($event, linha)"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.Data | date:'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-inputMask type="tel" (change)="mudeiAqui($event, linha)" [(ngModel)]="linha.Hora"
+                                    mask="99:99" required>
+                                </p-inputMask>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Hora">{{linha.Hora}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
+                                    optionLabel="Nome" [showClear]="true" placeholder="Base" [style]="{'width': '100%'}"
+                                    (onChange)="mudeiAqui($event, linha)">
+                                </p-dropdown>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
+                        class="p-button-raised p-button-rounded p-button-danger"></button>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-fieldset>
+
 
     <p-fieldset legend="Anexos" [toggleable]="true">
         <div class="p-fluid p-formgrid grid">
@@ -327,8 +351,7 @@
 
     <p-fieldset legend="Comentários" [toggleable]="true">
 
-        <textarea [rows]="5" style="width:100%" pInputTextarea [autoResize]="true"
-            [(ngModel)]="comentario"></textarea>
+        <textarea [rows]="5" style="width:100%" pInputTextarea [autoResize]="true" [(ngModel)]="comentario"></textarea>
 
         <div *ngFor="let item of turmaInterna.TurmasComentarios">
             {{item.Data | date:'dd/MM/yyyy'}} <span *ngIf="item.Instrutor">{{item.Instrutor.Trato}}</span><span

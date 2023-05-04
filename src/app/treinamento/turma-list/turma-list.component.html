@@ -3,9 +3,9 @@
     <p-toolbar>
         <div class="p-toolbar-group-left">
             <!-- <p-button icon="pi pi-home" styleClass="p-button-success" routerLink="/home"></p-button>         -->
-            <button pButton type="button" label="Nova Turma" icon="pi pi-plus" (click)="novaTurma()"></button>
+            <button pButton type="button" label="Nova Turma" icon="pi pi-plus" (click)="novaTurma()" [disabled]="loading"></button>
             <button pButton type="button" label="Excluir Selecionadas" icon="pi pi-trash" (click)="excluir()"
-                class="p-button-danger ml-2" [disabled]="paraExcluir.length == 0"></button>
+                class="p-button-danger ml-2" [disabled]="paraExcluir.length == 0 || loading"></button>
         </div>
         <!-- <div class="p-toolbar-group-right">
         <p-button icon="pi pi-sign-out" styleClass="p-button-danger" routerLink="/logoff"></p-button>
@@ -15,9 +15,9 @@
 
     <p-card>
         <button type="button" pButton pRipple label="Data"></button>
-        <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+        <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" 
             showIcon="true" [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
             showIcon="true" [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
             class="ml-2"></button>

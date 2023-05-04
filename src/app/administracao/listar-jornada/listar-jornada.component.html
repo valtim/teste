@@ -5,8 +5,8 @@
     <div class="col">
         <button type="button" pButton pRipple label="Data"></button>
         <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
-            [locale]="locale_pt"></p-calendar>
-        <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy" [locale]="locale_pt" showIcon="true"
+            ></p-calendar>
+        <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy"  showIcon="true"
             [inputStyle]="{'width':'100px'}"></p-calendar> -->
 
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"

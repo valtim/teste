@@ -1046,10 +1046,10 @@ export class ApiService {
       .toPromise();
   }
 
-  async getProximosVencimentos(): Promise<any> {
+  async getProximosVencimentos(referencia : Date): Promise<any> {
     return await lastValueFrom(
       this.http
-        .get(`${this.url}api/ultimosVencimentos`, this.httpOptions)
+        .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
     );
   }
   async postAtualizaVencimento(vencimento: any): Promise<any> {

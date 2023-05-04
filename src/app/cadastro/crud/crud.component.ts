@@ -101,26 +101,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
   pesquisar() {
     this.colunasExibidas = this.camposExibidos.split(',').map(x => x.trim());
 
-    this.botoes =
-      [
-        {
-          label: 'Novo',
-          icon: 'pi pi-plus',
-          command: () => { this.novoItem(); }
-        },
-        {
-          label: 'Salvar',
-          icon: 'pi pi-save',
-          command: () => { this.salvar() },
-          disabled: true,
-        },
-        {
-          label: 'Excluir',
-          icon: 'pi pi-trash',
-          command: () => { this.excluir() },
-          disabled: true,
-        },
-      ];
+    this.verBotoes();
 
     //this.tipo = this.route.snapshot.params['tipo'];
 
@@ -239,9 +220,28 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
   }
 
   verBotoes() {
-    this.botoes[1].disabled = this.dados.filter(x => x.Modificado).length == 0;
-    this.botoes[2].disabled = this.valoresSelecionados.length == 0;
 
+    this.botoes =
+      [
+        {
+          label: 'Novo',
+          icon: 'pi pi-plus',
+          command: () => { this.novoItem(); },
+          disabled: false,
+        },
+        {
+          label: 'Salvar',
+          icon: 'pi pi-save',
+          command: () => { this.salvar() },
+          disabled: this.dados.filter(x=>x.Modificado).length == 0,
+        },
+        {
+          label: 'Excluir',
+          icon: 'pi pi-trash',
+          command: () => { this.excluir() },
+          disabled: this.valoresSelecionados.length == 0,
+        },
+      ];
   }
 
   mudeiAqui(e, dado) {

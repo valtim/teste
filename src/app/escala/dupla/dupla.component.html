@@ -9,12 +9,12 @@
     <div class="row p-mt-1">
         <div class="col">
             <button type="button" pButton pRipple label="Inicial"></button>
-            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true" (onSelect)="mudarDataInicio()"></p-calendar>
         </div>
         <div class="col">
             <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true"></p-calendar>
         </div>
         <div class="col">
@@ -63,7 +63,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                        [locale]="locale_pt" showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                         showIcon="true" (onInput)="mudeiAqui($event, linha)"
                                         (onSelect)="mudeiAqui($event, linha)"></p-calendar>
                                 </ng-template>
                                 <ng-template pTemplate="output">
@@ -222,7 +222,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                    [locale]="locale_pt" showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                     showIcon="true" (onInput)="mudeiAqui($event, linha)"
                                     (onSelect)="mudeiAqui($event, linha)"></p-calendar>
                             </ng-template>
                             <ng-template pTemplate="output">
@@ -339,7 +339,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single" dateFormat="dd/mm/yy"
-                                    [locale]="locale_pt" showIcon="true" (onSelect)="mudeiAqui($event, linha)">
+                                     showIcon="true" (onSelect)="mudeiAqui($event, linha)">
                                 </p-calendar>
                             </ng-template>
                             <ng-template pTemplate="output">

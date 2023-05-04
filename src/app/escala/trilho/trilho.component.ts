@@ -56,7 +56,10 @@ export class TrilhoComponent implements OnInit {
 
   }
 
-
+  editInit(e){
+    console.log('passou');
+    
+  }
 
   searchTrip(event) {
     this.resultsTrip = this.tripulantes.filter(x => x.Trato.indexOf(event.query.toUpperCase()) > -1);
@@ -70,6 +73,10 @@ export class TrilhoComponent implements OnInit {
 
     this.api.getTrilho(this.dataIni, this.dataFim).then(x => {
       this.tabelaPronta = true;
+      if ( x == null ){
+        this.tudoPronto = this.tabelaPronta && this.listasProntas;
+        return;  
+      }
       this.trilhos = x;
 
       this.trilhos.forEach(x => {

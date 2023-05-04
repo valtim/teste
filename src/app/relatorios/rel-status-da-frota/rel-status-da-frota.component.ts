@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/shared/api.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ApiGenericoService } from 'src/app/shared/api.generico.service';
+import { v4 as uuid } from 'uuid';
 
 
 //import { v4 as uuidv4 } from './../../../../node_modules/uuid';
@@ -17,12 +18,11 @@ export class RelStatusDaFrotaComponent implements OnInit {
 
   botoes: MenuItem[];
 
-  locale_pt;
   baseDeOperacao;
   baseDeOperacaoSelecionada;
   data: Date;
 
-  dados;
+  dados = [];
 
   consulta_ok = false;
   tela_ok = false;
@@ -43,26 +43,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.botoes =
-      [
-        {
-          label: 'Novo',
-          icon: 'pi pi-plus',
-          command: () => { this.novoItem(); }
-        },
-        {
-          label: 'Salvar',
-          icon: 'pi pi-save',
-          command: () => { this.salvar() },
-          disabled: false,
-        },
-        {
-          label: 'Excluir',
-          icon: 'pi pi-trash',
-          command: () => { this.excluir() },
-          disabled: true,
-        },
-      ];
+    this.verBotoes();
 
 
 
@@ -70,7 +51,6 @@ export class RelStatusDaFrotaComponent implements OnInit {
     date.setDate(date.getDate() + 1);
 
     this.data = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    this.locale_pt = this.api.getLocale('pt');
 
     this.api.getCombos().then(x => {
 
@@ -97,7 +77,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
   novoItem() {
     let nova =
     {
-      //"Id": uuidv4(),
+      "Id": uuid(),
       "Prefixo": {
         "Nome": "",
         "Id": { Nome: "", Id: '00000000-0000-0000-0000-000000000000' }
@@ -113,6 +93,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
       "Data": this.data,
     };
     this.dados.push(nova);
+    this.verBotoes();
 
   }
   salvar() {
@@ -123,6 +104,7 @@ export class RelStatusDaFrotaComponent implements OnInit {
   }
   rodarRelatorio() {
     this.consulta_ok = false;
+    this.valoresSelecionados = [];
     this.api.getRelStatusDaFrota(this.data, this.clienteSelecionado).then(x => {
       this.consulta_ok = true;
       this.dados = x.Lista;
@@ -139,8 +121,27 @@ export class RelStatusDaFrotaComponent implements OnInit {
   }
 
   verBotoes() {
-    this.botoes[1].disabled = false;//this.dados.filter(x => x.Novo || x.Modificado).length == 0;
-    this.botoes[2].disabled = this.valoresSelecionados.length == 0;
+    this.botoes =
+      [
+        {
+          label: 'Novo',
+          icon: 'pi pi-plus',
+          command: () => { this.novoItem(); },
+          disabled: false,
+        },
+        {
+          label: 'Salvar',
+          icon: 'pi pi-save',
+          command: () => { this.salvar() },
+          disabled: this.dados.filter(x=>x.Modificado).length == 0,
+        },
+        {
+          label: 'Excluir',
+          icon: 'pi pi-trash',
+          command: () => { this.excluir() },
+          disabled: this.valoresSelecionados.length == 0,
+        },
+      ];
 
   }
 

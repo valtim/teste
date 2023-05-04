@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { MsalService, MsalBroadcastService } from "@azure/msal-angular";
-import { InteractionStatus } from "@azure/msal-browser";
-import { Subject } from "rxjs";
-import { filter, takeUntil } from "rxjs/operators";
-import { ApiService } from "./shared/api.service";
+import { PrimeNGConfig } from "primeng/api";
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -11,9 +9,20 @@ import { ApiService } from "./shared/api.service";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  ngOnInit(): void {
-    
-  }
-  title = "SOL";
   
+  subscription: Subscription;
+
+  constructor(private primeNGConfig: PrimeNGConfig, private translateService: TranslateService) {
+    translateService.setDefaultLang('pt');
+    this.subscription = this.translateService.stream('primeng').subscribe((data) => {
+      this.primeNGConfig.setTranslation(data);
+    });
+  }
+
+  ngOnInit() {
+  }
+
+  
+  title = "SOL";
+
 }

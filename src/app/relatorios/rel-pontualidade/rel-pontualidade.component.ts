@@ -17,9 +17,10 @@ export class RelPontualidadeComponent implements OnInit {
   carregandoRelatorio: boolean;
   prefixos: any;
   clientes: any;
-  clientesSelecionados;
-  prefixosSelecionados;
-  baseDeOperacaoSelecionada;
+  clientesSelecionados: any;
+  prefixosSelecionados: any;
+  baseDeOperacaoSelecionada: any;
+  motivosDoAtrasoSelecionados: any;
   dataInicio: Date;
   dataFim: Date;
   locale_pt;
@@ -30,6 +31,7 @@ export class RelPontualidadeComponent implements OnInit {
   dataFimf: any;
   voos: any;
   motivosDoAtraso: any;
+  somenteAtraso : boolean;
 
   constructor(
     private api: ApiService,
@@ -49,6 +51,7 @@ export class RelPontualidadeComponent implements OnInit {
     this.api.getCombos().then(x => {
       this.prefixos = x.Prefixo;
       this.clientes = x.Cliente;
+      this.motivosDoAtraso = x.MotivoDoAtraso;
       this.carregandoMenu = false;
 
       this.rodarRelatorio();
@@ -73,6 +76,8 @@ export class RelPontualidadeComponent implements OnInit {
       clientes: this.clientesSelecionados,
       dataInicio: this.dataInicio,
       dataFim: this.dataFim,
+      motivosDoAtraso : this.motivosDoAtrasoSelecionados,
+      somenteAtrasos : this.somenteAtraso
       //base : this.baseDeOperacaoSelecionada,  
     }
 
@@ -83,6 +88,7 @@ export class RelPontualidadeComponent implements OnInit {
       this.dataIniciof = x.filtros.dataInicio;
       this.dataFimf = x.filtros.dataFim;
       this.motivosDoAtraso = x.MotivoDoAtraso;
+      this.somenteAtraso = x.somenteAtrasos
     })
   }
 

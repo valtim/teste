@@ -10,5 +10,8 @@ export class HoraTurma
     public Data : string;
     public HoraInicio : string;
     public HoraTermino : string;
+    public Descricao : string;
+    public ParaPagamento : boolean;
+    public OitoHoras : boolean;
 
 }

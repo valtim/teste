@@ -1,6 +1,18 @@
 <app-titulo [titulo]="titulo" [carregando]="(!consulta_ok)"></app-titulo>
 
 
+<p-card>
+    <span class="p-float-label">
+        <p-calendar [(ngModel)]="dataReferencia" dateFormat="dd/mm/yy" id="data" [disabled]="!consulta_ok"></p-calendar>
+        <label htmlFor="data">Data de Referência</label>
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            [disabled]="!consulta_ok"></button>
+    </span>
+</p-card>
+
+
+
+
 <p-dialog [(visible)]="vencimentoEditado" [style]="{width: '450px'}" header="Vencimento" [modal]="true"
     styleClass="p-fluid">
     <ng-template pTemplate="content">
@@ -10,19 +22,17 @@
             <div class="input-group-append">
                 <span class="input-group-text">Vencimento</span>
             </div>
-            <p-inputMask [mask]="vencimentoEditado.Mascara" [(ngModel)]="vencimentoEditado.ValorExibido" [disabled]="vencimentoEditado.NaoControlado"></p-inputMask>
-    
+            <p-inputMask [mask]="vencimentoEditado.Mascara" [(ngModel)]="vencimentoEditado.ValorExibido"
+                [disabled]="vencimentoEditado.NaoControlado"></p-inputMask>
+
         </div>
-    
-    
+
+
         <div class="input-group mb-3">
-    
             <div class="input-group-append">
                 <span class="input-group-text">N/A</span>
                 <p-inputSwitch [(ngModel)]="vencimentoEditado.NaoControlado"></p-inputSwitch>
             </div>
-            <input type="text" pInputText [(ngModel)]="vencimentoEditado.ValorExibido" />
-    
         </div>
 
     </ng-template>

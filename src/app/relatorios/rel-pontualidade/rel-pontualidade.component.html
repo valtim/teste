@@ -8,20 +8,27 @@
 <div class="d-print-none" *ngIf="!carregandoMenu">
 
     <div class="grid">
-        <div class="col"></div>
-        <div class="col">
+        <div class="col-2">
             <p-listbox [options]="clientes" optionLabel="Nome" [(ngModel)]="clientesSelecionados" multiple="multiple"
-                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+                checkbox="checkbox" [filter]="true" [listStyle]="{'max-height':'110px'}">
                 <p-header>
                     Clientes
                 </p-header>
             </p-listbox>
         </div>
-        <div class="col">
+        <div class="col-2">
             <p-listbox [options]="prefixos" optionLabel="Nome" [(ngModel)]="prefixosSelecionados" multiple="multiple"
-                checkbox="checkbox" filter="filter" [listStyle]="{'max-height':'110px'}">
+                checkbox="checkbox" [filter]="true" [listStyle]="{'max-height':'110px'}">
                 <p-header>
                     Prefixos
+                </p-header>
+            </p-listbox>
+        </div>
+        <div class="col-8">
+            <p-listbox [options]="motivosDoAtraso" optionLabel="Nome" [(ngModel)]="motivosDoAtrasoSelecionados"
+                multiple="multiple" checkbox="checkbox" [filter]="true" [listStyle]="{'max-height':'110px'}">
+                <p-header>
+                    Motivos Do Atraso
                 </p-header>
             </p-listbox>
         </div>
@@ -30,18 +37,19 @@
     </div>
 
     <div class="grid">
-        <div class="col"></div>
+        <div class="col"> <p-checkbox [(ngModel)]="somenteAtraso" label="Somente Atraso" [binary]="true"
+                ></p-checkbox></div>
         <div class="col">
 
             <button type="button" pButton pRipple label="Inicial" class="p-ml-2"></button>
-            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
 
         </div>
 
         <div class="col">
             <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
+            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
 
         </div>

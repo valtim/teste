@@ -27,9 +27,9 @@ export class EditarVencimentoComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.mascara = "99/99/99";
+    this.mascara = "99/99/9999";
     if (this.dados.Certificado.SomenteMes)
-      this.mascara = "99/99";
+      this.mascara = "99/9999";
 
     this.naoControlado = this.dados.NaoControlado;
 

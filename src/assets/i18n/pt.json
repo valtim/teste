@@ -1,0 +1,50 @@
+{
+    "demo": {
+      "greetings": "Olá!",
+      "en": "Inglês",
+      "pt": "Português",
+      "date": "Data",
+      "emptyMessage": "Nenhum Resultado",
+      "message": "Tem certeza que quer continuar?",
+      "confirm": "Confirma",
+      "name": "Nome"
+    },
+    "primeng": {
+      "dayNamesMin": ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+      "monthNames": [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro"
+      ],
+      "emptyMessage": "Nenhum resultado",
+      "emptyFilterMessage": "Nenhum resultado - Filter",
+      "choose": "Escolha",
+      "upload": "Upload",
+      "cancel": "Cancelar",
+      "startsWith": "Começa com",
+      "contains": "Contém",
+      "notContains": "Não Contém",
+      "endsWith": "Termina com",
+      "equals": "Igual",
+      "notEquals": "Diferente",
+      "clear": "Limpar",
+      "apply": "Aplicar",
+      "matchAll": "Selecionar Tudo",
+      "matchAny": "Selecionar Qualquer",
+      "addRule": "Adicionar Regra",
+      "removeRule": "Remover Regra",
+      "accept": "Sim",
+      "reject": "Não",
+      "dateFormat": "dd/mm/yy"
+    }
+  }
+  

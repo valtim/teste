@@ -12,6 +12,8 @@ export class RelVencimentoTreinamentoComponent implements OnInit {
   titulo = 'Próximos Vencimentos';
   consulta_ok = false;
   vencimentoEditado = null;
+  dataReferencia = new Date();
+
   constructor(private api: ApiService,) {
 
   }
@@ -19,14 +21,14 @@ export class RelVencimentoTreinamentoComponent implements OnInit {
 
   save() {
     this.api.postAtualizaVencimento(this.vencimentoEditado).then(() => {
-      
+
       alert('Salvo com sucesso');
-      
-      this.dados[this.dados.findIndex(x=> x.Id == this.vencimentoEditado.Id)] = {...this.vencimentoEditado};
+
+      this.dados[this.dados.findIndex(x => x.Id == this.vencimentoEditado.Id)] = { ...this.vencimentoEditado };
 
     }
     );
-    
+
   }
 
   hide() {
@@ -37,12 +39,16 @@ export class RelVencimentoTreinamentoComponent implements OnInit {
     this.vencimentoEditado = { ...data };
   }
 
-  ngOnInit(): void {
-    this.api.getProximosVencimentos().then(x => {
-      //alert();
+  rodarRelatorio() {
+    this.consulta_ok = false;
+    this.api.getProximosVencimentos(this.dataReferencia).then(x => {
       this.dados = x;
       this.consulta_ok = true;
     });
+  }
+
+  ngOnInit(): void {
+    this.rodarRelatorio();
   }
 
   customSort(event: SortEvent) {

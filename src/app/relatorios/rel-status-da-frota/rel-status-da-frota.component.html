@@ -5,16 +5,16 @@
     <div class="grid">
         <div class="col"></div>
         <div class="col"><button type="button" pButton pRipple label="Inicial"></button>
-            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" [locale]="locale_pt"
-                showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+            <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+                [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
-                filterBy="Nome" optionValue="Id" optionLabel="Nome"></p-dropdown>
-        </div>
+                filterBy="Nome" optionValue="Id" optionLabel="Nome" appendTo="body"></p-dropdown>
+        </div> -->
         <div class="col">
-            <p-dropdown [options]="clientes" [(ngModel)]="clienteSelecionado" [filter]="true"
-                filterBy="Nome" optionValue="Id" optionLabel="Nome"></p-dropdown>
+            <p-dropdown [options]="clientes" [(ngModel)]="clienteSelecionado" [filter]="true" filterBy="Nome"
+                optionValue="Id" optionLabel="Nome" appendTo="body"></p-dropdown>
         </div>
         <div class="col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button></div>
@@ -47,7 +47,8 @@
                 <th>Tipo da Operação</th>
                 <th>Backup</th>
                 <th>Posição do Helicóptero no Aeroporto</th>
-                <th>Aeronave Substituta</th>
+                <!-- <th>Aeronave Substituta</th> -->
+                <th>Base</th>
                 <th>Observações</th>
             </tr>
         </ng-template>
@@ -68,11 +69,12 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td pEditableColumn>
+                <td pEditableColumn nowrap>
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="prefixos" [(ngModel)]="rowData.Prefixo" [filter]="true"
-                                filterBy="Nome" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)">
+                                filterBy="Nome" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)"
+                                appendTo="body">
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -87,7 +89,8 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="disponibilidade" [(ngModel)]="rowData.Disponibilidade"
-                                [style]="{'width':'100%'}" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)">
+                                [style]="{'width':'100%'}" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)"
+                                appendTo="body">
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -110,7 +113,8 @@
                     <p-cellEditor>
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="tiposDeOperacao" [(ngModel)]="rowData.TipoDeOperacao"
-                                [style]="{'width':'100%'}" (onChange)="mudeiAqui($event, rowData)" optionLabel="Nome">
+                                [style]="{'width':'100%'}" (onChange)="mudeiAqui($event, rowData)" optionLabel="Nome"
+                                appendTo="body">
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -123,7 +127,7 @@
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="prefixos" [(ngModel)]="rowData.Backup" [filter]="true"
                                 filterBy="Nome" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)"
-                                placeholder="Backup" [showClear]="true">
+                                placeholder="Backup" [showClear]="true" appendTo="body">
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -142,7 +146,19 @@
                         </ng-template>
                     </p-cellEditor>
                 </td>
-                <td></td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="baseDeOperacao" [(ngModel)]="rowData.Base" [filter]="true" dataKey="Id"
+                                filterBy="Nome" optionLabel="Nome" (onChange)="mudeiAqui($event, rowData)"
+                                placeholder="Base" [showClear]="true" appendTo="body">
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="rowData.Base">{{rowData.Base.Nome}}</span>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
                 <td pEditableColumn>
                     <p-cellEditor>
                         <ng-template pTemplate="input">

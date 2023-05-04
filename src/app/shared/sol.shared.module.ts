@@ -28,6 +28,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -44,6 +45,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ChartModule } from 'primeng/chart';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -63,6 +65,8 @@ import { ChartModule } from 'primeng/chart';
     CardModule,
     CheckboxModule,
     CommonModule,
+    ConfirmPopupModule,
+    ConfirmDialogModule,
     DialogModule,
     DropdownModule,
     FieldsetModule,
@@ -101,6 +105,8 @@ import { ChartModule } from 'primeng/chart';
     CardModule,
     CheckboxModule,
     CommonModule,
+    ConfirmPopupModule,
+    ConfirmDialogModule,
     DialogModule,
     DropdownModule,
     FieldsetModule,

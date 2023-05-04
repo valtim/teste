@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { DataUtil } from '../../shared/DataUtil';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Turma } from 'src/app/models/Turma';
 import { HoraTurma } from 'src/app/models/HoraTurma';
 import { PeriodoDeCurso } from 'src/app/models/PeriodoDeCurso';
@@ -9,16 +9,20 @@ import { TurmaAluno } from 'src/app/models/TurmaAluno';
 import { MenuItem } from 'primeng/api';
 import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
 import { GuidUtil } from 'src/app/shared/GuidUtil';
+import { Message } from 'primeng/api';
+import { PickList } from 'primeng/picklist';
 
 
 @Component({
   selector: 'app-turma',
   templateUrl: './turma.component.html',
   styleUrls: ['./turma.component.css'],
-  providers: [MessageService]
+  providers: [MessageService, ConfirmationService]
 })
 export class TurmaComponent implements OnInit, AfterViewInit {
 
+
+  @ViewChild('picklist') picklist : PickList
   /*valtim*/
   @Input() turma: Turma;
   @Input() equipamentos = [];
@@ -42,8 +46,48 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   PeriodosDeCurso: ContadorDePeriodos = new ContadorDePeriodos;
   periodosSomados: number = 0;
   todasAsPessoas: any[];
+  autoCompleteResults: any[];
+  messages: Message[];
 
   enviar(turma: Turma) {
+
+    this.messages = [];
+
+    if (typeof turma.Equipamento === 'string') {
+      this.messages.push({ severity: 'error', summary: 'Erro:', detail: `O Equipamento ${turma.Equipamento} não está cadastrado no banco. Por favor confira antes de Salvar` });
+    }
+
+    if (typeof turma.Instrutor === 'string' && !turma.InstrutorExterno) {
+      this.messages.push({ severity: 'error', summary: 'Erro:', detail: `O Instrutor ${turma.Instrutor} não está cadastrado no banco. Por favor confira antes de Salvar` });
+    }
+
+    if (this.messages.length != 0)
+      return;
+
+    if (typeof turma.Treinamento === 'string') {
+
+      if (typeof turma.Treinamento === 'string')
+        this.confirmationService.confirm({
+          //target: event.target,
+          message: `O treinamento ${turma.Treinamento} não está cadastrado no banco. Confirma cadastramento de um novo trenamento?`,
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+
+            var novoTreinamento = { "Id": GuidUtil.NewGuid(), Nome: turma.Treinamento };
+            this.api.postTreinamento({ "Id": GuidUtil.NewGuid(), Nome: turma.Treinamento })
+              .then(x => {
+                turma.Treinamento = novoTreinamento;
+              })
+
+
+            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+          },
+          reject: () => {
+            return;
+          }
+        });
+    }
+
     this.salvarTurma(turma, () => { });
   }
 
@@ -157,7 +201,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   mudancaDeData(data) {
     if (this.turmaInterna.PeriodosDeCurso.filter(x => x.Data == data).length > 0)
       return;
-    this.turmaInterna.PeriodosDeCurso.push(<PeriodoDeCurso>{ Data: data, Horas: [] });
+    this.turmaInterna.PeriodosDeCurso.push(<PeriodoDeCurso>{ Data: data, Horas: [{ ParaPagamento: true }] });
   }
 
   mudancaDeDataDeDeslocamento(data) {
@@ -186,6 +230,66 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
   moverAlunos() {
     this.atualizarStatusTurma(() => { });
+  }
+
+
+  incluirTripulante(trip) {
+    if (this.alunos.findIndex(x => x.Trato = trip.Trato) > -1)
+      return;
+    this.alunos.push(trip);
+    var idxExcluir = this.tripulantes.findIndex(x => x.Trato == trip.Trato);
+    if (idxExcluir > -1)
+      this.tripulantes.splice(idxExcluir, 1);
+
+      this.picklist.moveAllRight();
+      // this.picklist.resetFilter();
+      // this.picklist.target = this.alunos;
+  }
+
+  confirmaInclusao(e) {
+    if (e.value.length != 1)
+      return;
+
+
+    var trip = e.value[0];
+
+    this.confirmationService.confirm({
+      target: e,
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+
+
+        //this.incluirTripulante(trip)
+        this.picklist.moveAllRight();
+
+        //this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+      },
+      reject: () => { return; }
+  });
+
+
+    // this.confirmationService.confirm({
+    //   target: e,
+    //   message: `Confirma inclusão do aluno ${trip.Trato}?`,
+    //   icon: 'pi pi-exclamation-triangle',
+    //   accept: () => {
+
+
+    //     this.incluirTripulante(trip)
+
+
+    //     this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
+    //   },
+    //   reject: () => {
+    //     return;
+    //   }
+    // });
+
+
+
+
   }
 
   // onInstrutorExterno() {
@@ -283,10 +387,14 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
   novaHora(data) {
     let dia = this.turmaInterna.PeriodosDeCurso.find(x => x.Data == data);
-    dia.Horas.push(<HoraTurma>{ HoraInicio: '00:00', HoraTermino: '00:00' });
+    dia.Horas.push(<HoraTurma>{ HoraInicio: '00:00', HoraTermino: '00:00', Descricao: '', ParaPagamento: true, });
     this.atualizarStatusTurma(() => { });
   }
 
+
+  buscar(event, lista, campo) {
+    this.autoCompleteResults = lista.filter(x => x[campo].indexOf(event.query.toUpperCase()) > -1);
+  }
 
   funCalcularHoras() {
     //alert();
@@ -637,6 +745,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   };
 
   constructor(
+    private confirmationService: ConfirmationService,
     private api: ApiTurmasService,
     private cdr: ChangeDetectorRef,
     private messageService: MessageService) {
@@ -678,7 +787,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
       this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
       this.alunos = this.turmaInterna.TurmaAluno
-      .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
+        .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
       this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y['Id']).indexOf(x['Id']) == -1);
 
 

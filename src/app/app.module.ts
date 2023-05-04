@@ -104,9 +104,16 @@ import { SafeHtmlPipe } from './shared/pipe/safeHTML';
 import { BlocoComponent } from './cadastro/bloco/bloco.component';
 import { RelVencimentoTreinamentoComponent } from './relatorios/rel-vencimento-treinamento/rel-vencimento-treinamento.component';
 import { LoginLdapComponent } from './login-ldap/login-ldap.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
+}
 
 @NgModule({
   providers: [
@@ -208,7 +215,13 @@ const rodandoLocal = window.location.host == 'localhost:4200';
     AppRoutingModule,
     SegurancaModule,
     SOLSharedModule,
-
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
 
 
 
