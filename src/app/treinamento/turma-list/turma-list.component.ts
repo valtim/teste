@@ -41,8 +41,8 @@ export class TurmaListComponent implements OnInit {
     this.dataFim.setDate(this.dataFim.getDate() - 1);
 
     if (isDevMode()) {
-      this.dataIni = new Date(2023, 2, 1);
-      this.dataFim = new Date(2023, 2, 31);
+      this.dataIni = new Date(2022, 0, 1);
+      this.dataFim = new Date(2022, 0, 5);
     }
 
     this.rodarRelatorio();
@@ -63,9 +63,36 @@ export class TurmaListComponent implements OnInit {
       this.tripulantes = x.Tripulantes;
       this.deslocamentos = x.Deslocamentos;
 
-      this.turmas = [];
-      this.turmas = x.Turmas;
-      this.turmasFiltro = x.Turmas;
+      console.log(x.Turmas);
+
+      this.turmas = [];            
+
+      x.Turmas.forEach((turma,index_turma) => {
+        let dataFinal = '';
+        turma.PeriodosDeCurso.forEach((periodo,index_periodo) => {
+          let dataStr = "";
+  
+          if (typeof periodo.Data == 'object')
+            dataStr = periodo.Data.toISOString().split("T")[0];
+          else
+            dataStr = periodo.Data.split("T")[0];
+  
+          if (dataStr > dataFinal) {
+            dataFinal = dataStr;
+          }
+
+          // promisse
+          if (index_periodo == (turma.PeriodosDeCurso.length - 1)) {
+            turma.DataDeFim = dataFinal;            
+            if (index_turma == (x.Turmas.length - 1)) {
+              
+              this.turmas = x.Turmas;
+              this.turmasFiltro = x.Turmas;
+            }   
+          }          
+        });
+      });
+      
       this.loading = false;
     })
       .catch((e) => {

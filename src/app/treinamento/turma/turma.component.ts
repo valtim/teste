@@ -232,7 +232,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.atualizarStatusTurma(() => { });
   }
 
-
   incluirTripulante(trip) {
     if (this.alunos.findIndex(x => x.Trato = trip.Trato) > -1)
       return;
@@ -246,51 +245,27 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       // this.picklist.target = this.alunos;
   }
 
+  /*
+  this.confirmationService.confirm({
+      target: e,
+      message: 'Você deseja incluir todos os alunos?',
+      header: 'Confirmação',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        return;
+        //this.picklist.moveAllRight();
+        //this.atualizarStatusTurma(() => {});
+      },
+      reject: () => { return; }
+    });
+
   confirmaInclusao(e) {
     if (e.value.length != 1)
       return;
 
-
     var trip = e.value[0];
-
-    this.confirmationService.confirm({
-      target: e,
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-
-
-        //this.incluirTripulante(trip)
-        this.picklist.moveAllRight();
-
-        //this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-      },
-      reject: () => { return; }
-  });
-
-
-    // this.confirmationService.confirm({
-    //   target: e,
-    //   message: `Confirma inclusão do aluno ${trip.Trato}?`,
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-
-
-    //     this.incluirTripulante(trip)
-
-
-    //     this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-    //   },
-    //   reject: () => {
-    //     return;
-    //   }
-    // });
-
-
-
-
   }
+  */
 
   // onInstrutorExterno() {
   //   this.api.onLoading();
