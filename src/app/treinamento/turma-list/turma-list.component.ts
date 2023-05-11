@@ -56,14 +56,12 @@ export class TurmaListComponent implements OnInit {
 
   rodarRelatorio() {
     this.loading = true;
-    this.api.getTurmasByData(this.dataIni, this.dataFim).then(x => {
+    this.api.getTurmasByData(this.dataIni, this.dataFim).then(x => {    
       this.treinamentos = x.Treinamentos;
       this.equipamentos = x.Equipamentos;
       this.instrutores = x.Instrutores;
       this.tripulantes = x.Tripulantes;
       this.deslocamentos = x.Deslocamentos;
-
-      console.log(x.Turmas);
 
       this.turmas = [];            
 
