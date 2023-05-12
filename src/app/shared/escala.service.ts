@@ -1,11 +1,7 @@
-import { Indisponibilidade } from './../models/Indisponibilidade';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AutorizacaoService } from './autorizacao.service';
-
-import { DataUtil } from './../shared/DataUtil';
-
+import { HttpClient } from '@angular/common/http';
 import { ApiService } from './api.service';
+import { lastValueFrom } from "rxjs";
 
 
 @Injectable({
@@ -43,8 +39,8 @@ export class EscalaService {
       .toPromise();
   }
 
-  getRestricoes(data: Date): any {
-    return this.http.get(`${this.api.url}api/restricoes/${data.toISOString().split("T")[0]}`, this.api.httpOptions)
+  getRestricoes(dataI: Date, dataF: Date): any {
+    return this.http.get(`${this.api.url}api/restricoes/${dataI.toISOString().split("T")[0]}/${dataF.toISOString().split("T")[0]}`, this.api.httpOptions)
       .toPromise();
   }
 
@@ -53,10 +49,9 @@ export class EscalaService {
     //return this.http.post(`${this.api.url}api/dupla`, duplas, this.api.httpOptions)
       .toPromise();
   }
-
-  getListasDupla(data: Date): any {
-    return this.http.get(`${this.api.url}api/dupla/listas/${data.toISOString().split('T')[0]}`, this.api.httpOptions)
-      .toPromise();
+//async getAnaliseDeFadiga(dateI: Date, dateF: Date): Promise<any>
+  async getListasDupla(dateI: Date, dateF: Date): Promise<any> {
+    return await lastValueFrom(this.http.get(`${this.api.url}api/dupla/listas/${dateI.toISOString().split('T')[0]}/${dateF.toISOString().split('T')[0]}`, this.api.httpOptions));
   }
 
 }

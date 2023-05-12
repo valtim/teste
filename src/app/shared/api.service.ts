@@ -165,6 +165,9 @@ export class ApiService {
       .toPromise();
   }
 
+
+
+
   postDadosDaEscala(escala: any): Promise<any> {
     return this.http
       .post(`${this.url}api/DadosDaEscala`, escala, this.httpOptions)
@@ -1012,14 +1015,25 @@ export class ApiService {
   }
 
 
-  postAnaliseDeFadiga(filtro: any): Promise<any> {
-    return this.http
-      .post(
-        `${this.url}api/analise-de-fadiga/processar`,
-        filtro,
+/*
+
+async getProximosVencimentos(referencia : Date): Promise<any> {
+    return await lastValueFrom(
+      this.http
+        .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
+    );
+  }
+
+        */
+
+
+
+  async getAnaliseDeFadiga(dateI: Date, dateF: Date): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(
+        `${this.url}api/analise-de-fadiga/consultar/${dateI.toISOString().split("T")[0]}/${dateF.toISOString().split("T")[0]}`,
         this.httpOptions
-      )
-      .toPromise();
+      ));
   }
 
   getGrupoDeFicha(): Promise<any> {

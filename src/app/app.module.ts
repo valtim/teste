@@ -88,7 +88,7 @@ import { ControleDeAcessoEditComponent } from './cadastro/controle-de-acesso-edi
 import { DeslocamentoComponent } from './cadastro/deslocamento/deslocamento.component';
 import { ModificadorComponent } from './cadastro/modificador/modificador.component';
 import { GraficoComponent } from './controle-da-fadiga/grafico/grafico.component';
-import { TesteGraficoComponent } from './teste-grafico/teste-grafico.component';
+import { GraficoFadigaComponent } from './grafico-fadiga/grafico-fadiga.component';
 
 import { ControleDeAcessoComponent } from './cadastro/controle-de-acesso/controle-de-acesso.component';
 import { GrupoDePerguntaComponent } from './cadastro/grupo-de-pergunta/grupo-de-pergunta.component';
@@ -195,7 +195,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DeslocamentoComponent,
     ModificadorComponent,
     GraficoComponent,
-    TesteGraficoComponent,
+    GraficoFadigaComponent,
     ControleDeAcessoComponent,
     GrupoDePerguntaComponent,
     FichaDeAvaliacaoComponent,

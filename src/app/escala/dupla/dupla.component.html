@@ -6,31 +6,21 @@
 
 
 
-    <div class="row p-mt-1">
-        <div class="col">
-            <button type="button" pButton pRipple label="Inicial"></button>
-            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
-                showIcon="true" (onSelect)="mudarDataInicio()"></p-calendar>
-        </div>
-        <div class="col">
-            <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
-                showIcon="true"></p-calendar>
-        </div>
-        <div class="col">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()" class="p-ml-2"></button>
-        </div>
+    <div class="mt-2 mb-2">
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            (onSelect)="mudarDataInicio()"></p-calendar>
+        <button type="button" pButton pRipple label="Fim" class="ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [inputStyle]="{'width':'150px'}"></p-calendar>
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="ml-2"></button>
     </div>
 
     <div class="card" *ngIf="(listasOK && duplasOK)">
 
-        <!-- <p-fieldset legend="Deslocamento" [toggleable]="true"> -->
-
-        <span class="p-buttonset">
-            <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
-                class="p-button-raised p-button-rounded"></button>
-        </span>
+        <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
+            class="p-button-raised p-button-rounded p-button-success"></button>
 
         <p-card>
             <p-table #dt2 [value]="deslocamentosDoDia" dataKey="Id" editMode="row">
@@ -63,7 +53,7 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                         showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                        showIcon="true" (onInput)="mudeiAqui($event, linha)"
                                         (onSelect)="mudeiAqui($event, linha)"></p-calendar>
                                 </ng-template>
                                 <ng-template pTemplate="output">
@@ -169,9 +159,8 @@
             <button pButton type="button" label="Excluir" icon="pi pi-trash" (click)="delete()"
                 class="p-button-raised p-button-rounded p-button-danger"
                 [disabled]="linhasSelecionadas.length == 0 || !(listasOK && duplasOK)"></button>
-                <button pButton type="button" label="Imprimir" icon="pi pi-print" (click)="print()"
-                    class="p-button-raised p-button-rounded p-button-success"
-                    [disabled]="!(listasOK && duplasOK)"></button>
+            <button pButton type="button" label="Imprimir" icon="pi pi-print" (click)="print()"
+                class="p-button-raised p-button-rounded p-button-success" [disabled]="!(listasOK && duplasOK)"></button>
         </span>
 
         <p-table #dt [value]="duplas" dataKey="Id" editMode="row">
@@ -222,7 +211,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                     showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                    showIcon="true" (onInput)="mudeiAqui($event, linha)"
                                     (onSelect)="mudeiAqui($event, linha)"></p-calendar>
                             </ng-template>
                             <ng-template pTemplate="output">
@@ -339,7 +328,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single" dateFormat="dd/mm/yy"
-                                     showIcon="true" (onSelect)="mudeiAqui($event, linha)">
+                                    showIcon="true" (onSelect)="mudeiAqui($event, linha)">
                                 </p-calendar>
                             </ng-template>
                             <ng-template pTemplate="output">

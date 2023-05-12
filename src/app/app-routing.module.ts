@@ -47,7 +47,7 @@ import { TreinamentoListComponent } from "./treinamento/treinamento-list/treinam
 import { BuscaBiComponent } from "./bi/busca-bi/busca-bi.component";
 import { DeslocamentoComponent } from "./cadastro/deslocamento/deslocamento.component";
 import { ModificadorComponent } from "./cadastro/modificador/modificador.component";
-import { TesteGraficoComponent } from "./teste-grafico/teste-grafico.component";
+import { GraficoFadigaComponent } from "./grafico-fadiga/grafico-fadiga.component";
 
 import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
 import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
@@ -329,7 +329,7 @@ const routes: Routes = [
   },
   {
     path: "grafico-fadiga",
-    component: TesteGraficoComponent,
+    component: GraficoFadigaComponent,
   },
   {
     path: "grupo-de-pergunta",

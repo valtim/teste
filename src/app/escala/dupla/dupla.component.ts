@@ -121,7 +121,7 @@ export class DuplaComponent implements OnInit {
     this.listasOK = false;
     this.duplasOK = false;
 
-    this.apiEscala.getListasDupla(this.dataInicio).then(x => {
+    this.apiEscala.getListasDupla(this.dataInicio, this.dataFim).then(x => {
       this.tripulantes = x.tripulantes;
       this.bases = x.bases;
       this.prefixos = x.prefixos;
@@ -151,7 +151,7 @@ export class DuplaComponent implements OnInit {
           })
 
 
-        this.apiEscala.getRestricoes(this.dataInicio).then(x => {
+        this.apiEscala.getRestricoes(this.dataInicio, this.dataFim).then(x => {
 
           x.forEach(y => {
             this.tripulantes.find(z => z.Id == y.Id).Vencimentos = y.Vencimentos;

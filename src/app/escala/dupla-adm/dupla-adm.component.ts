@@ -23,6 +23,7 @@ export class DuplaAdmComponent implements OnInit {
   cursos: any;
   linhasSelecionadas = [];
   datas: any;
+  prefixos: any;
 
 
   dataSelecionada: any;
@@ -90,10 +91,11 @@ export class DuplaAdmComponent implements OnInit {
     this.duplas = [];
 
 
-    this.apiEscala.getListasDupla(this.dataInicio).then(x => {
+    this.apiEscala.getListasDupla(this.dataInicio, this.dataFim).then(x => {
       this.tripulantes = x.tripulantes;
       this.bases = x.bases;
       this.incompatibilidades = x.incompatibilidades;
+      this.prefixos = x.prefixos;
       //this.listarPendencias();
 
       this.apiEscala.getDuplasAdm(this.dataInicio, this.dataFim).then(x => {

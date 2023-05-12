@@ -15,28 +15,25 @@
             [disabled]="linhasSelecionadas.length == 0 || !(listasOK && listasOK)"></button>
     </span>
 
-    <div class="row p-mt-1">
-        <div class="col">
-            <button type="button" pButton pRipple label="Inicial"></button>
-            <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
-                (onSelect)="mudarDataInicio()"></p-calendar>
-        </div>
-        <div class="col">
-            <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-            <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
-        </div>
-        <div class="col">
-            <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()" class="p-ml-2"></button>
-        </div>
-    </div>
+    <p-card class="mt-1">
+
+        <button type="button" pButton pRipple label="Inicial"></button>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            (onSelect)="mudarDataInicio()"></p-calendar>
+        <button type="button" pButton pRipple label="Final" class="ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="ml-2"></button>
+
+    </p-card>
 
     <p-button *ngFor="let item of datas" class="p-ml-2" (click)="filtrar(item)">
         {{item | date:'dd/MM/yyyy'}}
     </p-button>
-    
 
-    <p-table [value]="cursos" styleClass="p-datatable-striped p-mt-2" >
+
+    <p-table [value]="cursos" styleClass="p-datatable-striped p-mt-2">
 
         <ng-template pTemplate="colgroup">
             <colgroup>
@@ -68,7 +65,8 @@
                     {{linha.Local}}
                 </td>
                 <td>
-                    <div *ngIf="linha.InstrutorExterno">Externo</div><div *ngIf="!linha.InstrutorExterno">{{linha.Instrutor}}</div>
+                    <div *ngIf="linha.InstrutorExterno">Externo</div>
+                    <div *ngIf="!linha.InstrutorExterno">{{linha.Instrutor}}</div>
                 </td>
                 <td>
                     {{linha.AlunosStr}}
@@ -83,7 +81,7 @@
     </p-table>
 
 
-    <p-table [value]="duplas" dataKey="Id" editMode="row" styleClass="p-datatable-striped p-mt-2" >
+    <p-table [value]="duplas" dataKey="Id" editMode="row" styleClass="p-datatable-striped p-mt-2">
 
         <ng-template pTemplate="colgroup">
             <colgroup>
@@ -106,6 +104,7 @@
                 <th>Base</th>
                 <th>PIC</th>
                 <th>SIC</th>
+                <th>Prefixo</th>
                 <th>Observação</th>
                 <th>Repete Até</th>
             </tr>
@@ -149,6 +148,14 @@
                             <p-dropdown [options]="tripulantes" [(ngModel)]="linha.PIC" dataKey="Id" optionLabel="Trato"
                                 [showClear]="true" placeholder="PIC" [style]="{'width': '150px'}"
                                 (onChange)="mudeiAqui($event, linha)" [filter]="true">
+                                <ng-template let-trip pTemplate="item">
+                                    <div>
+                                        <div class="grid">
+                                            <div class="col-2"><div class="bolinha" ngClass="{{trip.Bolinha}}"><span *ngIf="trip.PIC">P</span><span *ngIf="!trip.PIC">S</span></div></div>
+                                            <div class="col-8 ml-2">{{trip.Trato}}</div>
+                                        </div>
+                                    </div>
+                                </ng-template>
                             </p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
@@ -167,6 +174,20 @@
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="linha.SIC">{{linha.SIC.Trato}}</span>
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pInitEditableRow>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [options]="prefixos" [(ngModel)]="linha.Prefixo" dataKey="Id"
+                                optionLabel="PrefixoCompleto" [showClear]="true" placeholder="Prefixo"
+                                [style]="{'width': '130px'}" (onChange)="mudeiAqui($event, linha)" [filter]="true">
+                            </p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            <span *ngIf="linha.Prefixo">{{linha.Prefixo.PrefixoCompleto}}</span>
                         </ng-template>
                     </p-cellEditor>
                 </td>

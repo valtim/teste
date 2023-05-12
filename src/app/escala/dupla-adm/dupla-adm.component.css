@@ -1,0 +1,27 @@
+div.bolinha {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    font-weight: bold;
+}
+
+div.cinza {
+    background-color: gray;
+}
+
+div.vermelha {
+    background-color: red;
+    color: white;
+}
+
+div.amarela {
+    background-color: yellow;
+}
+
+div.verde {
+    background-color: green;
+    color: white;
+}
