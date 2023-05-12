@@ -43,7 +43,7 @@
                 <th>Periodo</th>
                 <th>Instrutor</th>
                 <th>Alunos</th>
-                <th>Tempo</th>
+                <!--<th>Tempo</th>-->
             </tr>
         </ng-template>
         <tr>
@@ -60,11 +60,11 @@
                         *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span>
                 </td>
                 <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
-                <td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>
-                <td>
+                <!--<td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>-->
+                <!--<td>
                     <app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino">
                     </app-turma-status>
-                </td>
+                </td>-->
             </tr>
         </ng-template>
     </p-table>

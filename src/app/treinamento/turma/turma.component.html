@@ -159,7 +159,7 @@
                     filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
                     [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
                     (onMoveToTarget)="moverAlunos()" (onMoveToSource)="moverAlunos()"
-                    (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()" (onSourceFilter)="confirmaInclusao($event)">
+                    (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()">
                     <ng-template let-item pTemplate="item">
                         <div>
                             <b>{{item.Trato}} / {{item.CodigoANAC}}</b>
