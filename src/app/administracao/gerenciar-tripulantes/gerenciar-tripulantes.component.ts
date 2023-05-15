@@ -27,13 +27,16 @@ export class GerenciarTripulantesComponent implements OnInit {
   bolinhaAmarela = true;
   bolinhaVerde = true;
 
+  botaoExcluir = false;
+  tripulantesMarcadosCheckbox = [];
+
   constructor(private api: ApiService, private router: Router, private messageService: MessageService) {
     this.locale_pt = this.api.getLocale('pt');
   }
 
   ngOnInit(): void {
     this.carregando = true;
-    this.colunas = ['Trato', 'ANAC', 'Matrícula', 'Status', 'Ações'];
+    this.colunas = ['','Trato', 'ANAC', 'Matrícula', 'Status'];
     this.filtro = '';
     this.exibirDialogo = false;
     this.exibirEdicao = false;
@@ -74,9 +77,22 @@ export class GerenciarTripulantesComponent implements OnInit {
     this.filtrarTripulantes();
   }
 
-  exibirDialogoExclusao(tripulante): void {
-    this.tripulanteSelecionado = tripulante;
+  exibirDialogoExclusao(): void {
     this.exibirDialogo = true;
+  }
+
+  marcarCheckboxTripulante(evento,tripulante): void {
+    let marcado = evento.target.checked;
+    if (marcado) {
+      this.tripulantesMarcadosCheckbox.push(tripulante);
+    } else {
+      let index = this.tripulantesMarcadosCheckbox.findIndex(x => x["Id"] === tripulante["Id"]);
+      if (index > -1) {
+        this.tripulantesMarcadosCheckbox.splice(index, 1);
+      }
+    }
+    
+    this.botaoExcluir = (this.tripulantesMarcadosCheckbox.length > 0);
   }
 
   obterNovoTripulante(): any {
@@ -133,24 +149,32 @@ export class GerenciarTripulantesComponent implements OnInit {
     this.ocultarDialogoExclusao();
     this.carregando = true;
 
-    this.tripulanteSelecionado.Ativo = false;
+    this.tripulantesMarcadosCheckbox.forEach((tripulante,index_tripulante)=>{      
+      tripulante.Ativo = false;
 
-    this.api.postNTripulantes([this.tripulanteSelecionado]).then(x => {      
+      if (index_tripulante == (this.tripulantesMarcadosCheckbox.length - 1)) {
+        this.carregando = false;
+        
+        this.api.postNTripulantes(this.tripulantesMarcadosCheckbox).then(x => {      
       
-      this.obterTripulantesDoServidor();
-      this.filtrarTripulantes();
-
-      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Excluído com sucesso!' });
+          this.tripulantesMarcadosCheckbox = [];
+          this.botaoExcluir = false;
+          this.obterTripulantesDoServidor();
+          this.filtrarTripulantes();
     
-      this.tripulanteSelecionado = null;
-      this.carregando = false;      
-    }).catch((x) => {
-      console.error(x);
-      this.messageService.add({
-        severity: "error",
-        summary: "Erro",
-        detail: "Erro ao excluir o Tripulante!",
-      });
+          this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Excluído com sucesso!' });
+        
+          this.tripulanteSelecionado = null;
+          this.carregando = false;      
+        }).catch((x) => {
+          console.error(x);
+          this.messageService.add({
+            severity: "error",
+            summary: "Erro",
+            detail: "Erro ao excluir o Tripulante!",
+          });
+        });
+      }
     });
   }
 
