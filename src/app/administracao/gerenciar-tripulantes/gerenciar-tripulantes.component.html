@@ -1,11 +1,11 @@
 <app-titulo titulo="GERENCIAR TRIPULANTES" [carregando]="carregando"></app-titulo>
-
-<div class="row p-mt-1">    
-    <div class="col-4">        
+<br>
+<div class="grid">    
+    <div class="col-3">        
         <button type="button" pButton pRipple label="Filtrar"></button>
         <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato, ANAC ou Matrícula">
     </div>
-    <div class="col-4 div-checkbox">
+    <div class="col-3 div-checkbox">
         <input type="checkbox" [(ngModel)]="bolinhaCinza" (change)="filtrarBolinhas()">
         <div class="bolinha" ngClass="cinza"></div>
 
@@ -18,8 +18,9 @@
         <input type="checkbox" [(ngModel)]="bolinhaVerde" (change)="filtrarBolinhas()">
         <div class="bolinha" ngClass="verde"></div>
     </div>
-    <div class="col-3">
+    <div class="col-4">
         <button class="novo-tripulante" pButton type="button" icon="pi pi-plus" label="Novo Tripulante" (click)="exibirDialogoNovo()"></button>
+        <button class="p-button-danger" pButton type="button" icon="pi pi-trash" label="Excluir Selecionados" (click)="exibirDialogoExclusao()" *ngIf="botaoExcluir"></button>
     </div>
 </div>
 
@@ -36,14 +37,15 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
-                <td>{{rowData.Trato}}</td>
-                <td>{{rowData.CodigoANAC}}</td>
-                <td>{{rowData.Matricula}}</td>                
-                <td><div class="bolinha" ngClass="{{rowData.Cor}}"></div></td>
-                <td>
+                <td><input type="checkbox" (change)="marcarCheckboxTripulante($event,rowData)"></td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Trato}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.CodigoANAC}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Matricula}}</td>                
+                <td (click)="exibirDialogoEdicao(rowData)"><div class="bolinha" ngClass="{{rowData.Cor}}"></div></td>
+                <!--<td>
                     <button pButton type="button" icon="pi pi-arrow-right" label="Editar" (click)="exibirDialogoEdicao(rowData)"></button>
                     <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="exibirDialogoExclusao(rowData)"></button>
-                </td>
+                </td>-->
             </tr>
         </ng-template>
     </p-table>
@@ -52,7 +54,7 @@
 
 <p-dialog header="Excluir Tripulante" [(visible)]="exibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoExclusao()">    
     <h5>
-        Realmente deseja excluir o Tripulante {{tratoTripulanteSelecionado()}}?
+        Realmente deseja excluir os Tripulante selecionados?
     </h5>
     <div class="botoes">
         <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light" (click)="ocultarDialogoExclusao()"></button>
@@ -60,7 +62,7 @@
     </div>
 </p-dialog>
 
-<p-dialog *ngIf="exibirEdicao" header="EDITAR TRIPULANTES" [(visible)]="exibirEdicao" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoEdicao()">
+<p-dialog [style]="{'width':'95%', 'height':'95%'}" *ngIf="exibirEdicao" header="EDITAR TRIPULANTES" [(visible)]="exibirEdicao" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoEdicao()">
     <app-editar-gerenciar-tripulantes [tripulanteSelecionado]="tripulanteSelecionado" (retorno)="ocultarDialogoEdicao()">
     </app-editar-gerenciar-tripulantes>
 </p-dialog>

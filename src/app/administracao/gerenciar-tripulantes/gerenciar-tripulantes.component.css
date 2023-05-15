@@ -1,6 +1,7 @@
 button.novo-tripulante {
     display: inline-block;
     margin-left: -24px;
+    margin-right: 10px;
 }
 
 div > input[type=text] {

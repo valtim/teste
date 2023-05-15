@@ -39,7 +39,7 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
     /* Clonar tripulante para não afetar a lista original */
     this.tripulante = JSON.parse(JSON.stringify(this.tripulanteSelecionado));
 
-    this.api.getCombos().then((x) => {
+    this.api.getCombos().then((x) => {      
       this.cargos = x.Cargo;
       this.basesTripulante = x.BaseDoTripulante;
 

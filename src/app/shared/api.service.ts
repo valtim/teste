@@ -653,11 +653,12 @@ export class ApiService {
 
   getCombos(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
-      if (!localStorage.getItem("Combos")) {
+      let combos = localStorage.getItem("Combos");
+      if ( (combos == null) || (combos == 'null') ) {        
         this.getCombosServidor().then((x) => {
           resolve(x);
         });
-      } else {
+      } else {        
         resolve(JSON.parse(localStorage.getItem("Combos")));
       }
     });
