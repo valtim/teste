@@ -164,7 +164,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
               Object.assign(new HoraTurma, ({
                 Data: new Date(dataStr + "T" + "00:00"),
                 HoraInicio: new Date(dataStr + "T" + y.HoraInicio),
-                HoraTermino: new Date(dataStr + "T" + y.HoraTermino)
+                HoraTermino: new Date(dataStr + "T" + y.HoraTermino),
+                ParaPagamento: y.ParaPagamento,
+                Descricao: y.Descricao,
               }))
             )
           });
