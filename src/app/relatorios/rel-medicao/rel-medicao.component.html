@@ -22,9 +22,9 @@
     <div class="col"></div>
 </div>
 
-<p-tabView *ngIf="prefixos">    
+<p-tabView *ngIf="prefixos" (onChange)="definirAbaSelecionada($event)">    
     <p-tabPanel [header]="prefixo.Prefixo" *ngFor="let prefixo of prefixos; let i = index" [selected]="i == 0">
-        <table>
+        <table *ngIf="exibirPrefixos">
             <thead>
                 <tr>
                     <th><img src="/assets/imgs/bristow.png" alt="image"></th>
@@ -33,7 +33,7 @@
                         H-008<br>           
                         Revisão: 01<br>
                         Data: 02/08/2021
-                    </th>                
+                    </th>
                 </tr>
                 <tr><!-- Em branco --></tr>
                 <tr>
@@ -64,7 +64,7 @@
                 <tr><!-- Em branco --></tr>
             </thead>
         </table>
-        <table>
+        <table *ngIf="exibirPrefixos">
             <!-- Linhas -->
             <tbody>                
                 <tr *ngFor="let dia of prefixo.Dias;">
@@ -82,6 +82,34 @@
                     <td>{{dia.IndisponibilidadeDiaria}}</td>
                 </tr>                
             </tbody>
-        </table>        
+        </table>
+        
+        <table class="disponibilidade" *ngIf="!exibirPrefixos">
+            <thead>
+                <tr>
+                    <th>Contrato</th>
+                    <th>Estado</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                </tr>
+            </thead>
+            <tbody>                
+                <tr *ngFor="let linha of indisponibilidade;">
+                    <td>{{linha.Contrato}}</td>
+                    <td>{{linha.Estado}}</td>
+                    <td>{{linha.Inicio | date: "dd/MM/yyyy HH:mm"}}</td>
+                    <td>{{linha.Fim | date: "dd/MM/yyyy HH:mm"}}</td>
+                </tr>                
+            </tbody>
+        </table>
     </p-tabPanel>    
 </p-tabView>
+
+<div *ngIf="exibirPrefixos" class="resumo">
+    <label class="negrito">Total Tempo FB: </label>{{prefixoSelecionado.TotalTempoFB}}<br>
+    <label class="negrito">Total Back Up: </label>{{prefixoSelecionado.TotalBackUp}}<br>
+    <label class="negrito">Total Consumo FB: </label>{{prefixoSelecionado.TotalConsumoFB}} Libras<br>
+    <label class="negrito vermelho">Total Dowtime: </label><label class="vermelho">{{prefixoSelecionado.TotalDowtime}}</label><br>
+    <label class="negrito">Total Tempo Glosado: </label>{{prefixoSelecionado.TotalTempoGlosado}}<br>
+    <label class="negrito">Tempo Total Faturado: </label>{{prefixoSelecionado.TempoTotalFaturado}}
+</div>
