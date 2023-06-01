@@ -1,0 +1,87 @@
+<app-titulo titulo="Dados de Medição" [carregando]="!tudoPronto"></app-titulo>
+
+<br>
+<div class="grid">   
+    <div class="col"></div>
+    <div class="col">
+        <button type="button" pButton pRipple label="Mês"></button>
+        <p-calendar [(ngModel)]="dataSelecionada" view="month" selectionMode="single" dateFormat="mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+    </div>     
+    <div class="col">
+        <button type="button" pButton pRipple label="Base"></button>
+        <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
+            filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
+    </div>
+    <div class="col">
+        <button type="button" pButton pRipple label="Cliente"></button>
+        <p-dropdown [options]="filtroClientes" [(ngModel)]="clienteSelecionado" [filter]="true" filterBy="Nome"
+            optionValue="Id" optionLabel="Nome" appendTo="body"></p-dropdown>
+    </div>
+    <div class="col"><button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button></div>
+    <div class="col"></div>
+</div>
+
+<p-tabView *ngIf="prefixos">    
+    <p-tabPanel [header]="prefixo.Prefixo" *ngFor="let prefixo of prefixos; let i = index" [selected]="i == 0">
+        <table>
+            <thead>
+                <tr>
+                    <th><img src="/assets/imgs/bristow.png" alt="image"></th>
+                    <th>DADOS DE MEDIÇÃO</th>
+                    <th>
+                        H-008<br>           
+                        Revisão: 01<br>
+                        Data: 02/08/2021
+                    </th>                
+                </tr>
+                <tr><!-- Em branco --></tr>
+                <tr>
+                    <th></th>
+                    <th>
+                        Período de {{prefixo.Inicio | date: "dd/MM/yyyy"}} à {{prefixo.Fim | date: "dd/MM/yyyy"}}<br>           
+                        Contrato: {{prefixo.Contrato}}<br>
+                        Base: {{prefixo.Base}}
+                    </th>                                
+                </tr>
+                <tr>
+                    <th>Titular/PR-NLN</th>
+                </tr>
+                <tr>
+                    <th>Data</th>
+                    <th>Nº Folha Bordo</th>
+                    <th>Back Up</th>
+                    <th>Base</th>
+                    <th>Tempo FB</th>
+                    <th>Consumido FB</th>
+                    <th>Tempo<br>Glosado</th>
+                    <th>QAV<br>Abastecido (Lt)</th>
+                    <th>Tempo<br>Faturado</th>
+                    <th>OBSERVAÇÃO</th>       
+                    <th>Período<br>Indisponibilidade</th>
+                    <th>Indisponibilidade<br>Diária</th>         
+                </tr>
+                <tr><!-- Em branco --></tr>
+            </thead>
+        </table>
+        <table>
+            <!-- Linhas -->
+            <tbody>                
+                <tr *ngFor="let dia of prefixo.Dias;">
+                    <td>{{dia.Data | date: "dd/MM/yyyy"}}</td>
+                    <td>{{dia.FolhaDeBordo}}</td>
+                    <td>{{dia.Backup}}</td>
+                    <td>{{dia.Base}}</td>
+                    <td>{{dia.Tempo}}</td>
+                    <td>{{dia.CombustivelConsumido}}</td>
+                    <td>{{dia.TempoGlosada}}</td>
+                    <td>{{dia.CombustivelAbastecido}}</td>
+                    <td>{{dia.TempoFaturado}}</td>
+                    <td>{{dia.Observacao}}</td>       
+                    <td>{{dia.Periodo}}</td>
+                    <td>{{dia.IndisponibilidadeDiaria}}</td>
+                </tr>                
+            </tbody>
+        </table>        
+    </p-tabPanel>    
+</p-tabView>

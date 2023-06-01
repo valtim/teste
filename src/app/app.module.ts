@@ -107,6 +107,7 @@ import { LoginLdapComponent } from './login-ldap/login-ldap.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -209,7 +210,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SafeHtmlPipe,
     BlocoComponent,
     RelVencimentoTreinamentoComponent,
-    LoginLdapComponent
+    LoginLdapComponent,
+    RelMedicaoComponent
   ],
   imports: [
     AppRoutingModule,

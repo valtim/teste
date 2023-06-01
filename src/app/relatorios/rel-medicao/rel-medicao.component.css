@@ -1,0 +1,243 @@
+::ng-deep .p-tabview.p-component {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+::ng-deep ul.p-tabview-nav {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-width: 2px 0 0 0 !important;
+    margin-top: 10px !important;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    border: solid #dee2e6;
+    border-width: 2px 0 0 0 !important;
+    border-color: transparent transparent #dee2e6 transparent;
+    border: 2px solid #dee2e6;
+    background: #ffffff;
+    color: #6c757d;
+    padding: 1rem;
+    font-weight: 600;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    transition: box-shadow 0.2s;
+    margin: -2px 0 0 0 !important;
+}
+
+::ng-deep .p-tabview .p-tabview-panels {
+    background: #ffffff;
+    padding: 0 !important;        
+    color: #495057;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;    
+}
+
+::ng-deep .p-tabview .p-tabview-panels table {   
+    width: 100%; 
+    border-collapse: collapse;
+    color: #000000;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr {    
+    border: 2px solid #000000 !important;
+    padding: 0;        
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr th {
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr th img {
+    max-width: 100%;
+    max-height: 40px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(1) th:nth-child(1) {    
+    width: 10%;
+    padding-top: 5px;
+    border-right: 2px solid #000000;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(1) th:nth-child(2) {        
+    line-height: 55px;
+    font-size: 1.2em;
+    width: 80%;
+    border-right: 2px solid #000000;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(1) th:nth-child(3) {            
+    font-size: 0.9em;
+    text-align: left;
+    line-height: 1em;
+    padding-top: 5px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(2) {    
+    height: 20px; 
+    border: 0 !important;   
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(3) {    
+    padding: 0 !important;   
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(3) th {
+    height: 50px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(3) th:nth-child(1) {    
+    width: 10%;    
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(3) th:nth-child(2) {    
+    line-height: 1em;
+    font-size: 0.9em;
+    text-align: left;
+    padding-top: 2px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(4) {         
+    border: 1px solid #000000 !important;
+    border-left: 2px solid #000000 !important;
+    border-right: 2px solid #000000 !important;       
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(4) th:nth-child(1) {            
+    width: 10%;
+    height: 24px;
+    padding-top: 1px;
+    font-size: 0.9em;
+    text-align: center;
+    background-color: #b3e5fc;
+    margin-top: -2px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) {         
+    border: 1px solid #000000 !important;
+    border-left: 2px solid #000000 !important;
+    border-right: 2px solid #000000 !important;       
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th {            
+    width: 7%;
+    height: 40px;    
+    font-size: 0.65em;
+    text-align: center;
+    border: 0 !important;    
+    border-right: 1px solid #000000 !important;
+    padding-top: 14px;    
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:first-child {            
+    width: 10%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:nth-child(7) {            
+    padding-top: 6px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:nth-child(8) {            
+    padding-top: 6px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:nth-child(9) {            
+    padding-top: 6px;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:nth-child(10) {            
+    width: 14%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:nth-child(11) {            
+    padding-top: 6px;
+    width: 10%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(5) th:last-child {            
+    padding-top: 6px;
+    width: 10%;
+    color: #ff0000;
+    border-right: 0 !important;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table tr:nth-child(6) {    
+    height: 10px; 
+    border: 0 !important;   
+}
+
+/* Linhas */
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr {         
+    border: 1px solid #000000 !important;
+    border-left: 2px solid #000000 !important;
+    border-right: 2px solid #000000 !important;                   
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr:nth-child(2) {    
+    height: 20px; 
+    border: 1px solid #000000 !important;
+    border-left: 2px solid #000000 !important;
+    border-right: 2px solid #000000 !important;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr > td {                
+    height: 20px;    
+    font-size: 0.65em;
+    text-align: center;
+    font-weight: normal;
+    border: 0 !important;    
+    border-right: 1px solid #000000 !important;
+    padding-top: 0;    
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(1) {            
+    width: 10%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(2) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(3) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(4) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(5) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(6) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(7) {            
+    width: 6.98%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(8) {            
+    width: 7%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(9) {            
+    width: 6.98%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(10) {            
+    width: 13.98%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(11) {            
+    width: 10%;
+}
+
+::ng-deep .p-tabview .p-tabview-panels table > tbody > tr td:nth-child(12) {            
+    width: 12%;
+    color: #ff0000;
+}
