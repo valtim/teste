@@ -58,7 +58,7 @@ export class RelEscalaPtbrComponent implements OnInit {
 
   rodarRelatorio(){
     this.tudoPronto = false;
-    this.api.getEscalaPTBR(this.dataReferencia, this.dataInicio, this.dataFim, this.baseDeOperacaoSelecionada.Id).then(x=>{
+    this.api.getEscalaPTBR(this.dataReferencia, this.dataInicio, this.dataFim, this.baseDeOperacaoSelecionada.Id).then(x=>{        
         this.resultado = x.tabela;
         this.empresa = x.Empresa;
         this.retReferencia = x.dataReferencia;

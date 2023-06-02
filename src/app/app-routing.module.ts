@@ -72,6 +72,7 @@ import { FichaDeAvaliacaoItemComponent } from "./cadastro/ficha-de-avaliacao-ite
 import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component";
 import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
 import { BlocoComponent } from "./cadastro/bloco/bloco.component";
+import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -214,6 +215,10 @@ const routes: Routes = [
   {
     path: "rel-escala-ptbr",
     component: RelEscalaPtbrComponent,
+  },
+  {
+    path: "rel-medicao",
+    component: RelMedicaoComponent,
   },
   {
     path: "rel-controle-spot",
