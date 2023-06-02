@@ -24,7 +24,6 @@ export class AnexosComponent implements OnInit {
 
   uploadAnexos(event) {   
 
-
     const formData = new FormData();
 
     event.files.forEach((arq, index) => {
@@ -48,7 +47,7 @@ export class AnexosComponent implements OnInit {
         message = a.length+ ' arquivos carregado com sucesso!'
 
       this.messageService.add({severity:'success', summary:'Upload de Arquivos', detail:message});
-      this.callbackFunction(true);
+      this.callbackFunction(this.listaArquivos);
   return;
     });
   }

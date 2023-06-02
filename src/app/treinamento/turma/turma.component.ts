@@ -428,7 +428,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   alterarHoraFinal(index, data, hora) {
     let periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data == data);
     if (periodos.length > 0) {
-      periodos[0].Horas[index].HoraTermino = hora;
+      if ((periodos[0].Horas[index]) && (periodos[0].Horas[index].HoraTermino)) { 
+        periodos[0].Horas[index].HoraTermino = hora; 
+      }      
     } else {
       let horaTurma = Object.assign(new HoraTurma, ({ Data: data, HoraTermino: hora }));
       this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [horaTurma] });
@@ -566,7 +568,20 @@ export class TurmaComponent implements OnInit, AfterViewInit {
 
   }
 
-  uploadCompleto = (args: any): void => {
+  uploadCompletoAnexos = (args: any): void => {
+    this.turmaInterna.Anexos = args;    
+  }
+
+  uploadCompletoSAEs = (args: any): void => {
+    this.turmaInterna.SAEs = args;    
+  }
+
+  uploadCompletoNECs = (args: any): void => {
+    this.turmaInterna.NECs = args;    
+  }
+
+  uploadCompletoNRTs = (args: any): void => {
+    this.turmaInterna.NRTs = args;    
     this.atualizarStatusTurma(() => { });
   }
 
@@ -767,7 +782,17 @@ export class TurmaComponent implements OnInit, AfterViewInit {
         .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
       this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y['Id']).indexOf(x['Id']) == -1);
 
-
+      this.turmaInterna.PeriodosDeCurso.forEach(periodoDeCurso => {
+        periodoDeCurso.Horas.forEach(hora => {
+          let horaTurmaAssociada = this.turmaInterna.HorasTurma.filter(horaTurma => {
+            return horaTurma.Id === hora.Id
+          });
+          if (horaTurmaAssociada.length == 1) {
+            hora['Descricao'] = horaTurmaAssociada[0].Descricao;
+            hora['ParaPagamento'] = horaTurmaAssociada[0].ParaPagamento;
+          }          
+        });
+      });
     });
   }
 

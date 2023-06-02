@@ -332,12 +332,12 @@
             <div class="p-field col-6">
                 <h2>Anexos da Turma</h2>
                 <div class="p-field">
-                    <app-anexos [listaArquivos]='turmaInterna.Anexos'></app-anexos>
+                    <app-anexos [listaArquivos]='turmaInterna.Anexos' [callbackFunction]="uploadCompletoAnexos"></app-anexos>
                 </div>
             </div>
             <div class="p-field  col-6">
                 <h2>NRT</h2>
-                <app-anexos [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompleto"></app-anexos>
+                <app-anexos [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompletoNRTs"></app-anexos>
             </div>
         </div>
         <div *ngIf="turmaInterna.Treinamento">
@@ -345,12 +345,12 @@
                 <div class="p-field col-6">
                     <h2>SAE</h2>
                     <div class="p-field">
-                        <app-anexos [listaArquivos]='turmaInterna.SAEs'></app-anexos>
+                        <app-anexos [listaArquivos]='turmaInterna.SAEs' [callbackFunction]="uploadCompletoSAEs"></app-anexos>
                     </div>
                 </div>
                 <div class="p-field  col-6">
                     <h2>NEC</h2>
-                    <app-anexos [listaArquivos]='turmaInterna.NECs'></app-anexos>
+                    <app-anexos [listaArquivos]='turmaInterna.NECs' [callbackFunction]="uploadCompletoNECs"></app-anexos>
                 </div>
             </div>
         </div>
