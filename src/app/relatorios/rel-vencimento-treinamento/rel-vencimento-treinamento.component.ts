@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { SortEvent } from 'primeng/api';
+import { MessageService, SortEvent } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
   selector: 'app-rel-vencimento-treinamento',
   templateUrl: './rel-vencimento-treinamento.component.html',
-  styleUrls: ['./rel-vencimento-treinamento.component.css']
+  styleUrls: ['./rel-vencimento-treinamento.component.css'],
+  providers: [MessageService]
 })
 export class RelVencimentoTreinamentoComponent implements OnInit {
   dados: any[];
@@ -14,17 +15,35 @@ export class RelVencimentoTreinamentoComponent implements OnInit {
   vencimentoEditado = null;
   dataReferencia = new Date();
 
-  constructor(private api: ApiService,) {
+  messages;
+
+  constructor(private api: ApiService,
+    private messageService: MessageService) {
 
   }
 
 
   save() {
+
+
+    let pedaco = this.vencimentoEditado.ValorExibido.split('/');
+
+    let dia = this.vencimentoEditado.SomenteMes ? 1 : pedaco[0];
+    let mes = this.vencimentoEditado.SomenteMes ? pedaco[0] - 1 : pedaco[1] - 1;
+    let ano = this.vencimentoEditado.SomenteMes ? pedaco[1] : pedaco[2];
+    let vencimento = new Date(ano, mes, dia);
+
+
+    this.vencimentoEditado.DataDeVencimento = vencimento;
+
     this.api.postAtualizaVencimento(this.vencimentoEditado).then(() => {
 
-      alert('Salvo com sucesso');
+      this.messageService.add({key: 'tc', severity:'success', summary: 'Salvo', detail: `Vencimento do Tripulante Salvos`});
 
       this.dados[this.dados.findIndex(x => x.Id == this.vencimentoEditado.Id)] = { ...this.vencimentoEditado };
+
+
+      this.hide()
 
     }
     );

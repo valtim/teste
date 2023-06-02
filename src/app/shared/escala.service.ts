@@ -24,9 +24,8 @@ export class EscalaService {
     return this.http.get(`${this.api.url}api/somentevencimento/${referencia.toISOString().split('T')[0]}`).toPromise();
   }
 
-  getEscalaMensal(dataInicio: Date, dataFim: Date): any {
-    return this.http.get(`${this.api.url}api/escala-mensal/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.api.httpOptions)
-      .toPromise();
+  async getEscalaMensal(dataInicio: Date, dataFim: Date): Promise<any> {
+    return await lastValueFrom(this.http.get(`${this.api.url}api/escala-mensal/${dataInicio.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, this.api.httpOptions));
   }
 
   getDuplas(dataInicio: Date, dataFim: Date): any {

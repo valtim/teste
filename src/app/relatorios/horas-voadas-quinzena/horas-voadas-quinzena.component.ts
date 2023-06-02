@@ -24,7 +24,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
   exibirMemoria = false;
 
-
+  agruparMensal : boolean;
 
   constructor(private api: ApiService) { }
 
@@ -45,6 +45,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
       .postRelHorasQuinzena({
         dataInicio: this.dataInicio,
         dataFim: this.dataFim,
+        agruparMensal: this.agruparMensal,
       })
       .then((x) => {
         //colunas = colunas, filtro = filtro, listas = listas

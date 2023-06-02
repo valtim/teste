@@ -1,38 +1,34 @@
 <app-titulo titulo="Horas da Quinzena para Pagamento" [carregando]="!tudoPronto"></app-titulo>
 
-<div class=" d-print-none">
-  <div class="grid">
-    <div class="col"></div>
-    <div class="col">
-      <button type="button" pButton pRipple label="Inicial"></button>
-      <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
-        showIcon="true" [inputStyle]="{ width: '100px' }"></p-calendar>
-    </div>
-    <div class="col">
-      <button type="button" pButton pRipple label="Final"></button>
-      <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
-        showIcon="true" [inputStyle]="{ width: '100px' }"></p-calendar>
-    </div>
-    <div class="col">
-      <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"></button>
-    </div>
-    <div class="col">
-      <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-        class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+<p-toolbar class=" d-print-none">
 
-      <button type="button" label="Relatório" pButton pRipple icon="pi pi-file" (click)="gerarTXT()"
-        class="botao-excel p-button-success mr-2" style="margin-left: 10px" pTooltip="TXT"
-        tooltipPosition="bottom"></button>
+  <div>
+
+    <button type="button" pButton pRipple label="Inicial"></button>
+    <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+      [inputStyle]="{ width: '100px' }" class="mr-2"></p-calendar>
+
+    <button type="button" pButton pRipple label="Final"></button>
+    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+      [inputStyle]="{ width: '100px' }" class="mr-2"></p-calendar>
+      
+    <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="mr-4"></button>
+
+    <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+      class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+
+    <button type="button" label="Relatório" pButton pRipple icon="pi pi-file" (click)="gerarTXT()"
+      class="botao-excel p-button-success mr-2" pTooltip="TXT" tooltipPosition="bottom" class="mr-2"></button>
 
 
-      <button type="button" label="Relatório/Memória" pButton pRipple icon="pi pi-file" (click)="exibirMemoria = !exibirMemoria"
-        class="botao-excel p-button-warning mr-2" style="margin-left: 10px" pTooltip="TXT"
-        tooltipPosition="bottom"></button>
-
-
-    </div>
+    <button type="button" label="Relatório/Memória" pButton pRipple icon="pi pi-file"
+      (click)="exibirMemoria = !exibirMemoria" class="botao-excel p-button-warning" pTooltip="TXT"
+      tooltipPosition="bottom"></button>
   </div>
-</div>
+
+
+
+</p-toolbar>
 
 <!-- {{hyphenated | timespanvalti }} -->
 

@@ -45,16 +45,16 @@ export class VencimentoCarteiraComponent implements OnInit {
     if (!retorno.Confirmado)
       return;
 
-      retorno.Display = false;
-    this.api.postVencimento(retorno.Certificado).then(x => {      
+    retorno.Display = false;
+    this.api.postAtualizaVencimento(retorno.Certificado).then(x => {
       var item = this.valores.filter(y => y.Trato == x.Tripulante.Trato)[0][x.Certificado.Nome];
       item.Display = false;
-      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });      
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });
       item.ValorExibido = x.ValorExibido;
-      item.Cor = x.Cor;
+      item.CorNaTela = x.CorNaTela;
     }).catch
       (e => {
-        
+
         this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao salvar, verifique os dados.' });
 
       })
@@ -70,7 +70,7 @@ export class VencimentoCarteiraComponent implements OnInit {
   ngOnInit() {
 
     this.api.getQuadroDeTripulantes().then(result => {
-      this.loading = false;
+    this.loading = false;
       this.resultado = result;
       this.valores = result.valores;
       this.scrollableCols = result.scrollableCols;
@@ -79,7 +79,7 @@ export class VencimentoCarteiraComponent implements OnInit {
   }
   reordenar(coluna) {
 
-    alert(coluna);
+    //alert(coluna);
   }
   // salvarVencimento() {
   //   if (this.vencimentoListToSave.length) {

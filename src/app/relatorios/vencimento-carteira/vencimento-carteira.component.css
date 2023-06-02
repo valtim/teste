@@ -40,3 +40,14 @@ td {
 div {
     text-align: center;
 }
+
+.barra_de_cores{
+    position: absolute;
+    width: 95vw;
+    bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+
+}

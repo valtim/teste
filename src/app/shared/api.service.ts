@@ -129,20 +129,19 @@ export class ApiService {
       .toPromise();
   }
 
-  postLogin(username: string, password: string): Promise<any> {
+  async postLogin(username: string, password: string): Promise<any> {
     // this.httpOptions = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json'
     //   })
     // };
 
-    return this.http
+    return await lastValueFrom(this.http
       .post(
         this.url + "api/autorizacao",
-        { username: username, password: password },
+        { Username: username, Password: password },
         this.httpOptions
-      )
-      .toPromise();
+      ));
   }
 
   getDiarioByDate(date: string): Promise<any> {

@@ -17,7 +17,7 @@ export class DuplaAdmComponent implements OnInit {
   tripulantes: any;
   bases: any;
   incompatibilidades: any;
-  listasOK: boolean;
+  carregado: boolean = false;
   duplas: any;
   duplasExibidas: any;
   cursos: any;
@@ -26,18 +26,22 @@ export class DuplaAdmComponent implements OnInit {
   prefixos: any;
 
 
+  exibeCursos = false;
+
   dataSelecionada: any;
 
-  filtrar(data){
+  filtrar(data) {
     this.dataSelecionada = data;
-    this.duplas.forEach(x=>x.Exibir = false);
-    this.duplas.filter(x=>x.Data.toISOString() == data.toISOString()).forEach(x=>x.Exibir = true);
+    this.duplas.forEach(x => { x.Exibir = false; x.ExibirDetalhes = false; });
+    this.duplas.filter(x => x.Data.toISOString() == data.toISOString()).forEach(x => x.Exibir = true);
 
 
     let dataStr = DataUtil.formatDateBR(data);
 
-    this.cursos.forEach(x=>x.Exibir = false);
-    this.cursos.filter(x=>x.DatasStr.includes(dataStr)).forEach(x=>x.Exibir = true);
+    this.cursos.forEach(x => x.Exibir = false);
+    this.cursos.filter(x => x.DatasStr.includes(dataStr)).forEach(x => x.Exibir = true);
+
+    this.exibeCursos = this.cursos.filter(x => x.DatasStr.includes(dataStr)).length > 0;
   }
 
   mudarDataInicio() {
@@ -46,6 +50,18 @@ export class DuplaAdmComponent implements OnInit {
 
     this.dataInicio = datas.segunda;
     this.dataFim = datas.domingo;
+  }
+
+  mudeiApresentacao(dados) {
+
+    dados.Modificado = true;
+    this.apiEscala.postFinalDeJornada(DataUtil.TimeSpanURL(dados.Apresentacao)).then(x => {
+      dados.UltimoCorte = x.UltimoCorte;
+      dados.FinalDaJornada = x.FinalDaJornada;
+
+      dados.Invalido = false;
+      dados.Ativo = true;
+    })
   }
 
   mudeiAqui(e, dados) {
@@ -59,18 +75,62 @@ export class DuplaAdmComponent implements OnInit {
       dados.Invalido = true;
     }
 
-    if (dados.PIC && dados.SIC) {
-
-      if (dados.PIC.Idade + dados.SIC.Idade > 120)
-        this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${dados.PIC.Trato} e ${dados.SIC.Trato} não podem ser escalados juntos por superarem 120 anos na soma das idades` });
-
-      if (this.incompatibilidades.filter(x => (x.Tripulante1.Id == dados.PIC.Id && x.Tripulante2.Id == dados.SIC.Id) || (x.Tripulante2.Id == dados.PIC.Id && x.Tripulante1.Id == dados.SIC.Id)).length != 0)
-        this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${dados.PIC.Trato} e ${dados.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente` });
-
-    }
+    dados.Descricao = this.getDescricao(dados);
 
 
     dados.Modificado = true;
+  }
+
+  getDescricao(linha): string {
+    let desc = [];
+
+    if (linha.PIC && linha.SIC) {
+
+
+      if (linha.PIC.Idade + linha.SIC.Idade > 120) {
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por superarem 120 anos na soma das idades`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: mensagem });
+      }
+
+      if (this.incompatibilidades.filter(x => (x.Tripulante1.Id == linha.PIC.Id && x.Tripulante2.Id == linha.SIC.Id) || (x.Tripulante2.Id == linha.PIC.Id && x.Tripulante1.Id == linha.SIC.Id)).length != 0) {
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente`
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente` });
+      }
+
+      let temVerde = linha.PIC.Bolinha == 'verde' || linha.SIC.Bolinha == 'verde';
+      // let temAmarela = linha.PIC.Bolinha != 'amarela' || linha.SIC.Bolinha != 'amarela';
+      let temVermelha = linha.PIC.Bolinha == 'vermelha' || linha.SIC.Bolinha == 'vermelha';
+
+      if ( temVermelha && !temVerde){
+        let mensagem = 'Tripulante Vemelho deve fazer dupla com um tripulante VERDE';
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      
+      }
+
+    }
+
+    
+    if (linha.PIC) {
+      desc.push(`FADIGA ${linha.PIC.Fadiga.filter(x=>x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
+      desc.push(`${linha.PIC.Trato} VENCIDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
+      desc.push(`VENCENDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
+    }
+    if (linha.SIC) {
+      desc.push(`FADIGA ${linha.SIC.Fadiga.filter(x=>x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
+      desc.push(`${linha.SIC.Trato} VENCIDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
+      desc.push(`VENCENDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
+    }
+
+
+
+    return desc.join(', ');
+  }
+
+  funExibe(linha) {
+    linha.ExibirDetalhes = !linha.ExibirDetalhes;
   }
 
   getPrimeiroAndUtimo(base: Date): { segunda: Date; domingo: Date; } {
@@ -88,6 +148,7 @@ export class DuplaAdmComponent implements OnInit {
 
   rodarRelatorio() {
 
+    this.carregado = false;
     this.duplas = [];
 
 
@@ -96,20 +157,31 @@ export class DuplaAdmComponent implements OnInit {
       this.bases = x.bases;
       this.incompatibilidades = x.incompatibilidades;
       this.prefixos = x.prefixos;
-      //this.listarPendencias();
 
       this.apiEscala.getDuplasAdm(this.dataInicio, this.dataFim).then(x => {
         this.datas = x.Datas.map(x => new Date(x));
         this.duplas = x.Duplas;
+
         this.duplas.forEach(x => {
+          if (x.PIC) {
+            x.PIC = this.tripulantes.filter(y => y.Id == x.PIC.Id)[0]
+          }
+
+          if (x.SIC) {
+            x.SIC = this.tripulantes.filter(y => y.Id == x.SIC.Id)[0]
+          }
           x.Data = new Date(x.Data)
+          x.Descricao = this.getDescricao(x);
           x.Exibir = true;
         });
         this.cursos = x.Cursos;
         this.filtrar(this.dataInicio);
-        this.listasOK = true;
+        this.carregado = true;
       })
     })
+      .catch(() => {
+        this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao acessar o site' });
+      })
   }
 
 
@@ -136,7 +208,7 @@ export class DuplaAdmComponent implements OnInit {
   salvar() {
 
 
-    this.listasOK = false;
+    this.carregado = false;
     let editado_novo = this.duplas.filter(x => x.Modificado && !x.Invalido);
 
     let duplasAndDeslocamentos = { data: this.dataInicio, duplas: editado_novo, deslocamentosDoDia: [] };
@@ -160,13 +232,13 @@ export class DuplaAdmComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: x.mensagensDeErro[i] });
 
 
-      this.listasOK = true;
+      this.carregado = true;
     })
   }
 
   delete() {
 
-    this.listasOK = false;
+    this.carregado = false;
     let editado = this.duplas.filter(x => this.linhasSelecionadas.includes(x.Id));
 
     editado.forEach(x => x.Ativo = false);
@@ -180,7 +252,7 @@ export class DuplaAdmComponent implements OnInit {
 
       this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
 
-      this.listasOK = true;
+      this.carregado = true;
     })
 
   }

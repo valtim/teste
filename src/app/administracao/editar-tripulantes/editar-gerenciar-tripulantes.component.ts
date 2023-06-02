@@ -33,13 +33,13 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
   ultimoPesoLb;
   ultimoPesoKg;
 
-  constructor(private api: ApiService, private router: Router, private messageService: MessageService) {}
+  constructor(private api: ApiService, private router: Router, private messageService: MessageService) { }
 
   ngOnInit(): void {
     /* Clonar tripulante para não afetar a lista original */
     this.tripulante = JSON.parse(JSON.stringify(this.tripulanteSelecionado));
 
-    this.api.getCombos().then((x) => {      
+    this.api.getCombos().then((x) => {
       this.cargos = x.Cargo;
       this.basesTripulante = x.BaseDoTripulante;
 
@@ -47,34 +47,36 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
       else if (this.tripulante.Bolinha == 'amarela') this.bolinhaAmarela = true;
       else if (this.tripulante.Bolinha == 'verde') this.bolinhaVerde = true;
       else this.bolinhaCinza = true;
-    
+
       this.dataNascimento = this.converterDataBancoParaTela(this.tripulante.Nascimento);
       this.dataAdmissao = this.converterDataBancoParaTela(this.tripulante.Admissao);
       this.ultimoPesoLb = this.converterPesoBancoParaTela(this.tripulante.UltimoPeso);
-      this.ultimoPesoKg = this.convertPoundsToKilograms(this.tripulante.UltimoPeso);      
+      this.ultimoPesoKg = this.convertPoundsToKilograms(this.tripulante.UltimoPeso);
+      this.tripulante.ComandanteEm = this.converterDataBancoParaTela(this.tripulante.ComandanteEm);
+      this.tripulante.InstrutorEm = this.converterDataBancoParaTela(this.tripulante.InstrutorEm);
     });
   }
 
   converterDataBancoParaTela(dataBanco: string): Date {
     if ((dataBanco != null) && (dataBanco != '')) {
-      let partes = dataBanco.substring(0,10).split('-');
-      return new Date(parseInt(partes[0]),parseInt(partes[1])-1,parseInt(partes[2]));
+      let partes = dataBanco.substring(0, 10).split('-');
+      return new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
     } else {
       return null;
     }
   }
 
-  converterDataTelaParaBanco(data: Date): String {    
+  converterDataTelaParaBanco(data: Date): String {
     if (data != null) {
-      return data.getFullYear() + '-' + ("0" + (data.getMonth()+1)).slice(-2) + '-' + ("0" + data.getDate()).slice(-2) + 'T00:00:00';
+      return data.getFullYear() + '-' + ("0" + (data.getMonth() + 1)).slice(-2) + '-' + ("0" + data.getDate()).slice(-2) + 'T00:00:00';
     } else {
-      return '';
+      return undefined;
     }
   }
 
   converterPesoBancoParaTela(UltimoPeso: any): String {
     if (UltimoPeso != null) {
-      return String(UltimoPeso).replace('.',',');
+      return String(UltimoPeso).replace('.', ',');
     } else {
       return '';
     }
@@ -82,7 +84,7 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
 
   converterPesoTelaParaBanco(peso: string): number {
     if ((peso != null) && (peso != '')) {
-      return parseFloat(peso.replace(',','.'));
+      return parseFloat(peso.replace(',', '.'));
     } else {
       return 0;
     }
@@ -90,11 +92,11 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
 
   convertPoundsToKilograms(pounds: any): String {
     if (pounds != null) {
-      let kilograms = String(pounds * 0.453592);      
+      let kilograms = String(pounds * 0.453592);
       return this.converterPesoBancoParaTela(parseFloat(kilograms).toFixed(2));
     } else {
       return '';
-    }   
+    }
   }
 
   ajustarValorQuilos(): void {
@@ -114,8 +116,8 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
       if (this.cpfEstaValido) {
         this.liberarBotaoSalvar = true;
       } else {
-        this.liberarBotaoSalvar = false;  
-      }          
+        this.liberarBotaoSalvar = false;
+      }
     } else {
       this.liberarBotaoSalvar = false;
     }
@@ -124,13 +126,13 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
   validarValorCPF(): void {
     if ((this.tripulante.CPF != '') && (this.tripulante.CPF != null)) {
       let cpf = document.getElementById('input_cpf_mask');
-      if (this.validarCPF(this.tripulante.CPF)) {                            
+      if (this.validarCPF(this.tripulante.CPF)) {
         if (cpf.classList.contains('cpf-invalido')) {
-          cpf.classList.remove('cpf-invalido');          
+          cpf.classList.remove('cpf-invalido');
           this.cpfEstaValido = true;
           this.validarValores();
-        }                  
-      } else {          
+        }
+      } else {
         if (!cpf.classList.contains('cpf-invalido')) {
           cpf.classList.add('cpf-invalido');
           this.cpfEstaValido = false;
@@ -142,40 +144,40 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
 
   validarCPF(cpf: string): boolean {
     if (cpf == null) return true;
-    cpf = cpf.replace(/[^\d]+/g,'');    	
-    if(cpf == '') return true;	
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf == '') return true;
     // Elimina CPFs invalidos conhecidos	
-    if (cpf.length != 11 || 
-      cpf == "00000000000" || 
-      cpf == "11111111111" || 
-      cpf == "22222222222" || 
-      cpf == "33333333333" || 
-      cpf == "44444444444" || 
-      cpf == "55555555555" || 
-      cpf == "66666666666" || 
-      cpf == "77777777777" || 
-      cpf == "88888888888" || 
+    if (cpf.length != 11 ||
+      cpf == "00000000000" ||
+      cpf == "11111111111" ||
+      cpf == "22222222222" ||
+      cpf == "33333333333" ||
+      cpf == "44444444444" ||
+      cpf == "55555555555" ||
+      cpf == "66666666666" ||
+      cpf == "77777777777" ||
+      cpf == "88888888888" ||
       cpf == "99999999999")
-        return false;		
+      return false;
     // Valida 1o digito	
-    let add = 0;	
-    for (let i=0; i < 9; i ++)		
-      add += parseInt(cpf.charAt(i)) * (10 - i);	
-      let rev = 11 - (add % 11);	
-      if (rev == 10 || rev == 11)		
-        rev = 0;	
-      if (rev != parseInt(cpf.charAt(9)))		
-        return false;		
+    let add = 0;
+    for (let i = 0; i < 9; i++)
+      add += parseInt(cpf.charAt(i)) * (10 - i);
+    let rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+      rev = 0;
+    if (rev != parseInt(cpf.charAt(9)))
+      return false;
     // Valida 2o digito	
-    add = 0;	
-    for (let i = 0; i < 10; i ++)		
-      add += parseInt(cpf.charAt(i)) * (11 - i);	
-    rev = 11 - (add % 11);	
-    if (rev == 10 || rev == 11)	
-      rev = 0;	
+    add = 0;
+    for (let i = 0; i < 10; i++)
+      add += parseInt(cpf.charAt(i)) * (11 - i);
+    rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+      rev = 0;
     if (rev != parseInt(cpf.charAt(10)))
-      return false;		
-    return true;   
+      return false;
+    return true;
   }
 
   salvar(): void {
@@ -202,8 +204,12 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
 
     this.tripulante.UltimoPeso = this.converterPesoTelaParaBanco(this.ultimoPesoLb);
 
-    this.api.postNTripulantes([this.tripulante]).then(x => {              
-      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Tripulante atualizado com sucesso!' });          
+    this.tripulante.ComandanteEm = this.converterDataTelaParaBanco(this.tripulante.ComandanteEm);
+    this.tripulante.InstrutorEm = this.converterDataTelaParaBanco(this.tripulante.InstrutorEm);
+
+
+    this.api.postNTripulantes([this.tripulante]).then(x => {
+      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Tripulante atualizado com sucesso!' });
       console.log('Tripulante salvo com sucesso!');
       this.mostrarLoading = false;
       this.retorno.emit();

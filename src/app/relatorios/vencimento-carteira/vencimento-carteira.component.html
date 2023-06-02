@@ -2,16 +2,16 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="tabela" *ngIf="valores">
     <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
-        scrollHeight="70vh" id="" frozenWidth="280px" frozenHeight="200px" class="tabela"
+        scrollHeight="88vh" id="" frozenWidth="280px" frozenHeight="200px tabela"
         (sortFunction)="customSort($event)" [customSort]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of columns" class="coluna">
+                <col *ngFor="let col of columns coluna">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th [pSortableColumn]="col.field" *ngFor="let col of columns; let i = index" class="coluna">
+                <th [pSortableColumn]="col.field" *ngFor="let col of columns; let i = index coluna">
                     {{col.header}}
                 </th>
             </tr>
@@ -23,7 +23,7 @@
 
 
                     <div *ngIf="ehObjeto(rowData[col.field]) && rowData[col.field].Certificado.Readonly"
-                        [ngClass]="rowData[col.field].Cor"
+                        [class]="rowData[col.field].CorNaTela"
                         (click)="exibirVoos($event, rowData[col.field]);op.toggle($event)">
                         {{rowData[col.field].ValorExibido}}
                     </div>
@@ -32,7 +32,7 @@
 
                     <div [id]="rowData[col.field].Id"
                         *ngIf="ehObjeto(rowData[col.field]) && !rowData[col.field].Certificado.Readonly"
-                        [ngClass]="rowData[col.field].Cor" (mouseup)="exibir($event, rowData[col.field])">
+                        [class]="rowData[col.field].CorNaTela" (mouseup)="exibir($event, rowData[col.field])">
                         {{rowData[col.field].ValorExibido}}
                     </div>
 
@@ -55,16 +55,12 @@
 
 </div>
 
-
-
-
-<div class="row text-center font-weight-bold">
-    <div class="col-3" style="background-color: #bdd6ee">60 dias</div>
-    <div class="col-3" style="background-color: #ffff00">30 dias</div>
-    <div class="col-3" style="background-color: #f7caac">15 dias</div>
-    <div class="col-3 text-white" style="background-color: #ff0000">Vencidos</div>
+<div class="grid text-center font-weight-bold barra_de_cores">
+    <div class="col-3 azul">60 dias</div>
+    <div class="col-3 amarelo">30 dias</div>
+    <div class="col-3 laranja">15 dias</div>
+    <div class="col-3 vermelho">Vencidos</div>
 </div>
-
 
 <p-overlayPanel #op>
     <div #myDiv></div>

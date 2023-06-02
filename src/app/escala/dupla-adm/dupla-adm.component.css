@@ -25,3 +25,24 @@ div.verde {
     background-color: green;
     color: white;
 }
+
+li.vermelho {
+    background-color: red;
+    color: white;
+    list-style-type: none;
+    padding: 5px;
+}
+
+li.amarelo {
+    background-color: yellow;
+    color:black;
+    list-style-type: none;
+    padding: 5px;
+}
+
+li.verde {
+    background-color: green;
+    color: white;
+    list-style-type: none;
+    padding: 5px;
+}

@@ -46,6 +46,7 @@ import { StepsModule } from 'primeng/steps';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import {BadgeModule} from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   imports: [
     AccordionModule,
     AutoCompleteModule,
+    BadgeModule,
     BrowserAnimationsModule,
     BrowserModule,
     ButtonModule,
@@ -98,6 +100,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
   exports: [
     AccordionModule,
     AutoCompleteModule,
+    BadgeModule,
     BrowserAnimationsModule,
     BrowserModule,
     ButtonModule,

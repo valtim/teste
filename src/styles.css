@@ -23,6 +23,10 @@ body{
 
 }
 
+.p-card{
+  background-color: black;
+}
+
 @media screen {
   .somente-impressora {
     display: none;

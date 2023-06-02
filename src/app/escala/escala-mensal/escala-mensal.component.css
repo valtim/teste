@@ -125,8 +125,8 @@ ul, li {
     font-family: helvetica;
 }
 
-/* don't do this */
 
-/* tr> :first-child {
-    box-shadow: inset 0px 1px black;
-} */
+.letrinha{
+    font-size: xx-small;
+
+}

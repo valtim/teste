@@ -105,4 +105,20 @@
         <button type="button" pButton pRipple label="Kg"></button>
     </div>
 
+    <div class="col-6"></div>
+
+    
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Data Comando"></button>
+        <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="tripulante.ComandanteEm" selectionMode="single" dateFormat="dd/mm/yy"
+            showIcon="true"></p-calendar>                    
+    </div>    
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Data Instrutor"></button>
+        <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="tripulante.InstrutorEm" selectionMode="single" dateFormat="dd/mm/yy"
+            showIcon="true"></p-calendar>                    
+    </div>
+
 </div>

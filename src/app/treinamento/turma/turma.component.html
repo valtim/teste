@@ -19,25 +19,34 @@
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="Nome">Equipamentos</label>
-                <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
+                <p-dropdown [options]="equipamentos" [(ngModel)]="turmaInterna.Equipamento" optionLabel="Nome"
+                    [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Equipamento"
+                    appendTo="body"></p-dropdown>
+                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
                     (completeMethod)="buscar($event, equipamentos, 'Nome')" field="Nome" autoHighlight="true"
-                    appendTo="body" />
+                    appendTo="body" /> -->
             </div>
         </div>
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="Nome">Treinamento</label>
-                <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
+                <p-dropdown [options]="treinamentos" [(ngModel)]="turmaInterna.Treinamento" optionLabel="Nome"
+                    [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Treinamento"
+                    appendTo="body"></p-dropdown>
+                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
                     (completeMethod)="buscar($event, treinamentos, 'Nome')" field="Nome" autoHighlight="true"
-                    appendTo="body" />
+                    appendTo="body" /> -->
             </div>
         </div>
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="Trato">Instrutor</label>
-                <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
+                <p-dropdown [options]="tripulantes" [(ngModel)]="turmaInterna.Instrutor"
+                    [disabled]="turmaInterna.InstrutorExterno" optionLabel="Trato" [filter]="true" filterBy="Trato"
+                    [showClear]="true" placeholder="Tripulante" appendTo="body"></p-dropdown>
+                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
                     [suggestions]="autoCompleteResults" (completeMethod)="buscar($event, instrutores, 'Trato')"
-                    field="Trato" autoHighlight="true" appendTo="body" />
+                    field="Trato" autoHighlight="true" appendTo="body" /> -->
                 <p-inputSwitch [(ngModel)]="turmaInterna.InstrutorExterno">
                 </p-inputSwitch>Instrutor Externo
             </div>
@@ -155,9 +164,9 @@
     <p-fieldset legend="Participantes" [toggleable]="true">
         <div class="p-fluid p-formgrid grid">
             <div class="p-field col-12">
-                <p-pickList #picklist [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos" targetHeader="Alunos"
-                    filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
-                    [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
+                <p-pickList #picklist [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos"
+                    targetHeader="Alunos" filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false"
+                    [responsive]="true" [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
                     (onMoveToTarget)="moverAlunos()" (onMoveToSource)="moverAlunos()"
                     (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()">
                     <ng-template let-item pTemplate="item">

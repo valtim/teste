@@ -1,22 +1,19 @@
 <app-titulo titulo="Escala Mensal" [carregando]="!tudoPronto"></app-titulo>
-<div class="row p-mt-1">
-    <div class="col">
+
+
+<p-toolbar>
+    <div>
+
         <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
-            showIcon="true"></p-calendar>
-    </div>
-    <div class="col">
-        <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
-            showIcon="true"></p-calendar>
-    </div>
-    <div class="col">
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+        <button type="button" pButton pRipple label="Final" class="ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-            class="p-ml-2"></button>
+            class="ml-2"></button>
         <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"
-            class="p-ml-2 p-button-success"></button>
+            class="ml-2 p-button-success"></button>
     </div>
-</div>
+</p-toolbar>
 
 <p-tabView>
     <p-tabPanel header="Hitch Control">
@@ -35,14 +32,17 @@
                     </tr>
                 </tfoot>
                 <tr *ngFor="let linha of dados">
-                    <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)"
-                        [ngClass]="linha[col.Header].Estilo">
-                        {{linha[col.Header].Texto}}<span class="p-badge p-badge-danger"
+                    <td *ngFor="let col of colunas" (click)="modificarRegistro($event, linha[col.Header].Id)">
+                        <!-- [ngClass]="linha[col.Header].Estilo"> -->
+                        {{linha[col.Header].Texto}}
+                        <span class="p-badge p-badge-danger"
                             *ngIf="linha[col.Header].NumeroDeVencimentos > 0 ">{{linha[col.Header].NumeroDeVencimentos}}</span>
-                        <span *ngIf="linha[col.Header].Base"
-                            class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>
                         <span class="p-badge p-badge-warning"
                             *ngIf="linha[col.Header].NumeroDeTreinamentos > 0 ">{{linha[col.Header].NumeroDeTreinamentos}}</span>
+                        <span *ngIf="linha[col.Header].Base"
+                            class="texto-pequeno"><br />{{linha[col.Header].Base}}</span>
+                        <span *ngIf="linha[col.Header].Prefixo"
+                            class="texto-pequeno"><br />{{linha[col.Header].Prefixo}}</span>
                     </td>
                 </tr>
             </table>
@@ -136,6 +136,9 @@
             </tr>
             <tr>
                 <th>CHIEF PILOT</th>
+            </tr>
+            <tr>
+                <th>PILOTS TOTAL BALANCE</th>
             </tr>
         </table>
     </p-tabPanel>
