@@ -108,6 +108,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
+import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
+import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
 import { ApontamentoComponent } from './relatorios/apontamento/apontamento.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -213,6 +215,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RelVencimentoTreinamentoComponent,
     LoginLdapComponent,
     RelMedicaoComponent,
+    BaseDoTripulanteComponent,
+    CadastroEmailCdoComponent,
     ApontamentoComponent
   ],
   imports: [

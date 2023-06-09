@@ -30,9 +30,9 @@ export class RelMedicaoComponent {
 
       /* Campos filtros */
       var date = new Date();
-      this.dataSelecionada = new Date(date.getFullYear(), date.getMonth(), date.getDate());      
-      this.baseDeOperacaoSelecionada = this.filtroBase[0];
-      this.clienteSelecionado = this.filtroClientes[0];
+      this.dataSelecionada = new Date(date.getFullYear(), date.getMonth(), 1);      
+      this.baseDeOperacaoSelecionada = this.filtroBase[0].Id;
+      this.clienteSelecionado = this.filtroClientes[0].Id;
 
       this.rodarRelatorio();
     });
@@ -46,7 +46,14 @@ export class RelMedicaoComponent {
     console.log(this.clienteSelecionado);
     console.log(this.dataSelecionada);
 
-    this.consultarAPI().then(dados => {
+    var filtro = {
+      base : this.baseDeOperacaoSelecionada,
+      cliente : this.clienteSelecionado,
+      data : this.dataSelecionada,
+    }
+
+
+    this.api.postRelarioMedicao(filtro).then(dados => {
 
       this.prefixos = dados.Prefixos;
       this.indisponibilidade = dados.Indisponibilidade;

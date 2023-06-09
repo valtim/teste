@@ -1,4 +1,38 @@
-::ng-deep .p-tabview.p-component {
+#logo {
+    max-width: 100%;
+    max-height: 40px;
+}
+
+#titular {
+    background-color: #b9d9ff;
+}
+
+#contrato {
+
+    text-align: left;
+    vertical-align: middle;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #b9d9ff;
+}
+
+/* ::ng-deep .p-tabview.p-component {
     display: flex;
     flex-direction: column-reverse;
 }
@@ -168,7 +202,6 @@
     border: 0 !important;   
 }
 
-/* Linhas */
 
 ::ng-deep .p-tabview .p-tabview-panels table > tbody {         
     display: block;          
@@ -361,4 +394,4 @@
 ::ng-deep .p-tabview .p-tabview-panels table.disponibilidade tr td:first-child {    
     background-color: #F2DCDB;
 }
-
+ */

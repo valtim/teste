@@ -41,6 +41,10 @@ export class ApiGenericoService {
   }
 
   postGenerico(tipo: string, dados: any): Promise<any> {
+
+    dados.forEach(x=>{
+      delete x.AtualizadoPor;
+    })
     return this.http
       .post(
         `${this.url}api/salvar/${tipo}`,
