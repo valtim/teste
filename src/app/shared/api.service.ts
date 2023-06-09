@@ -212,7 +212,7 @@ export class ApiService {
       .toPromise();
   }
 
-  getApontamentos(month: string, year: string): Promise<any> {
+  getApontamentos(month: number, year: number): Promise<any> {
     return this.http
       .get(`${this.url}api/apontamentos/${month}/${year}`, this.httpOptions)
       .toPromise();

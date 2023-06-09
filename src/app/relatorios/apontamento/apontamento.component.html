@@ -1,1 +1,52 @@
-<p>apontamento works!</p>
+<app-titulo titulo="Apontamento Aéreo" [carregando]="!tudoPronto"></app-titulo>
+
+<br>
+<div class="grid">   
+    <div class="col"></div>
+    <div class="col">
+        <button type="button" pButton pRipple label="Mês"></button>
+        <p-calendar [(ngModel)]="dataSelecionada" view="month" selectionMode="single" dateFormat="mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+    </div>         
+    <div class="col"><button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button></div>
+    <div class="col"></div>
+</div>
+
+<p-table [value]="apontamentos" [resizableColumns]="true" [autoLayout]="true">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Item</th>
+            <th>Equipamento</th>
+            <th>Atendimento</th>
+            <th>Escala</th>
+            <th>Descrição da Operação</th>
+            <th>Grupo de Códigos</th>
+            <th>Código da Operação</th>            
+            <th>Data Inicial</th>     
+            <th>Hora Inicial</th>
+            <th>Hora Final</th>
+            <th>Horas Voadas</th>       
+            <th>Horas Glosadas</th>
+            <th>Qtde Item Avulso</th>
+            <th>Observações</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-apontamento>        
+        <tr>
+            <td>{{apontamento.Item}}</td>
+            <td>{{apontamento.Equipamento}}</td>
+            <td>{{apontamento.Atendimento}}</td>
+            <td>{{apontamento.Escala}}</td>
+            <td>{{apontamento.Codigo.DescricaoOperacao}}</td>
+            <td>{{apontamento.Codigo.GrupoCodigos}}</td>
+            <td>{{apontamento.Codigo.CodigoOperacao}}</td>
+            <td>{{apontamento.DataInicial | date: "dd/MM/yyyy"}}</td>
+            <td>{{apontamento.HoraInicial | date: "HH:mm"}}</td>
+            <td>{{apontamento.HoraFinal | date: "HH:mm"}}</td>
+            <td>{{apontamento.HorasVoadas | date: "HH:mm"}}</td>
+            <td>{{apontamento.HorasGlosadas | date: "HH:mm"}}</td>
+            <td>{{apontamento.QuantidadeItemAvulso}}</td>
+            <td>{{apontamento.Observacoes}}</td>            
+        </tr>
+    </ng-template>
+</p-table>
