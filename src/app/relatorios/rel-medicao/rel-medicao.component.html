@@ -1,51 +1,51 @@
 <app-titulo titulo="Dados de Medição" [carregando]="!tudoPronto"></app-titulo>
 
-<br>
-<div class="grid">   
-    <div class="col"></div>
-    <div class="col">
+
+<p-toolbar class=" d-print-none">
+
+    <div>
+
         <button type="button" pButton pRipple label="Mês"></button>
         <p-calendar [(ngModel)]="dataSelecionada" view="month" selectionMode="single" dateFormat="mm/yy" showIcon="true"
             [inputStyle]="{'width':'100px'}"></p-calendar>
-    </div>     
-    <div class="col">
-        <button type="button" pButton pRipple label="Base"></button>
-        <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
+
+        <button type="button" pButton pRipple label="Base" class="ml-2"></button>
+        <p-dropdown [options]="filtroBase" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true" optionValue="Id"
             filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
-    </div>
-    <div class="col">
-        <button type="button" pButton pRipple label="Cliente"></button>
+
+        <button type="button" pButton pRipple label="Cliente" class="ml-2"></button>
         <p-dropdown [options]="filtroClientes" [(ngModel)]="clienteSelecionado" [filter]="true" filterBy="Nome"
             optionValue="Id" optionLabel="Nome" appendTo="body"></p-dropdown>
+        <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
+            class="ml-2"></button>
     </div>
-    <div class="col"><button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button></div>
-    <div class="col"></div>
-</div>
 
-<p-tabView *ngIf="prefixos" (onChange)="definirAbaSelecionada($event)">    
+
+
+</p-toolbar>
+
+<p-tabView *ngIf="prefixos" (onChange)="definirAbaSelecionada($event)">
     <p-tabPanel [header]="prefixo.Prefixo" *ngFor="let prefixo of prefixos; let i = index" [selected]="i == 0">
         <table *ngIf="exibirPrefixos">
             <thead>
                 <tr>
-                    <th><img src="/assets/imgs/bristow.png" alt="image"></th>
-                    <th>DADOS DE MEDIÇÃO</th>
+                    <th><img id="logo" src="/assets/imgs/bristow.png" alt="image"></th>
+                    <th colspan="10">DADOS DE MEDIÇÃO</th>
                     <th>
-                        H-008<br>           
+                        H-008<br>
                         Revisão: 01<br>
                         Data: 02/08/2021
                     </th>
                 </tr>
-                <tr><!-- Em branco --></tr>
                 <tr>
-                    <th></th>
-                    <th>
-                        Período de {{prefixo.Inicio | date: "dd/MM/yyyy"}} à {{prefixo.Fim | date: "dd/MM/yyyy"}}<br>           
+                    <th id="contrato" colspan="12">
+                        Período de {{prefixo.Inicio | date: "dd/MM/yyyy"}} à {{prefixo.Fim | date: "dd/MM/yyyy"}}<br>
                         Contrato: {{prefixo.Contrato}}<br>
                         Base: {{prefixo.Base}}
-                    </th>                                
+                    </th>
                 </tr>
                 <tr>
-                    <th>Titular/PR-NLN</th>
+                    <th id="titular">Titular/{{prefixo.PrefixoCompleto}}</th>
                 </tr>
                 <tr>
                     <th>Data</th>
@@ -57,16 +57,12 @@
                     <th>Tempo<br>Glosado</th>
                     <th>QAV<br>Abastecido (Lt)</th>
                     <th>Tempo<br>Faturado</th>
-                    <th>OBSERVAÇÃO</th>       
+                    <th>OBSERVAÇÃO</th>
                     <th>Período<br>Indisponibilidade</th>
-                    <th>Indisponibilidade<br>Diária</th>         
+                    <th>Indisponibilidade<br>Diária</th>
                 </tr>
-                <tr><!-- Em branco --></tr>
             </thead>
-        </table>
-        <table *ngIf="exibirPrefixos">
-            <!-- Linhas -->
-            <tbody>                
+            <tbody>
                 <tr *ngFor="let dia of prefixo.Dias;">
                     <td>{{dia.Data | date: "dd/MM/yyyy"}}</td>
                     <td>{{dia.FolhaDeBordo}}</td>
@@ -77,13 +73,13 @@
                     <td>{{dia.TempoGlosada}}</td>
                     <td>{{dia.CombustivelAbastecido}}</td>
                     <td>{{dia.TempoFaturado}}</td>
-                    <td>{{dia.Observacao}}</td>       
+                    <td>{{dia.Observacao}}</td>
                     <td>{{dia.Periodo}}</td>
                     <td>{{dia.IndisponibilidadeDiaria}}</td>
-                </tr>                
+                </tr>
             </tbody>
         </table>
-        
+
         <table class="disponibilidade" *ngIf="!exibirPrefixos">
             <thead>
                 <tr>
@@ -93,23 +89,25 @@
                     <th>Fim</th>
                 </tr>
             </thead>
-            <tbody>                
+            <tbody>
                 <tr *ngFor="let linha of indisponibilidade;">
                     <td>{{linha.Contrato}}</td>
                     <td>{{linha.Estado}}</td>
                     <td>{{linha.Inicio | date: "dd/MM/yyyy HH:mm"}}</td>
                     <td>{{linha.Fim | date: "dd/MM/yyyy HH:mm"}}</td>
-                </tr>                
+                </tr>
             </tbody>
         </table>
-    </p-tabPanel>    
+    </p-tabPanel>
 </p-tabView>
 
-<div *ngIf="exibirPrefixos" class="resumo">
-    <label class="negrito">Total Tempo FB: </label>{{prefixoSelecionado.TotalTempoFB}}<br>
-    <label class="negrito">Total Back Up: </label>{{prefixoSelecionado.TotalBackUp}}<br>
+<p-card *ngIf="exibirPrefixos" class="resumo">
+    <label class="negrito">Total Tempo FB: </label>{{prefixoSelecionado.TotalTempoFB | timespan:"HH:mm:ss"}}<br>
+    <label class="negrito">Total Back Up: </label>{{prefixoSelecionado.TotalBackUp | timespan:"HH:mm:ss"}}<br>
     <label class="negrito">Total Consumo FB: </label>{{prefixoSelecionado.TotalConsumoFB}} Libras<br>
-    <label class="negrito vermelho">Total Dowtime: </label><label class="vermelho">{{prefixoSelecionado.TotalDowtime}}</label><br>
-    <label class="negrito">Total Tempo Glosado: </label>{{prefixoSelecionado.TotalTempoGlosado}}<br>
-    <label class="negrito">Tempo Total Faturado: </label>{{prefixoSelecionado.TempoTotalFaturado}}
-</div>
+    <label class="negrito vermelho">Total Dowtime: </label><label class="vermelho">{{prefixoSelecionado.TotalDowtime |
+        timespan:"HH:mm:ss"}}</label><br>
+    <label class="negrito">Total Tempo Glosado: </label>{{prefixoSelecionado.TotalTempoGlosado |
+    timespan:"HH:mm:ss"}}<br>
+    <label class="negrito">Tempo Total Faturado: </label>{{prefixoSelecionado.TempoTotalFaturado | timespan:"HH:mm:ss"}}
+</p-card>

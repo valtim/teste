@@ -12,7 +12,7 @@ import { ApiService } from 'src/app/shared/api.service';
   styleUrls: ['./crud.component.css'],
   providers: [MessageService]
 })
-export class CrudComponent implements OnInit, AfterContentChecked  {
+export class CrudComponent implements OnInit {
 
 
   @Input() tipo: any;
@@ -21,7 +21,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
 
   @Input() camposExibidos: string;
 
-  @Input() camposAutomaticos: [];
+  @Input() camposAutomaticos: any;
 
   @Input() combos: [];
 
@@ -42,47 +42,47 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo","Tripulante", "Int32"];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo", "Tripulante", "Int32"];
   listas: any[];
 
 
 
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
-        let value1 = data1[event.field];
-        let value2 = data2[event.field];
-        let result =  null;
+      let value1 = data1[event.field];
+      let value2 = data2[event.field];
+      let result = null;
 
-        if (value1 == null && value2 != null)
-            result = -1;
-        else if (value1 != null && value2 == null)
-            result = 1;
-        else if (value1 == null && value2 == null)
-            result = 0;
-        else if (typeof value1 === 'string' && typeof value2 === 'string')
-            result = value1.localeCompare(value2);
-        else
-            result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
+      if (value1 == null && value2 != null)
+        result = -1;
+      else if (value1 != null && value2 == null)
+        result = 1;
+      else if (value1 == null && value2 == null)
+        result = 0;
+      else if (typeof value1 === 'string' && typeof value2 === 'string')
+        result = value1.localeCompare(value2);
+      else
+        result = (value1 < value2) ? -1 : (value1 > value2) ? 1 : 0;
 
-        return (event.order * result);
+      return (event.order * result);
     });
 
   }
 
 
   //fg: FormGroup;
-  
+
   grupos: UntypedFormGroup[];
 
   constructor(
     private api: ApiService,
     private apiGenerico: ApiGenericoService,
     private fb: UntypedFormBuilder) {
-      
-     }
-  ngAfterContentChecked(): void {
-    this.verBotoes()
+
   }
+  // ngAfterContentChecked(): void {
+  //   this.verBotoes()
+  // }
 
 
   ngOnInit(): void {
@@ -111,10 +111,23 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
     this.api.getCombos().then(x => {
       this.listas = x;
 
+      if (this.camposAutomaticos != null) {
+        this.api.getGenerico(this.camposAutomaticos.controller, this.camposAutomaticos.filtro).then(x => {
+          this.dados = x.lista;
+          if (this.Ordem != undefined)
+            this.dados = x.lista.sort(this.Ordem);
+          this.colunas = x.propriedades.filter(x => (this.colunasExibidas.indexOf(x.field) > -1));
+          this.todasAsColunas = x.propriedades;
+          this.tela_ok = true;
+          this.consulta_ok = true;
+        })
+        return;
+      }
+
 
       this.apiGenerico.getGenerico(this.tipo).then(x => {
         this.dados = x.lista;
-        if ( this.Ordem != undefined )
+        if (this.Ordem != undefined)
           this.dados = x.lista.sort(this.Ordem);
         this.colunas = x.propriedades.filter(x => (this.colunasExibidas.indexOf(x.field) > -1));
         this.todasAsColunas = x.propriedades;
@@ -191,7 +204,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
       if (this.todasAsColunas[i].type == "DateTime") {
         novoItem[this.todasAsColunas[i].field] = '';
         continue;
-      }      
+      }
 
       if (this.todasAsColunas[i].type == "Int32") {
         novoItem[this.todasAsColunas[i].field] = 0;
@@ -233,7 +246,7 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
           label: 'Salvar',
           icon: 'pi pi-save',
           command: () => { this.salvar() },
-          disabled: this.dados.filter(x=>x.Modificado).length == 0,
+          disabled: this.dados.filter(x => x.Modificado).length == 0,
         },
         {
           label: 'Excluir',
@@ -252,10 +265,10 @@ export class CrudComponent implements OnInit, AfterContentChecked  {
   mudeiAquiData(e, dado, campo) {
     let pedacos = dado[campo].split("/");
 
-    if ( pedacos.length != 3 )
+    if (pedacos.length != 3)
       return;
 
-    dado[campo] = new Date(pedacos[2], (+pedacos[1])-1, pedacos[0]);
+    dado[campo] = new Date(pedacos[2], (+pedacos[1]) - 1, pedacos[0]);
     this.mudeiAqui(e, dado);
   }
 

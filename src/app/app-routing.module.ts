@@ -73,6 +73,8 @@ import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component"
 import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
 import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
+import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
+import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -249,6 +251,10 @@ const routes: Routes = [
     component: CadastroDeEmailReporteComponent,
   },
   {
+    path: "cad-email-cdo",
+    component: CadastroEmailCdoComponent,
+  },
+  {
     path: "indisponibilidade",
     component: IndisponibilidadeComponent,
   },
@@ -372,6 +378,10 @@ const routes: Routes = [
   {
     path: 'vencimento-treinamento',
     component: RelVencimentoTreinamentoComponent,
+  },
+  {
+    path: 'base-do-tripulante',
+    component: BaseDoTripulanteComponent,
   }
 ];
 

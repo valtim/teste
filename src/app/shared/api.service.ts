@@ -653,11 +653,11 @@ export class ApiService {
   getCombos(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       let combos = localStorage.getItem("Combos");
-      if ( (combos == null) || (combos == 'null') ) {        
+      if ((combos == null) || (combos == 'null')) {
         this.getCombosServidor().then((x) => {
           resolve(x);
         });
-      } else {        
+      } else {
         resolve(JSON.parse(localStorage.getItem("Combos")));
       }
     });
@@ -1015,16 +1015,16 @@ export class ApiService {
   }
 
 
-/*
-
-async getProximosVencimentos(referencia : Date): Promise<any> {
-    return await lastValueFrom(
-      this.http
-        .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
-    );
-  }
-
-        */
+  /*
+  
+  async getProximosVencimentos(referencia : Date): Promise<any> {
+      return await lastValueFrom(
+        this.http
+          .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
+      );
+    }
+  
+          */
 
 
 
@@ -1060,7 +1060,7 @@ async getProximosVencimentos(referencia : Date): Promise<any> {
       .toPromise();
   }
 
-  async getProximosVencimentos(referencia : Date): Promise<any> {
+  async getProximosVencimentos(referencia: Date): Promise<any> {
     return await lastValueFrom(
       this.http
         .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
@@ -1071,4 +1071,21 @@ async getProximosVencimentos(referencia : Date): Promise<any> {
       this.http.post(`${this.url}api/AtulizarVencimento`, vencimento, this.httpOptions)
     );
   }
+
+  async postRelarioMedicao(filtro): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(
+        `${this.url}api/relmedicao`,
+        filtro,
+        this.httpOptions
+      ));
+  }
+
+
+  async getGenerico(controller: string, filtro: string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}api/${controller}/${filtro}`, this.httpOptions));
+  }
+
+
 }

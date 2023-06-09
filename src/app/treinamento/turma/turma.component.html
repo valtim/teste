@@ -19,7 +19,7 @@
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="Nome">Equipamentos</label>
-                <p-dropdown [options]="equipamentos" [(ngModel)]="turmaInterna.Equipamento" optionLabel="Nome"
+                <p-dropdown [options]="equipamentos" [(ngModel)]="turmaInterna.Equipamento" optionLabel="Nome" dataKey="Id"
                     [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Equipamento"
                     appendTo="body"></p-dropdown>
                 <!-- <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
@@ -30,7 +30,7 @@
         <div class="p-field col-3">
             <div class="p-field">
                 <label for="Nome">Treinamento</label>
-                <p-dropdown [options]="treinamentos" [(ngModel)]="turmaInterna.Treinamento" optionLabel="Nome"
+                <p-dropdown [options]="treinamentos" [(ngModel)]="turmaInterna.Treinamento" optionLabel="Nome" dataKey="Id"
                     [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Treinamento"
                     appendTo="body"></p-dropdown>
                 <!-- <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
@@ -42,7 +42,7 @@
             <div class="p-field">
                 <label for="Trato">Instrutor</label>
                 <p-dropdown [options]="tripulantes" [(ngModel)]="turmaInterna.Instrutor"
-                    [disabled]="turmaInterna.InstrutorExterno" optionLabel="Trato" [filter]="true" filterBy="Trato"
+                    [disabled]="turmaInterna.InstrutorExterno" optionLabel="Trato" [filter]="true" filterBy="Trato" dataKey="Id"
                     [showClear]="true" placeholder="Tripulante" appendTo="body"></p-dropdown>
                 <!-- <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
                     [suggestions]="autoCompleteResults" (completeMethod)="buscar($event, instrutores, 'Trato')"
