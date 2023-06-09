@@ -108,6 +108,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
+import { ApontamentoComponent } from './relatorios/apontamento/apontamento.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -211,7 +212,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BlocoComponent,
     RelVencimentoTreinamentoComponent,
     LoginLdapComponent,
-    RelMedicaoComponent
+    RelMedicaoComponent,
+    ApontamentoComponent
   ],
   imports: [
     AppRoutingModule,

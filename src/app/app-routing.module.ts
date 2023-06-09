@@ -73,6 +73,7 @@ import { InstrutorComponent } from "./treinamento/instrutor/instrutor.component"
 import { DuplaAdmComponent } from "./escala/dupla-adm/dupla-adm.component";
 import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
+import { ApontamentoComponent } from "./relatorios/apontamento/apontamento.component";
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -220,6 +221,10 @@ const routes: Routes = [
     path: "rel-medicao",
     component: RelMedicaoComponent,
   },
+  {
+    path: "apontamento",
+    component: ApontamentoComponent,
+  },  
   {
     path: "rel-controle-spot",
     component: RelControleSpotComponent,
