@@ -212,6 +212,18 @@ export class ApiService {
       .toPromise();
   }
 
+  getApontamentos(month: string, year: string): Promise<any> {
+    return this.http
+      .get(`${this.url}api/apontamentos/${month}/${year}`, this.httpOptions)
+      .toPromise();
+  }
+
+  postApontamento(apontamento: any): Promise<any> {
+    return this.http
+      .post(`${this.url}api/apontamento`, apontamento, this.httpOptions)
+      .toPromise();
+  }
+
   getPagamento(data: string): Promise<any> {
     return this.http
       .get(`${this.url}api/relatorio/pagamento/${data}`, this.httpOptions)
