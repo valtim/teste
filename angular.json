@@ -40,7 +40,6 @@
           },
           "configurations": {
             "production": {
-              "deployUrl": "/angular/",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
