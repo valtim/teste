@@ -37,7 +37,11 @@
             <td>{{apontamento.Equipamento}}</td>
             <td>{{apontamento.Atendimento}}</td>
             <td>{{apontamento.Escala}}</td>
-            <td>{{apontamento.Codigo.DescricaoOperacao}}</td>
+            <td>
+                <!-- {{apontamento.Codigo.DescricaoOperacao}} -->                
+                <p-dropdown appendTo="body" [options]="codigos" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
+                    [showClear]="true" [(ngModel)]="apontamento.Codigo" [style]="{'width':'400px'}" (onChange)="alterarCodigo(apontamento)"></p-dropdown>
+            </td>
             <td>{{apontamento.Codigo.GrupoCodigos}}</td>
             <td>{{apontamento.Codigo.CodigoOperacao}}</td>
             <td>{{apontamento.DataInicial | date: "dd/MM/yyyy"}}</td>
