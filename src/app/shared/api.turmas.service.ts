@@ -147,6 +147,11 @@ export class ApiTurmasService {
     return this.http.post(url, files).toPromise();
   }
 
+  postUploadSign(id: any, files: any): Promise<any> {
+    const url = this.URLCORE + `api/arquivo-sign/${id}`;
+    return this.http.post(url, files).toPromise();
+  }
+
   postUploadSimples(files: any): Promise<any> {
     const url = this.URLCORE + `api/arquivo`;
     return this.http.post(url, files).toPromise();

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { GuidUtil } from 'src/app/shared/GuidUtil';
 
 @Component({
   selector: 'app-rel-rdv',
@@ -17,7 +18,9 @@ export class RelRdvComponent implements OnInit {
 
   exibirAssinatura = false;
   DadosAssinatura: any = { Status: false };
+  blobPDF: any;
   statusAssinatura = false;
+  desabilitarBotaoAssinatura = false;
 
   rdv: any;
   tudoPronto = false;
@@ -41,9 +44,10 @@ export class RelRdvComponent implements OnInit {
       this.semErros = true;
       this.cancelada = this.rdv.Cancelada;
 
-      this.api.getAssinaturaRDV(this.rdv.Id).then(DadosAssinatura => {
-        this.DadosAssinatura = DadosAssinatura;
+      this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {
+        this.DadosAssinatura = dados;
         this.statusAssinatura = this.DadosAssinatura.Status;
+        this.desabilitarBotaoAssinatura = false;
         
         this.tudoPronto = true;
       });      
@@ -55,14 +59,18 @@ export class RelRdvComponent implements OnInit {
         alert('db não encontrado no banco');
       }
     })
-
   }
 
   abrirDialogoAssinatura(): void {
-    this.exibirAssinatura = true;
-    //this.convertoToPDF();
-    let nomeArquivo = 'Relatório RDV ' + this.DadosAssinatura.DiarioDeBordo.NumeroDaFolha + '.pdf';
+    this.desabilitarBotaoAssinatura = true;
+    this.tudoPronto = true;
+
+    this.convertoToPDF((pdf: any) => {
+      this.blobPDF = pdf;
+      this.exibirAssinatura = true;
+    });
   }
+
   fecharDialogoAssinatura(): void {    
     this.exibirAssinatura = false;
     this.statusAssinatura = this.DadosAssinatura.Status;
@@ -83,7 +91,7 @@ export class RelRdvComponent implements OnInit {
     });
   }
 
-  convertoToPDF() {
+  convertoToPDF(callback) {
     this.converterRelatorioParaImagem(imageData => {
       var base64 = document.getElementById('imageid');
       let doc = new jsPDF('l', 'px', [imageData.width+20, imageData.height+420]);      
@@ -95,8 +103,38 @@ export class RelRdvComponent implements OnInit {
         imageData.width,
         imageData.height
       );
-      doc.save('FirstPdf.pdf');
+      callback(doc.output('blob'));
+      //doc.save('arquivo.pdf'); -> para baixar o arquivo, se fosse o caso
     });
   }
+
+  /*
+  obterOuCriarAssinatura(dados: any): void {
+    let criar = false;
+    if (!dados.Assinatura) criar = true;
+    else if (!dados.Assinatura.Id) criar = true;    
+
+    if (criar) {
+      dados.Assinatura = {
+        Id: GuidUtil.NewGuid(),        
+        TransientDocumentId: null,
+        AgreementId: null,
+        Status: '',
+        Arquivos: []
+      };
+      dados.AssinaturaRDV = {
+        Id: GuidUtil.NewGuid(),
+        Assinatura: dados.Assinatura,
+        DiarioDeBordo: dados.DiarioDeBordo,
+        NumeroDaFolha: dados.DiarioDeBordo.NumeroDaFolha
+      };
+      if (dados.Emails && dados.Emails.length == 1) {
+        dados.Emails[0].Assinatura = dados.Assinatura;                        
+      }
+    }
+
+    return dados;
+  }
+  */
 
 }

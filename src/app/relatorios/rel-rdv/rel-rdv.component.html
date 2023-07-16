@@ -1,7 +1,7 @@
 <app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
 
 <div class="grid grid-assinatura" *ngIf="tudoPronto && semErros">
-    <button (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Assinar"></button>    
+    <button [disabled]="desabilitarBotaoAssinatura" (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Assinar"></button>    
     
     <button *ngIf="statusAssinatura" icon="pi pi-check-square" class="p-button-success status-assinar" type="button" pButton pRipple></button>
     <button *ngIf="!statusAssinatura" icon="pi pi-file-excel" class="p-button-danger status-assinar" type="button" pButton pRipple></button>
@@ -190,8 +190,8 @@
     </span>
 </div>
 
-<p-dialog [style]="{'width':'95%', 'height':'95%'}" *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
-    <app-assinatura-rdv [DadosAssinatura]="DadosAssinatura" (retorno)="fecharDialogoAssinatura()">
+<p-dialog *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
+    <app-assinatura-rdv [DadosAssinatura]="DadosAssinatura" [blobPDF]="blobPDF" (retorno)="fecharDialogoAssinatura()">
     </app-assinatura-rdv>
 </p-dialog>
 
