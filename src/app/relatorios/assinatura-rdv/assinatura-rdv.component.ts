@@ -60,9 +60,15 @@ export class AssinaturaRDVComponent implements OnInit {
   }
 
   enviarEmail(): void {
-    this.mostrarLoading = false;
-    this.liberarBotaoEnviarEmail = false;
-    this.retorno.emit();
+    this.mostrarLoading = true;
+    this.liberarBotaoEnviarEmail = false;    
+
+    this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id).then((dados: any) => {
+      console.log(dados);
+      this.mostrarLoading = false;
+      this.liberarBotaoEnviarEmail = true;
+      //this.retorno.emit();
+    });
   }
 
   uploadAnexos(event) {   
