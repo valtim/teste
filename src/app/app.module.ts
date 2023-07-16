@@ -110,6 +110,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { AssinaturaRDVComponent } from './relatorios/assinatura-rdv/assinatura-rdv.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -215,7 +216,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     LoginLdapComponent,
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
-    CadastroEmailCdoComponent
+    CadastroEmailCdoComponent,
+    AssinaturaRDVComponent
   ],
   imports: [
     AppRoutingModule,

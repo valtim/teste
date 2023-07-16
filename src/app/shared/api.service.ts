@@ -717,6 +717,12 @@ export class ApiService {
       .toPromise();
   }
 
+  getAssinaturaRDV (DiarioDeBordo_id: string): Promise<any> {
+    return this.http
+      .get(`${this.url}api/assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
+      .toPromise();
+  }
+
   postRelHorasQuinzena(filtro: any): Promise<any> {
     return this.http
       .post(
