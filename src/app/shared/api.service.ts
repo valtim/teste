@@ -723,9 +723,15 @@ export class ApiService {
       .toPromise();
   }
 
-  assinarRDV (Assinatura_id: string): Promise<any> {
+  assinarRDV (Assinatura_id: string, EmailAssinante: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinar-pdfs-rdv/` + Assinatura_id, this.httpOptions)
+      .get(`${this.url}api/assinar-pdfs-rdv/` + Assinatura_id + '/' + EmailAssinante, this.httpOptions)
+      .toPromise();
+  }
+
+  obterStatusRDV (Assinatura_id: string): Promise<any> {
+    return this.http
+      .get(`${this.url}api/obter-status-rdv/` + Assinatura_id, this.httpOptions)
       .toPromise();
   }
 

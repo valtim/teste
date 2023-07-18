@@ -17,22 +17,75 @@ export class AssinaturaRDVComponent implements OnInit {
   @Output() retorno = new EventEmitter();
 
   mostrarLoading = false;
-  liberarBotaoEnviarEmail = false;
   anexos = [];
+  EmailAssinante: string;
+  passo: number = 1;
+  EsignUrl: '';
+  idJoinArquivosAssinado: string;
 
   constructor(private api: ApiService, private apiTurmas: ApiTurmasService, private router: Router, private messageService: MessageService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.mostrarLoading = true;
+    this.passo = 1;
 
-    console.log(this.DadosAssinatura);
+    // TODO
+    console.log(this.DadosAssinatura);    
 
-    this.criarArquivoRDV(()=>{
-      this.liberarBotaoEnviarEmail = true;      
+    this.criarArquivoRDV(()=>{      
       this.mostrarLoading = false;
 
-      //this.DadosAssinatura.Status = true;
+      if ((this.DadosAssinatura.Emails != null) && (this.DadosAssinatura.Emails.length > 0)) {
+        this.EmailAssinante = this.DadosAssinatura.Emails[0].Email;
+        if ((this.DadosAssinatura.Emails[0].EsignUrl) && (this.DadosAssinatura.Emails[0].EsignUrl != '')) {
+          this.passo = 3;
+          this.EsignUrl = this.DadosAssinatura.Emails[0].EsignUrl;
+        }
+      } else {
+        this.EmailAssinante = "suporte@sistemasol.com.br";
+      }
+
+      // TODO - remover
+      this.EmailAssinante = 'lgapontes@gmail.com';
+
+      if (
+        (this.DadosAssinatura.AssinaturaRDV) &&
+        (this.DadosAssinatura.AssinaturaRDV.JoinArquivosSemAssinar) &&
+        (this.DadosAssinatura.AssinaturaRDV.JoinArquivosSemAssinar.Id) &&
+        (this.passo == 3)
+      ) {
+        this.passo = 4;
+      }
+
+      if (
+        (this.DadosAssinatura.Assinatura) &&
+        (this.DadosAssinatura.Assinatura.Status == "SIGNED") &&
+        (this.DadosAssinatura.AssinaturaRDV) &&
+        (this.DadosAssinatura.AssinaturaRDV.JoinArquivosAssinado) &&
+        (this.DadosAssinatura.AssinaturaRDV.JoinArquivosAssinado.Id) &&
+        (this.passo == 4)
+      ) {
+        this.DadosAssinatura.Status = true;
+        this.idJoinArquivosAssinado = this.DadosAssinatura.AssinaturaRDV.JoinArquivosAssinado.Id;
+        this.passo = 5;
+      }
     });    
+  }
+
+  obterStatusAssinatura(): string {
+    if (this.passo == 1) {
+      return "PASSO 1 - Upload dos arquivos"
+    }
+    if (this.passo == 2) {
+      return "PASSO 2 - Confirmar e-email e enviar arquivos"
+    }
+    if (this.passo == 3) {
+      return "PASSO 3 - Assine os arquivos"
+    }
+    if (this.passo == 4) {
+      return "PASSO 4 - Verifique a assinatura"
+    }
+    return 'Assinatura realizada!';
   }
 
   criarArquivoRDV(callback): void {
@@ -60,15 +113,79 @@ export class AssinaturaRDVComponent implements OnInit {
   }
 
   enviarEmail(): void {
-    this.mostrarLoading = true;
-    this.liberarBotaoEnviarEmail = false;    
+    if ((this.DadosAssinatura.Assinatura.Arquivos == null) || this.DadosAssinatura.Assinatura.Arquivos.length == 0) {
+      this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'É necessário ter no mínimo 1 anexo para assinar!' });
+    } else {
+      if (!this.validarEmail(this.EmailAssinante)) {
+        this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'E-mail inválido!' });
+      } else {
+        this.mostrarLoading = true;    
 
-    this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id).then((dados: any) => {
-      console.log(dados);
-      this.mostrarLoading = false;
-      this.liberarBotaoEnviarEmail = true;
-      //this.retorno.emit();
+        this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante).then((dados: any) => {
+          // TODO
+          console.log(dados);          
+
+          this.DadosAssinatura.AssinaturaRDV.JoinArquivosSemAssinar = dados.JoinArquivosSemAssinar;
+          this.DadosAssinatura.Assinatura.TransientDocumentId = dados.TransientDocumentId;
+          this.DadosAssinatura.Assinatura.AgreementId = dados.AgreementId;
+                    
+          if ((dados.EsignUrl) && (dados.EsignUrl != '')) {                        
+            if ((this.DadosAssinatura.Emails != null) && (this.DadosAssinatura.Emails.length > 0)) {                          
+              this.DadosAssinatura.Emails[0].Email = dados.EmailAssinante;
+              this.DadosAssinatura.Emails[0].EsignUrl = dados.EsignUrl;
+            }
+
+            this.EsignUrl = dados.EsignUrl;                              
+            this.passo = 3;
+          }          
+          this.mostrarLoading = false;                
+        });
+      }
+    }    
+  }
+
+  validarEmail(email): boolean {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );    
+  }
+
+  assinarArquivos(): void {
+    if (this.EsignUrl != '') {
+      window.open(this.EsignUrl, "_blank");
+      this.passo = 4;
+    } else {      
+      this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'Não foi possível gerar o link de assinatura!' });
+    }    
+  }
+
+  verificarAssinatura(): void {
+    this.mostrarLoading = true;
+    
+    this.api.obterStatusRDV(this.DadosAssinatura.Assinatura.Id).then((dados: any) => {
+      // TODO
+      console.log(dados);          
+
+      this.DadosAssinatura.Assinatura.Status = dados.Status;
+      this.DadosAssinatura.AssinaturaRDV.JoinArquivosAssinado = dados.JoinArquivosAssinado;
+      this.DadosAssinatura.Status = dados.StatusAssinatura;
+      this.idJoinArquivosAssinado = dados.idJoinArquivosAssinado;
+
+      if ((this.DadosAssinatura.Status) && (this.idJoinArquivosAssinado) && (this.idJoinArquivosAssinado != '')) {
+        this.passo = 5;
+        this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Assinatura foi realizada!' });      
+      } else {
+        this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'A Assinatura ainda não foi realizada!' });
+      }      
+
+      this.mostrarLoading = false;      
     });
+  }
+
+  downloadArquivoAssinado(): void {
+    if (this.passo == 5) {
+      this.abrirArquivo(this.idJoinArquivosAssinado);
+    }
   }
 
   uploadAnexos(event) {   
@@ -83,7 +200,8 @@ export class AssinaturaRDVComponent implements OnInit {
           arquivos.forEach((arquivo, indexArquivos) => {            
             this.DadosAssinatura.Assinatura.Arquivos.push(arquivo);
             if (indexArquivos == (arquivos.length - 1)) {
-              this.mostrarLoading = false;              
+              this.passo = 2;
+              this.mostrarLoading = false;                            
             }
           });                    
         });        

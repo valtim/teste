@@ -45,6 +45,10 @@ export class RelRdvComponent implements OnInit {
       this.cancelada = this.rdv.Cancelada;
 
       this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {
+
+        // TODO
+        console.log(dados);
+
         this.DadosAssinatura = dados;
         this.statusAssinatura = this.DadosAssinatura.Status;
         this.desabilitarBotaoAssinatura = false;
@@ -74,6 +78,7 @@ export class RelRdvComponent implements OnInit {
   fecharDialogoAssinatura(): void {    
     this.exibirAssinatura = false;
     this.statusAssinatura = this.DadosAssinatura.Status;
+    this.desabilitarBotaoAssinatura = false;
   }
 
   @ViewChild('screen') screen: ElementRef;

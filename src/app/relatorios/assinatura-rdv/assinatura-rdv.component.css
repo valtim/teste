@@ -29,3 +29,40 @@ div.div-loading > svg {
     width: 50px;
     height: 50px;
 }
+
+div.container-passos::after {
+    display: block;
+    content: '';
+    height: 0;
+    clear: both;
+}
+
+div.container-passos > span.passos {
+    display: block;
+    float: left;
+    width: 25%;
+    box-sizing: border-box;
+    border: 0;
+    border-left: 1px solid #b0bec5;
+    background-color: #eceff1;
+    font-size: 0.9em;
+    padding: 5px;
+    height: 100px;
+}
+
+div.container-passos > span.passos > h5 {
+    margin: 0;
+}
+
+div.container-passos > span.passos:first-child {
+    border: 0;
+}
+
+div.container-passos > span.selecionado {    
+    background-color: #a5d6a7;
+}
+
+button.botao-cinza {
+    background-color: #b0bec5 !important;
+    border-color: #878788;
+}
