@@ -3,8 +3,6 @@ import { ApiService } from '../../shared/api.service';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import { GuidUtil } from 'src/app/shared/GuidUtil';
 
 @Component({
   selector: 'app-rel-rdv',
@@ -46,13 +44,15 @@ export class RelRdvComponent implements OnInit {
 
       this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {
 
-        // TODO
-        console.log(dados);
-
         this.DadosAssinatura = dados;
         this.statusAssinatura = this.DadosAssinatura.Status;
         this.desabilitarBotaoAssinatura = false;
-        
+
+        this.DadosAssinatura.atualizar = (Status) => {
+          this.statusAssinatura = Status;
+          console.log('Status da Assinatura: ' + Status);
+        }
+
         this.tudoPronto = true;
       });      
     }).catch((e) => {
