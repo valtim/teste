@@ -2,6 +2,14 @@ import { getLocaleDateTimeFormat } from "@angular/common"
 
 export class DataUtil {
 
+  public static paraDataISOdeDate(date: Date) : string{
+    return date.toISOString().split('T')[0];
+  }
+  
+  public static paraDataISOdeString(date: String) : string{
+    return date.split('T')[0];
+  }
+
   private static padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }

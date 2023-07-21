@@ -36,7 +36,7 @@ export class GerenciarTripulantesComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregando = true;
-    this.colunas = ['','Trato', 'ANAC', 'Matrícula', 'Status'];
+    this.colunas = ['','Trato', 'ANAC', 'Matrícula', 'Email', 'Status'];
     this.filtro = '';
     this.exibirDialogo = false;
     this.exibirEdicao = false;

@@ -10,7 +10,7 @@ import { Coluna } from "src/app/coluna";
 })
 export class HorasVoadasQuinzenaComponent implements OnInit {
   locale_pt;
-  tudoPronto = false;
+  tudoPronto = true;
   dados;
 
   filtroRetorno;
@@ -24,18 +24,18 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
   exibirMemoria = false;
 
-  agruparMensal : boolean;
+  agruparMensal: boolean;
 
   constructor(private api: ApiService) { }
 
   ngOnInit(): void {
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
-    this.dataFim = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth() - 1, 1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth(), 0);
 
     this.locale_pt = this.api.getLocale("pt");
 
-    this.rodarRelatorio();
+    //this.rodarRelatorio();
   }
 
   rodarRelatorio() {
@@ -77,7 +77,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     let matriculaFormatada = '';
 
     if (matricula.length > 5) {
-      matriculaFormatada = matricula.substring(matricula.length-5, matricula.length);
+      matriculaFormatada = matricula.substring(matricula.length - 5, matricula.length);
     } else {
       if (matricula.length == 5) {
         matriculaFormatada = matricula;
@@ -120,35 +120,36 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
       0861 => Adicional 1/3 Horas Instrução
       0868 => AD.NOTURNO 20%
+      0938 => ADICIONAL NOTURNO INSTRUÇÃO
 
     */
 
     if (linha == null) return [];
 
-    if (codigo == '8018' && linha.DiurnoUtil != '00:00:00')
-      return ['8018' + this.formatBristow(linha.DiurnoUtil)];
+    if (codigo == '8018' && linha.HorasSomadasSemDobras != '00:00:00')
+      return ['8018' + this.formatBristow(linha.HorasSomadasSemDobras)];
 
     if (codigo == '8019' && linha.NoturnoUtil != '00:00:00')
-      return ['8018' + this.formatBristow(linha.NoturnoUtil), '8019' + this.formatBristow(linha.NoturnoUtil)];
+      return ['8019' + this.formatBristow(linha.NoturnoUtil)];
 
-    if (codigo == '8020' && linha.DiurnoFeriado != '00:00:00')
-      return ['8018' + this.formatBristow(linha.DiurnoFeriado), '8020' + this.formatBristow(linha.DiurnoFeriado)];
+    if (codigo == '8020' && linha.DiurnoFeriadoCalc != '00:00:00')
+      return ['8020' + this.formatBristow(linha.DiurnoFeriadoCalc)];
 
     if (codigo == '8021' && linha.NoturnoFeriado != '00:00:00')
-      return ['8018' + this.formatBristow(linha.NoturnoFeriado), '8020' + this.formatBristow(linha.NoturnoFeriado), '8019' + this.formatBristow(linha.NoturnoFeriado)];
+      return ['8021' + this.formatBristow(linha.NoturnoFeriado)];
 
 
-    if (codigo == '8023' && linha.TreinamentoDiurnoUtil != '00:00:00')
-      return ['8023' + this.formatBristow(linha.TreinamentoDiurnoUtil)];
+    if (codigo == '8023' && linha.TotalTreinamento != '00:00:00')
+      return ['8023' + this.formatBristow(linha.TotalTreinamento)];
 
     if (codigo == '8024' && linha.TreinamentoNoturnoUtil != '00:00:00')
-      return ['8023' + this.formatBristow(linha.TreinamentoNoturnoUtil), '8024' + this.formatBristow(linha.TreinamentoNoturnoUtil)];
+      return ['8024' + this.formatBristow(linha.TreinamentoNoturnoUtil)];
 
-    if (codigo == '8025' && linha.TreinamentoDiurnoFeriado != '00:00:00')
-      return ['8023' + this.formatBristow(linha.TreinamentoDiurnoFeriado), '8025' + this.formatBristow(linha.TreinamentoDiurnoFeriado)];
+    if (codigo == '8025' && linha.TreinamentoDiurnoFeriadoCalc != '00:00:00')
+      return ['8025' + this.formatBristow(linha.TreinamentoDiurnoFeriadoCalc)];
 
     if (codigo == '8044' && linha.TreinamentoNoturnoFeriado != '00:00:00')
-      return ['8023' + this.formatBristow(linha.TreinamentoNoturnoFeriado), '8025' + this.formatBristow(linha.TreinamentoNoturnoUtil), '8024' + this.formatBristow(linha.TreinamentoNoturnoUtil)];
+      return ['8044' + this.formatBristow(linha.TreinamentoNoturnoFeriado)];
 
 
 
@@ -157,6 +158,9 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
     if (codigo == '0868' && linha.HorasNoturnoComAdicional != '00:00:00')
       return ['0868' + this.formatBristow(linha.HorasNoturnoComAdicional)];
+
+    if (codigo == '0938' && linha.HorasDeInstrucaoNoturnas != '00:00:00')
+      return ['0938' + this.formatBristow(linha.HorasDeInstrucaoNoturnas)];
 
     return [];
 
@@ -191,7 +195,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     if ((this.dados != undefined) && (this.dados != null) && (this.dados.length > 0)) {
       let linhas = [];
       let dataFormatada = this.formatarData(this.dataFim);
-      let codigosArquivo = ['8018', '8019', '8020', '8021', '8023', '8024', '8025', '8044', '8061', '0868'];
+      let codigosArquivo = ['8018', '8019', '8020', '8021', '8023', '8024', '8025', '8044', '0861', '0868', '0938'];
 
       this.dados.forEach((linha, index_dados) => {
         if (linha.Matricula != null) {

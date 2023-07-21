@@ -72,7 +72,6 @@ import { ConteudoCurricularComponent } from './treinamento/conteudo-curricular/c
 import { EnviarValidacaoComponent } from './treinamento/enviar-validacao/enviar-validacao.component';
 import { ListaAnexosComponent } from './treinamento/lista-anexos/lista-anexos.component';
 import { NotificarEnvolvidosComponent } from './treinamento/notificar-envolvidos/notificar-envolvidos.component';
-import { NovoTreinamentoComponent } from './treinamento/novo-treinamento/novo-treinamento.component';
 import { RegistroFrequenciaComponent } from './treinamento/registro-frequencia/registro-frequencia.component';
 import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
 import { TurmaComponent } from './treinamento/turma/turma.component';
@@ -110,6 +109,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { EditarTreinamentoComponent } from './treinamento/editar-treinamento/editar-treinamento.component';
+import { TripulanteEscalaComponent } from './escala/tripulante-escala/tripulante-escala.component';
+import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
+import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
+import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
+import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diario-cdo.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -134,7 +139,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RegistroFrequenciaComponent,
     TreinamentoListComponent,
     TurmaComponent,
-    NovoTreinamentoComponent,
+    EditarTreinamentoComponent,
     TurmaListComponent,
     TurmaStatusComponent,
     AnaliseDeRiscoComponent,
@@ -215,7 +220,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     LoginLdapComponent,
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
-    CadastroEmailCdoComponent
+    CadastroEmailCdoComponent,
+    TripulanteEscalaComponent,
+    OrdenarCertificadoComponent,
+    EmailEscalaComponent,
+    EmailDiarioFadigaComponent,
+    EmailDiarioCdoComponent
   ],
   imports: [
     AppRoutingModule,

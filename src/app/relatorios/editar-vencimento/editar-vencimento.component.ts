@@ -41,6 +41,8 @@ export class EditarVencimentoComponent implements OnInit {
 
   editarData(e) {
     this.naoControlado = (e.target.value.length != this.mascara.length);
+    if(!this.naoControlado)
+    this.valorExibido = e.target.value;
   }
 
   clique(e) {
@@ -61,6 +63,11 @@ export class EditarVencimentoComponent implements OnInit {
     }
 
     let novoValor = Object.assign(this.dados);
+
+
+    let dia = 0;
+    let mes = 0;
+    let ano = 0;
     novoValor.ValorExibido = this.valorExibido;
     novoValor.NaoControlado = this.naoControlado;
     this.retorno.emit({ Confirmado: true, Certificado: novoValor });

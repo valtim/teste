@@ -77,7 +77,8 @@ export class CrudComponent implements OnInit {
   constructor(
     private api: ApiService,
     private apiGenerico: ApiGenericoService,
-    private fb: UntypedFormBuilder) {
+    private fb: UntypedFormBuilder, 
+    private messageService: MessageService) {
 
   }
   // ngAfterContentChecked(): void {
@@ -145,21 +146,44 @@ export class CrudComponent implements OnInit {
     this.apiGenerico.deleteGenerico(this.tipo, this.valoresSelecionados).then(
       () => {
         this.pesquisar();
+        this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
-    )
+    ).catch(()=>{
+      this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
+    });
 
     //throw new Error("Method not implemented.");
   }
   salvar() {
+
+    if (this.camposAutomaticos != null) {
+      this.api.postGenerico(this.camposAutomaticos.controller, this.camposAutomaticos.filtro, this.dados.filter(x => x.Modificado)).then(
+        () => {
+          this.dados.forEach(x => {
+            delete x.Modificado;
+          });
+          this.verBotoes();
+          this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
+        }
+        
+      ).catch(()=>{
+        this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
+      });
+      return;
+    }
+
     this.apiGenerico.postGenerico(this.tipo, this.dados.filter(x => x.Modificado)).then(
       () => {
         this.dados.forEach(x => {
           delete x.Modificado;
         });
         this.verBotoes();
+        this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
 
-    )
+    ).catch(()=>{
+      this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
+    })
   }
   novoItem() {
 
@@ -218,10 +242,10 @@ export class CrudComponent implements OnInit {
 
 
 
-    if (this.camposAutomaticos != null)
-      this.camposAutomaticos.forEach(x => {
-        Object.assign(novoItem, x);
-      });
+    // if (this.camposAutomaticos != null)
+    //   this.camposAutomaticos.forEach(x => {
+    //     Object.assign(novoItem, x);
+    //   });
 
     novoItem['Modificado'] = true;
 

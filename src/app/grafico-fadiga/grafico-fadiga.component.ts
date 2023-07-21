@@ -58,7 +58,13 @@ export class GraficoFadigaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.rodarRelatorio();
+    this.api.GetListasPick("tripulante")
+    .then(x => {
+      this.tripulantes = x.tripulante;
+    })
+    .catch(() => this.messageService.add({ severity: 'warning', summary: 'SOL Sistemas', detail: 'Erro ao carregar tripulantes' }));
+    this.carregando = false;
+    //this.rodarRelatorio();
   }
 
 
@@ -70,19 +76,22 @@ export class GraficoFadigaComponent implements OnInit {
     this.resultado = undefined;
     this.fadigaSelecionada = undefined;
 
-    try {
-      this.api.getAnaliseDeFadiga(this.dataIni, this.dataFim).then(x => {
-        this.data = x.data;
-        this.resultado = x.resultado;
+
+    let filtro = {
+      inicio : this.dataIni,
+      termino : this.dataFim,
+      tripulantes : this.selectedValues,
+    }
+
+    this.api.getAnaliseDeFadiga(filtro).then(x => {
+      this.data = x.data;
+      this.resultado = x.resultado;
+      this.carregando = false;
+    })
+      .catch((e) => {
+        this.messageService.add({ severity: 'warning', summary: 'SOL Sistemas', detail: 'Não foi possível carregar a fadiga.' });
         this.carregando = false;
       })
-
-    }
-    catch {
-      this.messageService.add({ severity: 'warning', summary: 'SOL Sistemas', detail: 'Não foi possível carregar a fadiga, entre em contato com o suporte.' });
-      this.carregando = false;
-    }
-
   }
 
 }

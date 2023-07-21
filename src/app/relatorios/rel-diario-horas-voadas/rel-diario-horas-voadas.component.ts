@@ -10,7 +10,7 @@ export class RelDiarioHorasVoadasComponent implements OnInit {
   data: Date;
   locale_pt: any;
 
-  relatorio_ok;
+  relatorio_ok = true;
   previstas: any;
   cols: any;
   dataDaConsulta: any;
@@ -23,7 +23,7 @@ export class RelDiarioHorasVoadasComponent implements OnInit {
     this.data = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.locale_pt = this.api.getLocale('pt');   
     
-    this.rodarRelatorio();
+    //this.rodarRelatorio();
   }
 
   rodarRelatorio() {
@@ -36,6 +36,7 @@ export class RelDiarioHorasVoadasComponent implements OnInit {
       })
       .catch(x => {
 
+        this.relatorio_ok = true;
       })
   }
 

@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { AutorizacaoService } from './autorizacao.service';
-import { BehaviorSubject } from 'rxjs';
-import { WindowScrollController } from '@fullcalendar/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { ApiService } from './api.service';
 
 
 @Injectable({
   providedIn: "root",
 })
 export class ApiTurmasService {
-  private httpOptions: any;
-  public URLCORE: string;
-  private permission;
   error: string;
   message: any;
   username: string;
@@ -20,36 +16,18 @@ export class ApiTurmasService {
   private loadingSource = new BehaviorSubject<boolean>(false);
   loading = this.loadingSource.asObservable();
 
-  constructor(
-    private http: HttpClient,
-    private autorizacao: AutorizacaoService
-  ) {
-    this.URLCORE =
-      window.location.host == "localhost:4200"
-      ? "https://localhost:44343/"
-     //? "https://teste.fastapi.com.br/"
-        : "/";
-
-    if (localStorage.getItem("Authorization")) {
-      this.httpOptions = {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("Authorization"),
-        }),
-      };
-    } else {
-      this.httpOptions = new HttpHeaders({
-        "Content-Type": "application/json",
-      });
-    }
-
+  constructor(private api: ApiService, private http: HttpClient) {
     this.message = {
       show: false,
       title: "",
       message: "",
       type: "alert",
-      callBack: () => {},
+      callBack: () => { },
     };
+  }
+
+  get url(): string {
+    return this.api.url;
   }
 
   onLoading() {
@@ -57,43 +35,16 @@ export class ApiTurmasService {
     this.loadingSource.next(this.defaulLoading);
   }
 
-  getOptions(lista: []) {
-    if (lista == undefined) {
-      return {
-        headers: new HttpHeaders({
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("Authorization"),
-        }),
-      };
-    }
 
-    return {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("Authorization"),
-        Lista: JSON.stringify(lista),
-      }),
-    };
-  }
 
   async postLogin(username: string, password: string): Promise<any> {
     return this.http
       .post(
-        this.URLCORE + "api/autorizacao-perfil",
+        this.api.url + "autorizacao-perfil",
         { username: username, password: password },
-        this.httpOptions
+        this.api.httpOptions
       )
       .toPromise();
-  }
-
-  public updateAuthorization(): void {
-    localStorage.setItem("Authorization", this.autorizacao.getAuthorization());
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("Authorization"),
-      }),
-    };
   }
 
   newGuid(): string {
@@ -128,39 +79,39 @@ export class ApiTurmasService {
   }
 
   getUsuarioLogado(): Promise<any> {
-    const url = this.URLCORE + `api/quemsoueu`;
-    return this.http.get(url, this.httpOptions).toPromise();
+    const url = this.api.url + `quemsoueu`;
+    return this.http.get(url, this.api.httpOptions).toPromise();
   }
 
   getListOfAnexos(referencia: string): Promise<any> {
-    const url = this.URLCORE + `api/lista_arquivo/${referencia}`;
-    return this.http.get(url, this.httpOptions).toPromise();
+    const url = this.api.url + `lista_arquivo/${referencia}`;
+    return this.http.get(url, this.api.httpOptions).toPromise();
   }
 
   deleteAnexo(id: string): Promise<any> {
-    const url = this.URLCORE + `api/arquivo/${id}/delete`;
-    return this.http.get(url, this.httpOptions).toPromise();
+    const url = this.api.url + `arquivo/${id}/delete`;
+    return this.http.get(url, this.api.httpOptions).toPromise();
   }
 
   postUploadAnexo(id: any, files: any): Promise<any> {
-    const url = this.URLCORE + `api/arquivo/${id}`;
+    const url = this.api.url + `arquivo/${id}`;
     return this.http.post(url, files).toPromise();
   }
 
   postUploadSimples(files: any): Promise<any> {
-    const url = this.URLCORE + `api/arquivo`;
+    const url = this.api.url + `arquivo`;
     return this.http.post(url, files).toPromise();
   }
 
   postComentario(comentario): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/TurmaComentario`, comentario, this.httpOptions)
+      .post(`${this.api.url}TurmaComentario`, comentario, this.api.httpOptions)
       .toPromise();
   }
 
   getEnvolvidosTurma(idTurma): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/envolvidos/${idTurma}`, this.httpOptions)
+      .get(`${this.api.url}turma/envolvidos/${idTurma}`, this.api.httpOptions)
       .toPromise();
   }
 
@@ -170,36 +121,43 @@ export class ApiTurmasService {
     });
     return this.http
       .post(
-        `https://redemet.fastapi.com.br/api/mail`,
+        `https://redemet.sistemasol.com.br/mail`,
         envolvido,
-        this.httpOptions
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   getInstrutores(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/instrutor`, this.httpOptions)
+      .get(`${this.api.url}instrutor`, this.api.httpOptions)
       .toPromise();
   }
 
   postTreinamento(treinamento): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/treinamento`, treinamento, this.httpOptions)
+      .post(`${this.api.url}treinamento`, treinamento, this.api.httpOptions)
       .toPromise();
   }
 
+
+  async deleteTreinamento(ids): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.api.url}treinamento/delete`, ids, this.api.httpOptions));
+  }
+
+
   putTreinamento(treinamento): Promise<any> {
     return this.http
-      .put(`${this.URLCORE}api/treinamento`, treinamento, this.httpOptions)
+      .put(`${this.api.url}treinamento`, treinamento, this.api.httpOptions)
       .toPromise();
   }
 
   getInstrutorTreinamento(id: string): Promise<any> {
     return this.http
       .get(
-        `${this.URLCORE}api/tripulante/instrutor/treinamento/${id}`,
-        this.httpOptions
+        `${this.api.url}tripulante/instrutor/treinamento/${id}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
@@ -207,91 +165,91 @@ export class ApiTurmasService {
   getAlunosTreinamento(id: string): Promise<any> {
     return this.http
       .get(
-        `${this.URLCORE}api/tripulante/alunos/treinamento/${id}`,
-        this.httpOptions
+        `${this.api.url}tripulante/alunos/treinamento/${id}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   postTurma(turma: any): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/turma`, turma, this.httpOptions)
+      .post(`${this.api.url}turma`, turma, this.api.httpOptions)
       .toPromise();
   }
 
   putTurma(turma: any): Promise<any> {
     return this.http
-      .put(`${this.URLCORE}api/turma`, turma, this.httpOptions)
+      .put(`${this.api.url}turma`, turma, this.api.httpOptions)
       .toPromise();
   }
 
   postTurmaUploadAnexo(id: any, files: any): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/turma/upload/${id}`, files, this.httpOptions)
+      .post(`${this.api.url}turma/upload/${id}`, files, this.api.httpOptions)
       .toPromise();
   }
 
   getTurmaAnexos(id: string): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/files/${id}`, this.httpOptions)
+      .get(`${this.api.url}turma/files/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
   postTurmaUlpoadNRT(id: any, files: any): Promise<any> {
     return this.http
       .post(
-        `${this.URLCORE}api/turma/upload/nrt/${id}`,
+        `${this.api.url}turma/upload/nrt/${id}`,
         files,
-        this.httpOptions
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   getTurmaUlpoadNRT(id: any): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/files/nrt/${id}`, this.httpOptions)
+      .get(`${this.api.url}turma/files/nrt/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
   deleteTurmaUpload(id: string, nome: string): Promise<any> {
     return this.http
-      .delete(`${this.URLCORE}api/turma/upload/${id}/${nome}`, this.httpOptions)
+      .delete(`${this.api.url}turma/upload/${id}/${nome}`, this.api.httpOptions)
       .toPromise();
   }
 
   deleteTurmaNRTUpload(id: string, nome: string): Promise<any> {
     return this.http
       .delete(
-        `${this.URLCORE}api/turma/upload/nrt/${id}/${nome}`,
-        this.httpOptions
+        `${this.api.url}turma/upload/nrt/${id}/${nome}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   deleteTurma(id: string): Promise<any> {
     return this.http
-      .delete(`${this.URLCORE}api/turma/${id}`, this.httpOptions)
+      .delete(`${this.api.url}turma/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
   getTurmas(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma`, this.httpOptions)
+      .get(`${this.api.url}turma`, this.api.httpOptions)
       .toPromise();
   }
 
   getTurmasPorUsuario(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/usuario`, this.httpOptions)
+      .get(`${this.api.url}turma/usuario`, this.api.httpOptions)
       .toPromise();
   }
   getTurmasByData(dataIni: Date, dataFim: Date): Promise<any> {
-    return this.http.get(`${this.URLCORE}api/turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.httpOptions).toPromise();
+    return this.http.get(`${this.api.url}turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.api.httpOptions).toPromise();
   }
 
   getTurmaById(id: string): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/${id}`, this.httpOptions)
+      .get(`${this.api.url}turma/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
@@ -301,19 +259,19 @@ valtim
 
   getTreinamentoPorEquipamento(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/TreinamentoPorEquipamento`, this.httpOptions)
+      .get(`${this.api.url}TreinamentoPorEquipamento`, this.api.httpOptions)
       .toPromise();
   }
 
   getInsumosTurmas(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turma/comListas`, this.httpOptions)
+      .get(`${this.api.url}turma/comListas`, this.api.httpOptions)
       .toPromise();
   }
 
   deleteTurmas(id: string[]): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/turma/delete`, id, this.httpOptions)
+      .post(`${this.api.url}turma/delete`, id, this.api.httpOptions)
       .toPromise();
   }
 
@@ -324,31 +282,31 @@ fim valtim
 
   getTreinamentos(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/treinamento/ComListas`, this.httpOptions)
+      .get(`${this.api.url}treinamento/ComListas`, this.api.httpOptions)
       .toPromise();
   }
   getEquipamentos(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/equipamento`, this.httpOptions)
+      .get(`${this.api.url}equipamento`, this.api.httpOptions)
       .toPromise();
   }
   getEquipamentosByTreinamento(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/equipamento/treinamento`, this.httpOptions)
+      .get(`${this.api.url}equipamento/treinamento`, this.api.httpOptions)
       .toPromise();
   }
 
   getTipoTreinamentos(): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/treinamento/tipos`, this.httpOptions)
+      .get(`${this.api.url}treinamento/tipos`, this.api.httpOptions)
       .toPromise();
   }
 
   getTreinamentosByEquipamento(IdEquipamento: string): Promise<any> {
     return this.http
       .get(
-        `${this.URLCORE}api/treinamento/equipamento/${IdEquipamento}`,
-        this.httpOptions
+        `${this.api.url}treinamento/equipamento/${IdEquipamento}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
@@ -356,36 +314,32 @@ fim valtim
   getInstrutoresByTreinamento(IdTreinamento: string): Promise<any> {
     return this.http
       .get(
-        `${this.URLCORE}api/instrutor/treinamento/${IdTreinamento}`,
-        this.httpOptions
+        `${this.api.url}instrutor/treinamento/${IdTreinamento}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   getTreinamento(id: string): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/treinamento/${id}/comListas`, this.httpOptions)
+      .get(`${this.api.url}treinamento/${id}/comListas`, this.api.httpOptions)
       .toPromise();
   }
 
   deleteConteudo(id: string): Promise<any> {
     return this.http
-      .delete(`${this.URLCORE}api/conteudo/${id}`, this.httpOptions)
+      .delete(`${this.api.url}conteudo/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
-  deleteTreinamento(id: string): Promise<any> {
-    return this.http
-      .delete(`${this.URLCORE}api/treinamento/${id}`, this.httpOptions)
-      .toPromise();
-  }
+
 
   uploadFileTreinamento(id: string, tripulanteFiles: any): Promise<any> {
     return this.http
       .post(
-        `${this.URLCORE}api/treinamento/upload/${id}`,
+        `${this.api.url}treinamento/upload/${id}`,
         tripulanteFiles,
-        this.httpOptions
+        this.api.httpOptions
       )
       .toPromise();
   }
@@ -393,45 +347,45 @@ fim valtim
   deleteFileTreinamento(id: string, nome: string): Promise<any> {
     return this.http
       .delete(
-        `${this.URLCORE}api/treinamento/upload/${id}/${nome}`,
-        this.httpOptions
+        `${this.api.url}treinamento/upload/${id}/${nome}`,
+        this.api.httpOptions
       )
       .toPromise();
   }
 
   getTreinamentoFiles(id: string): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/treinamento/files/${id}`, this.httpOptions)
+      .get(`${this.api.url}treinamento/files/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
   postTurmaStatus(turmaStatus: any): Promise<any> {
     return this.http
-      .post(`${this.URLCORE}api/turmaStatus`, turmaStatus, this.httpOptions)
+      .post(`${this.api.url}turmaStatus`, turmaStatus, this.api.httpOptions)
       .toPromise();
   }
 
   putTurmaStatus(turmaStatus: any): Promise<any> {
     return this.http
-      .put(`${this.URLCORE}api/turmaStatus`, turmaStatus, this.httpOptions)
+      .put(`${this.api.url}turmaStatus`, turmaStatus, this.api.httpOptions)
       .toPromise();
   }
 
   getTurmaStatusByIdTurma(id: any): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/turmaStatus/${id}`, this.httpOptions)
+      .get(`${this.api.url}turmaStatus/${id}`, this.api.httpOptions)
       .toPromise();
   }
 
   sendEmail(email: any): Promise<any> {
     return this.http
-      .post("https://log.fastapi.com.br/api/mail", email)
+      .post("https://log.fastapi.com.br/mail", email)
       .toPromise();
   }
 
   getComentariosByTurma(turma: string): Promise<any> {
     return this.http
-      .get(`${this.URLCORE}api/TurmaComentario/${turma}`, this.httpOptions)
+      .get(`${this.api.url}TurmaComentario/${turma}`, this.api.httpOptions)
       .toPromise();
   }
 

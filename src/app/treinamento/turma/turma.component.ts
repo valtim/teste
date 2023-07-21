@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, AfterViewInit, Output, EventEmitter, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { DataUtil } from '../../shared/DataUtil';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Turma } from 'src/app/models/Turma';
 import { HoraTurma } from 'src/app/models/HoraTurma';
 import { PeriodoDeCurso } from 'src/app/models/PeriodoDeCurso';
@@ -17,12 +17,69 @@ import { PickList } from 'primeng/picklist';
   selector: 'app-turma',
   templateUrl: './turma.component.html',
   styleUrls: ['./turma.component.css'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService]
 })
 export class TurmaComponent implements OnInit, AfterViewInit {
+  constructor(
+    private api: ApiTurmasService,
+    private cdr: ChangeDetectorRef,
+    private messageService: MessageService) {
+    this.usuarioLogado = {
+      ehAdministrador: false,
+      ehInstrutor: false
+    };
+  }
 
 
-  @ViewChild('picklist') picklist : PickList
+  ngOnInit(): void {
+
+    this.todasAsPessoas = this.tripulantes.concat(this.instrutores);
+
+    this.turmaInterna = Object.assign(new Turma, this.turma);
+    this.turmaInterna.CargaHoraria = 0;
+    if (this.turmaInterna.Deslocamentos)
+      this.turmaInterna.Deslocamentos.forEach(x => {
+        x.Data = new Date(x.Data);
+      });
+
+    this.definirStatusTurma();
+
+    this.api.getUsuarioLogadoComPermissoes(resp => {
+      this.usuarioLogado = resp;
+
+      this.periodo = this.turmaInterna.HorasTurma.map(a => new Date(a.Data));
+      this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
+      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
+
+      if (this.turmaInterna.Treinamento) {
+        this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
+        this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
+      }
+
+      if (this.turmaInterna.Instrutor) {
+        this.turmaInterna.Instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
+      }
+
+      this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
+      this.alunos = this.turmaInterna.TurmaAluno
+        .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
+      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y['Id']).indexOf(x['Id']) == -1);
+
+      this.turmaInterna.PeriodosDeCurso.forEach(periodoDeCurso => {
+        periodoDeCurso.Horas.forEach(hora => {
+          let horaTurmaAssociada = this.turmaInterna.HorasTurma.filter(horaTurma => {
+            return horaTurma.Id === hora.Id
+          });
+          if (horaTurmaAssociada.length == 1) {
+            hora['Descricao'] = horaTurmaAssociada[0].Descricao;
+            hora['ParaPagamento'] = horaTurmaAssociada[0].ParaPagamento;
+          }
+        });
+      });
+    });
+  }
+
+  @ViewChild('picklist') picklist: PickList
   /*valtim*/
   @Input() turma: Turma;
   @Input() equipamentos = [];
@@ -49,45 +106,42 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   autoCompleteResults: any[];
   messages: Message[];
 
+
   enviar(turma: Turma) {
 
     this.messages = [];
 
-    if (typeof turma.Equipamento === 'string') {
-      this.messages.push({ severity: 'error', summary: 'Erro:', detail: `O Equipamento ${turma.Equipamento} não está cadastrado no banco. Por favor confira antes de Salvar` });
-    }
-
-    if (typeof turma.Instrutor === 'string' && !turma.InstrutorExterno) {
-      this.messages.push({ severity: 'error', summary: 'Erro:', detail: `O Instrutor ${turma.Instrutor} não está cadastrado no banco. Por favor confira antes de Salvar` });
-    }
-
     if (this.messages.length != 0)
       return;
 
-    if (typeof turma.Treinamento === 'string') {
+    var errosDeslocamento : string[] = [];
 
-      if (typeof turma.Treinamento === 'string')
-        this.confirmationService.confirm({
-          //target: event.target,
-          message: `O treinamento ${turma.Treinamento} não está cadastrado no banco. Confirma cadastramento de um novo trenamento?`,
-          icon: 'pi pi-exclamation-triangle',
-          accept: () => {
+    this.turmaInterna.Deslocamentos.forEach(x=>{
+      
+      
+      if ( x.Deslocamento.Nome == '')
+      {
+        errosDeslocamento.push(`Há um deslocamento preenchido sem o percurso`);
+      }
 
-            var novoTreinamento = { "Id": GuidUtil.NewGuid(), Nome: turma.Treinamento };
-            this.api.postTreinamento({ "Id": GuidUtil.NewGuid(), Nome: turma.Treinamento })
-              .then(x => {
-                turma.Treinamento = novoTreinamento;
-              })
+      if ( !x.Tripulante)
+      {
+        errosDeslocamento.push(`Há um deslocamento preenchido sem o tripulante`);
+      }     
 
+      if ( !x.Definir && !x.Hora)
+      {
+        errosDeslocamento.push(`Há um deslocamento preenchido sem horário`);
+      }
+        
+    })
 
-            this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'You have accepted' });
-          },
-          reject: () => {
-            return;
-          }
-        });
+    const erros = errosDeslocamento.map(x=> ({ severity: 'error', summary: 'Erro:', detail: x}) );
+    
+    if ( errosDeslocamento.length > 0 ){
+      this.messageService.addAll(erros);
+      return;
     }
-
     this.salvarTurma(turma, () => { });
   }
 
@@ -174,8 +228,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
         });
 
         this.api.postTurma(turma).then(x => {
+          //this.messageService.add({ severity: 'success', summary: 'SOl', detail: `A turma foi salva com sucesso!` });
           Object.assign(this.turmaInterna, x);
-          this.evento.emit(this.turmaInterna);
+          this.evento.emit({ Turma: this.turmaInterna, Salvo: true});
           callback();
         }).catch(x => {
           console.log(x);
@@ -192,7 +247,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   cancelar() {
     this.statusTurma = [];
     this.turmaInterna.Cancelado = true;
-    this.evento.emit(this.turmaInterna);
+    this.evento.emit({Turma : this.turmaInterna, Salvo : false});
   }
 
 
@@ -242,9 +297,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     if (idxExcluir > -1)
       this.tripulantes.splice(idxExcluir, 1);
 
-      this.picklist.moveAllRight();
-      // this.picklist.resetFilter();
-      // this.picklist.target = this.alunos;
+    this.picklist.moveAllRight();
+    // this.picklist.resetFilter();
+    // this.picklist.target = this.alunos;
   }
 
   /*
@@ -428,9 +483,9 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   alterarHoraFinal(index, data, hora) {
     let periodos = this.PeriodosDeCurso.Periodos.filter(x => x.Data == data);
     if (periodos.length > 0) {
-      if ((periodos[0].Horas[index]) && (periodos[0].Horas[index].HoraTermino)) { 
-        periodos[0].Horas[index].HoraTermino = hora; 
-      }      
+      if ((periodos[0].Horas[index]) && (periodos[0].Horas[index].HoraTermino)) {
+        periodos[0].Horas[index].HoraTermino = hora;
+      }
     } else {
       let horaTurma = Object.assign(new HoraTurma, ({ Data: data, HoraTermino: hora }));
       this.PeriodosDeCurso.Periodos.push(<PeriodoDeCurso>{ Data: data, Horas: [horaTurma] });
@@ -474,8 +529,19 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     //   });
   }
 
-  atualizarStatusTurma(callback) {
 
+  get envolvidos() {
+    var envolvidos = this.alunos.map(x => ({ Id: x.Id, Trato: x.Trato }));
+
+
+    if (this.turmaInterna.Instrutor != null) {
+      const instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
+      envolvidos.push(instrutor);
+    }
+    return envolvidos;
+  }
+
+  atualizarStatusTurma(callback) {
     this.indexStatusTurma = 0;
 
     // Treinamento Agendado
@@ -569,19 +635,19 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   }
 
   uploadCompletoAnexos = (args: any): void => {
-    this.turmaInterna.Anexos = args;    
+    this.turmaInterna.Anexos = args;
   }
 
   uploadCompletoSAEs = (args: any): void => {
-    this.turmaInterna.SAEs = args;    
+    this.turmaInterna.SAEs = args;
   }
 
   uploadCompletoNECs = (args: any): void => {
-    this.turmaInterna.NECs = args;    
+    this.turmaInterna.NECs = args;
   }
 
   uploadCompletoNRTs = (args: any): void => {
-    this.turmaInterna.NRTs = args;    
+    this.turmaInterna.NRTs = args;
     this.atualizarStatusTurma(() => { });
   }
 
@@ -736,65 +802,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     CONCLUSAO: 'Conclusão'
   };
 
-  constructor(
-    private confirmationService: ConfirmationService,
-    private api: ApiTurmasService,
-    private cdr: ChangeDetectorRef,
-    private messageService: MessageService) {
-    this.usuarioLogado = {
-      ehAdministrador: false,
-      ehInstrutor: false
-    };
-  }
-
-
-  ngOnInit(): void {
-
-    this.todasAsPessoas = this.tripulantes.concat(this.instrutores);
-
-    this.turmaInterna = Object.assign(new Turma, this.turma);
-    this.turmaInterna.CargaHoraria = 0;
-    if (this.turmaInterna.Deslocamentos)
-      this.turmaInterna.Deslocamentos.forEach(x => {
-        x.Data = new Date(x.Data);
-      });
-
-    this.definirStatusTurma();
-
-    this.api.getUsuarioLogadoComPermissoes(resp => {
-      this.usuarioLogado = resp;
-
-      this.periodo = this.turmaInterna.HorasTurma.map(a => new Date(a.Data));
-      this.alunos = this.turmaInterna.TurmaAluno.map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota, Email: a.Aluno.Email }));
-      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y.Id).indexOf(x.Id) == -1);
-
-      if (this.turmaInterna.Treinamento) {
-        this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(this.turmaInterna.Treinamento.CargaHoraria);
-        this.turmaInterna.Treinamento = { Id: this.turmaInterna.Treinamento.Id, Nome: this.turmaInterna.Treinamento.Nome, CargaHoraria: this.turmaInterna.Treinamento.CargaHoraria };
-      }
-
-      if (this.turmaInterna.Instrutor) {
-        this.turmaInterna.Instrutor = { Id: this.turmaInterna.Instrutor.Id, Trato: this.turmaInterna.Instrutor.Trato };
-      }
-
-      this.periodo = this.turmaInterna.Datas.map(a => new Date(a.Data));
-      this.alunos = this.turmaInterna.TurmaAluno
-        .map(a => ({ Id: a.Aluno.Id, Trato: a.Aluno.Trato, CodigoANAC: a.Aluno.CodigoANAC, Cargo: a.Aluno.Cargo.Nome, Licenca: a.Aluno.Licenca, Confirmado: a.Confirmado, Avaliado: a.Avaliado, Notificado: a.Notificado, Nota: a.Nota }));
-      this.tripulantes = this.tripulantes.filter(x => this.alunos.map(y => y['Id']).indexOf(x['Id']) == -1);
-
-      this.turmaInterna.PeriodosDeCurso.forEach(periodoDeCurso => {
-        periodoDeCurso.Horas.forEach(hora => {
-          let horaTurmaAssociada = this.turmaInterna.HorasTurma.filter(horaTurma => {
-            return horaTurma.Id === hora.Id
-          });
-          if (horaTurmaAssociada.length == 1) {
-            hora['Descricao'] = horaTurmaAssociada[0].Descricao;
-            hora['ParaPagamento'] = horaTurmaAssociada[0].ParaPagamento;
-          }          
-        });
-      });
-    });
-  }
+  
 
   ngAfterViewInit(): void {
     setTimeout(() => { this.atualizarPassos(() => { }); }, 0);

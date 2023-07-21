@@ -1,12 +1,15 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { from } from 'rxjs';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 import { ApiService } from 'src/app/shared/api.service';
 import { EscalaService } from 'src/app/shared/escala.service';
 
 @Component({
   selector: 'app-escala-mensal',
   templateUrl: './escala-mensal.component.html',
-  styleUrls: ['./escala-mensal.component.css']
+  styleUrls: ['./escala-mensal.component.css'],
+  providers: [MessageService]
 })
 export class EscalaMensalComponent implements OnInit {
   locale_pt: any;
@@ -27,7 +30,8 @@ export class EscalaMensalComponent implements OnInit {
   colunasBalance: any;
   contratos: any;
 
-  constructor(private apiEscala: EscalaService) {
+  constructor(private apiEscala: EscalaService, private apiGen: ApiGenericoService,
+    private messageService: MessageService,) {
     // this.locale_pt = this.api.getLocale('pt');
     const date = new Date();
     this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -39,10 +43,11 @@ export class EscalaMensalComponent implements OnInit {
 
   dataInicio;
   dataFim;
-  tudoPronto = true;
+  tudoPronto = false;
+  pesquisando = false;
 
   ngOnInit(): void {
-    this.rodarRelatorio()
+    //this.rodarRelatorio()
   }
 
   editarDia(e, dia) {
@@ -55,6 +60,7 @@ export class EscalaMensalComponent implements OnInit {
 
 
     this.tudoPronto = false;
+    this.pesquisando = true;
     this.apiEscala.getEscalaMensal(this.dataInicio, this.dataFim).then(x => {
       this.dados = x;
 
@@ -82,10 +88,11 @@ export class EscalaMensalComponent implements OnInit {
 
       this.fazerBalanco();
 
-      if (this.vencimentos.length > 0)
-        alert("Existem vencimentos de Cursos/Carteiras no período selecionado.\nVerifique a lista detalhada abaixo da Escala.");
+      // if (this.vencimentos.length > 0)
+      //   alert("Existem vencimentos de Cursos/Carteiras no período selecionado.\nVerifique a lista detalhada abaixo da Escala.");
 
       this.tudoPronto = true;
+      this.pesquisando = false;
     });
 
 
@@ -123,30 +130,39 @@ export class EscalaMensalComponent implements OnInit {
 
   }
 
-  modificarRegistro(evento, id) {
+  modificarRegistro(evento, item) {
 
-    if (evento.target.cellIndex == 0) {
-      this.destacarLinha(evento, evento.target.parentElement.rowIndex);
-      return;
-    }
 
-    this.registroSelecionado = this.previsoes.find(x => x.Id == id);
-    this.registroSelecionado.Display = true;
-    this.ExibirDialogo = true;
+
+
+    // if (evento.target.cellIndex == 0) {
+    //   this.destacarLinha(evento, evento.target.parentElement.rowIndex);
+    //   return;
+    // }
+
+    this.registroSelecionado = this.previsoes.find(x => x.Id == item.Id);
+    //this.registroSelecionado.Display = true;
+    //this.ExibirDialogo = true;
 
   }
 
   retornoEvento(e) {
 
+    if (e == null) {
+      this.registroSelecionado = undefined;
+      return;
+    }
 
-    this.ExibirDialogo = false;
-    this.ocultar();
+    this.apiEscala.SalvarPrevisao([e]).then(x => {
+      this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso!' });
+    }).catch(() => this.messageService.add({ severity: 'danger', summary: 'SOL Sistemas', detail: 'Erro ao salvar' }))
 
-    this.registroSelecionado = e;
+
+    this.registroSelecionado = undefined;
 
     let registro = this.previsoes.find(x => x.Id == e.Id);
 
-    registro = e;
+    registro = Object.assign({}, e);
 
     let data = new Date(e.Data);
 

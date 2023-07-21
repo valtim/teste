@@ -1,7 +1,38 @@
 <app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="tabela" *ngIf="valores">
-    <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
+
+
+
+    <table>
+        <tr>
+            <th *ngFor="let col of columns">{{col}}</th>
+        </tr>
+        <tr *ngFor="let item of valores">
+            <td *ngFor="let col of columns; let i = index"
+                (click)="i == 0 ? null : editarValor($event, item[col])"
+                [class]="item[col].CorNaTela">{{item[col].ValorExibido}}
+            </td>
+        </tr>
+    </table>
+
+
+    <p-dialog *ngIf="valorEditado" [(visible)]="valorEditado" [modal]="true" [baseZIndex]="10000">
+
+        <app-editar-vencimento [dados]="valorEditado" (retorno)="retornoCarteira($event)">
+        </app-editar-vencimento>
+
+    </p-dialog>
+
+    <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+        <ng-template pTemplate>
+            <ul>
+                <li *ngFor="let item of ultimosVoos">{{item.Data| date: 'dd/MM/yyyy'}} - {{item.NumeroDoDiario}} - {{item.NumeroDaFolha}}</li>
+            </ul>
+        </ng-template>
+    </p-overlayPanel>
+
+    <!-- <p-table [columns]="scrollableCols" [frozenColumns]="frozenCols" [value]="valores" [scrollable]="true"
         scrollHeight="88vh" id="" frozenWidth="280px" frozenHeight="200px tabela"
         (sortFunction)="customSort($event)" [customSort]="true">
         <ng-template pTemplate="colgroup" let-columns>
@@ -51,7 +82,7 @@
                 </td>
             </tr>
         </ng-template>
-    </p-table>
+    </p-table> -->
 
 </div>
 

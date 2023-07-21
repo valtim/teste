@@ -65,7 +65,7 @@ export class AnexosComponent implements OnInit {
 
 
   funAbrirArquivo(id : string){
-    window.open(this.api.URLCORE + 'api/arquivo/'+id,'_blank');
+    window.open(this.api.url + 'arquivo/'+id,'_blank');
   }
   constructor(private api: ApiTurmasService, private messageService: MessageService ) { }
 

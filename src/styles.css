@@ -1,3 +1,11 @@
+HTML {
+  font-size: smaller;
+}
+
+input {
+  font-size: smaller;
+}
+
 /* .vertical-center {
   display: flex;
   align-items: center;
@@ -13,17 +21,18 @@ body{
   .nao-imprimir {
     display: none;
   }
+
   app-titulo {
     display: none;
   }
-  
-  .botoes_salvar{
-    display:none;
+
+  .botoes_salvar {
+    display: none;
   }
 
 }
 
-.p-card{
+.p-card {
   background-color: black;
 }
 
@@ -33,18 +42,18 @@ body{
   }
 
 
-  .botoes_salvar{
-    position:fixed;
-    right:150px;
-    top:10px;
-    z-index:10000;
+  .botoes_salvar {
+    position: fixed;
+    right: 150px;
+    top: 10px;
+    z-index: 10000;
   }
 
-  .mensagens_de_erro{
-    position:fixed;
-    left:10px;
-    top:30px;
-    z-index:10000;
+  .mensagens_de_erro {
+    position: fixed;
+    left: 10px;
+    top: 30px;
+    z-index: 10000;
   }
 
 }

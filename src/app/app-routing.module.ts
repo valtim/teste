@@ -75,6 +75,9 @@ import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
+import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
+import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -251,6 +254,14 @@ const routes: Routes = [
     component: CadastroDeEmailReporteComponent,
   },
   {
+    path: "cad-email-diario-fadiga",
+    component: EmailDiarioFadigaComponent,
+  },
+  {
+    path: "cad-email-diario-cdo",
+    component: CadastroEmailCdoComponent,
+  },
+  {
     path: "cad-email-cdo",
     component: CadastroEmailCdoComponent,
   },
@@ -300,7 +311,7 @@ const routes: Routes = [
   },
   {
     path: "dupla",
-    component: DuplaComponent,
+    component: DuplaAdmComponent,
   },
   {
     path: "escala-semanal",
@@ -343,6 +354,10 @@ const routes: Routes = [
     component: GraficoFadigaComponent,
   },
   {
+    path: "email-escala",
+    component: EmailEscalaComponent,
+  },
+  {
     path: "grupo-de-pergunta",
     component: GrupoDePerguntaComponent,
   },
@@ -382,6 +397,10 @@ const routes: Routes = [
   {
     path: 'base-do-tripulante',
     component: BaseDoTripulanteComponent,
+  },
+  {
+    path: 'ordenar-certificado',
+    component: OrdenarCertificadoComponent,
   }
 ];
 

@@ -1,4 +1,7 @@
 <app-titulo titulo="Turma" [carregando]="loading"></app-titulo>
+
+<p-toast position="top-center"></p-toast>
+
 <div *ngIf="!displayModal">
     <p-toolbar>
         <div class="p-toolbar-group-left">
@@ -16,7 +19,7 @@
     <p-card>
         <button type="button" pButton pRipple label="Data"></button>
         <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" 
-            showIcon="true" [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
+            showIcon="true" [inputStyle]="{'width':'150px'}" class="ml-2" ></p-calendar>
         <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
             showIcon="true" [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
@@ -43,6 +46,8 @@
                 <th>Periodo</th>
                 <th>Instrutor</th>
                 <th>Alunos</th>
+                <th>TempoDeCurso</th>
+                <th>TempoDeCursoNoturno</th>
                 <!--<th>Tempo</th>-->
             </tr>
         </ng-template>
@@ -60,11 +65,21 @@
                         *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span>
                 </td>
                 <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
+                <td (click)="editar(treino.Id)">{{treino.TempoDeCurso | timespan:'HH:mm'}}</td>
+                <td (click)="editar(treino.Id)">{{treino.TempoDeCursoNoturno | timespan:'HH:mm'}}</td>
                 <!--<td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>-->
                 <!--<td>
                     <app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino">
                     </app-turma-status>
                 </td>-->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <td COLSPAN="5"></td>
+                <td >{{Totais.TempoDeCurso}}</td>
+                <td >{{Totais.TempoDeCursoNoturno}}</td>
+                
             </tr>
         </ng-template>
     </p-table>
