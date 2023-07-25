@@ -13,7 +13,8 @@ import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
 export class AssinaturaRDVComponent implements OnInit {
 
   @Input() DadosAssinatura: any;
-  @Input() blobPDF: any;  
+  @Input() blobPDF: any;
+  @Input() nomeArquivo: string;    
   @Output() retorno = new EventEmitter();
 
   mostrarLoading = false;
@@ -88,10 +89,10 @@ export class AssinaturaRDVComponent implements OnInit {
 
   criarArquivoRDV(callback): void {
     if ((!this.DadosAssinatura.Assinatura) || (!this.DadosAssinatura.Assinatura.Arquivos) || (this.DadosAssinatura.Assinatura.Arquivos.length == 0)) {      
-      const formData = new FormData();
-      let nomeArquivo = 'Relatorio RDV ' + this.DadosAssinatura.DiarioDeBordo.NumeroDaFolha + '.pdf';
-      nomeArquivo = nomeArquivo.replace(/ /g, '_');      
-      formData.append('file[0]', this.blobPDF, nomeArquivo);
+      const formData = new FormData();      
+
+      this.nomeArquivo = this.nomeArquivo.replace(/ /g, '_');      
+      formData.append('file[0]', this.blobPDF, this.nomeArquivo);
       this.apiTurmas.postUploadSign(this.DadosAssinatura.Assinatura.Id,formData).then((arquivos) => {
         this.DadosAssinatura.Assinatura.Arquivos = [];
         if ((arquivos) && (arquivos.length == 1)) {

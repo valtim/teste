@@ -1,0 +1,89 @@
+div.assinatura {
+    width: 800px;
+    min-height: 400px;
+}
+
+button.enviar-email {
+    position: absolute;
+    top: 20px;
+    right: 66px;
+}
+
+div.mostrar-loading {
+    display: block !important;
+}
+
+div.div-loading {
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.5);
+    z-index: 1;
+}
+
+div.div-loading > svg {
+    width: 50px;
+    height: 50px;
+}
+
+div.container-passos::after {
+    display: block;
+    content: '';
+    height: 0;
+    clear: both;
+}
+
+div.container-passos > span.passos {
+    display: block;
+    float: left;
+    width: 25%;
+    box-sizing: border-box;
+    border: 0;
+    border-left: 1px solid #b0bec5;
+    background-color: #eceff1;
+    font-size: 0.9em;
+    padding: 5px;
+    height: 120px;
+}
+
+div.container-passos > span.passos > h5 {
+    margin: 0;
+}
+
+div.container-passos > span.passos:first-child {
+    border: 0;
+}
+
+div.container-passos > span.selecionado {    
+    background-color: #a5d6a7;
+}
+
+button.botao-cinza {
+    background-color: #b0bec5 !important;
+    border-color: #878788;
+}
+
+div.lista-status::after {
+    display: block;
+    content: '';
+    height: 0;
+    clear: both;
+}
+
+div.item-lista-status {
+    display: block;
+    float: left;
+}
+
+button.botao-lista-status {
+    display: block;
+    float: right;
+}
+
+.chip-width > .ui-chips-container {
+    width: 784px;
+ }

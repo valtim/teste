@@ -190,12 +190,12 @@
     </span>
 </div>
 
-<p-dialog *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
-    <app-assinatura-rdv [DadosAssinatura]="DadosAssinatura" [blobPDF]="blobPDF" (retorno)="fecharDialogoAssinatura()">
-    </app-assinatura-rdv>
-</p-dialog>
-
 <div id="download">
     <img #canvas>
     <a #downloadLink></a>
 </div>
+
+<p-dialog *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
+    <app-assinatura-rdv [DadosAssinatura]="DadosAssinatura" [blobPDF]="blobPDF" [nomeArquivo]="nomeArquivo" (retorno)="fecharDialogoAssinatura()">
+    </app-assinatura-rdv>
+</p-dialog>

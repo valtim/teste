@@ -19,6 +19,7 @@ export class RelRdvComponent implements OnInit {
   blobPDF: any;
   statusAssinatura = false;
   desabilitarBotaoAssinatura = false;
+  nomeArquivo: string;
 
   rdv: any;
   tudoPronto = false;
@@ -41,20 +42,33 @@ export class RelRdvComponent implements OnInit {
       this.rdv = x;      
       this.semErros = true;
       this.cancelada = this.rdv.Cancelada;
+      this.nomeArquivo = this.definirNomeArquivo();
 
-      this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {
+      this.api.baseAssinaturaRDV(this.rdv.Id).then((base: any) => {        
+        
+        if ((base != null) && (base != undefined) && (base.Ok)) {
+      
+          this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {                
+            this.DadosAssinatura = dados;
+            this.statusAssinatura = this.DadosAssinatura.Status;
+            this.desabilitarBotaoAssinatura = false;
+  
+            this.DadosAssinatura.atualizar = (Status) => {
+              this.statusAssinatura = Status;
+              console.log('Status da Assinatura: ' + Status);
+            }
+    
+            this.tudoPronto = true;
+          });
 
-        this.DadosAssinatura = dados;
-        this.statusAssinatura = this.DadosAssinatura.Status;
-        this.desabilitarBotaoAssinatura = false;
-
-        this.DadosAssinatura.atualizar = (Status) => {
-          this.statusAssinatura = Status;
-          console.log('Status da Assinatura: ' + Status);
-        }
-
-        this.tudoPronto = true;
-      });      
+        } else {
+          console.log(base);
+          this.DadosAssinatura = { Status: false };
+          this.desabilitarBotaoAssinatura = true;
+          this.tudoPronto = true;
+        }     
+      });
+      
     }).catch((e) => {
       if ( e.status == 404)
       {
@@ -65,12 +79,27 @@ export class RelRdvComponent implements OnInit {
     })
   }
 
-  abrirDialogoAssinatura(): void {
-    this.desabilitarBotaoAssinatura = true;
-    this.tudoPronto = true;
+  definirNomeArquivo(): string {
+    let parteData = '00-00';    
+    if ( (this.rdv.DataDoDiario) && (this.rdv.DataDoDiario.length != '')) {
+      let partesData = this.rdv.DataDoDiario.split('T')[0].split('-');
+      parteData = partesData[2] + '-' + partesData[1];
+    }
+    let tempNumeroDoVoo = '000000000';
+    if (this.rdv.Linhas.length > 0) {
+      tempNumeroDoVoo = this.rdv.Linhas[0].NumeroDoVoo;
+    }
+    // PR-AEH - 13-07 -508460284 -236604.pdf
+    return this.rdv.Prefixo.PrefixoCompleto + '_' + parteData + '_' + tempNumeroDoVoo + '_' + this.rdv.NumeroDaFolha + '.pdf';
+  }
 
-    this.convertoToPDF((pdf: any) => {
+  abrirDialogoAssinatura(): void {
+    this.tudoPronto = false;
+    this.desabilitarBotaoAssinatura = true;    
+        
+    this.convertoToPDF((pdf: any) => {      
       this.blobPDF = pdf;
+      this.tudoPronto = true;
       this.exibirAssinatura = true;
     });
   }
@@ -86,12 +115,15 @@ export class RelRdvComponent implements OnInit {
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
   converterRelatorioParaImagem(callback) {
+    let width = this.screen.nativeElement.offsetWidth; 
+    let height = this.screen.nativeElement.offsetHeight;
+    
     html2canvas(this.screen.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
       callback({ 
         img: canvas.toDataURL('image/png'), 
-        width: this.screen.nativeElement.offsetWidth, 
-        height: this.screen.nativeElement.offsetHeight
+        width: width, 
+        height: height
       });
     });
   }
@@ -112,34 +144,5 @@ export class RelRdvComponent implements OnInit {
       //doc.save('arquivo.pdf'); -> para baixar o arquivo, se fosse o caso
     });
   }
-
-  /*
-  obterOuCriarAssinatura(dados: any): void {
-    let criar = false;
-    if (!dados.Assinatura) criar = true;
-    else if (!dados.Assinatura.Id) criar = true;    
-
-    if (criar) {
-      dados.Assinatura = {
-        Id: GuidUtil.NewGuid(),        
-        TransientDocumentId: null,
-        AgreementId: null,
-        Status: '',
-        Arquivos: []
-      };
-      dados.AssinaturaRDV = {
-        Id: GuidUtil.NewGuid(),
-        Assinatura: dados.Assinatura,
-        DiarioDeBordo: dados.DiarioDeBordo,
-        NumeroDaFolha: dados.DiarioDeBordo.NumeroDaFolha
-      };
-      if (dados.Emails && dados.Emails.length == 1) {
-        dados.Emails[0].Assinatura = dados.Assinatura;                        
-      }
-    }
-
-    return dados;
-  }
-  */
 
 }
