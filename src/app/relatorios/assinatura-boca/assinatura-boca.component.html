@@ -63,7 +63,7 @@
     <div class="p-field col-12">        
         <button type="button" class="col-12 label-fixo-2" pButton pRipple label="E-mails que vão receber os Manifestos de Voos (PASSO 4)"></button>
         <br>                            
-        <p-chips (onAdd)="validarEmailChips($event)" styleClass="chip-width" [allowDuplicate]="false" [disabled]="passo > 4" [(ngModel)]="EmailsDestino" name="EmailsDestinoChips" ngDefaultControl></p-chips>
+        <p-chips (onAdd)="validarEmailChips($event)" [allowDuplicate]="false" [disabled]="passo > 4" [(ngModel)]="EmailsDestino" name="EmailsDestinoChips" ngDefaultControl></p-chips>
     </div>
 
     <div class="p-field col-12" style="display: none;">

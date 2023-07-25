@@ -83,7 +83,3 @@ button.botao-lista-status {
     display: block;
     float: right;
 }
-
-.chip-width > .ui-chips-container {
-    width: 784px;
- }
