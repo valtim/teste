@@ -171,7 +171,7 @@ export class AssinaturaBocaComponent implements OnInit {
     } else {
       this.mostrarLoading = true;    
 
-      this.api.assinarBoca(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante).then((dados: any) => {                    
+      this.api.assinarBoca(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante,this.nomeArquivo).then((dados: any) => {                    
         this.DadosAssinatura.AssinaturaBoca.ArquivoSemAssinar = dados.ArquivoSemAssinar;
         this.DadosAssinatura.Assinatura.TransientDocumentId = dados.TransientDocumentId;
         this.DadosAssinatura.Assinatura.AgreementId = dados.AgreementId;
@@ -275,7 +275,7 @@ export class AssinaturaBocaComponent implements OnInit {
   verificarAssinatura(): void {      
     this.mostrarLoading = true;
     
-    this.api.obterStatusBoca(this.DadosAssinatura.Assinatura.Id).then((dados: any) => {                
+    this.api.obterStatusBoca(this.DadosAssinatura.Assinatura.Id,this.nomeArquivo).then((dados: any) => {                
 
       if (dados.ErroGerarArquivo) {
         this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'A Assinatura ainda não foi realizada!' });

@@ -119,7 +119,7 @@ export class AssinaturaRDVComponent implements OnInit {
       } else {
         this.mostrarLoading = true;    
 
-        this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante).then((dados: any) => {                    
+        this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante,this.nomeArquivo).then((dados: any) => {                    
           this.DadosAssinatura.AssinaturaRDV.JoinArquivosSemAssinar = dados.JoinArquivosSemAssinar;
           this.DadosAssinatura.Assinatura.TransientDocumentId = dados.TransientDocumentId;
           this.DadosAssinatura.Assinatura.AgreementId = dados.AgreementId;
@@ -157,7 +157,7 @@ export class AssinaturaRDVComponent implements OnInit {
   verificarAssinatura(): void {    
     this.mostrarLoading = true;
     
-    this.api.obterStatusRDV(this.DadosAssinatura.Assinatura.Id).then((dados: any) => {                
+    this.api.obterStatusRDV(this.DadosAssinatura.Assinatura.Id,this.nomeArquivo).then((dados: any) => {                
 
       if (dados.ErroGerarArquivo) {
         this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'A Assinatura ainda não foi realizada!' });
