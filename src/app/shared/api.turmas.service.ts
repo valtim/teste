@@ -115,18 +115,24 @@ export class ApiTurmasService {
       .toPromise();
   }
 
-  postNotificarEnvolvidoTurma(envolvido): Promise<any> {
-    const httpOptions = new HttpHeaders({
-      "Content-Type": "application/json",
-    });
-    return this.http
-      .post(
-        `https://redemet.sistemasol.com.br/mail`,
-        envolvido,
-        this.api.httpOptions
-      )
-      .toPromise();
+
+  async getNotificarEnvolvidos(idTurma): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.api.url}turma/notificarEnvolvidos/${idTurma}`, this.api.httpOptions));
   }
+
+  // postNotificarEnvolvidoTurma(envolvido): Promise<any> {
+  //   const httpOptions = new HttpHeaders({
+  //     "Content-Type": "application/json",
+  //   });
+  //   return this.http
+  //     .post(
+  //       `https://redemet.sistemasol.com.br/mail`,
+  //       envolvido,
+  //       this.api.httpOptions
+  //     )
+  //     .toPromise();
+  // }
 
   getInstrutores(): Promise<any> {
     return this.http

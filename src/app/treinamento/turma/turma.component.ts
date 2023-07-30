@@ -298,57 +298,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       this.tripulantes.splice(idxExcluir, 1);
 
     this.picklist.moveAllRight();
-    // this.picklist.resetFilter();
-    // this.picklist.target = this.alunos;
   }
-
-  /*
-  this.confirmationService.confirm({
-      target: e,
-      message: 'Você deseja incluir todos os alunos?',
-      header: 'Confirmação',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        return;
-        //this.picklist.moveAllRight();
-        //this.atualizarStatusTurma(() => {});
-      },
-      reject: () => { return; }
-    });
-
-  confirmaInclusao(e) {
-    if (e.value.length != 1)
-      return;
-
-    var trip = e.value[0];
-  }
-  */
-
-  // onInstrutorExterno() {
-  //   this.api.onLoading();
-  //   if (!this.turmaInterna.InstrutorExterno) {
-  //     this.api.getInstrutoresByTreinamento(this.turmaInterna.Treinamento.Id)
-  //       .then(resp => {
-  //         if (resp.Instrutores.length > 0) {
-  //           this.instrutores = resp.Instrutores;
-  //         } else {
-  //           this.instrutores = [];
-  //         }
-  //         this.atualizarStatusTurma(() => {
-  //           this.api.onLoading();
-  //         });
-  //       });
-  //   } else {
-  //     this.api.getInstrutores()
-  //       .then(resp => {
-  //         this.instrutores = resp.Instrutores;
-  //         this.atualizarStatusTurma(() => {
-  //           this.api.onLoading();
-  //         });
-  //       });
-  //   }
-  // }
-
   novoDeslocamento() {
     if (this.turmaInterna.Deslocamentos == undefined)
       this.turmaInterna.Deslocamentos = [];
@@ -360,51 +310,12 @@ export class TurmaComponent implements OnInit, AfterViewInit {
   }
 
   onNotificar() {
-    let nomeTreinamento = 'Não identificado';
-    if ((this.turmaInterna.Treinamento != undefined) && (this.turmaInterna.Treinamento != null)) {
-      nomeTreinamento = this.turmaInterna.Treinamento.Nome;
-    }
-    let local = 'Não identificado';
-    if ((this.turmaInterna.Local != undefined) && (this.turmaInterna.Local != null) && (this.turmaInterna.Local != '')) {
-      local = this.turmaInterna.Local;
-    }
-    let inicioTreinamento = 'Não identificado';
-    if ((this.turmaInterna.DataDeInicio != undefined) && (this.turmaInterna.DataDeInicio != null)) {
-      inicioTreinamento = new Date(this.turmaInterna.DataDeInicio).toLocaleDateString();
-    }
-
-    this.alunos.forEach((item, index) => {
-      item['inicioTreinamento'] = inicioTreinamento;
-      item['nomeTreinamento'] = nomeTreinamento;
-      item['local'] = local;
-      const envolvido = this.createEmailJson(item);
-      this.api.postNotificarEnvolvidoTurma(envolvido).then(_ => _);
-      item.Notificado = true;
-
-      if (index == (this.alunos.length - 1)) {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso!', detail: 'Notificação feita' });
-        this.atualizarStatusTurma(() => { });
-      }
-    });
+    this.api.getNotificarEnvolvidos(this.turmaInterna.Id)
+      .then(() => this.messageService.add({ severity: 'success', summary: 'SOL', detail: `As notificações foram enviadas com sucesso!` }))
+      .catch(() => this.messageService.add({ severity: 'danger', summary: 'SOL', detail: `Erro ao enviar notificações` }));
   }
 
-  createEmailJson(envolvido) {
-
-    let html = `<h1>Olá ${envolvido.Trato}</h1>`;
-    html += `<p>Você foi matriculado no treinamento <b>${envolvido.nomeTreinamento}</b> `;
-    html += `que ocorrerá em <b>${envolvido.local}</b> `;
-    html += `no dia <b>${envolvido.inicioTreinamento}</b>.</p>`;
-    html += `<p>Atenciosamente, Setor de Treinamentos.</p>`;
-
-    const envolvidoJson = {
-      'To': envolvido.Email,
-      'Subject': `Treinamento: ${envolvido.nomeTreinamento}`,
-      'HTML': html,
-      'Cliente': "Bristow"
-    };
-
-    return envolvidoJson;
-  }
+  
 
   avaliarAluno(aluno) {
     if (aluno.Nota != '') {
@@ -428,9 +339,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.autoCompleteResults = lista.filter(x => x[campo].indexOf(event.query.toUpperCase()) > -1);
   }
 
-  funCalcularHoras() {
-    //alert();
-  }
+ 
 
   /*end valtim*/
 
@@ -493,21 +402,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.calcularDiferenca();
   }
 
-  // onEquipamentoOptionsSelected(event) {
-  //   this.api.onLoading();
-  //   this.api.getTreinamentosByEquipamento(event.value.Id)
-  //     .then(resp => {
-  //       if (resp.Treinamentos.length > 0) {
-  //         this.instrutores = resp.Instrutores;
-  //         this.treinamentos = resp.Treinamentos;
-  //       } else {
-  //         this.instrutores = [];
-  //         this.treinamentos = [];
-  //       }
-  //       this.api.onLoading();
-  //     });
-  // }
-
   onInstrutorOptionsSelected(event) {
     this.atualizarStatusTurma(() => { });
   }
@@ -517,16 +411,6 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.api.onLoading();
     this.turmaInterna.CargaHoraria = DataUtil.horaToMinuto(event.value.CargaHoraria);
     Object.assign(event.value, this.turmaInterna.Treinamento);
-
-    // this.api.getInstrutoresByTreinamento(event.value.Id)
-    //   .then(resp => {
-    //     if (resp.Instrutores.length > 0) {
-    //       this.instrutores = resp.Instrutores;
-    //     } else {
-    //       this.instrutores = [];
-    //     }
-    //     this.api.onLoading();
-    //   });
   }
 
 

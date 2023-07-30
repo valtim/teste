@@ -69,9 +69,7 @@ import { AnexosComponent } from './treinamento/anexos/anexos.component';
 import { CertificadoComponent } from './treinamento/certificado/certificado.component';
 import { ComentarioComponent } from './treinamento/comentario/comentario.component';
 import { ConteudoCurricularComponent } from './treinamento/conteudo-curricular/conteudo-curricular.component';
-import { EnviarValidacaoComponent } from './treinamento/enviar-validacao/enviar-validacao.component';
 import { ListaAnexosComponent } from './treinamento/lista-anexos/lista-anexos.component';
-import { NotificarEnvolvidosComponent } from './treinamento/notificar-envolvidos/notificar-envolvidos.component';
 import { RegistroFrequenciaComponent } from './treinamento/registro-frequencia/registro-frequencia.component';
 import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
 import { TurmaComponent } from './treinamento/turma/turma.component';
@@ -133,9 +131,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CertificadoComponent,
     ComentarioComponent,
     ConteudoCurricularComponent,
-    EnviarValidacaoComponent,
     ListaAnexosComponent,
-    NotificarEnvolvidosComponent,
     RegistroFrequenciaComponent,
     TreinamentoListComponent,
     TurmaComponent,

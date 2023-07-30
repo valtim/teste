@@ -1015,10 +1015,9 @@ export class ApiService {
       .toPromise();
   }
 
-  getTripulantes(): Promise<any> {
-    return this.http
-      .get(`${this.url}tripulante`, this.httpOptions)
-      .toPromise();
+  async getTripulantes(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}tripulante`, this.httpOptions));
   }
 
   getTripulantesLight(): Promise<any> {
