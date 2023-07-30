@@ -107,6 +107,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { AssinaturaRDVComponent } from './relatorios/assinatura-rdv/assinatura-rdv.component';
+import { AssinaturaBocaComponent } from './relatorios/assinatura-boca/assinatura-boca.component';
 import { EditarTreinamentoComponent } from './treinamento/editar-treinamento/editar-treinamento.component';
 import { TripulanteEscalaComponent } from './escala/tripulante-escala/tripulante-escala.component';
 import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
@@ -217,11 +219,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
     CadastroEmailCdoComponent,
+
+    AssinaturaRDVComponent,
+    AssinaturaBocaComponent
+
     TripulanteEscalaComponent,
     OrdenarCertificadoComponent,
     EmailEscalaComponent,
     EmailDiarioFadigaComponent,
     EmailDiarioCdoComponent
+
   ],
   imports: [
     AppRoutingModule,

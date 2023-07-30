@@ -30,7 +30,7 @@ export class CabecalhoImpressaoComponent implements OnInit {
     this.ExibirRevisao = (this.revisao != undefined || this.data != undefined || this.form != undefined);
 
     this.api.getClienteLogado().then(x=>{
-      this.logo = `/assets/img/${x}.png`;
+      this.logo = `/assets/imgs/${x}.png`;
     });
     
   }

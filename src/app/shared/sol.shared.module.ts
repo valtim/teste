@@ -44,6 +44,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ChipsModule } from 'primeng/chips';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BadgeModule } from 'primeng/badge';
@@ -75,6 +76,7 @@ import {SidebarModule} from 'primeng/sidebar';
     DropdownModule,
     FieldsetModule,
     FileUploadModule,
+    ChipsModule,
     FormsModule,
     HttpClientModule,
     InputMaskModule,
@@ -118,6 +120,7 @@ import {SidebarModule} from 'primeng/sidebar';
     DropdownModule,
     FieldsetModule,
     FileUploadModule,
+    ChipsModule,
     FormsModule,
     HttpClientModule,
     InputMaskModule,

@@ -37,7 +37,15 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "allowedCommonJsDependencies": [
+              "jspdf",
+              "canvg",
+              "html2canvas",
+              "rgbcolor",
+              "raf",
+              "core-js"
+            ]              
           },
           "configurations": {
             "production": {

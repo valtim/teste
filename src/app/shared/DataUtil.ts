@@ -22,6 +22,14 @@ export class DataUtil {
     ].join('/');
   }
 
+  public static formatDateURL(date) {
+    return [
+      date.getFullYear(),
+      this.padTo2Digits(date.getMonth() + 1),
+      this.padTo2Digits(date.getDate())          
+    ].join('-');
+  }
+
   public static TimeSpanURL(timespan : string ):string {
     let hoje = new Date();
     let data = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDay(), parseInt(timespan.split(':')[0]), parseInt(timespan.split(':')[1]))
