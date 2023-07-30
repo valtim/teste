@@ -1,9 +1,10 @@
-<div *ngIf="Registro.Display" style="height:500px">
+<div *ngIf="Registro" style="height:500px">
 
     <h3>{{Registro.Tripulante.Trato}} - {{Registro.Data | date:'dd/MM/yyyy'}}</h3>
 
     <p-pickList [source]="list1" [target]="list2" dragdrop="true" (onTargetSelect)="funteste($event)"
-        [showTargetControls]="false" [showSourceControls]="false" [sourceStyle]="estilo" [targetStyle]="estilo" (onMoveToSource)="itemSelecionado = false">
+        [showTargetControls]="false" [showSourceControls]="false" [sourceStyle]="estilo" [targetStyle]="estilo"
+        (onMoveToSource)="itemSelecionado = false">
         <ng-template let-item pTemplate="item">
             <div>
                 <b>{{item.TipoDeOcorrencia.Nome}}</b>
@@ -46,8 +47,11 @@
 
 
     <hr>
-    <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"></button>
-    <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
-        class="ui-button-secondary"></button>
+    <span class="p-buttonset">
+        <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"
+            class="p-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
+            class="p-button-warning"></button>
+    </span>
 
 </div>

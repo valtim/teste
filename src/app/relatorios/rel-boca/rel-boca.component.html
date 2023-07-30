@@ -24,12 +24,13 @@
     </div>
 </div>
 
-
+<p-toolbar *ngIf="!dados" class="m-4">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
 <div #screen *ngIf="tudoPronto" id="tabela">
 
-
-    <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DA UTILIZAÇÃO DE AERONAVES CONTRATADAS" form="FORM CDV 023"
+  <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DA UTILIZAÇÃO DE AERONAVES CONTRATADAS" form="FORM CDV 023"
         data="20/04/2020" revisao="01" class="d-print"></app-cabecalho-impressao>
 
 

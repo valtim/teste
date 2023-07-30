@@ -31,6 +31,9 @@ export class Turma {
   public DataDeInicio: Date;
   public Filtro: String = "";
 
+  public TempoDeCurso: String = "";
+  public TempoDeCursoNoturno: String = "";
+
   /*
   get diferenca(): number {
 

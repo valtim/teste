@@ -24,7 +24,7 @@
 
 </p-toolbar>
 
-<p-tabView *ngIf="prefixos" (onChange)="definirAbaSelecionada($event)">
+<p-tabView *ngIf="prefixos && tudoPronto" (onChange)="definirAbaSelecionada($event)">
     <p-tabPanel [header]="prefixo.Prefixo" *ngFor="let prefixo of prefixos; let i = index" [selected]="i == 0">
         <table *ngIf="exibirPrefixos">
             <thead>
@@ -101,7 +101,7 @@
     </p-tabPanel>
 </p-tabView>
 
-<p-card *ngIf="exibirPrefixos" class="resumo">
+<p-card *ngIf="exibirPrefixos && tudoPronto" class="resumo">
     <label class="negrito">Total Tempo FB: </label>{{prefixoSelecionado.TotalTempoFB | timespan:"HH:mm:ss"}}<br>
     <label class="negrito">Total Back Up: </label>{{prefixoSelecionado.TotalBackUp | timespan:"HH:mm:ss"}}<br>
     <label class="negrito">Total Consumo FB: </label>{{prefixoSelecionado.TotalConsumoFB}} Libras<br>

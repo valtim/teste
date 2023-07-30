@@ -27,12 +27,16 @@
 <div class="tabela" *ngIf="tripulantes">
 
     <p-table [columns]="colunas" [value]="tripulantes" [scrollable]="true"
-        scrollHeight="70vh" id="" frozenHeight="200px" class="tabela">        
+        scrollHeight="83vh" id="" frozenHeight="200px" class="tabela">        
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns; let i = index" class="coluna">
-                    {{col}}
-                </th>
+                <th></th>
+                <th>Trato</th>
+                <th>ANAC</th>
+                <th>Matrícula</th>
+                <th>Matrícula TOTVS</th>
+                <th>e-mail</th>              
+                <th>Status</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -40,7 +44,9 @@
                 <td><input type="checkbox" (change)="marcarCheckboxTripulante($event,rowData)"></td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Trato}}</td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.CodigoANAC}}</td>
-                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Matricula}}</td>                
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Matricula}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.MatriculaInterna}}</td>               
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Email}}</td>              
                 <td (click)="exibirDialogoEdicao(rowData)"><div class="bolinha" ngClass="{{rowData.Cor}}"></div></td>
                 <!--<td>
                     <button pButton type="button" icon="pi pi-arrow-right" label="Editar" (click)="exibirDialogoEdicao(rowData)"></button>

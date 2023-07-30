@@ -1,8 +1,18 @@
 <app-titulo titulo="Treinamentos" [carregando]="loading"></app-titulo>
 
-<p-table [columns]="cols" [value]="treinamentos" [ngClass]="displayModal?'ocultar':''">
+<span class="p-buttonset botoes_salvar" *ngIf="!editando && !loading">
+    <button pButton type="button" label="Novo" (click)="novo()" icon="pi pi-plus-circle"
+        class="p-button-raised p-button-rounded"></button>
+    <button pButton type="button" label="Ordenar" [routerLink]="'/ordenar-certificado'" icon="pi pi-sort-amount-up-alt"
+        class="p-button-raised p-button-rounded p-button-warning"></button>
+    <button pButton type="button" label="Excluir" (click)="excluir()" icon="pi pi-trash"
+        [disabled]="valoresSelecionados.length == 0" class="p-button-raised p-button-rounded p-button-danger"></button>
+</span>
+
+<p-table [columns]="cols" [value]="treinamentos" *ngIf="!editando">
     <ng-template pTemplate="header" let-columns>
         <tr>
+            <th></th>
             <th *ngFor="let col of columns" [pSortableColumn]="col.field">
                 {{col.header}}
                 <p-sortIcon [field]="col.field" ariaLabel="Activate to sort"
@@ -14,21 +24,26 @@
 
     <ng-template pTemplate="body" let-treino>
         <tr>
+            <td><p-checkbox [value]="treino.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"></p-checkbox>
+            </td>
             <td (click)="editar(treino.Id)">{{treino.Nome}}</td>
             <td (click)="editar(treino.Id)">{{treino.CargaHoraria}}</td>
             <td (click)="editar(treino.Id)">{{treino.Equipamentos}}</td>
-            <td (click)="editar(treino.Id)"><span *ngIf="treino.HorasDeVoo">SIM</span><span *ngIf="!treino.HorasDeVoo">NÃO</span></td>
+            <td (click)="editar(treino.Id)"><span *ngIf="treino.HorasDeVoo">SIM</span><span
+                    *ngIf="!treino.HorasDeVoo">NÃO</span></td>
         </tr>
     </ng-template>
 </p-table>
 
-
+<app-editar-treinamento [treinamento]="treinamentoEditado" (retorno)="salvar($event)" *ngIf="editando"
+    [tipos]="listaDeTiposDeTreinamento" [equipamentos]="listaDeEquipamentos"
+    [instrutores]="listaDeInstrutores"></app-editar-treinamento>
 
 <!-- <p-dialog header="Treinamento" [(visible)]="displayModal" [modal]="true" [baseZIndex]="10000" [maximizable]="true"
-    (onShow)="showDialogMaximized(dialDetail)" #dialDetail> -->
+    (onShow)="showDialogMaximized(dialDetail)" #dialDetail> 
     <div *ngFor="let item of treinamentos">
-        <app-novo-treinamento [treinamento]="item" *ngIf="item.Display" [tipos]="listaDeTiposDeTreinamento"
+        <app-editar-treinamento [treinamento]="item" *ngIf="item.Display" [tipos]="listaDeTiposDeTreinamento"
             [equipamentos]="listaDeEquipamentos" [instrutores]="listaDeInstrutores"
-            (newItemEvent)="displayModal = false"></app-novo-treinamento>
+            (newItemEvent)="displayModal = false"></app-editar-treinamento>
     </div>
-<!-- </p-dialog> -->
+ </p-dialog> -->

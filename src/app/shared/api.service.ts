@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataUtil } from "./../shared/DataUtil";
 import { Observable, lastValueFrom } from "rxjs";
+import * as Globals from './global';
 
 @Injectable({
   providedIn: "root",
@@ -9,9 +10,9 @@ import { Observable, lastValueFrom } from "rxjs";
 export class ApiService {
   public bearerOK = false;
 
-  public get httpOptions(): any {
-    return this.getOptions();
-  }
+  // public get httpOptions(): any {
+  //   return this.getOptions();
+  // }
 
   public obj = {
     get latest() {
@@ -58,11 +59,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     // this.url = window.location.host === 'localhost:4200' ? 'https://localhost:44343/' : '/';
-    this.url =
-      window.location.host === "localhost:4200"
-        ? "https://localhost:44343/"
-        //? "https://teste.fastapi.com.br/"
-        : "/";
+    this.url = `${Globals.SERVER_API_URL}`;
 
     this.message = {
       show: false,
@@ -75,8 +72,17 @@ export class ApiService {
 
   public EhProducao(): Promise<any> {
     return this.http
-      .get(this.url + "api/ehproducao", this.httpOptions)
+      .get(this.url + "ehproducao", this.httpOptions)
       .toPromise();
+  }
+
+
+  async GetListasPick(item : string) : Promise<any> {
+    return await lastValueFrom(this.http
+      .get(
+        this.url + `/listasPick/${item}`,
+        this.httpOptions
+      ));
   }
 
   getServer() {
@@ -91,7 +97,7 @@ export class ApiService {
     return localStorage.getItem(window.location.href);
   }
 
-  getOptions() {
+  get httpOptions() {
     if (!localStorage.getItem("Authorization"))
       return {
         headers: new HttpHeaders({
@@ -109,7 +115,7 @@ export class ApiService {
 
   getLogin(): Promise<any> {
     return this.http
-      .get(this.url + "api/autorizacaoad", this.httpOptions)
+      .get(this.url + "autorizacaoad", this.httpOptions)
       .toPromise();
   }
 
@@ -122,7 +128,7 @@ export class ApiService {
 
     return this.http
       .post(
-        this.url + "api/autorizacao-bristow",
+        this.url + "autorizacao-bristow",
         { bearer: bearer },
         httpOptions
       )
@@ -138,7 +144,7 @@ export class ApiService {
 
     return await lastValueFrom(this.http
       .post(
-        this.url + "api/autorizacao",
+        this.url + "autorizacao",
         { Username: username, Password: password },
         this.httpOptions
       ));
@@ -146,21 +152,21 @@ export class ApiService {
 
   getDiarioByDate(date: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/relatorio-de-voo/list/${date}`, this.httpOptions)
+      .get(`${this.url}relatorio-de-voo/list/${date}`, this.httpOptions)
       .toPromise();
   }
 
   getPendenciaDeFadiga(date: Date): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/PendenciaDaFadiga/${date.toString().split("T")[0]}`,
+        `${this.url}PendenciaDaFadiga/${date.toString().split("T")[0]}`,
         this.httpOptions
       )
       .toPromise();
   }
   postPendenciaDeFadiga(email: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/PendenciaDaFadiga`, email, this.httpOptions)
+      .post(`${this.url}PendenciaDaFadiga`, email, this.httpOptions)
       .toPromise();
   }
 
@@ -169,31 +175,31 @@ export class ApiService {
 
   postDadosDaEscala(escala: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/DadosDaEscala`, escala, this.httpOptions)
+      .post(`${this.url}DadosDaEscala`, escala, this.httpOptions)
       .toPromise();
   }
 
   // postDiarioVoo(diarioVoo: any): Promise<any> {
-  //   return this.http.post(`${this.url}api/novodiario`, diarioVoo, this.httpOptions)
+  //   return this.http.post(`${this.url}novodiario`, diarioVoo, this.httpOptions)
   //     .toPromise();
   // }
 
   getDiarioById(id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/relatorio-de-voo/get/${id}`, this.httpOptions)
+      .get(`${this.url}relatorio-de-voo/get/${id}`, this.httpOptions)
       .toPromise();
   }
 
   getRDVById(id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/rdv/${id}`, this.httpOptions)
+      .get(`${this.url}rdv/${id}`, this.httpOptions)
       .toPromise();
   }
 
   getDiarioByFolha(diario: string, folha: string): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/relatorio-de-voo/get/${diario}/${folha}`,
+        `${this.url}relatorio-de-voo/get/${diario}/${folha}`,
         this.httpOptions
       )
       .toPromise();
@@ -202,44 +208,44 @@ export class ApiService {
   getDiarioNovo(): Promise<any> {
     console.log("arqui");
     return this.http
-      .get(`${this.url}api/relatorio-de-voo/getnovo`, this.httpOptions)
+      .get(`${this.url}relatorio-de-voo/getnovo`, this.httpOptions)
       .toPromise();
   }
 
   getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/novodiario/${id}/${month}/${year}`, this.httpOptions)
+      .get(`${this.url}novodiario/${id}/${month}/${year}`, this.httpOptions)
       .toPromise();
   }
 
   getPagamento(data: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/relatorio/pagamento/${data}`, this.httpOptions)
+      .get(`${this.url}relatorio/pagamento/${data}`, this.httpOptions)
       .toPromise();
   }
 
   getListasPMS(): Promise<any> {
     console.log("site");
     return this.http
-      .get(this.url + "api/listaspadrao", this.httpOptions)
+      .get(this.url + "listaspadrao", this.httpOptions)
       .toPromise();
   }
 
   getClienteLogado(): Promise<any> {
     return this.http
-      .get(`${this.url}api/clienteLogado`, this.httpOptions)
+      .get(`${this.url}clienteLogado`, this.httpOptions)
       .toPromise();
   }
 
   getQuadroDeTripulantes(): Promise<any> {
     return this.http
-      .get(`${this.url}api/quadro-de-tripulantes`, this.httpOptions)
+      .get(`${this.url}quadro-de-tripulantes`, this.httpOptions)
       .toPromise();
   }
 
   postVencimento(valor): Promise<any> {
     return this.http
-      .post(`${this.url}api/quadro-de-tripulantes`, valor, this.httpOptions)
+      .post(`${this.url}quadro-de-tripulantes`, valor, this.httpOptions)
       .toPromise();
   }
 
@@ -249,7 +255,7 @@ export class ApiService {
 
   getAerodromos(): Promise<any> {
     return this.http
-      .get(`${this.url}api/vencimento`, this.httpOptions)
+      .get(`${this.url}vencimento`, this.httpOptions)
       .toPromise();
   }
 
@@ -287,32 +293,36 @@ export class ApiService {
     return this.getCombos().then(() => JSON.parse(localStorage.getItem("Tripulante")));
   }
 
-  getCertificado(): Promise<any> {
-    return this.http
-      .get(`${this.url}api/certificado`, this.httpOptions)
-      .toPromise();
+  async getCertificado(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}certificado`, this.httpOptions));
+  }
+
+  async postCertificado(cert: any[]): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}certificado`, cert, this.httpOptions));
   }
 
   getVencimento(): Promise<any> {
     return this.http
-      .get(`${this.url}api/vencimento`, this.httpOptions)
+      .get(`${this.url}vencimento`, this.httpOptions)
       .toPromise();
   }
 
   // postVencimento(vencimentoList: Array<any>): Promise<any> {
-  //   return this.http.post(`${this.url}api/vencimento`, vencimentoList, this.httpOptions)
+  //   return this.http.post(`${this.url}vencimento`, vencimentoList, this.httpOptions)
   //     .toPromise();
   // }
 
   postDiarioVoo(diarioVoo: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/novodiario`, diarioVoo, this.httpOptions)
+      .post(`${this.url}novodiario`, diarioVoo, this.httpOptions)
       .toPromise();
   }
 
   getMenuPermission() {
     this.http
-      .get(`${this.url}api/menu`, this.httpOptions)
+      .get(`${this.url}menu`, this.httpOptions)
       .toPromise()
       .then((response) => {
         this.permission = response;
@@ -321,29 +331,29 @@ export class ApiService {
 
   getEscala(dataEscala: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/novaescala/${dataEscala}`, this.httpOptions)
+      .get(`${this.url}novaescala/${dataEscala}`, this.httpOptions)
       .toPromise();
   }
 
   getUltimaEscala(): Promise<any> {
     return this.http
-      .get(`${this.url}api/ultimaescala`, this.httpOptions)
+      .get(`${this.url}ultimaescala`, this.httpOptions)
       .toPromise();
   }
 
   postEscala(escala: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/novaescala`, escala, this.httpOptions)
+      .post(`${this.url}novaescala`, escala, this.httpOptions)
       .toPromise();
   }
 
   getBase(): Promise<any> {
-    return this.http.get(`${this.url}api/base`, this.httpOptions).toPromise();
+    return this.http.get(`${this.url}base`, this.httpOptions).toPromise();
   }
 
   getListaEscalaPrevista(): Promise<any> {
     return this.http
-      .get(`${this.url}api/listas/escala-prevista`, this.httpOptions)
+      .get(`${this.url}listas/escala-prevista`, this.httpOptions)
       .toPromise();
   }
 
@@ -353,43 +363,43 @@ export class ApiService {
 
   getEnviarEscalaEmail(data: string): Promise<any> {
     return this.http
-      .get(this.url + "api/escalaporemail/" + data, this.httpOptions)
+      .get(this.url + "escalaporemail/" + data, this.httpOptions)
       .toPromise();
   }
 
   getNTripulanteLista(): Promise<any> {
     return this.http
-      .get(this.url + "api/ntripulante", this.httpOptions)
+      .get(this.url + "ntripulante", this.httpOptions)
       .toPromise();
   }
 
   getNTripulante(id: string): Promise<any> {
     return this.http
-      .get(this.url + "api/ntripulante/" + id, this.httpOptions)
+      .get(this.url + "ntripulante/" + id, this.httpOptions)
       .toPromise();
   }
 
   postNTripulante(tripulante: any): Promise<any> {
     return this.http
-      .post(this.url + "api/ntripulante", tripulante, this.httpOptions)
+      .post(this.url + "ntripulante", tripulante, this.httpOptions)
       .toPromise();
   }
 
   postNTripulantes(tripulantes: Array<any>): Promise<any> {
     return this.http
-      .post(this.url + "api/ntripulantes", tripulantes, this.httpOptions)
+      .post(this.url + "ntripulantes", tripulantes, this.httpOptions)
       .toPromise();
   }
 
   getListaTripulante(): Promise<any> {
     return this.http
-      .get(this.url + "api/listas/tripulante", this.httpOptions)
+      .get(this.url + "listas/tripulante", this.httpOptions)
       .toPromise();
   }
 
   getListaTripulanteCombo(): Promise<any> {
     return this.http
-      .get(this.url + "api/listas/tripulantecombo", this.httpOptions)
+      .get(this.url + "listas/tripulantecombo", this.httpOptions)
       .toPromise();
   }
 
@@ -401,7 +411,7 @@ export class ApiService {
   ): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/localidade/${tipo}/${perPage}/${currentPage}${search}`,
+        `${this.url}localidade/${tipo}/${perPage}/${currentPage}${search}`,
         this.httpOptions
       )
       .toPromise();
@@ -409,18 +419,18 @@ export class ApiService {
 
   getListaLocalidade(): Promise<any> {
     return this.http
-      .get(this.url + "api/listas/localidade", this.httpOptions)
+      .get(this.url + "listas/localidade", this.httpOptions)
       .toPromise();
   }
 
   postLocalidade(localidades: Array<any>): Promise<any> {
     return this.http
-      .post(this.url + "api/localidade", localidades, this.httpOptions)
+      .post(this.url + "localidade", localidades, this.httpOptions)
       .toPromise();
   }
   getListasTrilho(): Promise<any> {
     return this.http
-      .get(this.url + `api/trilho/listas`, this.httpOptions)
+      .get(this.url + `trilho/listas`, this.httpOptions)
       .toPromise();
   }
 
@@ -428,7 +438,7 @@ export class ApiService {
     return this.http
       .get(
         this.url +
-        `api/trilho/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
+        `trilho/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
         }`,
         this.httpOptions
       )
@@ -438,7 +448,7 @@ export class ApiService {
   postEscalaPorEmail(data: Date, extras: any) {
     return this.http
       .post(
-        this.url + `api/escala-diaria/${data.toISOString().split("T")[0]}`,
+        this.url + `escala-diaria/${data.toISOString().split("T")[0]}`,
         extras,
         this.httpOptions
       )
@@ -448,7 +458,7 @@ export class ApiService {
   getEscalaDiaria(data: Date): Promise<any> {
     return this.http
       .get(
-        this.url + `api/escala-diaria/${data.toISOString().split("T")[0]}`,
+        this.url + `escala-diaria/${data.toISOString().split("T")[0]}`,
         this.httpOptions
       )
       .toPromise();
@@ -456,14 +466,14 @@ export class ApiService {
 
   getEscalaDiariaHTML(data: string): Promise<any> {
     return this.http
-      .get(this.url + `api/escala-diaria/${data}/html`, this.httpOptions)
+      .get(this.url + `escala-diaria/${data}/html`, this.httpOptions)
       .toPromise();
   }
 
   getEscalaSemanal(data: Date): Promise<any> {
     return this.http
       .get(
-        this.url + `api/escala-semanal/${data.toISOString().split("T")[0]}`,
+        this.url + `escala-semanal/${data.toISOString().split("T")[0]}`,
         this.httpOptions
       )
       .toPromise();
@@ -472,7 +482,7 @@ export class ApiService {
   postEscalaSemanal(data: Date, extras: any) {
     return this.http
       .post(
-        this.url + `api/escala-semanal/${data.toISOString().split("T")[0]}`,
+        this.url + `escala-semanal/${data.toISOString().split("T")[0]}`,
         extras,
         this.httpOptions
       )
@@ -481,29 +491,29 @@ export class ApiService {
 
   postTrilho(trilhos: Array<any>): Promise<any> {
     return this.http
-      .post(this.url + "api/trilho", trilhos, this.httpOptions)
+      .post(this.url + "trilho", trilhos, this.httpOptions)
       .toPromise();
   }
 
   deleteTrilho(trilhos: Array<string>): Promise<any> {
     return this.http
-      .post(this.url + "api/trilho/delete", trilhos, this.httpOptions)
+      .post(this.url + "trilho/delete", trilhos, this.httpOptions)
       .toPromise();
   }
 
   getListaBloco(): Promise<any> {
-    return this.http.get(this.url + "api/bloco", this.httpOptions).toPromise();
+    return this.http.get(this.url + "bloco", this.httpOptions).toPromise();
   }
 
   getListaBlocoByPrefixo(idPrefixo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/bloco/${idPrefixo}`, this.httpOptions)
+      .get(`${this.url}bloco/${idPrefixo}`, this.httpOptions)
       .toPromise();
   }
 
   postBlocoList(bloco: Array<any>): Promise<any> {
     return this.http
-      .post(this.url + "api/bloco", bloco, this.httpOptions)
+      .post(this.url + "bloco", bloco, this.httpOptions)
       .toPromise();
   }
 
@@ -518,67 +528,67 @@ export class ApiService {
       }),
     };
     return this.http
-      .post(`${this.url}api/excel/upload`, data, option)
+      .post(`${this.url}excel/upload`, data, option)
       .toPromise();
   }
 
   getListaDeUsuarios(): Promise<any> {
-    return this.http.get(`${this.url}api/listas/usuario`).toPromise();
+    return this.http.get(`${this.url}listas/usuario`).toPromise();
   }
 
   getUsuario(): Promise<any> {
-    return this.http.get(`${this.url}api/controledeacesso`).toPromise();
+    return this.http.get(`${this.url}controledeacesso`).toPromise();
   }
 
   postUsuario(usuarioList: Array<any>): Promise<any> {
     return this.http
-      .post(`${this.url}api/controledeacesso`, usuarioList)
+      .post(`${this.url}controledeacesso`, usuarioList)
       .toPromise();
   }
 
   // getGerenciaFadiga(data: string): Promise<any> {
-  //   return this.http.get(`${this.url}api/GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
+  //   return this.http.get(`${this.url}GerenciaDeFadiga/${data}`, this.httpOptions).toPromise();
   // }
 
   postGerenciaFadiga(data: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/GerenciaDaFadiga`, data, this.httpOptions)
+      .post(`${this.url}GerenciaDaFadiga`, data, this.httpOptions)
       .toPromise();
   }
 
   getEscalaRealizada(data: string) {
     return this.http
-      .get(`${this.url}api/escalarealizada/${data}`, this.httpOptions)
+      .get(`${this.url}escalarealizada/${data}`, this.httpOptions)
       .toPromise();
   }
 
   postEscalaRealizada(escala: Array<any>): Promise<any> {
     return this.http
-      .post(`${this.url}api/escalarealizada`, escala, this.httpOptions)
+      .post(`${this.url}escalarealizada`, escala, this.httpOptions)
       .toPromise();
   }
 
   postTrocaSenha(usuario: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/trocasenha`, usuario, this.httpOptions)
+      .post(`${this.url}trocasenha`, usuario, this.httpOptions)
       .toPromise();
   }
 
   getTratamentoFadiga(id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/TratamentoDaFadiga/${id}`, this.httpOptions)
+      .get(`${this.url}TratamentoDaFadiga/${id}`, this.httpOptions)
       .toPromise();
   }
 
   getTelaGerenciaDaFadiga(): Promise<any> {
     return this.http
-      .get(`${this.url}api/TelaGerenciaDaFadiga`, this.httpOptions)
+      .get(`${this.url}TelaGerenciaDaFadiga`, this.httpOptions)
       .toPromise();
   }
   postTratamentoFadiga(id: string, tratamento: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/TratamentoDaFadiga/${id}`,
+        `${this.url}TratamentoDaFadiga/${id}`,
         tratamento,
         this.httpOptions
       )
@@ -587,25 +597,25 @@ export class ApiService {
 
   getTipoPergunta() {
     return this.http
-      .get(`${this.url}api/TipoDePergunta`, this.httpOptions)
+      .get(`${this.url}TipoDePergunta`, this.httpOptions)
       .toPromise();
   }
 
   postTipoPergunta(perguntas: any) {
     return this.http
-      .post(`${this.url}api/TipoDePergunta`, perguntas, this.httpOptions)
+      .post(`${this.url}TipoDePergunta`, perguntas, this.httpOptions)
       .toPromise();
   }
 
   getPergunta() {
     return this.http
-      .get(`${this.url}api/Pergunta`, this.httpOptions)
+      .get(`${this.url}Pergunta`, this.httpOptions)
       .toPromise();
   }
 
   postPergunta(perguntas: any) {
     return this.http
-      .post(`${this.url}api/Pergunta`, perguntas, this.httpOptions)
+      .post(`${this.url}Pergunta`, perguntas, this.httpOptions)
       .toPromise();
   }
 
@@ -617,7 +627,7 @@ export class ApiService {
   ) {
     return this.http
       .get(
-        `${this.url}api/RdvPorPeriodo/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
+        `${this.url}RdvPorPeriodo/${fechado}/${dataInicio}/${dataFim}/${plataforma}`,
         this.httpOptions
       )
       .toPromise();
@@ -625,13 +635,13 @@ export class ApiService {
 
   getTelaConsultaRisco(): Promise<any> {
     return this.http
-      .get(`${this.url}api/TelaConsultaAvRisco`, this.httpOptions)
+      .get(`${this.url}TelaConsultaAvRisco`, this.httpOptions)
       .toPromise();
   }
 
   getBI(dataIni: Date, dataFim: Date): Observable<any> {
     return this.http.get(
-      `${this.url}api/consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
+      `${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
       }`,
       this.httpOptions
     );
@@ -640,7 +650,7 @@ export class ApiService {
   getCombosServidor(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       this.http
-        .get(`${this.url}api/combos-light`, this.httpOptions)
+        .get(`${this.url}combos-light`, this.httpOptions)
         .toPromise()
         .then((x) => {
           localStorage.setItem("Combos", JSON.stringify(x));
@@ -652,14 +662,17 @@ export class ApiService {
 
   getCombos(): Promise<any> {
     const promise = new Promise((resolve, reject) => {
-      let combos = localStorage.getItem("Combos");
-      if ((combos == null) || (combos == 'null')) {
-        this.getCombosServidor().then((x) => {
-          resolve(x);
-        });
-      } else {
-        resolve(JSON.parse(localStorage.getItem("Combos")));
-      }
+      this.getCombosServidor().then((x) => {
+        resolve(x);
+      });
+      // let combos = localStorage.getItem("Combos");
+      // if ((combos == null) || (combos == 'null')) {
+      //   this.getCombosServidor().then((x) => {
+      //     resolve(x);
+      //   });
+      // } else {
+      //   resolve(JSON.parse(localStorage.getItem("Combos")));
+      // }
     });
 
     return promise;
@@ -668,7 +681,7 @@ export class ApiService {
   postTelaConsultaRisco(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/TelaConsultaAvRisco`,
+        `${this.url}TelaConsultaAvRisco`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -678,7 +691,7 @@ export class ApiService {
   postPaxTransportado(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelQtdePaxTransportados`,
+        `${this.url}RelQtdePaxTransportados`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -688,7 +701,7 @@ export class ApiService {
   postConsComb(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelConsumoDeCombustivel`,
+        `${this.url}RelConsumoDeCombustivel`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -698,7 +711,7 @@ export class ApiService {
   postRelErrosNoDb(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelErrosNoDb`,
+        `${this.url}RelErrosNoDb`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -707,13 +720,13 @@ export class ApiService {
 
   postRelRDV(filtro: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/RelRdv`, JSON.stringify(filtro), this.httpOptions)
+      .post(`${this.url}RelRdv`, JSON.stringify(filtro), this.httpOptions)
       .toPromise();
   }
 
   getRDV(folha: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/RelRdv/` + folha, this.httpOptions)
+      .get(`${this.url}RelRdv/` + folha, this.httpOptions)
       .toPromise();
   }
 
@@ -774,7 +787,7 @@ export class ApiService {
   postRelHorasQuinzena(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelHorasQuinzena`,
+        `${this.url}RelHorasQuinzena`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -783,7 +796,7 @@ export class ApiService {
 
   postRelBoca(filtro: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/RelBoca`, JSON.stringify(filtro), this.httpOptions)
+      .post(`${this.url}RelBoca`, JSON.stringify(filtro), this.httpOptions)
       .toPromise();
   }
 
@@ -791,7 +804,7 @@ export class ApiService {
     let str = DataUtil.from_date_to_traco(data);
 
     return this.http
-      .get(`${this.url}api/RelControleDeHoras/${str}`, this.httpOptions)
+      .get(`${this.url}RelControleDeHoras/${str}`, this.httpOptions)
       .toPromise();
   }
 
@@ -799,7 +812,7 @@ export class ApiService {
     data: Date,
     cliente: string
   ): Promise<any> {
-    let caminho = `${this.url}api/RelStatusDaFrota/${data.toISOString().split("T")[0]
+    let caminho = `${this.url}RelStatusDaFrota/${data.toISOString().split("T")[0]
       }/${cliente}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
@@ -810,14 +823,14 @@ export class ApiService {
     dataFim: Date,
     baseDeOperacao: string
   ): Promise<any> {
-    let caminho = `${this.url}api/RelEscala/${dataref.toISOString().split("T")[0]
+    let caminho = `${this.url}RelEscala/${dataref.toISOString().split("T")[0]
       }/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
       }/${baseDeOperacao}`;
     return this.http.get(caminho, this.httpOptions).toPromise();
   }
 
   postRelStatusDaFrota(lista: any): Promise<any> {
-    let caminho = `${this.url}api/RelStatusDaFrota`;
+    let caminho = `${this.url}RelStatusDaFrota`;
     return this.http
       .post(caminho, JSON.stringify(lista), this.httpOptions)
       .toPromise();
@@ -826,7 +839,7 @@ export class ApiService {
   postRelHorasPorTripulante(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelHorasPorTripulante`,
+        `${this.url}RelHorasPorTripulante`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -835,7 +848,7 @@ export class ApiService {
 
   getCliente() {
     return this.http
-      .get(`${this.url}api/clientelogado`, this.httpOptions)
+      .get(`${this.url}clientelogado`, this.httpOptions)
       .toPromise();
   }
 
@@ -846,7 +859,7 @@ export class ApiService {
   postRelPousosPorLocal(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelPousosPorLocal`,
+        `${this.url}RelPousosPorLocal`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -856,7 +869,7 @@ export class ApiService {
   postVoosRealizados(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelVoosRealizados`,
+        `${this.url}RelVoosRealizados`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -866,7 +879,7 @@ export class ApiService {
   postRelControleDeHoras(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/RelControleDeHoras`,
+        `${this.url}RelControleDeHoras`,
         JSON.stringify(filtro),
         this.httpOptions
       )
@@ -876,7 +889,7 @@ export class ApiService {
   postEscalaNova(dados: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/dadosDaEscala`,
+        `${this.url}dadosDaEscala`,
         JSON.stringify(dados),
         this.httpOptions
       )
@@ -885,26 +898,26 @@ export class ApiService {
 
   getContrato(): Promise<any> {
     return this.http
-      .get(`${this.url}api/contrato`, this.httpOptions)
+      .get(`${this.url}contrato`, this.httpOptions)
       .toPromise();
   }
 
   getTodos(tipo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/${tipo}`, this.httpOptions)
+      .get(`${this.url}${tipo}`, this.httpOptions)
       .toPromise();
   }
 
   postIndisponibilidade(filtro: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/relIndisponibilidade`, filtro, this.httpOptions)
+      .post(`${this.url}relIndisponibilidade`, filtro, this.httpOptions)
       .toPromise();
   }
 
   postCrudIndisponibilidadeFiltro(filtro: any): Promise<any> {
     return this.http
       .post(
-        `${this.url}api/CrudIndiponibilidade/filtro`,
+        `${this.url}CrudIndiponibilidade/filtro`,
         filtro,
         this.httpOptions
       )
@@ -913,20 +926,20 @@ export class ApiService {
 
   postCrudIndisponibilidade(filtro: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/CrudIndiponibilidade`, filtro, this.httpOptions)
+      .post(`${this.url}CrudIndiponibilidade`, filtro, this.httpOptions)
       .toPromise();
   }
 
   postPontualidade(filtro: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/RelPontualidade`, filtro, this.httpOptions)
+      .post(`${this.url}RelPontualidade`, filtro, this.httpOptions)
       .toPromise();
   }
 
   getCDO(data: Date): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/RelControleDiarioDeOperacoes/${data.toISOString().split("T")[0]
+        `${this.url}RelControleDiarioDeOperacoes/${data.toISOString().split("T")[0]
         }`,
         this.httpOptions
       )
@@ -984,14 +997,14 @@ export class ApiService {
 
   getJornadaImpressaoPeloId(id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/impressaodejornada/${id}`, this.httpOptions)
+      .get(`${this.url}impressaodejornada/${id}`, this.httpOptions)
       .toPromise();
   }
 
   getJornadaImpressaoPeloMesAno(data: Date): Promise<any> {
     return this.http
       .get(
-        `${this.url}api/jornadamensal/data/${data.toISOString().split("T")[0]}`,
+        `${this.url}jornadamensal/data/${data.toISOString().split("T")[0]}`,
         this.httpOptions
       )
       .toPromise();
@@ -999,19 +1012,19 @@ export class ApiService {
 
   getIncompatibilidadeCRUD(): Promise<any> {
     return this.http
-      .get(`${this.url}api/Incompatibilidade`, this.httpOptions)
+      .get(`${this.url}Incompatibilidade`, this.httpOptions)
       .toPromise();
   }
 
   postIncompatibilidadeCRUD(dados): Promise<any> {
     return this.http
-      .post(`${this.url}api/Incompatibilidade`, dados, this.httpOptions)
+      .post(`${this.url}Incompatibilidade`, dados, this.httpOptions)
       .toPromise();
   }
 
   deleteIncompatibilidadeCRUD(dados): Promise<any> {
     return this.http
-      .post(`${this.url}api/Incompatibilidade/delete`, dados, this.httpOptions)
+      .post(`${this.url}Incompatibilidade/delete`, dados, this.httpOptions)
       .toPromise();
   }
 
@@ -1019,14 +1032,14 @@ export class ApiService {
     if (gerente)
       return this.http
         .get(
-          `${this.url}api/confirmacaodejornada/gerente/${id}`,
+          `${this.url}confirmacaodejornada/gerente/${id}`,
           this.httpOptions
         )
         .toPromise();
 
     return this.http
       .get(
-        `${this.url}api/confirmacaodejornada/analista/${id}`,
+        `${this.url}confirmacaodejornada/analista/${id}`,
         this.httpOptions
       )
       .toPromise();
@@ -1035,36 +1048,35 @@ export class ApiService {
   }
 
   getPerfis(): Promise<any> {
-    return this.http.get(`${this.url}api/perfis`, this.httpOptions).toPromise();
+    return this.http.get(`${this.url}perfis`, this.httpOptions).toPromise();
   }
 
   getPermissao(): Promise<any> {
     return this.http
-      .get(`${this.url}api/permissoes`, this.httpOptions)
+      .get(`${this.url}permissoes`, this.httpOptions)
       .toPromise();
   }
 
   postPermissao(permissao): Promise<any> {
     return this.http
-      .post(`${this.url}api/permissoes`, permissao, this.httpOptions)
+      .post(`${this.url}permissoes`, permissao, this.httpOptions)
       .toPromise();
   }
 
   getPermissaoById(id: String): Promise<any> {
     return this.http
-      .get(`${this.url}api/permissoes/${id}`, this.httpOptions)
+      .get(`${this.url}permissoes/${id}`, this.httpOptions)
       .toPromise();
   }
 
-  getTripulantes(): Promise<any> {
-    return this.http
-      .get(`${this.url}api/tripulante`, this.httpOptions)
-      .toPromise();
+  async getTripulantes(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}tripulante`, this.httpOptions));
   }
 
   getTripulantesLight(): Promise<any> {
     return this.http
-      .get(`${this.url}api/tripulante-light`, this.httpOptions)
+      .get(`${this.url}tripulante-light`, this.httpOptions)
       .toPromise();
   }
 
@@ -1074,7 +1086,7 @@ export class ApiService {
   async getProximosVencimentos(referencia : Date): Promise<any> {
       return await lastValueFrom(
         this.http
-          .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
+          .get(`${this.url}ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
       );
     }
   
@@ -1082,54 +1094,57 @@ export class ApiService {
 
 
 
-  async getAnaliseDeFadiga(dateI: Date, dateF: Date): Promise<any> {
-    return await lastValueFrom(this.http
-      .get(
-        `${this.url}api/analise-de-fadiga/consultar/${dateI.toISOString().split("T")[0]}/${dateF.toISOString().split("T")[0]}`,
-        this.httpOptions
-      ));
-  }
+  
 
   getGrupoDeFicha(): Promise<any> {
     return this.http
-      .get(`${this.url}api/grupodeficha`, this.httpOptions)
+      .get(`${this.url}grupodeficha`, this.httpOptions)
       .toPromise();
   }
 
   postGrupoDeFicha(grupo): Promise<any> {
     return this.http
-      .post(`${this.url}api/grupodeficha`, grupo, this.httpOptions)
+      .post(`${this.url}grupodeficha`, grupo, this.httpOptions)
       .toPromise();
   }
 
   getFichaDeAvaliacao(): Promise<any> {
     return this.http
-      .get(`${this.url}api/fichadeavaliacao`, this.httpOptions)
+      .get(`${this.url}fichadeavaliacao`, this.httpOptions)
       .toPromise();
   }
 
   postFichaDeAvaliacao(ficha): Promise<any> {
     return this.http
-      .post(`${this.url}api/fichadeavaliacao`, ficha, this.httpOptions)
+      .post(`${this.url}fichadeavaliacao`, ficha, this.httpOptions)
       .toPromise();
+  }
+
+  async getAnaliseDeFadiga(filtro : any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(
+        `${this.url}analise-de-fadiga/consultar`,
+        filtro,
+        this.httpOptions
+      ));
   }
 
   async getProximosVencimentos(referencia: Date): Promise<any> {
     return await lastValueFrom(
       this.http
-        .get(`${this.url}api/ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
+        .get(`${this.url}ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
     );
   }
   async postAtualizaVencimento(vencimento: any): Promise<any> {
     return await lastValueFrom(
-      this.http.post(`${this.url}api/AtulizarVencimento`, vencimento, this.httpOptions)
+      this.http.post(`${this.url}AtulizarVencimento`, vencimento, this.httpOptions)
     );
   }
 
   async postRelarioMedicao(filtro): Promise<any> {
     return await lastValueFrom(this.http
       .post(
-        `${this.url}api/relmedicao`,
+        `${this.url}relmedicao`,
         filtro,
         this.httpOptions
       ));
@@ -1138,8 +1153,19 @@ export class ApiService {
 
   async getGenerico(controller: string, filtro: string): Promise<any> {
     return await lastValueFrom(this.http
-      .get(`${this.url}api/${controller}/${filtro}`, this.httpOptions));
+      .get(`${this.url}${controller}/${filtro}`, this.httpOptions));
   }
 
+  async postGenerico(controller: string, filtro: string, dados : any[]): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}${controller}/${filtro}`, dados, this.httpOptions));
+  }
+
+
+  
+  async emailEscalaMensal(filtro: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}escala-mensal/individual`, filtro, this.httpOptions));
+  }
 
 }

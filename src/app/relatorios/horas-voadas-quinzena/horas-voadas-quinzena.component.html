@@ -11,33 +11,47 @@
     <button type="button" pButton pRipple label="Final"></button>
     <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
       [inputStyle]="{ width: '100px' }" class="mr-2"></p-calendar>
-      
+
     <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="mr-4"></button>
 
     <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
-      class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+      class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom" [disabled]="!dados"></button>
 
     <button type="button" label="Relatório" pButton pRipple icon="pi pi-file" (click)="gerarTXT()"
-      class="botao-excel p-button-success mr-2" pTooltip="TXT" tooltipPosition="bottom" class="mr-2"></button>
+      class="botao-excel p-button-success mr-2" pTooltip="TXT" tooltipPosition="bottom" class="mr-2" [disabled]="!dados"></button>
 
 
-    <button type="button" label="Relatório/Memória" pButton pRipple icon="pi pi-file"
+    <!-- <button type="button" label="Relatório/Memória" pButton pRipple icon="pi pi-file"
       (click)="exibirMemoria = !exibirMemoria" class="botao-excel p-button-warning" pTooltip="TXT"
-      tooltipPosition="bottom"></button>
+      tooltipPosition="bottom"  disabled="!dados"></button> -->
   </div>
-
-
 
 </p-toolbar>
 
-<!-- {{hyphenated | timespanvalti }} -->
+<p-toolbar *ngIf="!dados" class="m-4">
+  Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
-<div id="dataTable" *ngIf="!exibirMemoria && filtroRetorno">
-  <p-table>
+<!-- <div id="dataTable" *ngIf="!exibirMemoria && dados"> -->
+<!-- <p-table>
     <ng-template pTemplate="caption"> Horas Voadas no Período </ng-template>
-  </p-table>
+  </p-table> -->
+<div class="tabela" *ngIf="dados">
+  <table id="dataTable">
+    <tr>
+      <th *ngFor="let coluna of colunas">{{coluna.Header}}</th>
+    </tr>
 
-  <p-table>
+    <tr *ngFor="let linha of dados">
+      <td *ngFor="let coluna of colunas" nowrap>
+        <b *ngIf="coluna.Bold">{{linha[coluna.Value]}}</b>
+        <span *ngIf="!coluna.Bold">{{linha[coluna.Value]}}</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- <p-table>
     <ng-template pTemplate="caption">
       Periodo de: {{ filtroRetorno.dataInicio | date: "dd/MM/yyyy" }} até
       {{ filtroRetorno.dataFim | date: "dd/MM/yyyy" }}
@@ -75,6 +89,6 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
 
-</div>
+<!-- </div> -->

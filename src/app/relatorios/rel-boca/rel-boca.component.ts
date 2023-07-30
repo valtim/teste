@@ -50,9 +50,14 @@ export class RelBocaComponent implements OnInit {
     this.api.getCombos().then(x => {
       this.baseDeOperacao = x.BaseDeOperacao;
       this.baseDeOperacaoSelecionada = this.baseDeOperacao[0];
-      
-      this.rodarRelatorio();            
-    });
+
+      //this.rodarRelatorio();
+      this.tudoPronto = true;
+
+    })
+
+
+
   }
 
   rodarRelatorio() {
@@ -61,8 +66,8 @@ export class RelBocaComponent implements OnInit {
     this.api.postRelBoca(
       {
         data: this.data,
-        clientes: [{ 'Id' : '31965f5a-e078-11e7-a923-0026b94bb39e' },
-          { 'Id' : 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998' }],
+        clientes: [{ 'Id': '31965f5a-e078-11e7-a923-0026b94bb39e' },
+        { 'Id': 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998' }],
         base: this.baseDeOperacaoSelecionada
       }).then(x => {
 
