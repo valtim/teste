@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService } from "primeng/api";
 import { ApiService } from 'src/app/shared/api.service';
 import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
+import * as Globals from 'src/app/shared/global';
 
 @Component({
   selector: 'app-assinatura-boca',
@@ -312,7 +313,7 @@ export class AssinaturaBocaComponent implements OnInit {
   }
 
   abrirArquivo(id : string) {    
-    window.open(this.apiTurmas.URLCORE + 'api/arquivo/'+id,'_blank');
+    window.open(`${Globals.SERVER_API_URL}` + 'arquivo/'+id,'_blank');
   }
 
 }

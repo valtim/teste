@@ -217,7 +217,7 @@ export class AssinaturaRDVComponent implements OnInit {
   }
 
   abrirArquivo(id : string) {    
-    window.open(this.apiTurmas.URLCORE + 'api/arquivo/'+id,'_blank');
+    window.open(this.api.url + 'arquivo/'+id,'_blank');
   }
 
 }

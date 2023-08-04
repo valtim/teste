@@ -732,55 +732,55 @@ export class ApiService {
 
   getAssinaturaRDV (DiarioDeBordo_id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
+      .get(`${this.url}assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
       .toPromise();
   }
 
   baseAssinaturaRDV (DiarioDeBordo_id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/base-assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
+      .get(`${this.url}base-assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
       .toPromise();
   }
 
   postAssinaturaBoca (dados: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/assinatura-boca`, JSON.stringify(dados), this.httpOptions)
+      .post(`${this.url}assinatura-boca`, JSON.stringify(dados), this.httpOptions)
       .toPromise();
   }
 
   postEmailManifestos (email: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/enviar-mail-manifestos`, JSON.stringify(email), this.httpOptions)
+      .post(`${this.url}enviar-mail-manifestos`, JSON.stringify(email), this.httpOptions)
       .toPromise();
   }
 
   postStatusAssinaturaBoca (dados: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/status-assinaturas-rdv`, JSON.stringify(dados), this.httpOptions)
+      .post(`${this.url}status-assinaturas-rdv`, JSON.stringify(dados), this.httpOptions)
       .toPromise();
   }
 
   assinarRDV (Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinar-pdfs-rdv/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}assinar-pdfs-rdv/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
   assinarBoca (Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinar-pdf-boca/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}assinar-pdf-boca/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
   obterStatusRDV (Assinatura_id: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/obter-status-rdv/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}obter-status-rdv/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
   obterStatusBoca (Assinatura_id: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/obter-status-boca/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}obter-status-boca/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 

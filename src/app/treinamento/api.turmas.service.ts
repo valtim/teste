@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { AutorizacaoService } from "../shared/autorizacao.service";
 import { BehaviorSubject } from "rxjs";
+import * as Globals from '../shared/global';
 
 @Injectable({
   providedIn: "root",
@@ -22,11 +23,7 @@ export class ApiService {
     private http: HttpClient,
     private autorizacao: AutorizacaoService
   ) {
-    this.URLCORE =
-      window.location.host == "localhost:4300"
-      ? "https://localhost:44343/"
-     //? "https://teste.fastapi.com.br/"
-        : "/";
+    this.URLCORE = `${Globals.SERVER_API_URL}`;
 
     if (localStorage.getItem("Authorization")) {
       this.httpOptions = {

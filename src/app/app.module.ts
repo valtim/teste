@@ -221,7 +221,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CadastroEmailCdoComponent,
 
     AssinaturaRDVComponent,
-    AssinaturaBocaComponent
+    AssinaturaBocaComponent,
 
     TripulanteEscalaComponent,
     OrdenarCertificadoComponent,
