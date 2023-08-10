@@ -1,12 +1,12 @@
 <app-titulo titulo="RDV" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="grid grid-assinatura" *ngIf="tudoPronto && semErros">
+<!-- <div class="grid grid-assinatura" *ngIf="tudoPronto && semErros">
     <button [disabled]="desabilitarBotaoAssinatura" (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Assinar"></button>    
     
     <button *ngIf="statusAssinatura" icon="pi pi-check-square" class="p-button-success status-assinar" type="button" pButton pRipple></button>
     <button *ngIf="!statusAssinatura" icon="pi pi-file-excel" class="p-button-warning status-assinar" type="button" pButton pRipple></button>
     <button class="p-button-raised p-button-text p-button-secondary texto-assinar" type="button" pButton pRipple label="Status da Assinatura Digital:"></button>        
-</div>
+</div> -->
 
 <div #screen *ngIf="tudoPronto && semErros">
 

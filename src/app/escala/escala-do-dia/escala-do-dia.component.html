@@ -6,17 +6,32 @@
 
 <p-card class="nao-imprimir">
     <button type="button" pButton pRipple label="Data"></button>
-    <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy"  showIcon="true"
+    <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
         [inputStyle]="{'width':'150px'}"></p-calendar>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-        class="p-ml-2"></button>
+        class="ml-2"></button>
     <button pButton type="button" icon="pi pi-save" iconPos="right" label="Salvar" (click)="salvar()"
-        class="p-ml-2 p-button-success"></button>
+        class="ml-2 p-button-success"></button>
     <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar por Email" (click)="email()"
-        class="p-ml-2"></button>
+        class="ml-4"></button>
 </p-card>
 
 
+
+<p-card class="nao-imprimir" *ngIf="tripulantesComPendencias.length > 0">
+    <h3>Os seguintes tripulantes não serão escalados por terem pendências. Retorne à tela de duplas para maiores detalhes</h3>
+    <div *ngFor="let item of tripulantesComPendencias">
+        <h3>{{item.Trato}}</h3>
+        <ul>
+            <li *ngIf="item.Fadiga < 50">Fadiga Inferior a 50 pontos</li>
+            <li *ngIf="item.TemVencido">Treinamento Vencido <ul><li *ngFor="let curso of item.Vencido">{{curso}}</li></ul> </li>
+            <li *ngIf="item.MenosDe15Horas">Tripulante precisa de ao menos 15 horas de voo nos últimos 60 dias</li>
+            <li *ngIf="item.MenosDe3Pousos">Tripulante precisa de ao menos 3 ciclos(pouso/decolagem) OFFSHORE nos últimos 60 dias</li>
+            <li *ngIf="item.MenosDe50Horas">Tripulante precisa de ao menos 50 horas de voo nos últimos 90 dias</li>
+            <li *ngIf="item.SemVooHa45Dias">Tripulante precisa de ao menos UM voo nos últimos 45 dias</li>
+        </ul>
+    </div>
+</p-card>
 
 <p-card class="nao-imprimir" *ngIf="extras">
 
@@ -112,47 +127,6 @@
 </table>
 
 <div [innerHtml]="escalaDoDia | safeHtml"></div>
-
-<!-- <table #escala>
-    <tr>
-        <th [attr.colspan]="valorColspan">
-            <img [src]="urlLogo" [alt]="urlLogo" style="max-height: 50px;"><span class="fonte-titulo">Atualização de
-                Escala
-                do dia {{data | date:'dd/MM/yyyy'}}</span>
-        </th>
-    </tr>
-
-    <tr>
-        <td>Nome</td>
-        <td>Base</td>
-        <td>Prefixo</td>
-        <td>Apres.</td>
-        <td>Obs.</td>
-        <td *ngFor="let coluna of colunas">&nbsp;</td>
-        <td>Saída</td>
-        <td>Limite Jornada</td>
-    </tr>
-    <tr *ngFor="let crew of tripulacoes">
-        <td>{{crew.Trato}}</td>
-        <td>{{crew.Base}}</td>
-        <td>{{crew.Prefixo}}</td>
-        <td>{{crew.Apresentacao}}</td>
-        <td>{{crew.Observacao}}</td>
-        <td *ngFor="let evento of crew.Eventos">
-            <span *ngIf="evento.Tipo == 'Voo'">Prefixo: {{evento.Prefixo}}<br />
-                <span>PIC: {{evento.PIC}} / SIC: {{evento.SIC}}</span>
-                <br />
-            </span>
-            {{evento.Descricao}}
-            <span *ngIf="evento.Tipo == 'Voo'"><br /><b>{{getPosicao(crew.Trato, evento)}}</b></span>
-            <span *ngIf="evento.Tipo == 'Treinamento'"><br />Início: {{evento.Inicio}} / Fim: {{evento.Fim}}</span>
-        </td>
-        <td>{{crew.LimiteDeCorte}}</td>
-        <td>{{crew.LimiteDeJornada}}</td>
-    </tr>
-</table>
-
--->
 
 <div class="formatted somente-impressora" *ngIf="extras">
     <b>Previsão de escala. Alterações poderão ocorrer devido às nossas operações serem não regulares e/ou por demanda

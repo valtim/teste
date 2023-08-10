@@ -77,7 +77,7 @@ export class ApiService {
   }
 
 
-  async GetListasPick(item : string) : Promise<any> {
+  async GetListasPick(item: string): Promise<any> {
     return await lastValueFrom(this.http
       .get(
         this.url + `/listasPick/${item}`,
@@ -428,10 +428,9 @@ export class ApiService {
       .post(this.url + "localidade", localidades, this.httpOptions)
       .toPromise();
   }
-  getListasTrilho(): Promise<any> {
-    return this.http
-      .get(this.url + `trilho/listas`, this.httpOptions)
-      .toPromise();
+  async getListasTrilho(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(this.url + `trilho/listas`, this.httpOptions));
   }
 
   getTrilho(dataIni: Date, dataFim: Date): Promise<any> {
@@ -647,35 +646,22 @@ export class ApiService {
     );
   }
 
-  getCombosServidor(): Promise<any> {
-    const promise = new Promise((resolve, reject) => {
-      this.http
-        .get(`${this.url}combos-light`, this.httpOptions)
-        .toPromise()
-        .then((x) => {
-          localStorage.setItem("Combos", JSON.stringify(x));
-          resolve(x);
-        });
-    });
-    return promise;
-  }
+  // getCombosServidor(): Promise<any> {
+  //   const promise = new Promise((resolve, reject) => {
+  //     this.http
+  //       .get(`${this.url}combos-light`, this.httpOptions)
+  //       .toPromise()
+  //       .then((x) => {
+  //         localStorage.setItem("Combos", JSON.stringify(x));
+  //         resolve(x);
+  //       });
+  //   });
+  //   return promise;
+  // }
 
-  getCombos(): Promise<any> {
-    const promise = new Promise((resolve, reject) => {
-      this.getCombosServidor().then((x) => {
-        resolve(x);
-      });
-      // let combos = localStorage.getItem("Combos");
-      // if ((combos == null) || (combos == 'null')) {
-      //   this.getCombosServidor().then((x) => {
-      //     resolve(x);
-      //   });
-      // } else {
-      //   resolve(JSON.parse(localStorage.getItem("Combos")));
-      // }
-    });
-
-    return promise;
+  async getCombos(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}combos-light`, this.httpOptions))
   }
 
   postTelaConsultaRisco(filtro: any): Promise<any> {
@@ -730,57 +716,57 @@ export class ApiService {
       .toPromise();
   }
 
-  getAssinaturaRDV (DiarioDeBordo_id: string): Promise<any> {
+  getAssinaturaRDV(DiarioDeBordo_id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
+      .get(`${this.url}assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
       .toPromise();
   }
 
-  baseAssinaturaRDV (DiarioDeBordo_id: string): Promise<any> {
+  baseAssinaturaRDV(DiarioDeBordo_id: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/base-assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
+      .get(`${this.url}base-assinatura-rdv/` + DiarioDeBordo_id, this.httpOptions)
       .toPromise();
   }
 
-  postAssinaturaBoca (dados: any): Promise<any> {
+  postAssinaturaBoca(dados: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/assinatura-boca`, JSON.stringify(dados), this.httpOptions)
+      .post(`${this.url}assinatura-boca`, JSON.stringify(dados), this.httpOptions)
       .toPromise();
   }
 
-  postEmailManifestos (email: any): Promise<any> {
+  postEmailManifestos(email: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/enviar-mail-manifestos`, JSON.stringify(email), this.httpOptions)
+      .post(`${this.url}enviar-mail-manifestos`, JSON.stringify(email), this.httpOptions)
       .toPromise();
   }
 
-  postStatusAssinaturaBoca (dados: any): Promise<any> {
+  postStatusAssinaturaBoca(dados: any): Promise<any> {
     return this.http
-      .post(`${this.url}api/status-assinaturas-rdv`, JSON.stringify(dados), this.httpOptions)
+      .post(`${this.url}status-assinaturas-rdv`, JSON.stringify(dados), this.httpOptions)
       .toPromise();
   }
 
-  assinarRDV (Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
+  assinarRDV(Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinar-pdfs-rdv/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}assinar-pdfs-rdv/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
-  assinarBoca (Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
+  assinarBoca(Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/assinar-pdf-boca/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}assinar-pdf-boca/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
-  obterStatusRDV (Assinatura_id: string, nomeArquivo: string): Promise<any> {
+  obterStatusRDV(Assinatura_id: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/obter-status-rdv/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}obter-status-rdv/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
-  obterStatusBoca (Assinatura_id: string, nomeArquivo: string): Promise<any> {
+  obterStatusBoca(Assinatura_id: string, nomeArquivo: string): Promise<any> {
     return this.http
-      .get(`${this.url}api/obter-status-boca/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
+      .get(`${this.url}obter-status-boca/` + Assinatura_id + '/' + nomeArquivo, this.httpOptions)
       .toPromise();
   }
 
@@ -1094,7 +1080,7 @@ export class ApiService {
 
 
 
-  
+
 
   getGrupoDeFicha(): Promise<any> {
     return this.http
@@ -1120,7 +1106,7 @@ export class ApiService {
       .toPromise();
   }
 
-  async getAnaliseDeFadiga(filtro : any): Promise<any> {
+  async getAnaliseDeFadiga(filtro: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(
         `${this.url}analise-de-fadiga/consultar`,
@@ -1156,16 +1142,22 @@ export class ApiService {
       .get(`${this.url}${controller}/${filtro}`, this.httpOptions));
   }
 
-  async postGenerico(controller: string, filtro: string, dados : any[]): Promise<any> {
+  async postGenerico(controller: string, filtro: string, dados: any[]): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}${controller}/${filtro}`, dados, this.httpOptions));
   }
 
 
-  
+
   async emailEscalaMensal(filtro: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}escala-mensal/individual`, filtro, this.httpOptions));
+  }
+
+
+  async disponibilidade(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}painel/disponibilidade`, this.httpOptions));
   }
 
 }

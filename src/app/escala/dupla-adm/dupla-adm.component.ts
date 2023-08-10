@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 import { DataUtil } from 'src/app/shared/DataUtil';
@@ -13,6 +14,7 @@ import { GuidUtil } from 'src/app/shared/GuidUtil';
 })
 export class DuplaAdmComponent implements OnInit {
 
+  ehGerente: boolean;
   dataFim: any;
   dataInicio: any;
   bases: any;
@@ -38,8 +40,9 @@ export class DuplaAdmComponent implements OnInit {
   deslocamentos: any;
 
   getSeverity(value: number): string {
-    if (value > 85) return "success";
-    if (value >= 80) return "warning"
+    if (value >= 75) return "success"
+    if (value >= 65) return "info"
+    if (value >= 50) return "warning"
     return "danger"
   }
 
@@ -101,7 +104,6 @@ export class DuplaAdmComponent implements OnInit {
       dados.Invalido = true;
     }
 
-    return;
 
     dados.Descricao = this.getDescricao(dados, this.dataSelecionada);
 
@@ -109,25 +111,25 @@ export class DuplaAdmComponent implements OnInit {
     if (dados.Invalido == true)
       return;
 
-    if (tipo == 'dupla') {
+    // if (tipo == 'dupla') {
 
-      let dupla = Object.assign({}, dados);
+    //   let dupla = Object.assign({}, dados);
 
-      if (dupla.Apresentacao == undefined)
-        return;
+    //   if (dupla.Apresentacao == undefined)
+    //     return;
 
-      dupla.PIC = dupla.PIC == null ? null : { Id: dupla.PIC.Id };
-      dupla.SIC = dupla.SIC == null ? null : { Id: dupla.SIC.Id };
+    //   dupla.PIC = dupla.PIC == null ? null : { Id: dupla.PIC.Id };
+    //   dupla.SIC = dupla.SIC == null ? null : { Id: dupla.SIC.Id };
 
-      this.apigenerico.postGenerico('Dupla', [dupla])
-        .then(() => {
-          this.messageService.add({ sticky: false, severity: 'success', summary: 'SOL Sistemas', detail: `Escala Salva` })
-          dupla.RepeteAte = undefined;
-          dupla.Modificado = false;
-        })
-        .catch((e) => { this.messageService.add({ sticky: false, severity: 'error', summary: 'SOL Sistemas', detail: `Erro ao salvar` }) })
-      return;
-    }
+    //   // this.apigenerico.postGenerico('Dupla', [dupla])
+    //   //   .then(() => {
+    //   //     this.messageService.add({ sticky: false, severity: 'success', summary: 'SOL Sistemas', detail: `Escala Salva` })
+    //   //     dupla.RepeteAte = undefined;
+    //   //     dupla.Modificado = false;
+    //   //   })
+    //   //   .catch((e) => { this.messageService.add({ sticky: false, severity: 'error', summary: 'SOL Sistemas', detail: `Erro ao salvar` }) })
+    //   // return;
+    // }
 
   }
 
@@ -158,8 +160,8 @@ export class DuplaAdmComponent implements OnInit {
         this.messageService.add({ sticky: true, severity: 'error', summary: 'SOL Sistemas', detail: `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente` });
       }
 
-      let temVerde = linha.PIC.Bolinha == 'success' || linha.SIC.Bolinha == 'success';
-      let temVermelha = linha.PIC.Bolinha == 'danger' || linha.SIC.Bolinha == 'danger';
+      // let temVerde = linha.PIC.Bolinha == 'success' || linha.SIC.Bolinha == 'success';
+      // let temVermelha = linha.PIC.Bolinha == 'danger' || linha.SIC.Bolinha == 'danger';
 
       // if (temVermelha && !temVerde) {
       //   let mensagem = 'Tripulante Vemelho deve fazer dupla com um tripulante VERDE';
@@ -167,24 +169,77 @@ export class DuplaAdmComponent implements OnInit {
       //   this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       // }
 
+      if (linha.PIC.Bolinha == 'warning' && linha.SIC.Bolinha == 'warning') {
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente, notifique o PILOTO CHEFE`;
+        if (this.ehGerente)
+          mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos pois PIC amarelo só pode voar com SIC amarelo mediante aprovação do PILOTO CHEFE`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'warn', summary: mensagem });
+      }
+
+      if (linha.PIC.Bolinha == 'warning' && linha.SIC.Bolinha == 'danger') {
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente, notifique o PILOTO CHEFE`;
+        if (this.ehGerente)
+          mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos pois PIC amarelo só pode voar com SIC vermelho mediante aprovação do PILOTO CHEFE`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'warn', summary: mensagem });
+      }
+
+      if (linha.PIC.Bolinha == 'danger' && linha.SIC.Bolinha == 'warning') {
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos por terem Incompatibilidade Presente`;
+        if (this.ehGerente)
+          mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos pois PIC vermelho só pode voar com SIC verde`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
+
+      if (linha.PIC.Fadiga <= 50 ) {
+        let mensagem = `Tripulante ${linha.PIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;        
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
+
+      if (linha.SIC.Fadiga <= 50 ) {
+        let mensagem = `Tripulante ${linha.SIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;        
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
+
+      if (!linha.PIC.EhInstrutor && linha.SIC.SoVoaComInstrutor){
+        let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos pois ${linha.SIC.Trato} só pode voar com Instrutores`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
+
+      if (linha.PIC.SemVooHa45Dias || linha.PIC.MenosDe50Horas || linha.PIC.MenosDe15Horas || linha.PIC.MenosDe3Pousos){
+        let mensagem = `O Tripulante ${linha.PIC.Trato} tem pendência de recência e só pode voar após "CHECK" com instrutor`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
+
+      if (!linha.PIC.EhInstrutor && (linha.SIC.SemVooHa45Dias || linha.SIC.MenosDe50Horas || linha.SIC.MenosDe15Horas || linha.SIC.MenosDe3Pousos)){
+        let mensagem = `O Tripulante ${linha.SIC.Trato} tem pendência de recência e só pode voar após "CHECK" com instrutor`;
+        desc.push(mensagem);
+        this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
+      }
     }
 
 
-    // if (linha.PIC) {
-    //   if (linha.PIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0]).length > 0)
-    //     desc.push(`FADIGA ${linha.PIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
-    //   desc.push(`${linha.PIC.Trato} VENCIDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
-    //   desc.push(`VENCENDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
+    if (linha.PIC) {
+      if (linha.PIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0]).length > 0)
+        desc.push(`FADIGA ${linha.PIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
+      desc.push(`${linha.PIC.Trato} VENCIDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
+      desc.push(`VENCENDO: ${linha.PIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
 
-    //   linha.Vencido = linha.PIC.Vencimentos.filter(x => x.DataDeVencimento >= dataSelecionada).length;
-    //   linha.Vencendo = linha.PIC.Vencimentos.filter(x => x.DataDeVencimento >= dataSelecionada.setDate(dataSelecionada.getDate() + 30)).length;
-    // }
-    // if (linha.SIC) {
-    //   if (linha.SIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0]).length > 0)
-    //     desc.push(`FADIGA ${linha.SIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
-    //   desc.push(`${linha.SIC.Trato} VENCIDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
-    //   desc.push(`VENCENDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
-    // }
+      linha.Vencido = linha.PIC.Vencimentos.filter(x => x.DataDeVencimento >= dataSelecionada).length;
+      linha.Vencendo = linha.PIC.Vencimentos.filter(x => x.DataDeVencimento >= dataSelecionada.setDate(dataSelecionada.getDate() + 30)).length;
+    }
+    if (linha.SIC) {
+      if (linha.SIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0]).length > 0)
+        desc.push(`FADIGA ${linha.SIC.Fadiga.filter(x => x.Data.split('T')[0] == linha.Data.toISOString().split('T')[0])[0].FadigaGravada}`)
+      desc.push(`${linha.SIC.Trato} VENCIDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'vermelho').length}`)
+      desc.push(`VENCENDO: ${linha.SIC.Vencimentos.filter(x => x.Cor == 'amarelo').length}`)
+    }
 
 
 
@@ -193,6 +248,11 @@ export class DuplaAdmComponent implements OnInit {
 
   funExibe(linha) {
     linha.ExibirDetalhes = !linha.ExibirDetalhes;
+  }
+
+  jornadaNoturna(apresentacao: string): boolean {
+    var hora = parseInt(apresentacao.split(':')[0]);
+    return hora > 12;
   }
 
   getPrimeiroAndUtimo(base: Date): { segunda: Date; domingo: Date; } {
@@ -234,46 +294,14 @@ export class DuplaAdmComponent implements OnInit {
       this.deslocamentos = da.Deslocamentos;
       this.PorDia = da.PorDia;
 
-
-
-      //this.PorDia.forEach(x => this.dataSelecionada = x.Hoje ? x.Data : this.dataSelecionada);
-
       if (!this.dataSelecionada) this.dataSelecionada = this.PorDia[0].Data;
       this.tripulantes = this.PorDia.find(x => DataUtil.paraDataISOdeString(x.Data) == DataUtil.paraDataISOdeString(this.dataSelecionada)).Tripulantes;
-
-      //this.mudouAba(0);
-
-      // this.filtrar(this.dataInicio);
-      //this.apiEscala.getDuplasAdm(this.dataInicio, this.dataFim).then(du => {
-
-      // this.duplas = du.Duplas;
-
-      // this.duplas.forEach(x => {
-      //   x.Data = new Date(x.Data);
-      //   // let trips = this.dados.filter(y=> data.getDate() == x.Data.getDate());
-
-      //   // if (x.PIC) {
-      //   //   x.PIC = this.trips.filter(y => y.data == x.data &&)[0]
-      //   // }
-
-      //   // if (x.SIC) {
-      //   //   x.SIC = this.tripulantes.filter(y => y.Id == x.SIC.Id)[0]
-      //   // }
-      //   x.Data = new Date(x.Data)
-      //   //x.Descricao = this.getDescricao(x, this.dataInicio);
-      //   x.Exibir = true;
-      // });
-
-
-      // let DataUtil.paraDataISOdeDate(data) = DataUtil.formatDateBR(data);
-      // this.cursos.forEach(x => x.Exibir = false);
-      // this.cursos.filter(x => x.DatasStr.includes(DataUtil.paraDataISOdeDate(data))).forEach(x => x.Exibir = true);
-      // this.exibeCursos = this.cursos.filter(x => x.DatasStr.includes(DataUtil.paraDataISOdeDate(data))).length > 0;
       this.carregado = true;
     })
       //})
       .catch((e) => {
         this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao acessar o site' });
+        this.carregado = true;
       })
   }
 
@@ -403,7 +431,10 @@ export class DuplaAdmComponent implements OnInit {
     private apiEscala: EscalaService,
     private messageService: MessageService,
     private apigenerico: ApiGenericoService,
-  ) { }
+    private router: Router,
+  ) {
+    this.ehGerente = this.router.url.indexOf('adm') > -1;
+  }
 
   ngOnInit(): void {
 

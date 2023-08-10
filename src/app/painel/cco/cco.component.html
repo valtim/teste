@@ -1,0 +1,42 @@
+<div class="maior">
+    <div class="grid">
+        <div class="col-3" *ngFor="let base of dados">
+            <p-fieldset [legend]="base.Base">
+                <div class="grid">
+                    <div class="col-5 m-2" *ngFor="let item of base.Lista">
+                        <div class="box"
+                            [ngClass]="!item.Indisponivel ? 'verde' : item.Operacoes ? 'amarelo' :'vermelho'">
+                            {{item.Prefixo.Trigrama}}
+                        </div>
+                    </div>
+                </div>
+            </p-fieldset>
+            <ul *ngFor="let item of base.Lista">
+                <li *ngIf="item.Indisponivel">
+                    <h2>{{item.Prefixo.Trigrama}} : {{item.DescricaoDoMotivo}}
+                        {{item.Inicio | date:"dd/MM/yyyy HH:mm"}}</h2>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="menor">
+    <p-fieldset [legend]="base.Base" *ngFor="let base of dados">
+        <div class="grid">
+            <div class="col-3 m-2" *ngFor="let item of base.Lista">
+                <div class="box"
+                [ngClass]="!item.Indisponivel ? 'verde' : item.Operacoes ? 'amarelo' :'vermelho'">
+                    <h1>{{item.Prefixo.Trigrama}}</h1>
+                </div>
+            </div>
+        </div>
+        <div *ngFor="let item of base.Lista">
+            <div *ngIf="item.Indisponivel">
+                {{item.Prefixo.Trigrama}} : {{item.DescricaoDoMotivo}}
+                {{item.Inicio | date:"dd/MM/yyyy HH:mm"}}<br/>
+            </div>
+        </div>
+    </p-fieldset>
+
+</div>

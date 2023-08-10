@@ -115,6 +115,7 @@ import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/o
 import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diario-cdo.component';
+import { CcoComponent } from './painel/cco/cco.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -219,15 +220,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
     CadastroEmailCdoComponent,
-
     AssinaturaRDVComponent,
-    AssinaturaBocaComponent
-
+    AssinaturaBocaComponent,
     TripulanteEscalaComponent,
     OrdenarCertificadoComponent,
     EmailEscalaComponent,
     EmailDiarioFadigaComponent,
-    EmailDiarioCdoComponent
+    EmailDiarioCdoComponent,
+    CcoComponent
 
   ],
   imports: [

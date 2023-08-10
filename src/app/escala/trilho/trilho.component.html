@@ -3,14 +3,11 @@
 <p-toast position="center"></p-toast>
 
 <p-card>
-    <button type="button" pButton pRipple label="Inicio"></button>
-    <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy"  showIcon="true"
-        [inputStyle]="{'width':'150px'}"></p-calendar>
-    <button type="button" pButton pRipple label="Fim" class="p-ml-2"></button>
-    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"  showIcon="true"
+    <button type="button" pButton pRipple label="Data"></button>
+    <p-calendar [(ngModel)]="dataPesquisada" selectionMode="single" dateFormat="dd/mm/yy"  showIcon="true"
         [inputStyle]="{'width':'150px'}"></p-calendar>
     <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-        class="p-ml-2"></button>
+        class="ml-2"></button>
 </p-card>
 
 <span class="p-buttonset botoes_salvar">
@@ -25,17 +22,16 @@
         [disabled]="linhasSelecionadas.length == 0 || !tudoPronto"></button>
 </span>
 
-
-<p-table #dt [value]="trilhos" dataKey="Id" editMode="row" (onRowEditInit)="editInit($event)">
+<p-table *ngIf="temDados" #dt [value]="trilhos" dataKey="Id" editMode="row" (onRowEditInit)="editInit($event)">
     <ng-template pTemplate="colgroup">
         <colgroup>
             <col style="width:5%">
+            <!-- <col style="width:12%"> -->
             <col style="width:12%">
             <col style="width:12%">
             <col style="width:12%">
-            <col style="width:12%">
-            <col style="width:56%">
             <col style="width:15%">
+            <col style="width:56%">
             <col style="width:15%">
             <col style="width:15%">
             <col style="width:15%">
@@ -44,12 +40,12 @@
     <ng-template pTemplate="header">
         <tr>
             <th></th>
-            <th>Data</th>
+            <!-- <th>Data</th> -->
             <th>Cliente</th>
+            <th>Prefixo</th>
             <th>Partida</th>
             <th>Pouso</th>
             <th>Rota</th>
-            <th>Prefixo</th>
             <th>PIC</th>
             <th>SIC</th>
             <th>Inverte Cardeira</th>
@@ -60,7 +56,7 @@
             <td>
                 <p-checkbox [value]="linha.Id" [(ngModel)]="linhasSelecionadas"></p-checkbox>
             </td>
-            <td pInitEditableRow>
+            <!-- <td pInitEditableRow>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
@@ -71,17 +67,30 @@
                         {{linha.Data | date:'dd/MM/yyyy'}}
                     </ng-template>
                 </p-cellEditor>
-            </td>
+            </td> -->
             <td pInitEditableRow>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-autoComplete [(ngModel)]="linha.Cliente" [suggestions]="resultsCliente"
-                            (completeMethod)="searchCliente($event)" field="Nome" autoHighlight="true"
-                            [inputStyle]="{'width': '120px'}" appendTo="body">
+                            (completeMethod)="searchCliente($event)" field="Nome" autoHighlight="true" [forceSelection]="true"
+                            [inputStyle]="{'width': '120px'}" appendTo="body" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'">
                         </p-autoComplete>
                     </ng-template>
                     <ng-template pTemplate="output">
                         {{linha.Cliente.Nome}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td nowrap pInitEditableRow>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
+                            (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true" [forceSelection]="true"
+                            [inputStyle]="{'width': '90px'}" appendTo="body">
+                        </p-autoComplete>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{linha.Prefixo.PrefixoCompleto}}
                     </ng-template>
                 </p-cellEditor>
             </td>
@@ -113,11 +122,11 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td pInitEditableRow>
+            <!-- <td nowrap pInitEditableRow>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-autoComplete [(ngModel)]="linha.Prefixo" [suggestions]="resultsPrefixo"
-                            (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true"
+                            (completeMethod)="searchPrefixo($event)" field="PrefixoCompleto" autoHighlight="true" [forceSelection]="true"
                             [inputStyle]="{'width': '90px'}" appendTo="body">
                         </p-autoComplete>
                     </ng-template>
@@ -125,12 +134,12 @@
                         {{linha.Prefixo.PrefixoCompleto}}
                     </ng-template>
                 </p-cellEditor>
-            </td>
+            </td> -->
             <td pInitEditableRow>
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-autoComplete [(ngModel)]="linha.PIC" [suggestions]="resultsTrip"
-                            (completeMethod)="searchTrip($event)" field="Trato" autoHighlight="true"
+                            (completeMethod)="searchTrip($event)" field="Trato" autoHighlight="true" [forceSelection]="true"
                             [inputStyle]="{'width': '90px'}" appendTo="body">
                         </p-autoComplete>
                     </ng-template>
@@ -145,7 +154,7 @@
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <p-autoComplete [(ngModel)]="linha.SIC" [suggestions]="resultsTrip"
-                            (completeMethod)="searchTrip($event)" field="Trato" autoHighlight="true"
+                            (completeMethod)="searchTrip($event)" field="Trato" autoHighlight="true" [forceSelection]="true"
                             [inputStyle]="{'width': '90px'}" appendTo="body">
                         </p-autoComplete>
                     </ng-template>

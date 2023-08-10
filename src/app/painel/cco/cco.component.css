@@ -1,0 +1,66 @@
+@media only screen and (min-width: 1000px) {
+    .maior {
+        display: inline;
+    }
+
+    .menor {
+        display: none;
+    }
+
+
+    .box {
+        /*definimos a largura do box*/
+        width: 180px;
+        /* definimos a altura do box */
+        height: 80px;
+        /* definimos a cor de fundo do box */
+        /* definimos o quão arredondado irá ficar nosso box */
+        border-radius: 10px;
+        color: white;
+        font-size: 70px;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .maior {
+        display: none;
+    }
+
+    .menor {
+        display: inline;
+    }
+
+    .box {
+        /*definimos a largura do box*/
+        width: 80px;
+        /* definimos a altura do box */
+        height: 40px;
+        /* definimos a cor de fundo do box */
+        /* definimos o quão arredondado irá ficar nosso box */
+        border-radius: 10px;
+        color: white;
+    }
+}
+
+body, div{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.verde {
+    background-color: #005904;
+}
+
+.amarelo {
+    background-color: #c4c700;
+}
+
+.vermelho {
+    background-color: #73000d;
+}

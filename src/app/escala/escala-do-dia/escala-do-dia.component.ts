@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
+import { EscalaService } from 'src/app/shared/escala.service';
 
 @Component({
   selector: 'app-escala-do-dia',
@@ -17,8 +18,8 @@ export class EscalaDoDiaComponent implements OnInit {
   todosOsTrilhos: any;
   turmas: any;
   extras: any = {
-    Data : Date,
-    Ativo : Boolean,
+    Data: Date,
+    Ativo: Boolean,
   }
   urlLogo: string;
 
@@ -30,7 +31,8 @@ export class EscalaDoDiaComponent implements OnInit {
   escalaDoDia: any;
 
   constructor(private api: ApiService,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private apiEscala: EscalaService,) { }
 
   ngOnInit(): void {
 
@@ -79,6 +81,9 @@ export class EscalaDoDiaComponent implements OnInit {
 
   }
 
+
+  tripulantesComPendencias;
+
   rodarRelatorio() {
     this.relatorio = null;
     this.tripulacoes = null;
@@ -88,16 +93,28 @@ export class EscalaDoDiaComponent implements OnInit {
       return;
 
     this.api.getEscalaDiaria(this.data).then(x => {
-      this.tudoPronto = true;
-      this.escalaDoDia = x.HTML;
-      //this.relatorio = x.logs;
-      this.tripulacoes = x.Tripulacoes;
-      this.todosOsTrilhos = x.TodosOsTrilhos;
-      this.turmas = x.Turmas;
-      this.extras = x.Extras;
-      this.extras.Anexos = [];
-      this.getColunas(x.Colunas);
-      this.valorColspan = 7 + x.Colunas;
+
+      this.apiEscala.getListasDupla(this.data, this.data).then(da => {
+
+        var duplas = da.PorDia[0];
+        if (duplas != null) {
+          var pic = duplas.Duplas.map(x => x.PIC );
+          var sic = duplas.Duplas.filter(x => x.SIC != null).map(x => x.SIC );
+
+          this.tripulantesComPendencias = [...new Set([...pic, ...sic])].filter(x=>x.TemVencido || x.Fadiga < 50 || x.SemVooHa45Dias || x.MenosDe15Horas || x.MenosDe3Pousos || x.MenosDe50Horas);
+        }
+        this.tudoPronto = true;
+        this.escalaDoDia = x.HTML;
+        //this.relatorio = x.logs;
+        this.tripulacoes = x.Tripulacoes;
+        this.todosOsTrilhos = x.TodosOsTrilhos;
+        this.turmas = x.Turmas;
+        this.extras = x.Extras;
+        this.extras.Anexos = [];
+        this.getColunas(x.Colunas);
+        this.valorColspan = 7 + x.Colunas;
+      })
+
     })
       .catch(x => {
         this.tudoPronto = true;

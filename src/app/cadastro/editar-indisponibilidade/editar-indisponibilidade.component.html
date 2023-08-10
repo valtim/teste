@@ -68,12 +68,12 @@
                         </td>
                         <td>
                             <p-dropdown [options]="prefixo" formControlName="Substituto" placeholder="Prefixo"
-                                optionLabel="Nome" [showClear]="true" [filter]="true" appendTo="body">
+                                optionLabel="Nome" dataKey="Id" [showClear]="true" [filter]="true" appendTo="body">
                             </p-dropdown>
                         </td>
                         <td>
                             <p-dropdown [options]="base" formControlName="BaseDeOperacao" placeholder="Base"
-                                optionLabel="Nome" [showClear]="true" appendTo="body">
+                                optionLabel="Nome" dataKey="Id" [showClear]="true" appendTo="body">
                             </p-dropdown>
                         </td>
                         <td>
@@ -113,7 +113,7 @@
                         </td>
                         <td>
                             <p-dropdown [options]="motivosIndisponibilidade" formControlName="Motivo"
-                                placeholder="Motivo" optionLabel="Nome" [style]="{'width':'400px'}">
+                                placeholder="Motivo" optionLabel="Nome" [style]="{'width':'400px'}"  appendTo="body">
                             </p-dropdown>
                         </td>
                         <td>

@@ -64,9 +64,9 @@ tr:hover {
     background-color: #e9ecef;
 }
 
-tr > th:nth-child(5), tr > td:nth-child(5) {
+/* tr > th:nth-child(5), tr > td:nth-child(5) {
     width: 40%;
-}
+} */
 
 tr > td > button:nth-child(2) {
     margin-left: 10px;
