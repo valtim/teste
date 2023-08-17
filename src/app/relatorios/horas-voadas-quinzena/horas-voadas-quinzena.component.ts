@@ -1,14 +1,22 @@
 import { ApiService } from "./../../shared/api.service";
 import { Component, OnInit } from "@angular/core";
 import { saveAs } from 'file-saver-es'
+import { MessageService } from "primeng/api";
 import { Coluna } from "src/app/coluna";
+import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: "app-horas-voadas-quinzena",
   templateUrl: "./horas-voadas-quinzena.component.html",
   styleUrls: ["./horas-voadas-quinzena.component.css"],
+  providers: [MessageService, ConfirmationService]
 })
 export class HorasVoadasQuinzenaComponent implements OnInit {
+
+
+  selectedValues = [];
+
   locale_pt;
   tudoPronto = true;
   dados;
@@ -26,7 +34,12 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
   agruparMensal: boolean;
 
-  constructor(private api: ApiService) { }
+  html: string;
+  tripulantes = [];
+
+  constructor(private api: ApiService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     const date = new Date();
@@ -35,19 +48,54 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
 
     this.locale_pt = this.api.getLocale("pt");
 
+
+    this.api.GetListasPick("tripulante")
+      .then(x => {
+        this.tripulantes = x.tripulante;
+        this.tudoPronto = true;
+      })
+      .catch(() => this.messageService.add({ severity: 'warning', summary: 'SOL Sistemas', detail: 'Erro ao carregar tripulantes' }));
+
     //this.rodarRelatorio();
   }
 
-  rodarRelatorio() {
+
+  precisaConfirmar() {
+
+    this.confirmationService.confirm({
+      message: 'Confirma Enviar os e-mails para os tripulantes?',
+      accept: () => {
+        this.rodarRelatorio(false, true);
+      }
+    })
+  }
+
+  rodarRelatorio(html: boolean, email: boolean) {
     this.dados = undefined;
     this.tudoPronto = false;
+
     this.api
       .postRelHorasQuinzena({
         dataInicio: this.dataInicio,
         dataFim: this.dataFim,
         agruparMensal: this.agruparMensal,
+        email: email,
+        html: html,
+        tripulantes: this.selectedValues,
       })
       .then((x) => {
+
+
+        if (html) {
+          this.tudoPronto = true;
+          this.html = x.html;
+          return;
+        }
+        if (email) {
+          this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'emails enviados' })
+          return;
+        }
+
         //colunas = colunas, filtro = filtro, listas = listas
         this.colunas = x.colunas;
         this.dados = x.tabela;
@@ -156,8 +204,8 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     if (codigo == '0861' && linha.TotalPagamentoInstrucao != '00:00:00')
       return ['0861' + this.formatBristow(linha.TotalPagamentoInstrucao)];
 
-    if (codigo == '0868' && linha.HorasNoturnoComAdicional != '00:00:00')
-      return ['0868' + this.formatBristow(linha.HorasNoturnoComAdicional)];
+    // if (codigo == '0868' && linha.HorasNoturnoComAdicional != '00:00:00')
+    //   return ['0868' + this.formatBristow(linha.HorasNoturnoComAdicional)];
 
     if (codigo == '0938' && linha.HorasDeInstrucaoNoturnas != '00:00:00')
       return ['0938' + this.formatBristow(linha.HorasDeInstrucaoNoturnas)];
