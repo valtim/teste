@@ -92,6 +92,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
           return;
         }
         if (email) {
+          this.tudoPronto = true;
           this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'emails enviados' })
           return;
         }

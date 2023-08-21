@@ -17,123 +17,138 @@
 </p-card>
 
 
-
-<p-card class="nao-imprimir" *ngIf="tripulantesComPendencias.length > 0">
-    <h3>Os seguintes tripulantes não serão escalados por terem pendências. Retorne à tela de duplas para maiores detalhes</h3>
-    <div *ngFor="let item of tripulantesComPendencias">
-        <h3>{{item.Trato}}</h3>
-        <ul>
-            <li *ngIf="item.Fadiga < 50">Fadiga Inferior a 50 pontos</li>
-            <li *ngIf="item.TemVencido">Treinamento Vencido <ul><li *ngFor="let curso of item.Vencido">{{curso}}</li></ul> </li>
-            <li *ngIf="item.MenosDe15Horas">Tripulante precisa de ao menos 15 horas de voo nos últimos 60 dias</li>
-            <li *ngIf="item.MenosDe3Pousos">Tripulante precisa de ao menos 3 ciclos(pouso/decolagem) OFFSHORE nos últimos 60 dias</li>
-            <li *ngIf="item.MenosDe50Horas">Tripulante precisa de ao menos 50 horas de voo nos últimos 90 dias</li>
-            <li *ngIf="item.SemVooHa45Dias">Tripulante precisa de ao menos UM voo nos últimos 45 dias</li>
-        </ul>
-    </div>
-</p-card>
-
-<p-card class="nao-imprimir" *ngIf="extras">
+<p-toolbar *ngIf="!escalaDoDia" class="m-4 nao-imprimir">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
 
-    <div class="grid">
-        <div class="col-2">
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText [(ngModel)]="extras.Elaborado">
-                <label for="float-input">Elaborado por:</label>
-            </span>
+<div *ngIf="escalaDoDia">
+
+    <p-card class="nao-imprimir" *ngIf="tripulantesComPendencias.length > 0">
+        <h3>Os seguintes tripulantes não serão escalados por terem pendências. Retorne à tela de duplas para maiores
+            detalhes</h3>
+        <div *ngFor="let item of tripulantesComPendencias">
+            <h3>{{item.Trato}}</h3>
+            <ul>
+                <li *ngIf="item.Fadiga < 50">Fadiga Inferior a 50 pontos</li>
+                <li *ngIf="item.TemVencido">Treinamento Vencido <ul>
+                        <li *ngFor="let curso of item.Vencido">{{curso}}</li>
+                    </ul>
+                </li>
+                <li *ngIf="item.MenosDe15Horas">Tripulante precisa de ao menos 15 horas de voo nos últimos 60 dias</li>
+                <li *ngIf="item.MenosDe3Pousos">Tripulante precisa de ao menos 3 ciclos(pouso/decolagem) OFFSHORE nos
+                    últimos 60 dias</li>
+                <li *ngIf="item.MenosDe50Horas">Tripulante precisa de ao menos 50 horas de voo nos últimos 90 dias</li>
+                <li *ngIf="item.SemVooHa45Dias">Tripulante precisa de ao menos UM voo nos últimos 45 dias</li>
+            </ul>
         </div>
-        <div class="col-2">
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText [(ngModel)]="extras.Divulgado">
-                <label for="float-input">Divulgado por:</label>
-            </span>
-        </div>
-    </div>
-    <br />
-    <div class="grid">
-        <div class="col-4">
-            <span class="p-float-label">
-                <textarea id="float-input" [(ngModel)]="extras.Observacoes" rows="5" cols="100"
-                    pInputTextarea></textarea>
-                <label for="float-input">Observações</label>
-            </span>
-        </div>
-    </div>
-    <br />
-    <div class="grid">
-        <div class="col-4">
-            <span class="p-float-label">
-                <textarea id="float-input" [(ngModel)]="extras.Distribuicao" rows="5" cols="100"
-                    pInputTextarea></textarea>
-                <label for="float-input">Lista de Distribuição</label>
-            </span>
-        </div>
-    </div>
+    </p-card>
 
-    <div class="grid">
-        <div class="p-field col-4">
-            <h2>Anexos da Escala</h2>
-            <div class="p-field">
-                <app-anexos [listaArquivos]='extras.Anexos'></app-anexos>
+    <p-card class="nao-imprimir" *ngIf="extras">
+
+
+        <div class="grid">
+            <div class="col-2">
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText [(ngModel)]="extras.Elaborado">
+                    <label for="float-input">Elaborado por:</label>
+                </span>
+            </div>
+            <div class="col-2">
+                <span class="p-float-label">
+                    <input id="float-input" type="text" pInputText [(ngModel)]="extras.Divulgado">
+                    <label for="float-input">Divulgado por:</label>
+                </span>
             </div>
         </div>
+        <br />
+        <div class="grid">
+            <div class="col-4">
+                <span class="p-float-label">
+                    <textarea id="float-input" [(ngModel)]="extras.Observacoes" rows="5" cols="100"
+                        pInputTextarea></textarea>
+                    <label for="float-input">Observações</label>
+                </span>
+            </div>
+        </div>
+        <br />
+        <div class="grid">
+            <div class="col-4">
+                <span class="p-float-label">
+                    <textarea id="float-input" [(ngModel)]="extras.Distribuicao" rows="5" cols="100"
+                        pInputTextarea></textarea>
+                    <label for="float-input">Lista de Distribuição</label>
+                </span>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="p-field col-4">
+                <h2>Anexos da Escala</h2>
+                <div class="p-field">
+                    <app-anexos [listaArquivos]='extras.Anexos'></app-anexos>
+                </div>
+            </div>
+        </div>
+
+    </p-card>
+
+    <p-card *ngFor="let item of relatorio">
+        <h5>{{item.Name}}</h5>
+        <ul>
+            <li *ngFor="let evento of item.Events">{{evento.Descricao}} <span
+                    *ngIf="evento.Crew.PIC">{{evento.Crew.PIC.Trato}}</span>&nbsp;<span
+                    *ngIf="evento.Crew.SIC">{{evento.Crew.SIC.Trato}}</span></li>
+        </ul>
+    </p-card>
+
+    <table class="nao-imprimir">
+        <tr>
+            <th>Cliente</th>
+            <th>Partida</th>
+            <th>Pouso</th>
+            <th>Rota</th>
+            <th>Prefixo</th>
+            <th>Atendido</th>
+        </tr>
+        <tr *ngFor="let trilho of todosOsTrilhos">
+            <td>{{trilho.Cliente}}</td>
+            <td>{{trilho.HoraDoVoo}}</td>
+            <td>{{trilho.Pouso}}</td>
+            <td>{{trilho.Rota}}</td>
+            <td>{{trilho.Prefixo}}</td>
+            <td>{{trilho.Atendido}}</td>
+        </tr>
+    </table>
+
+    <table class="nao-imprimir">
+        <tr>
+            <th>Turma</th>
+            <th>Instrutor</th>
+            <th>Alunos</th>
+            <th>tIPO</th>
+        </tr>
+        <tr *ngFor="let turma of turmas">
+            <td>{{turma.Nome}}</td>
+            <td><span *ngIf="turma.Instrutor">{{turma.Instrutor}}</span><span
+                    *ngIf="!turma.Instrutor">EXTERNO</span>
+            </td>
+            <td>{{turma.Alunos}}</td>
+            <td>{{turma.TipoDeTreinamento}}</td>
+        </tr>
+    </table>
+
+    <div [innerHtml]="escalaDoDia | safeHtml"></div>
+
+    <div class="formatted somente-impressora" *ngIf="extras">
+        <b>Previsão de escala. Alterações poderão ocorrer devido às nossas operações serem não regulares e/ou por
+            demanda
+            dos contratantes</b>
+        Elaborado por: {{extras.Elaborado}}
+        <br />
+        Divulgado por: {{extras.Divulgado}}
+        <br /><br />
+        Observações: <br /> {{extras.Observacoes}}
     </div>
 
-</p-card>
-
-<p-card *ngFor="let item of relatorio">
-    <h5>{{item.Name}}</h5>
-    <ul>
-        <li *ngFor="let evento of item.Events">{{evento.Descricao}} <span
-                *ngIf="evento.Crew.PIC">{{evento.Crew.PIC.Trato}}</span>&nbsp;<span
-                *ngIf="evento.Crew.SIC">{{evento.Crew.SIC.Trato}}</span></li>
-    </ul>
-</p-card>
-
-<table class="nao-imprimir">
-    <tr>
-        <th>Cliente</th>
-        <th>Partida</th>
-        <th>Pouso</th>
-        <th>Rota</th>
-        <th>Prefixo</th>
-        <th>Atendido</th>
-    </tr>
-    <tr *ngFor="let trilho of todosOsTrilhos">
-        <td>{{trilho.Cliente}}</td>
-        <td>{{trilho.HoraDoVoo}}</td>
-        <td>{{trilho.Pouso}}</td>
-        <td>{{trilho.Rota}}</td>
-        <td>{{trilho.Prefixo}}</td>
-        <td>{{trilho.Atendido}}</td>
-    </tr>
-</table>
-
-<table class="nao-imprimir">
-    <tr>
-        <th>Turma</th>
-        <th>Instrutor</th>
-        <th>Alunos</th>
-        <th>tIPO</th>
-    </tr>
-    <tr *ngFor="let turma of turmas">
-        <td>{{turma.Treinamento.Nome}}</td>
-        <td><span *ngIf="turma.Instrutor">{{turma.Instrutor.Trato}}</span><span *ngIf="!turma.Instrutor">EXTERNO</span>
-        </td>
-        <td>{{turma.AlunosStr}}</td>
-        <td>{{turma.TipoDeTreinamento}}</td>
-    </tr>
-</table>
-
-<div [innerHtml]="escalaDoDia | safeHtml"></div>
-
-<div class="formatted somente-impressora" *ngIf="extras">
-    <b>Previsão de escala. Alterações poderão ocorrer devido às nossas operações serem não regulares e/ou por demanda
-        dos contratantes</b>
-    Elaborado por: {{extras.Elaborado}}
-    <br />
-    Divulgado por: {{extras.Divulgado}}
-    <br /><br />
-    Observações: <br /> {{extras.Observacoes}}
 </div>

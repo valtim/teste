@@ -10,7 +10,7 @@ import { EscalaService } from 'src/app/shared/escala.service';
   providers: [MessageService]
 })
 export class EscalaDoDiaComponent implements OnInit {
-  tudoPronto: any;
+  tudoPronto: boolean = true;
   data: Date;
   locale_pt: any;
   relatorio: any;
@@ -39,7 +39,7 @@ export class EscalaDoDiaComponent implements OnInit {
     this.api.getClienteLogado().then(x => this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
     this.locale_pt = this.api.getLocale('pt');
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-    this.rodarRelatorio();
+    //this.rodarRelatorio();
 
   }
 
@@ -88,7 +88,7 @@ export class EscalaDoDiaComponent implements OnInit {
     this.relatorio = null;
     this.tripulacoes = null;
     this.tudoPronto = false;
-
+    this.escalaDoDia = undefined;
     if (!this.data)
       return;
 
@@ -98,10 +98,10 @@ export class EscalaDoDiaComponent implements OnInit {
 
         var duplas = da.PorDia[0];
         if (duplas != null) {
-          var pic = duplas.Duplas.map(x => x.PIC );
-          var sic = duplas.Duplas.filter(x => x.SIC != null).map(x => x.SIC );
+          var pic = duplas.Duplas.map(x => x.PIC);
+          var sic = duplas.Duplas.filter(x => x.SIC != null).map(x => x.SIC);
 
-          this.tripulantesComPendencias = [...new Set([...pic, ...sic])].filter(x=>x.TemVencido || x.Fadiga < 50 || x.SemVooHa45Dias || x.MenosDe15Horas || x.MenosDe3Pousos || x.MenosDe50Horas);
+          this.tripulantesComPendencias = [...new Set([...pic, ...sic])].filter(x => x.TemVencido || x.Fadiga < 50 || x.SemVooHa45Dias || x.MenosDe15Horas || x.MenosDe3Pousos || x.MenosDe50Horas);
         }
         this.tudoPronto = true;
         this.escalaDoDia = x.HTML;
