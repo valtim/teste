@@ -35,12 +35,11 @@ export class EscalaDoDiaComponent implements OnInit {
     private apiEscala: EscalaService,) { }
 
   ngOnInit(): void {
-
     this.api.getClienteLogado().then(x => this.urlLogo = `${this.api.getServer()}assets/img/${x}.png`);
     this.locale_pt = this.api.getLocale('pt');
     this.data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
     //this.rodarRelatorio();
-
+    this.api.loggar("Abrir Tela Escala do Dia");    
   }
 
   numeroDeColunas = 0;

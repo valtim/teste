@@ -136,18 +136,38 @@ export class ApiService {
   }
 
   async postLogin(username: string, password: string): Promise<any> {
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json'
-    //   })
-    // };
-
     return await lastValueFrom(this.http
       .post(
-        this.url + "autorizacao",
+        this.url + "autorizacao-login",
         { Username: username, Password: password },
         this.httpOptions
       ));
+  }
+
+  async loggar(Funcionalidade: string) {
+    await lastValueFrom(
+      this.http.post(`${this.url}log-information`, { Funcionalidade: Funcionalidade }, this.httpOptions)      
+    ).then(usuario=>{
+      console.log(`${usuario['UsuarioLogado']} acessou ${Funcionalidade}`);
+    });
+  }
+
+  getLogFuncionalidades(): Promise<any> {
+    return this.http
+      .get(`${this.url}log-funcionalidades`, this.httpOptions)
+      .toPromise();
+  }
+  
+  getLogs(funcionalidade: string,data: string): Promise<any> {
+    if ((data != null) && (data != "")) {
+      return this.http
+        .get(`${this.url}log-information/${funcionalidade}/${data}`, this.httpOptions)
+        .toPromise();
+    } else {
+      return this.http
+        .get(`${this.url}log-information/${funcionalidade}`, this.httpOptions)
+        .toPromise();
+    }    
   }
 
   getDiarioByDate(date: string): Promise<any> {
