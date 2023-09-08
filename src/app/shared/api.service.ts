@@ -218,6 +218,30 @@ export class ApiService {
       .toPromise();
   }
 
+  getApontamentos(data: Date): Promise<any> {
+    return this.http
+      .get(`${this.url}api/apontamentos/${data.toISOString().split("T")[0]}`, this.httpOptions)
+      .toPromise();
+  }
+
+  postApontamento(apontamento: any): Promise<any> {
+    return this.http
+      .post(`${this.url}api/apontamento`, apontamento, this.httpOptions)
+      .toPromise();
+  }
+
+  apagarApontamentos(apontamentos: any[]): Promise<any> {
+    return this.http
+      .post(`${this.url}api/apagar-apontamentos`, apontamentos, this.httpOptions)
+      .toPromise();
+  }
+
+  postNovoApontamento(apontamento: any): Promise<any> {
+    return this.http
+      .post(`${this.url}api/novo-apontamento`, apontamento, this.httpOptions)
+      .toPromise();
+  }
+
   getPagamento(data: string): Promise<any> {
     return this.http
       .get(`${this.url}relatorio/pagamento/${data}`, this.httpOptions)
