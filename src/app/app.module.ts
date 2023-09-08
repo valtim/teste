@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-
 import { SegurancaModule } from './seguranca/seguranca.module';
-
 import { AppRoutingModule } from './app-routing.module';
-
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-de-risco.component';
