@@ -61,20 +61,21 @@ export class AssinaturaBocaComponent implements OnInit {
         */
       }
 
-      if (
-        (this.DadosAssinatura.Assinatura) &&
-        (this.DadosAssinatura.Assinatura.Assinado) &&
-        (this.DadosAssinatura.AssinaturaBoca) &&
-        (this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado) &&
-        (this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado.Id) &&
-        (this.passo == 2)
-      ) {
-        this.DadosAssinatura.Status = true;
-        this.idArquivoAssinado = this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado.Id;
-        this.passo = 3;
-      }
-
-      this.verificarStatusRDVs();                  
+      this.organizarArquivos(()=>{        
+        if (
+          (this.DadosAssinatura.Assinatura) &&
+          (this.DadosAssinatura.Assinatura.Assinado) &&
+          (this.DadosAssinatura.AssinaturaBoca) &&
+          (this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado) &&
+          (this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado.Id)
+        ) {
+          this.DadosAssinatura.Status = true;
+          this.idArquivoAssinado = this.DadosAssinatura.AssinaturaBoca.ArquivoAssinado.Id;
+          this.passo = 3;
+        }
+  
+        this.verificarStatusRDVs();
+      });                        
     });    
 
   }
@@ -128,14 +129,8 @@ export class AssinaturaBocaComponent implements OnInit {
   }
 
   obterStatusAssinatura(): string {
-    if (this.passo == 1) {
-      return "PASSO 1 - Confirmar e-mail e enviar relatório para assinar"
-    }
-    if (this.passo == 2) {
-      return "PASSO 2 - Assine os arquivos e verifique a assinatura"
-    }
-    if (this.passo == 3) {
-      return "PASSO 3 - Confirme a assinatura dos RDVs"
+    if (this.passo < 4) {
+      return "PASSO 1 - Gerar PDFs de todos os RDVs"
     }
     if (this.passo == 4) {
       return "PASSO 4 - Envie os manifestos de voos"
@@ -166,29 +161,33 @@ export class AssinaturaBocaComponent implements OnInit {
     this.DadosAssinatura.Assinatura.Arquivos = args;    
   }
 
-  enviarEmail(): void {
+  organizarArquivos(callback): void {        
+
+    this.api.assinarBoca(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante,this.nomeArquivo).then((dados: any) => {                    
+      
+      this.DadosAssinatura.Assinatura = dados.Assinatura;      
+      this.DadosAssinatura.AssinaturaBoca = dados.AssinaturaBoca;                          
+
+      if ((dados.EsignUrl) && (dados.EsignUrl != '')) {                        
+        if ((this.DadosAssinatura.Emails != null) && (this.DadosAssinatura.Emails.length > 0)) {                          
+          this.DadosAssinatura.Emails[0].Email = dados.EmailAssinante;
+          this.DadosAssinatura.Emails[0].EsignUrl = dados.EsignUrl;
+        }
+
+        this.EsignUrl = dados.EsignUrl;                              
+        this.passo = 2;        
+      }          
+      
+      callback();
+    });
+    
+    /*
     if (!this.validarEmail(this.EmailAssinante)) {
       this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'E-mail inválido!' });
     } else {
-      this.mostrarLoading = true;    
-
-      this.api.assinarBoca(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante,this.nomeArquivo).then((dados: any) => {                    
-        this.DadosAssinatura.AssinaturaBoca.ArquivoSemAssinar = dados.ArquivoSemAssinar;
-        this.DadosAssinatura.Assinatura.TransientDocumentId = dados.TransientDocumentId;
-        this.DadosAssinatura.Assinatura.AgreementId = dados.AgreementId;
-                  
-        if ((dados.EsignUrl) && (dados.EsignUrl != '')) {                        
-          if ((this.DadosAssinatura.Emails != null) && (this.DadosAssinatura.Emails.length > 0)) {                          
-            this.DadosAssinatura.Emails[0].Email = dados.EmailAssinante;
-            this.DadosAssinatura.Emails[0].EsignUrl = dados.EsignUrl;
-          }
-
-          this.EsignUrl = dados.EsignUrl;                              
-          this.passo = 2;
-        }          
-        this.mostrarLoading = false;                
-      });
-    }    
+      
+    } 
+    */   
   }
 
   enviarManifesto(): void {

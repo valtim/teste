@@ -14,13 +14,13 @@
         <div class="col col-1"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button></div>
         
-        <!-- <div class="col col-6 grid grid-assinatura">
-            <button [disabled]="desabilitarBotaoAssinatura" (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Assinar"></button>    
+        <div class="col col-6 grid grid-assinatura">
+            <button *ngIf="!statusAssinatura" [disabled]="desabilitarBotaoAssinatura" (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Gerar PDF"></button>    
             
             <button *ngIf="statusAssinatura" icon="pi pi-check-square" class="p-button-success status-assinar" type="button" pButton pRipple></button>
             <button *ngIf="!statusAssinatura" icon="pi pi-file-excel" class="p-button-warning status-assinar" type="button" pButton pRipple></button>
-            <button class="p-button-raised p-button-text p-button-secondary texto-assinar" type="button" pButton pRipple label="Status da Assinatura Digital:"></button>        
-        </div> -->
+            <button class="p-button-raised p-button-text p-button-secondary texto-assinar" type="button" pButton pRipple label="Os PDFs foram gerados?"></button>        
+        </div>
     </div>
 </div>
 
@@ -113,7 +113,7 @@
     <a #downloadLink></a>
 </div>
 
-<p-dialog *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
+<p-dialog *ngIf="exibirAssinatura" header="GERAR PDF" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
     <app-assinatura-boca [DadosAssinatura]="DadosAssinatura" [blobPDF]="blobPDF" [nomeArquivo]="nomeArquivo" (retorno)="fecharDialogoAssinatura()">
     </app-assinatura-boca>
 </p-dialog>

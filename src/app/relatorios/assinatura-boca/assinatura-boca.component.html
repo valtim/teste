@@ -6,25 +6,25 @@
         <svg viewBox="25 25 50 50" class="p-progress-spinner-svg" style="animation-duration: 2s;"><circle cx="50" cy="50" r="20" stroke-miterlimit="10" class="p-progress-spinner-circle" fill="none" stroke-width="2"></circle></svg>
     </div>
     
-    <button *ngIf="passo == 1" (click)="enviarEmail()" type="button" class="p-button-success enviar-email" icon="pi pi-id-card" pButton pRipple label="Enviar relatório para assinar"></button>
+    <!--<button *ngIf="passo == 1" (click)="enviarEmail()" type="button" class="p-button-success enviar-email" icon="pi pi-id-card" pButton pRipple label="Enviar relatório para assinar"></button>-->
     <button *ngIf="passo == 4" (click)="enviarManifesto()" type="button" class="p-button-success enviar-email" icon="pi pi-id-card" pButton pRipple label="Enviar Manifestos de Voos"></button>    
 
     <div class="p-field col-12">
-        <h2>Etapas da Assinatura do Relatório Boca</h2>
+        <h2>Etapas para enviar o Relatório Boca</h2>
         <div class="container-passos">
-            <span class="passos" [ngClass]="{'selecionado': passo === 1}">
+            <span class="passos">
                 <h5>PASSO 1</h5>
-                Confirme o e-mail do assinante e clique no botão <i>Enviar relatório para assinar</i>
+                Gerar PDFs de todos os RDVs listados nos botões <i>Acessar RDV</i>
             </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 2}">
+            <span class="passos">
                 <h5>PASSO 2</h5>
-                Clique em <i>Assinar arquivos</i>, assine o relatório, e depois clique em <i>Verificar assinatura</i>
+                Clique no botão <i>Verificar RDVs</i>
             </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 3}">
+            <span class="passos">
                 <h5>PASSO 3</h5>
-                Assine todos os RDVs listados nos botões <i>Assinar RDV</i> e clique no botão <i>Verificar RDVs</i>
+                Confirme o e-mail origem (que enviará o relatório)                
             </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 4}">
+            <span class="passos">
                 <h5>PASSO 4</h5>
                 Confirme os e-mails destino e clique em <i>Enviar Manifestos de Voos</i>
             </span>
@@ -32,24 +32,18 @@
     </div>
 
     <div class="p-field col-12">        
-        <button type="button" style="box-sizing: border-box; width: 25%;" class="label-fixo-2" pButton pRipple label="E-mail do Assinante"></button>
+        <button type="button" style="box-sizing: border-box; width: 25%;" class="label-fixo-2" pButton pRipple label="E-mail Origem"></button>
         <input [disabled]="passo != 1" [readonly]="passo != 1" pInputText style="box-sizing: border-box; width: 75%;" type="email" [(ngModel)]="EmailAssinante">                    
     </div>
 
     <div class="p-field col-12">        
-        <button class="p-button-raised p-button-text p-button-secondary" style="box-sizing: border-box; width: 40%;" type="button" icon="pi pi-file-pdf" pButton pRipple label="Status da Assinatura Digital"></button>
+        <button class="p-button-raised p-button-text p-button-secondary" style="box-sizing: border-box; width: 40%;" type="button" icon="pi pi-file-pdf" pButton pRipple label="Status dos PDFs Gerados"></button>
         <button *ngIf="passo == 5" icon="pi pi-check-square" class="p-button-success" style="box-sizing: border-box; width: 60%;" type="button" pButton pRipple label="{{obterStatusAssinatura()}}"></button>
         <button *ngIf="passo != 5" icon="pi pi-file-excel" class="p-button-warning" style="box-sizing: border-box; width: 60%;" type="button" pButton pRipple label="{{obterStatusAssinatura()}}"></button>
-    </div>
-
-    <div class="p-field col-12">                                    
-        <button [disabled]="passo != 2" (click)="assinarArquivos()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': passo != 2}" icon="pi pi-id-card" style="box-sizing: border-box; width: 31%;" pButton pRipple label="Assinar arquivos"></button>
-        <button [disabled]="passo != 2" (click)="verificarAssinatura()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': passo != 2}" icon="pi pi-sync" style="box-sizing: border-box; width: 31%; margin-left: 3.5%; margin-right: 3.5%;" pButton pRipple label="Verificar assinatura"></button>
-        <button [disabled]="passo < 3" (click)="downloadArquivoAssinado()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': passo < 3}" icon="pi pi-arrow-down" style="box-sizing: border-box; width: 31%;" pButton pRipple label="Baixar arquivo assinado"></button>
-    </div>
+    </div>    
 
     <div class="p-field lista-status col-12">        
-        <button type="button" class="label-fixo-2 item-lista-status" style="box-sizing: border-box; width: 70%;" pButton pRipple label="Verificar assinaturas dos RDVs (PASSO 3)"></button>        
+        <button type="button" class="label-fixo-2 item-lista-status" style="box-sizing: border-box; width: 70%;" pButton pRipple label="Verificar PDFs dos RDVs"></button>        
         <button [disabled]="passo > 3" (click)="verificarStatusRDVs()" type="button" class="p-button-success botao-lista-status" [ngClass]="{'botao-cinza': passo > 3}" icon="pi pi-sync" style="box-sizing: border-box; width: 27%;" pButton pRipple label="Verificar RDVs"></button>        
     </div>
 
@@ -57,11 +51,11 @@
         <button class="p-button-raised p-button-text p-button-secondary item-lista-status" type="button" style="box-sizing: border-box; width: 60%;" pButton pRipple label="Folha: {{assinatura.NumeroDaFolha}} - Voos: {{assinatura.Voos}} - Status:"></button>
         <button *ngIf="assinatura.Assinado" icon="pi pi-check-square" class="p-button-success item-lista-status" style="box-sizing: border-box; width: 10%;" type="button" pButton pRipple></button>
         <button *ngIf="!assinatura.Assinado" icon="pi pi-file-excel" class="p-button-warning status-item-lista-status" style="box-sizing: border-box; width: 10%;" type="button" pButton pRipple></button>                        
-        <button [disabled]="assinatura.Assinado" (click)="abrirLinkRDV(assinatura.NumeroDaFolha)" type="button" class="p-button-success botao-lista-status" style="box-sizing: border-box; width: 27%;" [ngClass]="{'botao-cinza': assinatura.Assinado}" icon="pi pi-key" pButton pRipple label="Assinar RDV"></button>    
+        <button [disabled]="assinatura.Assinado" (click)="abrirLinkRDV(assinatura.NumeroDaFolha)" type="button" class="p-button-success botao-lista-status" style="box-sizing: border-box; width: 27%;" [ngClass]="{'botao-cinza': assinatura.Assinado}" icon="pi pi-key" pButton pRipple label="Acessar RDV"></button>    
     </div>
 
     <div class="p-field col-12">        
-        <button type="button" class="col-12 label-fixo-2" pButton pRipple label="E-mails que vão receber os Manifestos de Voos (PASSO 4)"></button>
+        <button type="button" class="col-12 label-fixo-2" pButton pRipple label="E-mails que vão receber os Manifestos de Voos"></button>
         <br>                            
         <p-chips (onAdd)="validarEmailChips($event)" [allowDuplicate]="false" [disabled]="passo > 4" [(ngModel)]="EmailsDestino" name="EmailsDestinoChips" ngDefaultControl></p-chips>
     </div>

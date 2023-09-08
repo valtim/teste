@@ -72,19 +72,10 @@ export class AssinaturaRDVComponent implements OnInit {
   }
 
   obterStatusAssinatura(): string {
-    if (this.passo == 1) {
-      return "PASSO 1 - Upload dos arquivos"
-    }
-    if (this.passo == 2) {
-      return "PASSO 2 - Confirmar e-mail e enviar arquivos"
-    }
-    if (this.passo == 3) {
-      return "PASSO 3 - Assine os arquivos"
-    }
-    if (this.passo == 4) {
-      return "PASSO 4 - Verifique a assinatura"
-    }
-    return 'Assinatura realizada!';
+    if (this.passo < 5) {
+      return "Faça o Upload dos arquivos"
+    }    
+    return 'PDFs gerados com sucesso!';
   }
 
   criarArquivoRDV(callback): void {
@@ -114,10 +105,7 @@ export class AssinaturaRDVComponent implements OnInit {
     if ((this.DadosAssinatura.Assinatura.Arquivos == null) || this.DadosAssinatura.Assinatura.Arquivos.length == 0) {
       this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'É necessário ter no mínimo 1 anexo para assinar!' });
     } else {
-      if (!this.validarEmail(this.EmailAssinante)) {
-        this.messageService.add({ severity: 'error', summary: 'Erro:', detail: 'E-mail inválido!' });
-      } else {
-        this.mostrarLoading = true;    
+      this.mostrarLoading = true;    
 
         this.api.assinarRDV(this.DadosAssinatura.Assinatura.Id,this.EmailAssinante,this.nomeArquivo).then((dados: any) => {                    
           this.DadosAssinatura.AssinaturaRDV.JoinArquivosSemAssinar = dados.JoinArquivosSemAssinar;
@@ -133,9 +121,9 @@ export class AssinaturaRDVComponent implements OnInit {
             this.EsignUrl = dados.EsignUrl;                              
             this.passo = 3;
           }          
-          this.mostrarLoading = false;                
+          
+          this.verificarAssinatura();
         });
-      }
     }    
   }
 
