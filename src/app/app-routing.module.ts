@@ -79,6 +79,7 @@ import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/o
 import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 import { CcoComponent } from './painel/cco/cco.component';
+import { LoggingComponent } from './seguranca/logging/logging.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -467,6 +468,11 @@ const routes: Routes = [
   {
     path: 'occ-availability',
     component: CcoComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'registros-acesso',
+    component: LoggingComponent,
     canActivate: [AuthGuardService],
   },
   { path: '**', pathMatch: 'full', 

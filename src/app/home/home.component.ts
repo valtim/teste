@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   link;
 
   constructor(
+    private api: ApiService,
     private router: Router,
     private autorizacao: AutorizacaoService) { }
 
@@ -28,6 +29,9 @@ export class HomeComponent implements OnInit {
    ngOnInit() {    
     this.menu = this.autorizacao.getMenus();
     // this.link = 'http://localhost:4300/' + this.autorizacao.getAuthorization()
+    //console.log(this.menu);     
+    
+    this.api.loggar("Login");
     this.exibir = true;
   }
 
