@@ -19,6 +19,8 @@ export class EditarVencimentoComponent implements OnInit {
   valorExibido: string;
   mascara: string;
 
+  processando = false;
+
   constructor() {
 
 

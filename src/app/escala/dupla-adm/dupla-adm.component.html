@@ -23,7 +23,8 @@
 
     <span class="p-buttonset botao_pesquisar">
         <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true" [style]="{'width': '120px'}"></p-calendar>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [style]="{'width': '120px'}"></p-calendar>
         <button type="button" pButton pRipple label="Final" class="ml-2"></button>
         <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
             [style]="{'width': '120px'}"></p-calendar>
@@ -39,36 +40,36 @@
         <p-tabPanel [header]="item.DataStr" *ngFor="let item of PorDia; let i = index" [selected]="item.Hoje">
 
             <button pButton type="button" label="Novo Deslocamento" (click)="novaLinhaDeslocamento()" icon="pi pi-car"
-            class="p-button-raised p-button-rounded p-button-success"></button>
+                class="p-button-raised p-button-rounded p-button-success"></button>
 
-        <p-card>
-            <p-table #dt2 [value]="item.DeslocamentosDoDia" dataKey="Id" editMode="row">
+            <p-card>
+                <p-table #dt2 [value]="item.DeslocamentosDoDia" dataKey="Id" editMode="row">
 
-                <ng-template pTemplate="colgroup">
-                    <colgroup>
-                        <!-- <col style="width:25%"> -->
-                        <col style="width:25%">
-                        <col style="width:25%">
-                        <col style="width:20%">
-                        <col style="width:5%">
-                    </colgroup>
-                </ng-template>
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th colspan="4">Deslocamento</th>
-                    </tr>
-                    <tr>
-                        <!-- <th>Data</th> -->
-                        <th>Tripulante</th>
-                        <th>Deslocamento</th>
-                        <th>Horário</th>
-                        <th></th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
-                    <tr [pEditableRow]="linha" *ngIf="linha.Ativo">
+                    <ng-template pTemplate="colgroup">
+                        <colgroup>
+                            <!-- <col style="width:25%"> -->
+                            <col style="width:25%">
+                            <col style="width:25%">
+                            <col style="width:20%">
+                            <col style="width:5%">
+                        </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th colspan="4">Deslocamento</th>
+                        </tr>
+                        <tr>
+                            <!-- <th>Data</th> -->
+                            <th>Tripulante</th>
+                            <th>Deslocamento</th>
+                            <th>Horário</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+                        <tr [pEditableRow]="linha" *ngIf="linha.Ativo">
 
-                        <!-- <td pEditableColumn>
+                            <!-- <td pEditableColumn>
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
@@ -80,54 +81,56 @@
                                 </ng-template>
                             </p-cellEditor>
                         </td> -->
-                        <td pEditableColumn>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
-                                        optionLabel="Trato" [showClear]="true" placeholder="Tripulante" appendTo="body" [filter]="true"
-                                        [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha, 'deslocamento')">
-                                    </p-dropdown>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-dropdown [options]="tripulantes" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                            optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
+                                            appendTo="body" [filter]="true" [style]="{'width': '100%'}"
+                                            (onChange)="mudeiAqui($event, linha, 'deslocamento')">
+                                        </p-dropdown>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
 
-                        <td pEditableColumn>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
-                                        optionLabel="Nome" [showClear]="true" placeholder="Base"  appendTo="body" [filter]="true"
-                                        [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha, 'deslocamento')">
-                                    </p-dropdown>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento"
+                                            dataKey="Id" optionLabel="Nome" [showClear]="true" placeholder="Base"
+                                            appendTo="body" [filter]="true" [style]="{'width': '100%'}"
+                                            (onChange)="mudeiAqui($event, linha, 'deslocamento')">
+                                        </p-dropdown>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
 
-                        <td pEditableColumn>
-                            <p-cellEditor>
-                                <ng-template pTemplate="input">
-                                    <p-inputMask mask="99:99" [(ngModel)]="linha.Hora"
-                                        [style]="{'width': '80px'}" (onComplete)="mudeiAqui($event, linha, 'deslocamento')">
-                                    </p-inputMask>
-                                </ng-template>
-                                <ng-template pTemplate="output">
-                                    {{linha.Hora}}
-                                </ng-template>
-                            </p-cellEditor>
-                        </td>
+                            <td pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <p-inputMask mask="99:99" [(ngModel)]="linha.Hora" [style]="{'width': '80px'}"
+                                            (onComplete)="mudeiAqui($event, linha, 'deslocamento')">
+                                        </p-inputMask>
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{linha.Hora}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
 
-                        <button pButton type="button" (click)="excluirDeslocamento(linha)" icon="pi pi-trash"
-                            class="p-button-raised p-button-rounded p-button-danger"></button>
+                            <button pButton type="button" (click)="excluirDeslocamento(linha)" icon="pi pi-trash"
+                                class="p-button-raised p-button-rounded p-button-danger"></button>
 
-                    </tr>
-                </ng-template>
-            </p-table>
-        </p-card>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </p-card>
 
             <p-table *ngIf="item.Turmas" [value]="item.Turmas">
 
@@ -222,8 +225,8 @@
                             <p-cellEditor>
                                 <ng-template pTemplate="input">
                                     <p-calendar [(ngModel)]="linha.RepeteAte" selectionMode="single"
-                                        dateFormat="dd/mm/yy" showIcon="true" (onSelect)="mudeiAqui($event, linha, 'dupla')"
-                                        appendTo="body">
+                                        dateFormat="dd/mm/yy" showIcon="true"
+                                        (onSelect)="mudeiAqui($event, linha, 'dupla')" appendTo="body">
                                     </p-calendar>
                                 </ng-template>
                                 <ng-template pTemplate="output">
@@ -250,25 +253,50 @@
                                 <ng-template pTemplate="input">
                                     <span>
                                         <div class="grid">
+                                            <div class="col-2" *ngIf="linha.PIC && ehGerente">
+                                                <p-badge [value]="linha.PIC.EhInstrutor? 'I' : linha.PIC.EhCMT ? 'P' : 'S'"
+                                                    [severity]="linha.PIC.Bolinha"></p-badge>
+                                            </div>
+
                                             <div class="col-2" *ngIf="linha.PIC">
-                                                <!-- <p-badge [value]="linha.PIC.EhCMT ? 'P' : 'S'"
-                                                    [severity]="linha.PIC.Bolinha"></p-badge> -->
+                                                <p-badge *ngIf="linha.PIC.MenosDe50Horas" value="MenosDe50Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.SemVooHa45Dias" value="SemVooHa45Dias"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.MenosDe15Horas" value="MenosDe15Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.MenosDe3Pousos" value="MenosDe3Pousos"
+                                                    severity="danger"></p-badge>
                                             </div>
                                             <div class="col-8 ml-2">
                                                 <p-dropdown [options]="tripulantes" [(ngModel)]="linha.PIC" dataKey="Id"
                                                     optionLabel="Trato" [showClear]="true" placeholder="PIC"
-                                                    [style]="{'width': '150px'}" (onChange)="mudeiAqui($event, linha, 'dupla')"
-                                                    [filter]="true" appendTo="body">
+                                                    [style]="{'width': '150px'}"
+                                                    (onChange)="mudeiAqui($event, linha, 'dupla')" [filter]="true"
+                                                    appendTo="body">
                                                     <ng-template let-trip pTemplate="item">
                                                         <div>
                                                             <div class="grid">
-                                                                <div class="col-2">
-                                                                    <!-- <p-badge [value]="trip.EhCMT ? 'P' : 'S'"
-                                                                        [severity]="trip.Bolinha"></p-badge> -->
+                                                                <div class="col-2 mr-2" *ngIf="ehGerente">
+                                                                    <p-badge
+                                                                        [value]="trip.EhInstrutor? 'I' : trip.EhCMT ? 'P' : 'S'"
+                                                                        [severity]="trip.Bolinha"></p-badge>
                                                                 </div>
-                                                                <div class="col-6 ml-2">{{trip.Trato}}</div>
-                                                                <div class="col-2 ml-2"><i
-                                                                        class="pi pi-moon ml-1"></i><p-badge
+                                                                <div class="col">{{trip.Trato}}
+                                                                    <p-badge *ngIf="trip.MenosDe50Horas"
+                                                                        value="MenosDe50Horas"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.SemVooHa45Dias"
+                                                                        value="SemVooHa45Dias"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.MenosDe15Horas"
+                                                                        value="MenosDe15Horas"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.MenosDe3Pousos"
+                                                                        value="MenosDe3Pousos"
+                                                                        severity="danger"></p-badge>
+                                                                </div>
+                                                                <div class="col-2"><i class="pi pi-moon"></i><p-badge
                                                                         [value]="trip.Noturno ? 'OK' : 'NOK'"
                                                                         [severity]="trip.Noturno ? 'success' : 'danger'"></p-badge>
                                                                 </div>
@@ -283,11 +311,20 @@
                                 <ng-template pTemplate="output">
                                     <span *ngIf="linha.PIC">
                                         <div class="grid">
-                                            <div class="col-2">
-                                                <!-- <p-badge [value]="linha.PIC.EhCMT ? 'P' : 'S'"
-                                                    [severity]="linha.PIC.Bolinha"></p-badge> -->
+                                            <div class="col-2 mr-2" *ngIf="ehGerente">
+                                                <p-badge [value]="linha.PIC.EhInstrutor? 'I' : linha.PIC.EhCMT ? 'P' : 'S'"
+                                                    [severity]="linha.PIC.Bolinha"></p-badge>
                                             </div>
-                                            <div class="col-8 ml-2">{{linha.PIC.Trato}}</div>
+                                            <div class="col">{{linha.PIC.Trato}}
+                                                <p-badge *ngIf="linha.PIC.MenosDe50Horas" value="MenosDe50Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.SemVooHa45Dias" value="SemVooHa45Dias"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.MenosDe15Horas" value="MenosDe15Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.PIC.MenosDe3Pousos" value="MenosDe3Pousos"
+                                                    severity="danger"></p-badge>
+                                            </div>
                                         </div>
                                     </span>
                                 </ng-template>
@@ -299,17 +336,19 @@
                             <div *ngIf="linha.PIC">
                                 <i class="pi pi-user"></i><p-badge [value]="linha.PIC.Fadiga"
                                     [severity]="linha.PIC.CorDaFadiga"></p-badge>
-                                <span *ngIf="linha.PIC.TemVencendo || linha.PIC.TemVencido">
-                                    <i class=" pi pi-calendar-minus ml-1"></i>
-                                    <span *ngIf="linha.PIC.TemVencendo">
-                                        <p-badge (click)="this.vencimentos = linha.PIC.Vencendo;op.toggle($event);"
-                                            [value]="linha.PIC.Vencendo.length" severity="warning"></p-badge>
-                                    </span>
-                                    <span *ngIf="linha.PIC.TemVencido ">
-                                        <p-badge (click)="this.vencimentos = linha.PIC.Vencido;op.toggle($event);"
-                                            [value]="linha.PIC.Vencido.length" severity="danger"></p-badge>
-                                    </span>
+
+                                <i class=" pi pi-calendar-minus ml-1"></i>
+                                <span *ngIf="!(linha.PIC.TemVencendo || linha.PIC.TemVencido)"><p-badge value="OK"
+                                        severity="success"></p-badge></span>
+                                <span *ngIf="linha.PIC.TemVencendo">
+                                    <p-badge (click)="this.vencimentos = linha.PIC.Vencendo;op.toggle($event);"
+                                        [value]="linha.PIC.Vencendo.length" severity="warning"></p-badge>
                                 </span>
+                                <span *ngIf="linha.PIC.TemVencido ">
+                                    <p-badge (click)="this.vencimentos = linha.PIC.Vencido;op.toggle($event);"
+                                        [value]="linha.PIC.Vencido.length" severity="danger"></p-badge>
+                                </span>
+
                                 <span *ngIf="linha.PIC">
                                     <i class="pi pi-moon ml-1"></i><p-badge [value]="linha.PIC.Noturno ? 'OK' : 'NOK'"
                                         [severity]="linha.PIC.Noturno ? 'success' : 'danger'"></p-badge>
@@ -322,23 +361,47 @@
                                 <ng-template pTemplate="input">
                                     <span>
                                         <div class="grid">
-                                            <div class="col-2" *ngIf="linha.SIC">
-                                                <!-- <p-badge [value]="linha.SIC.EhCMT ? 'P' : 'S'"
-                                                    [severity]="linha.SIC.Bolinha"></p-badge> -->
+                                            <div class="col-2 mr-2" *ngIf="linha.SIC && ehGerente">
+                                                <p-badge [value]="linha.SIC.EhInstrutor? 'I' : linha.SIC.EhCMT ? 'P' : 'S'"
+                                                    [severity]="linha.SIC.Bolinha"></p-badge>
                                             </div>
-                                            <div class="col-8 ml-2">
+                                            <div class="col-2" *ngIf="linha.SIC">
+                                                <p-badge *ngIf="linha.SIC.MenosDe50Horas" value="MenosDe50Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.SemVooHa45Dias" value="SemVooHa45Dias"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.MenosDe15Horas" value="MenosDe15Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.MenosDe3Pousos" value="MenosDe3Pousos"
+                                                    severity="danger"></p-badge>
+                                            </div>
+                                            <div class="col">
                                                 <p-dropdown [options]="tripulantes" [(ngModel)]="linha.SIC" dataKey="Id"
                                                     optionLabel="Trato" [showClear]="true" placeholder="SIC"
-                                                    [style]="{'width': '150px'}" (onChange)="mudeiAqui($event, linha, 'dupla')"
-                                                    [filter]="true" appendTo="body">
+                                                    [style]="{'width': '150px'}"
+                                                    (onChange)="mudeiAqui($event, linha, 'dupla')" [filter]="true"
+                                                    appendTo="body">
                                                     <ng-template let-trip pTemplate="item">
                                                         <div>
                                                             <div class="grid">
-                                                                <div class="col-2">
-                                                                    <!-- <p-badge [value]="trip.EhCMT ? 'P' : 'S'"
-                                                                        [severity]="trip.Bolinha"></p-badge> -->
+                                                                <div class="col-2 mr-2" *ngIf="ehGerente">
+                                                                    <p-badge [value]="trip.EhInstrutor? 'I' : trip.EhCMT ? 'P' : 'S'"
+                                                                        [severity]="trip.Bolinha"></p-badge>
                                                                 </div>
-                                                                <div class="col-6 ml-2">{{trip.Trato}}</div>
+                                                                <div class="col">{{trip.Trato}}
+                                                                    <p-badge *ngIf="trip.MenosDe50Horas"
+                                                                        value="MenosDe50Horas"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.SemVooHa45Dias"
+                                                                        value="SemVooHa45Dias"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.MenosDe15Horas"
+                                                                        value="MenosDe15Horas"
+                                                                        severity="danger"></p-badge>
+                                                                    <p-badge *ngIf="trip.MenosDe3Pousos"
+                                                                        value="MenosDe3Pousos"
+                                                                        severity="danger"></p-badge>
+                                                                </div>
                                                                 <div class="col-2 ml-2"><i
                                                                         class="pi pi-moon ml-1"></i><p-badge
                                                                         [value]="trip.Noturno ? 'OK' : 'NOK'"
@@ -355,11 +418,20 @@
                                 <ng-template pTemplate="output">
                                     <span *ngIf="linha.SIC">
                                         <div class="grid">
-                                            <div class="col-2">
-                                                <!-- <p-badge [value]="linha.SIC.EhCMT ? 'P' : 'S'"
-                                                    [severity]="linha.SIC.Bolinha"></p-badge> -->
+                                            <div class="col-2 mr-2" *ngIf="ehGerente">
+                                                <p-badge [value]="linha.SIC.EhInstrutor? 'I' : linha.SIC.EhCMT ? 'P' : 'S'"
+                                                    [severity]="linha.SIC.Bolinha"></p-badge>
                                             </div>
-                                            <div class="col-8 ml-2">{{linha.SIC.Trato}}</div>
+                                            <div class="col">{{linha.SIC.Trato}}
+                                                <p-badge *ngIf="linha.SIC.MenosDe50Horas" value="MenosDe50Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.SemVooHa45Dias" value="SemVooHa45Dias"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.MenosDe15Horas" value="MenosDe15Horas"
+                                                    severity="danger"></p-badge>
+                                                <p-badge *ngIf="linha.SIC.MenosDe3Pousos" value="MenosDe3Pousos"
+                                                    severity="danger"></p-badge>
+                                            </div>
                                         </div>
                                     </span>
                                 </ng-template>
@@ -369,17 +441,19 @@
                             <div *ngIf="linha.SIC">
                                 <i class="pi pi-user"></i><p-badge [value]="linha.SIC.Fadiga"
                                     [severity]="linha.SIC.CorDaFadiga"></p-badge>
-                                <span *ngIf="linha.SIC.TemVencendo || linha.SIC.TemVencido ">
-                                    <i class="pi pi-calendar-minus ml-1"></i>
-                                    <span *ngIf="linha.SIC.TemVencendo">
-                                        <p-badge (click)="this.vencimentos = linha.SIC.Vencendo;op.toggle($event);"
-                                            [value]="linha.SIC.Vencendo.length" severity="warning"></p-badge>
-                                    </span>
-                                    <span *ngIf="linha.SIC.TemVencido ">
-                                        <p-badge (click)="this.vencimentos = linha.SIC.Vencido;op.toggle($event);"
-                                            [value]="linha.SIC.Vencido.length" severity="danger"></p-badge>
-                                    </span>
+
+                                <i class="pi pi-calendar-minus ml-1"></i>
+                                <span *ngIf="!(linha.SIC.TemVencendo || linha.SIC.TemVencido)"><p-badge value="OK"
+                                        severity="success"></p-badge></span>
+                                <span *ngIf="linha.SIC.TemVencendo">
+                                    <p-badge (click)="this.vencimentos = linha.SIC.Vencendo;op.toggle($event);"
+                                        [value]="linha.SIC.Vencendo.length" severity="warning"></p-badge>
                                 </span>
+                                <span *ngIf="linha.SIC.TemVencido ">
+                                    <p-badge (click)="this.vencimentos = linha.SIC.Vencido;op.toggle($event);"
+                                        [value]="linha.SIC.Vencido.length" severity="danger"></p-badge>
+                                </span>
+
                                 <span *ngIf="linha.SIC">
                                     <i class="pi pi-moon ml-1"></i><p-badge [value]="linha.SIC.Noturno ? 'OK' : 'NOK'"
                                         [severity]="linha.SIC.Noturno ? 'success' : 'danger'"></p-badge>

@@ -27,12 +27,14 @@
 <div class="tabela" *ngIf="tripulantes">
 
     <p-table [columns]="colunas" [value]="tripulantes" [scrollable]="true"
-        scrollHeight="83vh" id="" frozenHeight="200px" class="tabela">        
+        scrollHeight="83vh" id="" class="tabela">        
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th></th>
                 <th>Trato</th>
                 <th>ANAC</th>
+                <th>Cargo</th>
+                <th>Só c/ Inst.</th>
                 <th>Matrícula</th>
                 <th>Matrícula TOTVS</th>
                 <th>e-mail</th>              
@@ -44,6 +46,8 @@
                 <td><input type="checkbox" (change)="marcarCheckboxTripulante($event,rowData)"></td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Trato}}</td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.CodigoANAC}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)"><span *ngIf="rowData.Cargo != null">{{rowData.Cargo.Nome}}</span></td>
+                <td (click)="exibirDialogoEdicao(rowData)"><span *ngIf="rowData.SoVoaComInstrutor">SIM</span><span *ngIf="!rowData.SoVoaComInstrutor">NÃO</span></td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Matricula}}</td>
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.MatriculaInterna}}</td>               
                 <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Email}}</td>              

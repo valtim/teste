@@ -1,5 +1,8 @@
 <app-titulo titulo="Horas da Quinzena para Pagamento" [carregando]="!tudoPronto"></app-titulo>
 
+<p-toast position="center"></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
 <p-toolbar class=" d-print-none">
 
   <div>
@@ -12,23 +15,32 @@
     <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
       [inputStyle]="{ width: '100px' }" class="mr-2"></p-calendar>
 
-    <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="mr-4"></button>
+
+    <p-multiSelect [options]="tripulantes" [(ngModel)]="selectedValues" defaultLabel="Todos os Tripulantes"
+      optionLabel="Trato" optionValue="Id" display="chip"></p-multiSelect>
+
+    <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio(false, false)" class="mr-4"
+      [disabled]="!tudoPronto"></button>
 
     <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
       class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom" [disabled]="!dados"></button>
 
     <button type="button" label="Relatório" pButton pRipple icon="pi pi-file" (click)="gerarTXT()"
-      class="botao-excel p-button-success mr-2" pTooltip="TXT" tooltipPosition="bottom" class="mr-2" [disabled]="!dados"></button>
+      class="botao-excel p-button-success mr-2" pTooltip="TXT" tooltipPosition="bottom" class="mr-2"
+      [disabled]="!dados"></button>
 
+    <button pButton type="button" icon="pi pi-search" iconPos="right" label="Visualizar emails"
+      (click)="rodarRelatorio(true, false)" class="ml-2 mr-3 p-button-success" [disabled]="!tudoPronto"></button>
 
-    <!-- <button type="button" label="Relatório/Memória" pButton pRipple icon="pi pi-file"
-      (click)="exibirMemoria = !exibirMemoria" class="botao-excel p-button-warning" pTooltip="TXT"
-      tooltipPosition="bottom"  disabled="!dados"></button> -->
+  </div>
+  <div class="p-toolbar-group-right">
+    <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar emails" (click)="precisaConfirmar()"
+      class="ml-3 p-button-warning" [disabled]="!tudoPronto"></button>
   </div>
 
 </p-toolbar>
 
-<p-toolbar *ngIf="!dados" class="m-4">
+<p-toolbar *ngIf="!dados && !html" class="m-4">
   Selecione o período e clique em PESQUISAR.
 </p-toolbar>
 
@@ -50,6 +62,11 @@
     </tr>
   </table>
 </div>
+
+
+
+
+<div *ngIf="html" [innerHTML]="html | safeHtml"></div>
 
 <!-- <p-table>
     <ng-template pTemplate="caption">

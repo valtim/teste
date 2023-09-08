@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-
 import { SegurancaModule } from './seguranca/seguranca.module';
-
 import { AppRoutingModule } from './app-routing.module';
-
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AnaliseDeRiscoComponent } from './relatorios/analise-de-risco/analise-de-risco.component';
@@ -107,6 +103,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.component';
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { ApontamentoComponent } from './relatorios/apontamento/apontamento.component';
 import { AssinaturaRDVComponent } from './relatorios/assinatura-rdv/assinatura-rdv.component';
 import { AssinaturaBocaComponent } from './relatorios/assinatura-boca/assinatura-boca.component';
 import { EditarTreinamentoComponent } from './treinamento/editar-treinamento/editar-treinamento.component';
@@ -115,6 +112,7 @@ import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/o
 import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diario-cdo.component';
+import { CcoComponent } from './painel/cco/cco.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -219,16 +217,15 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
     CadastroEmailCdoComponent,
-
+    ApontamentoComponent
     AssinaturaRDVComponent,
     AssinaturaBocaComponent,
-
     TripulanteEscalaComponent,
     OrdenarCertificadoComponent,
     EmailEscalaComponent,
     EmailDiarioFadigaComponent,
-    EmailDiarioCdoComponent
-
+    EmailDiarioCdoComponent,
+    CcoComponent
   ],
   imports: [
     AppRoutingModule,

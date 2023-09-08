@@ -1,6 +1,8 @@
-<app-titulo titulo="Indisponibilidade" [carregando]="(carregandoMenu || carregandoRelatorio)"></app-titulo>
+<app-titulo titulo="Indisponibilidade" [carregando]="carregando"></app-titulo>
 
 <p-toast></p-toast>
+
+
 
 
 <div class="grid">
@@ -23,12 +25,12 @@
     </div>
     <div class="col">
         <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" 
-            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
-<br/>
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
+        <br />
         <button type="button" pButton pRipple label="Final"></button>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" 
-            showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+            [inputStyle]="{'width':'100px'}"></p-calendar>
     </div>
     <div class="col">
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
@@ -38,13 +40,21 @@
 
 </div>
 
-<div *ngIf="!carregandoRelatorio">
+<p-menubar *ngIf="listas" [model]="botoes" class="d-print-none"></p-menubar>
 
+<p-toolbar *ngIf="!dados" class="m-4">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
-    <p-menubar [model]="botoes" class="d-print-none"></p-menubar>
+<p-dialog *ngIf="item" [(visible)]="item" [modal]="true" [baseZIndex]="10000">
+    <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos"
+        [base]="basesDeOperacao" [motivosIndisponibilidade]="motivosIndisponibilidade"
+        (retorno)="onLinhaAlterada($event)">
+    </app-editar-indisponibilidade>
+</p-dialog>
 
-    <p-table [columns]="cols" [value]="dados" dataKey="Id" selectionMode="single" dataKey="Id"
-        (onRowSelect)="onRowSelect($event)">
+<div *ngIf="dados">
+    <p-table [columns]="cols" [value]="dados" dataKey="Id" selectionMode="single" dataKey="Id">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>Contrato</th>
@@ -55,7 +65,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData>
-            <tr [pSelectableRow]="rowData">
+            <tr [pSelectableRow]="rowData" (click)="onRowSelect($event, rowData)">
                 <td>{{rowData.Contrato.Nome}}</td>
                 <td>{{rowData.Inicio}}</td>
                 <td>{{rowData.Fim}}</td>
@@ -66,12 +76,12 @@
     </p-table>
 
 
-
-    <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="true" (onHide)="fechar()" [modal]="true">
+    <!-- <p-dialog *ngFor="let item of dados" [id]="item.Id" [visible]="item.Exibir" [closable]="true" (onHide)="fechar()"
+        [modal]="true">
         <app-editar-indisponibilidade [indisponibilidade]="item" [contrato]="contratos" [prefixo]="prefixos"
             [base]="basesDeOperacao" [motivosIndisponibilidade]="motivosIndisponibilidade"
             (retorno)="onLinhaAlterada($event)">
         </app-editar-indisponibilidade>
-    </p-dialog>
+    </p-dialog> -->
 
 </div>

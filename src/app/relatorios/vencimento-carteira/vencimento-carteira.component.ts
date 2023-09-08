@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import * as saveAs from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { SortEvent } from 'primeng/api/sortevent';
 import { OverlayPanel } from 'primeng/overlaypanel';
@@ -167,5 +168,40 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   // }
 
+
+  exportExcel() {
+    import("xlsx").then((xlsx) => {
+      // let title = document.getElementById("title");
+      // let subtitle = document.getElementById("subtitle");
+      // let trato = document.getElementById("trato");
+
+      let element = document.getElementById("quadro");
+      let worksheet = xlsx.utils.table_to_sheet(element, {
+        dateNF: "dd/mm/yyyy;@",
+        cellDates: true,
+        raw: true,
+      });
+      let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+
+      let excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "quadro-de-tripulantes");
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
 
 }

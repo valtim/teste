@@ -48,7 +48,6 @@ import { BuscaBiComponent } from "./bi/busca-bi/busca-bi.component";
 import { DeslocamentoComponent } from "./cadastro/deslocamento/deslocamento.component";
 import { ModificadorComponent } from "./cadastro/modificador/modificador.component";
 import { GraficoFadigaComponent } from "./grafico-fadiga/grafico-fadiga.component";
-
 import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
 import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
 import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
@@ -75,9 +74,11 @@ import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { ApontamentoComponent } from "./relatorios/apontamento/apontamento.component";
 import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
 import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
+import { CcoComponent } from './painel/cco/cco.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -105,17 +106,17 @@ const routes: Routes = [
   {
     path: "agenda-de-treinamento",
     component: AgendaComponent,
-    //canActivate: [AuthGuardService],
-    // children: [
-    // ]
+    canActivate: [AuthGuardService],
   },
   {
-    path: "turmas", // child route path
-    component: TurmaListComponent, // child route component that the router renders
+    path: "turmas", 
+    component: TurmaListComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "tipo-de-certificado",
-    component: TreinamentoListComponent, // another child route component that the router renders
+    component: TreinamentoListComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "quadro-de-tripulantes",
@@ -152,256 +153,324 @@ const routes: Routes = [
   {
     path: "grafico",
     component: GraficoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "deslocamento",
     component: DeslocamentoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "analise-de-risco",
     component: AnaliseDeRiscoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "visualizar-analise-de-risco/:id",
     component: AnaliseDeRiscoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "documento-impresso",
     component: DocumentoImpressoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "pax-transportados",
     component: PaxTransportadosComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "total-de-pousos",
     component: RelPousoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-cons-comb",
     component: RelConsCombComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-horas-quinzena",
     component: HorasVoadasQuinzenaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-horas-tripulante",
     component: HorasVoadasTripulanteComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-boca",
     component: RelBocaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-rdv",
     component: RelListaRdvComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-rdv/:id",
     component: RelRdvComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "voos-realizados",
     component: VoosRealizadosComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "status-da-frota",
     component: RelStatusDaFrotaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-diario-horas-voadas",
     component: RelDiarioHorasVoadasComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "controle-de-tripulantes",
     component: ControleDeTripulantesComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-escala-ptbr",
     component: RelEscalaPtbrComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-medicao",
     component: RelMedicaoComponent,
+    canActivate: [AuthGuardService],
   },
+  {
+    path: "apontamento",
+    component: ApontamentoComponent,
+  },  
   {
     path: "rel-controle-spot",
     component: RelControleSpotComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "crud/:tipo",
     component: CrudComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "motivo-do-atraso",
     component: MotivoDoAtrasoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-pontualidade",
     component: RelPontualidadeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-indisponibilidade",
     component: RelIndisponibilidadeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "rel-cdo",
     component: RelCdoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cad-email-reporte",
     component: CadastroDeEmailReporteComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cad-email-diario-fadiga",
     component: EmailDiarioFadigaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cad-email-diario-cdo",
     component: CadastroEmailCdoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "cad-email-cdo",
     component: CadastroEmailCdoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "indisponibilidade",
     component: IndisponibilidadeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "motivo-da-indisponibilidade",
     component: MotivoDaIndisponibilidadeComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "contrato",
     component: ContratoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "listar-jornada",
     component: ListarJornadaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "gerenciar-tripulantes",
     component: GerenciarTripulantesComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "imprimir-jornada",
     component: ImprimirJornadaNovoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "escala-mensal",
     component: EscalaMensalComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "tipo-de-ocorrencia",
     component: TipoDeOcorrenciaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "quinzena",
     component: QuinzenaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "trilho",
     component: TrilhoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "escala-do-dia",
     component: EscalaDoDiaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "dupla",
     component: DuplaAdmComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "escala-semanal",
     component: EscalaSemanalComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "erros-no-db",
     component: ErrosNoDbComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "informativo",
     component: ListaInformativoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "incompatibilidade",
     component: IncompatibilidadeComponent,
-  },
-  {
-    path: "busca-bi",
-    component: BuscaBiComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "controle-de-acesso",
     component: ControleDeAcessoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "controle-de-acesso/:Id",
     component: ControleDeAcessoEditComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "controle-de-acesso/novo",
     component: ControleDeAcessoEditComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "modificador",
     component: ModificadorComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "grafico-fadiga",
     component: GraficoFadigaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "email-escala",
     component: EmailEscalaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "grupo-de-pergunta",
     component: GrupoDePerguntaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "ficha-de-avaliacao",
     component: FichaDeAvaliacaoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "ficha-de-avaliacao/novo",
     component: FichaDeAvaliacaoEditComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "ficha-de-avaliacao-edit",
     component: FichaDeAvaliacaoEditComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: "ficha-de-avaliacao-item/:Id",
     component: FichaDeAvaliacaoItemComponent,
-
+    canActivate: [AuthGuardService],
   },
   {
     path: 'instrutor',
     component: InstrutorComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'dupla-adm',
     component: DuplaAdmComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'bloco',
     component: BlocoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'vencimento-treinamento',
     component: RelVencimentoTreinamentoComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'base-do-tripulante',
     component: BaseDoTripulanteComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'ordenar-certificado',
     component: OrdenarCertificadoComponent,
-  }
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'occ-availability',
+    component: CcoComponent,
+    canActivate: [AuthGuardService],
+  },
+  { path: '**', pathMatch: 'full', 
+  component: LogoffComponent },
 ];
 
 @NgModule({

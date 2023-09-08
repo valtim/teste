@@ -15,8 +15,8 @@ export class TrilhoComponent implements OnInit {
   listasProntas = false;
   tabelaPronta = false;
 
-  tudoPronto = false;
-  public trilhos = [];
+  // tudoPronto = false;
+  public trilhos: any[];
   linhasSelecionadas = [];
   prefixos = [];
   localidades = [];
@@ -26,10 +26,20 @@ export class TrilhoComponent implements OnInit {
   resultsPrefixo = [];
   resultsCliente: any[];
   locale_pt: any;
-  dataIni = new Date();
-  dataFim = new Date();
   tripulantes: any;
   resultsTrip: any;
+
+  dataPesquisada;
+
+
+
+  get tudoPronto() {
+    return this.tabelaPronta && this.listasProntas;
+  }
+
+  get temDados() {
+    return this.trilhos != undefined;
+  }
 
   constructor(private api: ApiService,
     private apiGenerico: ApiGenericoService,
@@ -40,25 +50,20 @@ export class TrilhoComponent implements OnInit {
   ngOnInit(): void {
 
     this.api.getListasTrilho().then(x => {
-      this.listasProntas = true;
       this.localidades = x.Localidades;
       this.prefixos = x.Prefixos;
       this.clientes = x.Clientes;
       this.tripulantes = x.Tripulantes;
-      this.tudoPronto = this.tabelaPronta && this.listasProntas;
+      this.dataPesquisada = new Date(x.DataPesquisada);
+      this.listasProntas = true;
+      this.rodarRelatorio();
     })
-
-
-    this.dataIni = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-    this.dataFim = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + 1);
-
-    this.rodarRelatorio();
 
   }
 
-  editInit(e){
+  editInit(e) {
     console.log('passou');
-    
+
   }
 
   searchTrip(event) {
@@ -66,36 +71,22 @@ export class TrilhoComponent implements OnInit {
   }
 
   rodarRelatorio() {
-    this.tabelaPronta = false;
-    this.trilhos = [];
-
-    this.tudoPronto = this.tabelaPronta && this.listasProntas;
-
-    this.api.getTrilho(this.dataIni, this.dataFim).then(x => {
+    this.trilhos = undefined;
+    this.api.getTrilho(this.dataPesquisada, this.dataPesquisada).then(x => {
       this.tabelaPronta = true;
-      if ( x == null ){
-        this.tudoPronto = this.tabelaPronta && this.listasProntas;
-        return;  
-      }
       this.trilhos = x;
-
       this.trilhos.forEach(x => {
         x.Data = new Date(x.Data);
       })
-
-      this.tudoPronto = this.tabelaPronta && this.listasProntas;
     })
-
   }
 
+  
   mudeiAqui(e, dados) {
-
     dados.Modificado = true;
   }
 
   salvar() {
-
-
 
     this.trilhos.forEach(x => {
       x.Paradas = [];
@@ -107,8 +98,6 @@ export class TrilhoComponent implements OnInit {
     let post = this.trilhos.filter(x => x.Modificado);
 
     this.trilhos = [];
-
-
 
     this.api.postTrilho(post).then(x => {
       this.rodarRelatorio();
@@ -129,7 +118,7 @@ export class TrilhoComponent implements OnInit {
 
     this.trilhos.push({
       Id: GuidUtil.NewGuid(),
-      Date: dt,
+      Date: this.dataPesquisada,
       Cliente: { Nome: '' },
       Hora: "06:00",
       Rota: [],
@@ -154,6 +143,10 @@ export class TrilhoComponent implements OnInit {
   }
 
   searchLocal(event) {
+    this.resultsLocal = this.localidades.filter(x => x.Nome.indexOf(event.query.toUpperCase()) > -1 || x.NomeICAO.indexOf(event.query.toUpperCase()) > -1);
+  }
+
+  searchBase(event) {
     this.resultsLocal = this.localidades.filter(x => x.Nome.indexOf(event.query.toUpperCase()) > -1 || x.NomeICAO.indexOf(event.query.toUpperCase()) > -1);
   }
 
