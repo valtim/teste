@@ -6,45 +6,21 @@
         <svg viewBox="25 25 50 50" class="p-progress-spinner-svg" style="animation-duration: 2s;"><circle cx="50" cy="50" r="20" stroke-miterlimit="10" class="p-progress-spinner-circle" fill="none" stroke-width="2"></circle></svg>
     </div>
     
-    <button *ngIf="passo == 1 || passo == 2" (click)="enviarEmail()" type="button" class="p-button-success enviar-email" icon="pi pi-id-card" pButton pRipple label="Enviar arquivos para assinar"></button>
+    <button *ngIf="passo < 5" (click)="enviarEmail()" type="button" class="p-button-success enviar-email" icon="pi pi-id-card" pButton pRipple label="Salvar todos os PDFs"></button>
 
     <div class="p-field col-12">
-        <h2>Etapas da Assinatura dos arquivos RDV</h2>
+        <h2>Etapas para salvar os arquivos PDFs</h2>
         <div class="container-passos">
-            <span class="passos" [ngClass]="{'selecionado': passo === 1}">
-                <h5>PASSO 1</h5>
-                Faça o upload dos arquivos que serão assinados
-            </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 2}">
-                <h5>PASSO 2</h5>
-                Confirme seu e-mail e clique no botão <i>Enviar arquivos para assinar</i>
-            </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 3}">
-                <h5>PASSO 3</h5>
-                Clique no botão <i>Assinar arquivos</i>
-            </span>
-            <span class="passos" [ngClass]="{'selecionado': passo === 4}">
-                <h5>PASSO 4</h5>
-                Clique no botão <i>Verificar assinatura</i>
-            </span>
+            <span class="texto">                
+                Faça o upload dos arquivos associados a este RDV e em seguida clica no botão <i>Salvar todos os PDFs</i>
+            </span>            
         </div>
     </div>
 
     <div class="p-field col-12">        
-        <button type="button" style="box-sizing: border-box; width: 25%;" class="label-fixo-2" pButton pRipple label="E-mail do Assinante"></button>
-        <input [disabled]="!(passo == 1 || passo == 2)" [readonly]="!(passo == 1 || passo == 2)" pInputText style="box-sizing: border-box; width: 75%;" type="email" [(ngModel)]="EmailAssinante">                    
-    </div>
-
-    <div class="p-field col-12">        
-        <button class="p-button-raised p-button-text p-button-secondary" style="box-sizing: border-box; width: 50%;" type="button" icon="pi pi-file-pdf" pButton pRipple label="Status da Assinatura Digital"></button>
+        <button class="p-button-raised p-button-text p-button-secondary" style="box-sizing: border-box; width: 50%;" type="button" icon="pi pi-file-pdf" pButton pRipple label="Status da geração dos PDFs"></button>
         <button *ngIf="passo == 5" icon="pi pi-check-square" class="p-button-success" style="box-sizing: border-box; width: 50%;" type="button" pButton pRipple label="{{obterStatusAssinatura()}}"></button>
         <button *ngIf="passo != 5" icon="pi pi-file-excel" class="p-button-warning" style="box-sizing: border-box; width: 50%;" type="button" pButton pRipple label="{{obterStatusAssinatura()}}"></button>
-    </div>
-
-    <div class="p-field col-12">                                    
-        <button [disabled]="!(passo == 3 || passo == 4)" (click)="assinarArquivos()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': !(passo == 3 || passo == 4)}" icon="pi pi-id-card" style="box-sizing: border-box; width: 31%;" pButton pRipple label="Assinar arquivos"></button>
-        <button [disabled]="!(passo == 3 || passo == 4)" (click)="verificarAssinatura()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': !(passo == 3 || passo == 4)}" icon="pi pi-sync" style="box-sizing: border-box; width: 31%; margin-left: 3.5%; margin-right: 3.5%;" pButton pRipple label="Verificar assinatura"></button>
-        <button [disabled]="passo != 5" (click)="downloadArquivoAssinado()" type="button" class="p-button-success" [ngClass]="{'botao-cinza': passo != 5}" icon="pi pi-arrow-down" style="box-sizing: border-box; width: 31%;" pButton pRipple label="Baixar arquivo"></button>
     </div>
 
     <div class="p-field col-12">

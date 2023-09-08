@@ -48,7 +48,6 @@ import { BuscaBiComponent } from "./bi/busca-bi/busca-bi.component";
 import { DeslocamentoComponent } from "./cadastro/deslocamento/deslocamento.component";
 import { ModificadorComponent } from "./cadastro/modificador/modificador.component";
 import { GraficoFadigaComponent } from "./grafico-fadiga/grafico-fadiga.component";
-
 import { ControleDeAcessoEditComponent } from "./cadastro/controle-de-acesso-edit/controle-de-acesso-edit.component";
 import { RelStatusDaFrotaComponent } from "./relatorios/rel-status-da-frota/rel-status-da-frota.component";
 import { RelDiarioHorasVoadasComponent } from "./relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component";
@@ -75,6 +74,7 @@ import { BlocoComponent } from "./cadastro/bloco/bloco.component";
 import { RelMedicaoComponent } from "./relatorios/rel-medicao/rel-medicao.component";
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
+import { ApontamentoComponent } from "./relatorios/apontamento/apontamento.component";
 import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
 import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
@@ -246,6 +246,10 @@ const routes: Routes = [
     component: RelMedicaoComponent,
     canActivate: [AuthGuardService],
   },
+  {
+    path: "apontamento",
+    component: ApontamentoComponent,
+  },  
   {
     path: "rel-controle-spot",
     component: RelControleSpotComponent,
