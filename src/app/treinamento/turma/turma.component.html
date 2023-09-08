@@ -1,6 +1,8 @@
 <p-toast position="top-center"></p-toast>
-<p-confirmDialog header="Confirmation" width="425"></p-confirmDialog>
-<p-messages [(value)]="messages" [enableService]="false" [closable]="true" class="mensagens_de_erro"></p-messages>
+<!-- <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog> -->
+<!-- <p-messages [(value)]="messages"></p-messages> -->
+
+<!-- <p-toast position="top-center" key="tc"></p-toast> -->
 
 <span class="p-buttonset botoes_salvar">
     <button pButton type="button" label="Salvar" (click)="enviar(turmaInterna)" icon="pi pi-check"
@@ -257,6 +259,7 @@
                     <th>Tripulante</th>
                     <th>Data</th>
                     <th>Hora</th>
+                    <th>A definir</th>
                     <th>Deslocamento</th>
                     <th></th>
                 </tr>
@@ -267,8 +270,8 @@
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="todasAsPessoas" [(ngModel)]="linha.Tripulante" dataKey="Id"
-                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
+                                <p-dropdown [options]="envolvidos" [(ngModel)]="linha.Tripulante" dataKey="Id"
+                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante" appendTo="body"
                                     [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)" filter="true">
                                 </p-dropdown>
                             </ng-template>
@@ -282,7 +285,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                    showIcon="true" (onInput)="mudeiAqui($event, linha)"
+                                    showIcon="true" (onInput)="mudeiAqui($event, linha)" appendTo="body"
                                     (onSelect)="mudeiAqui($event, linha)"></p-calendar>
                             </ng-template>
                             <ng-template pTemplate="output">
@@ -295,7 +298,7 @@
                         <p-cellEditor>
                             <ng-template pTemplate="input">
                                 <p-inputMask type="tel" (change)="mudeiAqui($event, linha)" [(ngModel)]="linha.Hora"
-                                    mask="99:99" required>
+                                    mask="99:99" [disabled]="linha.Definir">
                                 </p-inputMask>
                             </ng-template>
                             <ng-template pTemplate="output">
@@ -307,7 +310,20 @@
                     <td pInitEditableRow>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
+                                <p-checkbox [(ngModel)]="linha.Definir" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                <span *ngIf="linha.Definir">SIM</span>
+                                <span *ngIf="!linha.Definir">NÃO</span>
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id" appendTo="body"
                                     optionLabel="Nome" [showClear]="true" placeholder="Base" [style]="{'width': '100%'}"
                                     (onChange)="mudeiAqui($event, linha)">
                                 </p-dropdown>

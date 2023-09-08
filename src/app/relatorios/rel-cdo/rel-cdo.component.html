@@ -1,7 +1,7 @@
 <app-titulo titulo="DAILY FLIGHT TIME CONTROL" [carregando]="(!consulta_ok)"></app-titulo>
 
 
-<div class="row p-mt-1 nao-imprimir">
+<div class="row mt-1 nao-imprimir">
     <div class="col"></div>
     <div class="col">
         <div class="p-inputgroup">
@@ -9,9 +9,9 @@
             <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true" [inputStyle]="{'width':'150px'}"></p-calendar>
             <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
-                (click)="rodarRelatorio()" class="p-ml-2"></button>
+                (click)="rodarRelatorio()" class="ml-2"></button>
             <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir" (click)="imprimir()"
-                class="p-ml-2"></button>
+                class="ml-2"></button>
         </div>
     </div>
     <div class="col"></div>

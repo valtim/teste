@@ -44,9 +44,12 @@ import { TabViewModule } from 'primeng/tabview';
 import { InputTextModule } from 'primeng/inputtext';
 import { StepsModule } from 'primeng/steps';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ChipsModule } from 'primeng/chips';
 import { ChartModule } from 'primeng/chart';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import {BadgeModule} from 'primeng/badge';
+import { BadgeModule } from 'primeng/badge';
+import { TooltipModule } from 'primeng/tooltip';
+import {SidebarModule} from 'primeng/sidebar';
 
 @NgModule({
   declarations: [
@@ -73,6 +76,7 @@ import {BadgeModule} from 'primeng/badge';
     DropdownModule,
     FieldsetModule,
     FileUploadModule,
+    ChipsModule,
     FormsModule,
     HttpClientModule,
     InputMaskModule,
@@ -95,7 +99,9 @@ import {BadgeModule} from 'primeng/badge';
     ToastModule,
     ToolbarModule,
     RadioButtonModule,
-    ChartModule
+    ChartModule,
+    TooltipModule,
+    SidebarModule
   ],
   exports: [
     AccordionModule,
@@ -114,6 +120,7 @@ import {BadgeModule} from 'primeng/badge';
     DropdownModule,
     FieldsetModule,
     FileUploadModule,
+    ChipsModule,
     FormsModule,
     HttpClientModule,
     InputMaskModule,
@@ -140,8 +147,11 @@ import {BadgeModule} from 'primeng/badge';
     TituloComponent,
     ConfirmacaoComponent,
     FormataDataPipe,
-    TimespanPipe,    
-    RadioButtonModule
+    TimespanPipe,
+    RadioButtonModule,
+    TooltipModule,
+    SidebarModule,
+    
   ],
 })
 export class SOLSharedModule { }

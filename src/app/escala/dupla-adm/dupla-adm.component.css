@@ -1,3 +1,29 @@
+.botao_pesquisar{
+
+        position: fixed;
+        left: 150px;
+        top: 20px;
+        width: 500px;
+        z-index: 10000;
+
+}
+
+tr {
+    margin: 0%;
+    border: 0%;
+    padding: 0%;
+}
+td {
+    margin: 0%;
+    border: 0%;
+    padding: 0%;
+}
+.element {
+    margin: 0%;
+    border: 0%;
+    padding: 0%;
+}
+
 div.bolinha {
     width: 25px;
     height: 25px;
@@ -35,7 +61,7 @@ li.vermelho {
 
 li.amarelo {
     background-color: yellow;
-    color:black;
+    color: black;
     list-style-type: none;
     padding: 5px;
 }

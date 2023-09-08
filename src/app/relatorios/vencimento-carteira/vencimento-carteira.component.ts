@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
+import * as saveAs from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { SortEvent } from 'primeng/api/sortevent';
+import { OverlayPanel } from 'primeng/overlaypanel';
 import { ApiService } from 'src/app/shared/api.service';
 
 @Component({
@@ -10,27 +12,35 @@ import { ApiService } from 'src/app/shared/api.service';
   providers: [MessageService]
 })
 export class VencimentoCarteiraComponent implements OnInit {
+  columns: any;
+  loading: boolean;
 
   constructor(private api: ApiService, private messageService: MessageService) { }
 
-  public tripulantes: any;
-  public certificados: any;
-  public vencimentos: any;
-  public loading = true;
-  public ultimosVoos: any;
+  ultimosVoos: any;
   public vencimentoListToSave = [];
 
-  public resultado;
 
-  readonly DATE_FMT = 'dd/MMM/yyyy';
-
-
-  scrollableCols;
-  frozenCols;
+  valorEditado: any;
+  exibirModal: false;
   valores;
 
-  @ViewChild('myDiv') myDiv: ElementRef;
+  valorExibido;
 
+
+  @ViewChild('op') myDiv: OverlayPanel;
+
+  editarValor(event, valor) {
+
+    if (valor.Certificado.Readonly) {
+      this.ultimosVoos = valor.UltimosVoos;
+      this.myDiv.toggle(event)
+      return;
+    }
+
+    this.valorEditado = valor;
+    // alert(valor.Id);
+  }
 
   podeEditar = window.location.href.indexOf("readonly") == -1;
 
@@ -42,16 +52,21 @@ export class VencimentoCarteiraComponent implements OnInit {
     console.log(retorno);
 
 
-    if (!retorno.Confirmado)
+    if (!retorno.Confirmado) {
+      this.valorEditado = undefined;
       return;
+    }
 
-    retorno.Display = false;
+    //retorno.Display = false;
     this.api.postAtualizaVencimento(retorno.Certificado).then(x => {
-      var item = this.valores.filter(y => y.Trato == x.Tripulante.Trato)[0][x.Certificado.Nome];
-      item.Display = false;
+      // var item = this.valores.filter(y => y.Trato == x.Tripulante.Trato)[0][x.Certificado.Nome];
+      // item.Display = false;
       this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });
-      item.ValorExibido = x.ValorExibido;
-      item.CorNaTela = x.CorNaTela;
+
+      this.valorEditado.CorNaTela = x;
+
+      this.valorEditado = undefined;
+      //this.valores[this.valores.findIndex(x => x.Id == this.vencimentoEditado.Id)] = { ...this.vencimentoEditado };
     }).catch
       (e => {
 
@@ -70,11 +85,11 @@ export class VencimentoCarteiraComponent implements OnInit {
   ngOnInit() {
 
     this.api.getQuadroDeTripulantes().then(result => {
-    this.loading = false;
-      this.resultado = result;
+      this.loading = false;
+      this.columns = result.columns;
       this.valores = result.valores;
-      this.scrollableCols = result.scrollableCols;
-      this.frozenCols = result.frozenCols;
+    }).catch(() => {
+      this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao pesquisar, por favor tente novamente.' });
     });
   }
   reordenar(coluna) {
@@ -144,14 +159,49 @@ export class VencimentoCarteiraComponent implements OnInit {
     item.Display = true;
   }
 
-  exibirVoos(evento, item) {
+  // exibirVoos(evento, item) {
 
-    this.myDiv.nativeElement.innerHTML = "";
-    item.UltimosVoos.forEach(x => {
-      this.myDiv.nativeElement.innerHTML += "<a target='_new' href='/rel-rdv/" + x.NumeroDaFolha + "'>" + x.Data.substring(8, 10) + '/' + x.Data.substring(5, 7) + '/' + x.Data.substring(2, 4) + ' - ' + x.Prefixo + ' - ' + x.NumeroDaFolha + '</a><br/>'
+  //   this.myDiv.nativeElement.innerHTML = "";
+  //   item.UltimosVoos.forEach(x => {
+  //     this.myDiv.nativeElement.innerHTML += "<a target='_new' href='/rel-rdv/" + x.NumeroDaFolha + "'>" + x.Data.substring(8, 10) + '/' + x.Data.substring(5, 7) + '/' + x.Data.substring(2, 4) + ' - ' + x.Prefixo + ' - ' + x.NumeroDaFolha + '</a><br/>'
+  //   });
+
+  // }
+
+
+  exportExcel() {
+    import("xlsx").then((xlsx) => {
+      // let title = document.getElementById("title");
+      // let subtitle = document.getElementById("subtitle");
+      // let trato = document.getElementById("trato");
+
+      let element = document.getElementById("quadro");
+      let worksheet = xlsx.utils.table_to_sheet(element, {
+        dateNF: "dd/mm/yyyy;@",
+        cellDates: true,
+        raw: true,
+      });
+      let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+
+      let excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "quadro-de-tripulantes");
     });
-
   }
 
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
 
 }

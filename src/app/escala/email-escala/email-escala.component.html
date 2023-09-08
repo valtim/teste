@@ -1,0 +1,25 @@
+<app-titulo [carregando]="carregando" titulo="Email da Escala"></app-titulo>
+
+<p-card class=" p-text-center" *ngIf="tripulantes">
+    <div class="p-mb-4">
+
+        <button type="button" pButton pRipple label="Tripulantes"></button>
+        <p-multiSelect [options]="tripulantes" [(ngModel)]="selectedValues" defaultLabel="Todos os Tripulantes" optionLabel="Trato" optionValue="Id"
+        display="chip"></p-multiSelect>
+
+        <button type="button" pButton pRipple label="Inicio" class="ml-2"></button>
+        <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+        <button type="button" pButton pRipple label="Fim" class="ml-2"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+        <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+            class="ml-2" [disabled]="carregando"></button>
+            <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar emails" (click)="rodarRelatorio(true)"
+                class="ml-2 p-button-warning" [disabled]="carregando"></button>
+    </div>
+
+
+</p-card>
+
+<p-toast position="center"></p-toast>
+
+<div *ngIf="html" [innerHTML]="html | safeHtml"></div>

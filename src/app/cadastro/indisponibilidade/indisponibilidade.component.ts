@@ -12,13 +12,12 @@ import { TreeNode, MessageService } from 'primeng/api';
 export class IndisponibilidadeComponent implements OnInit {
   prefixos: any;
   clientes: any;
-  carregandoMenu: boolean = true;
-  carregandoRelatorio: boolean = true;
+  carregando: boolean = true;
   prefixosSelecionados: any;
   clientesSelecionados: any;
   dataInicio: Date;
   dataFim: Date;
-  dados = [];
+  dados: any[];
   cols: any;
   locale_pt: any;
   listas: any;
@@ -29,8 +28,10 @@ export class IndisponibilidadeComponent implements OnInit {
   botoes: { label: string; icon: string; command: () => void; }[];
   motivosIndisponibilidade: any;
 
-  fechar(){
-    
+  item: any;
+
+  fechar() {
+
   }
 
   constructor(private api: ApiService, private messageService: MessageService) { }
@@ -49,12 +50,12 @@ export class IndisponibilidadeComponent implements OnInit {
       ]
 
     const date = new Date();
-    
-    this.dataFim = new Date(date.getFullYear(), date.getMonth(), 25);
-    this.dataFim = new Date(this.dataFim.setMonth(this.dataFim.getMonth()+1));
 
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth() -2 , 26);
-    
+    this.dataFim = new Date(date.getFullYear(), date.getMonth(), 25);
+    this.dataFim = new Date(this.dataFim.setMonth(this.dataFim.getMonth() + 1));
+
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth() - 2, 26);
+
 
 
 
@@ -65,13 +66,13 @@ export class IndisponibilidadeComponent implements OnInit {
       this.contratos = x.Contrato;
       this.basesDeOperacao = x.BaseDeOperacao;
       this.motivosIndisponibilidade = x.MotivoIndisponibilidade;
-      this.carregandoMenu = false;
-      this.rodarRelatorio();
+      this.carregando = false;
+      //this.rodarRelatorio();
     })
 
   }
   novoItem() {
-    let novoItem = {
+    this.item = {
       Ativo: true,
       Contrato: null,
       DescricaoDoMotivo: null,
@@ -82,14 +83,12 @@ export class IndisponibilidadeComponent implements OnInit {
       EhOcorrencia: false,
       Ocorrencias: [],
     }
-
-    this.dados = this.dados.concat(novoItem, this.dados);
   }
 
   files: TreeNode[];
 
   rodarRelatorio() {
-    this.carregandoRelatorio = true;
+    this.carregando = true;
 
     const dados = {
       prefixos: this.prefixosSelecionados,
@@ -100,7 +99,7 @@ export class IndisponibilidadeComponent implements OnInit {
 
     this.api.postCrudIndisponibilidadeFiltro(dados).then(x => {
       this.dados = x;
-      this.carregandoRelatorio = false;
+      this.carregando = false;
     })
   }
 
@@ -109,13 +108,23 @@ export class IndisponibilidadeComponent implements OnInit {
     //this.verBotoes();
   }
 
-  onRowSelect(event) {
+  onRowSelect(event, linha) {
     // alert(event);    
-    event.data.Exibir = true;
+    //event.data.Exibir = true;
+    this.item = Object.assign({}, linha);
   }
 
   onLinhaAlterada(event) {
-    //this.rodarRelatorio();
+    this.item = undefined;
+    if (!event.Salvar && !event.excluir)
+      return;
+
+    this.dados = this.dados.filter(x => x.Id != event.Indisponibilidade.Id);
+    if (event.Excluir)
+      return;
+
+    //this.dados.push(event.Indisponibilidade);
+    this.dados = [event.Indisponibilidade].concat(this.dados);
     this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Salvo com sucesso!' });
   }
 

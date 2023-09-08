@@ -4,100 +4,97 @@
   <div class="grid">
     <div class="col"></div>
     <div class="col">
-      <p-listbox
-        [options]="clientes"
-        [(ngModel)]="clientesSelecionados"
-        multiple="multiple"
-        checkbox="checkbox"
-        filter="filter"
-        [listStyle]="{ 'max-height': '110px' }"
-        optionLabel="Nome"
-      >
+      <p-listbox [options]="bases" [(ngModel)]="basesSelecionadas" multiple="multiple" checkbox="checkbox"
+        filter="filter" [listStyle]="{ 'max-height': '110px' }" optionLabel="Nome" optionValue="Id">
+        <p-header> Localidades </p-header>
+      </p-listbox>
+    </div>
+    <div class="col">
+      <p-listbox [options]="clientes" [(ngModel)]="clientesSelecionados" multiple="multiple" checkbox="checkbox"
+        filter="filter" [listStyle]="{ 'max-height': '110px' }" optionLabel="Nome" optionValue="Id">
         <p-header> Clientes </p-header>
       </p-listbox>
     </div>
     <div class="col">
-      <p-listbox
-        [options]="prefixos"
-        [(ngModel)]="prefixosSelecionados"
-        multiple="multiple"
-        checkbox="checkbox"
-        filter="filter"
-        [listStyle]="{ 'max-height': '110px' }"
-        optionLabel="Nome"
-      >
+      <p-listbox [options]="prefixos" [(ngModel)]="prefixosSelecionados" multiple="multiple" checkbox="checkbox"
+        filter="filter" [listStyle]="{ 'max-height': '110px' }" optionLabel="Nome" optionValue="Id">
         <p-header> Prefixos </p-header>
       </p-listbox>
     </div>
     <div class="col">
       <button type="button" pButton pRipple label="Inicial"></button>
-      <p-calendar
-        [(ngModel)]="dataInicio"
-        selectionMode="single"
-        dateFormat="dd/mm/yy"
-        
-        showIcon="true"
-        [inputStyle]="{ width: '100px' }"
-      ></p-calendar>
+      <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+        [inputStyle]="{ width: '100px' }"></p-calendar>
+      <br />
+      <div class="mt-2">
+        <button type="button" pButton pRipple label="Final"></button>
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+          [inputStyle]="{ width: '100px' }" class="mt-2"></p-calendar>
+      </div>
+
     </div>
     <div class="col">
-      <button type="button" pButton pRipple label="Final"></button>
-      <p-calendar
-        [(ngModel)]="dataFim"
-        selectionMode="single"
-        dateFormat="dd/mm/yy"
-        
-        showIcon="true"
-        [inputStyle]="{ width: '100px' }"
-      ></p-calendar>
+      <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+        (click)="rodarRelatorio()"></button><br />
+      <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+        class="botao-excel p-button-success mt-2 " pTooltip="XLS" tooltipPosition="bottom"></button>
     </div>
-    <div class="col">
-      <button
-        pButton
-        type="button"
-        icon="pi pi-search"
-        iconPos="right"
-        label="Perquisar"
-        (click)="rodarRelatorio()"
-      ></button>
-    </div>
-    <div class="col">
-      <button
-        type="button"
-        label="Exportar"
-        pButton
-        pRipple
-        icon="pi pi-file-excel"
-        (click)="exportExcel()"
-        class="botao-excel p-button-success mr-2"
-        pTooltip="XLS"
-        tooltipPosition="bottom"
-      ></button>
-    </div>
+    <div class="col"></div>
   </div>
 </div>
 
-<app-cabecalho-impressao
-  titulo="Passageiros transportados por mês/ano"
-  class="d-print"
-></app-cabecalho-impressao>
 
-<div id="dataTable" *ngIf="dados">
-  <p-table [columns]="cols" [value]="dados">
-    <ng-template pTemplate="header">
-      <tr>
-        <th *ngFor="let col of cols">
-          {{ col.header }}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-car>
-      <tr>
-        <td *ngFor="let col of cols" nowrap>
-          <!-- <span class="d-lg-none d-print-none">{{col.header}}</span> -->
-          {{ car[col.field] }}
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+<app-cabecalho-impressao titulo="Passageiros transportados por mês/ano" class="d-print"></app-cabecalho-impressao>
+
+
+<p-table [value]="decolagens" *ngIf="!carregando" id="dec">
+  <ng-template pTemplate="caption">
+    Decolagens
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Cliente</th>
+      <th>Base</th>
+      <th>Ano</th>
+      <th>Mês</th>
+      <th>Voos</th>
+      <th>Pax</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{item.Cliente}}</td>
+      <td>{{item.Nome}}</td>
+      <td>{{item.Year}}</td>
+      <td>{{item.Month}}</td>
+      <td>{{item.Voos}}</td>
+      <td>{{item.Pax}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-table [value]="pousos" *ngIf="!carregando" id="pou">
+  <ng-template pTemplate="caption">
+    Pousos
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Cliente</th>
+      <th>Base</th>
+      <th>Ano</th>
+      <th>Mês</th>
+      <th>Voos</th>
+      <th>Pax</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-item>
+    <tr>
+      <td>{{item.Cliente}}</td>
+      <td>{{item.Nome}}</td>
+      <td>{{item.Year}}</td>
+      <td>{{item.Month}}</td>
+      <td>{{item.Voos}}</td>
+      <td>{{item.Pax}}</td>
+    </tr>
+  </ng-template>
+</p-table>

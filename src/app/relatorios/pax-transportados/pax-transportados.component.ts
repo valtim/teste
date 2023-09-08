@@ -16,6 +16,8 @@ export class PaxTransportadosComponent implements OnInit {
   dataInicio: Date;
   dataFim: Date;
 
+  bases;
+  basesSelecionadas;
   clientesSelecionados;
   clientes;
   prefixosSelecionados;
@@ -23,8 +25,18 @@ export class PaxTransportadosComponent implements OnInit {
   localidades: any;
 
   carregando = true;
+  decolagens: any;
+  pousos: any;
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService) {
+    this.api.getCombos().then((x) => {
+      this.prefixos = x.Prefixo;
+      this.clientes = x.Cliente;
+      this.bases = x.BaseDoTripulante;
+      this.basesSelecionadas = x.BaseDoTripulante.map(y => y.Id);
+      this.carregando = false;
+    });
+  }
 
   rodarRelatorio() {
     this.carregando = true;
@@ -34,22 +46,22 @@ export class PaxTransportadosComponent implements OnInit {
         dataFim: this.dataFim,
         clientes: this.clientesSelecionados ? this.clientesSelecionados : null,
         prefixos: this.prefixosSelecionados ? this.prefixosSelecionados : null,
+        localidades : this.basesSelecionadas ? this.basesSelecionadas : null,
       })
       .then((x) => {
-        this.cols = x.cols;
-        this.dados = x.data;
+        this.decolagens = x.decolagens;
+        this.pousos = x.pousos;
         this.carregando = false;
+      })
+      .catch(()=>{
+        this.carregando = false;
+        alert('erro ao carregar dados');
       });
   }
 
   ngOnInit() {
     this.carregando = true;
-    this.api.getCombos().then((x) => {
-      this.prefixos = x.Prefixo;
-      this.clientes = x.Cliente;
-      //sthis.localidades = x.Localidades;
-      this.carregando = false;
-    });
+
 
     const date = new Date();
     this.dataInicio = new Date(date.getFullYear(), 0, 1);
@@ -61,11 +73,13 @@ export class PaxTransportadosComponent implements OnInit {
 
   exportExcel() {
     import("xlsx").then((xlsx) => {
-      let element = document.getElementById("dataTable");
-      let worksheet = xlsx.utils.table_to_sheet(element);
-      let workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      let sheetDec = xlsx.utils.table_to_sheet(document.getElementById("dec"));
+      let sheetPou = xlsx.utils.table_to_sheet(document.getElementById("pou"));
+      let wb = xlsx.utils.book_new();
+      xlsx.utils.book_append_sheet(wb, sheetDec, "Decolagens");
+      xlsx.utils.book_append_sheet(wb, sheetPou, "Pousos");
       // worksheet["!cols"] = [{ width: 20 }, { width: 100 }];
-      let excelBuffer: any = xlsx.write(workbook, {
+      let excelBuffer: any = xlsx.write(wb, {
         bookType: "xlsx",
         type: "array",
       });
@@ -80,7 +94,7 @@ export class PaxTransportadosComponent implements OnInit {
     const data: Blob = new Blob([buffer], {
       type: EXCEL_TYPE,
     });
-    keys.saveAs(
+    saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );

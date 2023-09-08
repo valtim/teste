@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
           // 
           this.api.username = this.username;
 
-          this.api.getCombosServidor().then(
+          this.api.getCombos().then(
             () => {
               
               this.auth.setAuthorization(x.Authorization);

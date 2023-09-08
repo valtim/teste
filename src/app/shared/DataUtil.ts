@@ -2,6 +2,14 @@ import { getLocaleDateTimeFormat } from "@angular/common"
 
 export class DataUtil {
 
+  public static paraDataISOdeDate(date: Date) : string{
+    return date.toISOString().split('T')[0];
+  }
+  
+  public static paraDataISOdeString(date: String) : string{
+    return date.split('T')[0];
+  }
+
   private static padTo2Digits(num) {
     return num.toString().padStart(2, '0');
   }
@@ -12,6 +20,14 @@ export class DataUtil {
       this.padTo2Digits(date.getMonth() + 1),
       date.getFullYear(),
     ].join('/');
+  }
+
+  public static formatDateURL(date) {
+    return [
+      date.getFullYear(),
+      this.padTo2Digits(date.getMonth() + 1),
+      this.padTo2Digits(date.getDate())          
+    ].join('-');
   }
 
   public static TimeSpanURL(timespan : string ):string {

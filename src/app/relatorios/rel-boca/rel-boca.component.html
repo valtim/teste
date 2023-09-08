@@ -1,29 +1,36 @@
 <app-titulo titulo="BOCA" [carregando]="!tudoPronto"></app-titulo>
 
-
 <div class="nao-imprimir">
-    <div class="grid">
-        <div class="col"></div>
-        <div class="col"><button type="button" pButton pRipple label="Data"></button>
+    <div class="grid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="col col-1"></div>
+        <div class="col col-2"><button type="button" pButton pRipple label="Data"></button>
             <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="dd/mm/yy" 
                 showIcon="true" [inputStyle]="{'width':'100px'}"></p-calendar>
         </div>
-        <div class="col">
+        <div class="col col-2">
             <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
                 filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
         </div>
-        <div class="col"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
+        <div class="col col-1"><button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar"
                 (click)="rodarRelatorio()"></button></div>
-        <div class="col"></div>
+        
+        <!-- <div class="col col-6 grid grid-assinatura">
+            <button [disabled]="desabilitarBotaoAssinatura" (click)="abrirDialogoAssinatura()" type="button" class="p-button botao-assinar" icon="pi pi-key" pButton pRipple label="Assinar"></button>    
+            
+            <button *ngIf="statusAssinatura" icon="pi pi-check-square" class="p-button-success status-assinar" type="button" pButton pRipple></button>
+            <button *ngIf="!statusAssinatura" icon="pi pi-file-excel" class="p-button-warning status-assinar" type="button" pButton pRipple></button>
+            <button class="p-button-raised p-button-text p-button-secondary texto-assinar" type="button" pButton pRipple label="Status da Assinatura Digital:"></button>        
+        </div> -->
     </div>
 </div>
 
+<p-toolbar *ngIf="!dados" class="m-4">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
+<div #screen *ngIf="dados" id="tabela">
 
-<div *ngIf="tudoPronto" id="tabela">
-
-
-    <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DA UTILIZAÇÃO DE AERONAVES CONTRATADAS" form="FORM CDV 023"
+  <app-cabecalho-impressao titulo="CONTROLE DIÁRIO DA UTILIZAÇÃO DE AERONAVES CONTRATADAS" form="FORM CDV 023"
         data="20/04/2020" revisao="01" class="d-print"></app-cabecalho-impressao>
 
 
@@ -99,3 +106,13 @@
     </table>
 
 </div>
+
+<div id="download">
+    <img #canvas>
+    <a #downloadLink></a>
+</div>
+
+<p-dialog *ngIf="exibirAssinatura" header="ASSINATURA DIGITAL" [(visible)]="exibirAssinatura" [modal]="true" [baseZIndex]="10000" (onHide)="fecharDialogoAssinatura()">
+    <app-assinatura-boca [DadosAssinatura]="DadosAssinatura" [blobPDF]="blobPDF" [nomeArquivo]="nomeArquivo" (retorno)="fecharDialogoAssinatura()">
+    </app-assinatura-boca>
+</p-dialog>

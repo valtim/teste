@@ -69,10 +69,7 @@ import { AnexosComponent } from './treinamento/anexos/anexos.component';
 import { CertificadoComponent } from './treinamento/certificado/certificado.component';
 import { ComentarioComponent } from './treinamento/comentario/comentario.component';
 import { ConteudoCurricularComponent } from './treinamento/conteudo-curricular/conteudo-curricular.component';
-import { EnviarValidacaoComponent } from './treinamento/enviar-validacao/enviar-validacao.component';
 import { ListaAnexosComponent } from './treinamento/lista-anexos/lista-anexos.component';
-import { NotificarEnvolvidosComponent } from './treinamento/notificar-envolvidos/notificar-envolvidos.component';
-import { NovoTreinamentoComponent } from './treinamento/novo-treinamento/novo-treinamento.component';
 import { RegistroFrequenciaComponent } from './treinamento/registro-frequencia/registro-frequencia.component';
 import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
 import { TurmaComponent } from './treinamento/turma/turma.component';
@@ -111,6 +108,15 @@ import { RelMedicaoComponent } from './relatorios/rel-medicao/rel-medicao.compon
 import { BaseDoTripulanteComponent } from './cadastro/base-do-tripulante/base-do-tripulante.component';
 import { CadastroEmailCdoComponent } from './cadastro/cadastro-email-cdo/cadastro-email-cdo.component';
 import { ApontamentoComponent } from './relatorios/apontamento/apontamento.component';
+import { AssinaturaRDVComponent } from './relatorios/assinatura-rdv/assinatura-rdv.component';
+import { AssinaturaBocaComponent } from './relatorios/assinatura-boca/assinatura-boca.component';
+import { EditarTreinamentoComponent } from './treinamento/editar-treinamento/editar-treinamento.component';
+import { TripulanteEscalaComponent } from './escala/tripulante-escala/tripulante-escala.component';
+import { OrdenarCertificadoComponent } from './treinamento/ordenar-certificado/ordenar-certificado.component';
+import { EmailEscalaComponent } from './escala/email-escala/email-escala.component';
+import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
+import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diario-cdo.component';
+import { CcoComponent } from './painel/cco/cco.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -129,13 +135,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CertificadoComponent,
     ComentarioComponent,
     ConteudoCurricularComponent,
-    EnviarValidacaoComponent,
     ListaAnexosComponent,
-    NotificarEnvolvidosComponent,
     RegistroFrequenciaComponent,
     TreinamentoListComponent,
     TurmaComponent,
-    NovoTreinamentoComponent,
+    EditarTreinamentoComponent,
     TurmaListComponent,
     TurmaStatusComponent,
     AnaliseDeRiscoComponent,
@@ -218,6 +222,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BaseDoTripulanteComponent,
     CadastroEmailCdoComponent,
     ApontamentoComponent
+    AssinaturaRDVComponent,
+    AssinaturaBocaComponent,
+    TripulanteEscalaComponent,
+    OrdenarCertificadoComponent,
+    EmailEscalaComponent,
+    EmailDiarioFadigaComponent,
+    EmailDiarioCdoComponent,
+    CcoComponent
   ],
   imports: [
     AppRoutingModule,
