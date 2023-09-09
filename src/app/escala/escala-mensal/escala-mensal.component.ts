@@ -31,7 +31,7 @@ export class EscalaMensalComponent implements OnInit {
   contratos: any;
 
   constructor(private apiEscala: EscalaService, private apiGen: ApiGenericoService,
-    private messageService: MessageService,) {
+    private messageService: MessageService,private api: ApiService) {
     // this.locale_pt = this.api.getLocale('pt');
     const date = new Date();
     this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
@@ -47,7 +47,7 @@ export class EscalaMensalComponent implements OnInit {
   pesquisando = false;
 
   ngOnInit(): void {
-    //this.rodarRelatorio()
+    //this.rodarRelatorio()    
   }
 
   editarDia(e, dia) {

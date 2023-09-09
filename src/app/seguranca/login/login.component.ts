@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
               
               this.auth.setAuthorization(x.Authorization);
               this.auth.setRotas(x.Rotas);
-              this.auth.setMenus(x.Menu);
+              this.auth.setMenus(x.Menu);              
               //this.api.updateAuthorization();
 
 
@@ -69,7 +69,7 @@ export class LoginComponent implements OnInit {
               }
               //this.router.navigateByUrl('/quadro-de-tripulantes')
               this.loading = false;
-              this.router.navigate(['home']);
+              this.router.navigate(['home']);                  
 
             }
           );
@@ -80,6 +80,8 @@ export class LoginComponent implements OnInit {
 
         })
         .catch((error) => {
+
+          console.log(error);
 
           this.loading = false;
           switch (error.status) {

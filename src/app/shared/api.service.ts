@@ -137,18 +137,38 @@ export class ApiService {
   }
 
   async postLogin(username: string, password: string): Promise<any> {
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json'
-    //   })
-    // };
-
     return await lastValueFrom(this.http
       .post(
-        this.url + "autorizacao",
+        this.url + "autorizacao-login",
         { Username: username, Password: password },
         this.httpOptions
       ));
+  }
+
+  async loggar(Funcionalidade: string) {
+    await lastValueFrom(
+      this.http.post(`${this.url}log-information`, { Funcionalidade: Funcionalidade }, this.httpOptions)      
+    ).then(usuario=>{
+      console.log(`${usuario['UsuarioLogado']} acessou ${Funcionalidade}`);
+    });
+  }
+
+  getLogFuncionalidades(): Promise<any> {
+    return this.http
+      .get(`${this.url}log-funcionalidades`, this.httpOptions)
+      .toPromise();
+  }
+  
+  getLogs(funcionalidade: string,data: string): Promise<any> {
+    if ((data != null) && (data != "")) {
+      return this.http
+        .get(`${this.url}log-information/${funcionalidade}/${data}`, this.httpOptions)
+        .toPromise();
+    } else {
+      return this.http
+        .get(`${this.url}log-information/${funcionalidade}`, this.httpOptions)
+        .toPromise();
+    }    
   }
 
   getDiarioByDate(date: string): Promise<any> {
@@ -216,6 +236,30 @@ export class ApiService {
   getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
     return this.http
       .get(`${this.url}novodiario/${id}/${month}/${year}`, this.httpOptions)
+      .toPromise();
+  }
+
+  getApontamentos(data: Date): Promise<any> {
+    return this.http
+      .get(`${this.url}api/apontamentos/${data.toISOString().split("T")[0]}`, this.httpOptions)
+      .toPromise();
+  }
+
+  postApontamento(apontamento: any): Promise<any> {
+    return this.http
+      .post(`${this.url}api/apontamento`, apontamento, this.httpOptions)
+      .toPromise();
+  }
+
+  apagarApontamentos(apontamentos: any[]): Promise<any> {
+    return this.http
+      .post(`${this.url}api/apagar-apontamentos`, apontamentos, this.httpOptions)
+      .toPromise();
+  }
+
+  postNovoApontamento(apontamento: any): Promise<any> {
+    return this.http
+      .post(`${this.url}api/novo-apontamento`, apontamento, this.httpOptions)
       .toPromise();
   }
 

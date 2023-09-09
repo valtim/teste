@@ -15,7 +15,7 @@ export class LoginLdapComponent {
 
   constructor(
     private broadcastService: MsalBroadcastService,
-    private authService: MsalService,
+    private authService: MsalService    
   ) { }
 
   sleep(ms): Promise<any> {
@@ -44,7 +44,7 @@ export class LoginLdapComponent {
       console.log(this.ExibirBotaoLogin);
 
       if (usuarioLogado)
-      {
+      {        
         window.location.href = window.location.origin + "/home";
         return;
       }

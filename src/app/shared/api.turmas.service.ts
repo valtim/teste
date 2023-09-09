@@ -99,7 +99,7 @@ export class ApiTurmasService {
   }
 
   postUploadSign(id: any, files: any): Promise<any> {
-    const url = this.url + `arquivo-sign/${id}`;
+    const url = this.api.url + `arquivo-sign/${id}`;
     return this.http.post(url, files).toPromise();
   }
 

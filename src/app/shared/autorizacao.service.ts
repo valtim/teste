@@ -9,6 +9,7 @@ export class AutorizacaoService {
   private Authorization: string;
   private Rotas: string[];
   Menus: any;
+  Usuario: any;
   
   constructor() {
     // this.Authorization = localStorage.getItem('Authorization');
@@ -33,7 +34,6 @@ export class AutorizacaoService {
   }
   
   getMenus() {
-
     this.Menus = JSON.parse(localStorage.getItem('Menu'));
     return this.Menus;
   }
