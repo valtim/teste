@@ -219,7 +219,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RelMedicaoComponent,
     BaseDoTripulanteComponent,
     CadastroEmailCdoComponent,
-    ApontamentoComponent
+    ApontamentoComponent,
     AssinaturaRDVComponent,
     AssinaturaBocaComponent,
     TripulanteEscalaComponent,
