@@ -116,6 +116,7 @@ import { EmailEscalaComponent } from './escala/email-escala/email-escala.compone
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diario-cdo.component';
 import { CcoComponent } from './painel/cco/cco.component';
+import { FlightStripComponent } from './operacoes/flight-strip/flight-strip.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -227,8 +228,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EmailEscalaComponent,
     EmailDiarioFadigaComponent,
     EmailDiarioCdoComponent,
-    CcoComponent
-
+    CcoComponent,
+    FlightStripComponent,
   ],
   imports: [
     AppRoutingModule,

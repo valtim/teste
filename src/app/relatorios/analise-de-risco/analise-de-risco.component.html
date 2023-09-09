@@ -1,5 +1,8 @@
 <app-titulo [titulo]="titulo" [carregando]="carregando"></app-titulo>
 
+
+<p-toast position="center"></p-toast>
+
 <div class="grid">
     <div class="col"></div>
     <div class="col">
@@ -36,6 +39,11 @@
     </div>
 </div>
 
+
+<p-toolbar *ngIf="!grid" class="m-4 nao-imprimir">
+    Selecione a DATA e clique em PESQUISAR.
+</p-toolbar>
+
 <div *ngIf="grid">
 
     <p-table [value]="grid" styleClass="p-datatable-striped">
@@ -49,37 +57,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-item>
             <tr (click)="showDialog(item.Id)">
-                <td>{{item.Data}} <br> {{item.ETD}}</td>
+                <td nowrap>{{item.Data}} {{item.ETD}}</td>
                 <td nowrap>{{item.Prefixo}}</td>
-                <td>{{item.PIC}} <br> {{item.SIC}}</td>
+                <td>{{item.PIC}} / {{item.SIC}}</td>
                 <td>{{item.NotaFinal}}</td>
             </tr>
         </ng-template>
     </p-table>
-
-
-
-
-    <table class="table table-hover table-sm table-striped">
-        <thead>
-            <tr>
-                <th>Data <br>Hora</th>
-                <!-- <th>ETD</th> -->
-                <th>Prefixo</th>
-                <th>PIC <br>SIC</th>
-                <th>Nota</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of grid;index as i" (click)="showDialog(i)">
-                <td>{{item.Data}} <br> {{item.ETD}}</td>
-                <td nowrap>{{item.Prefixo}}</td>
-                <td>{{item.PIC}} <br> {{item.SIC}}</td>
-                <td>{{item.NotaFinal}}</td>
-            </tr>
-
-        </tbody>
-    </table>
 </div>
 
 

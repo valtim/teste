@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataUtil } from "./../shared/DataUtil";
 import { Observable, lastValueFrom } from "rxjs";
 import * as Globals from './global';
+import { promise } from "protractor";
 
 @Injectable({
   providedIn: "root",
@@ -638,12 +639,10 @@ export class ApiService {
       .toPromise();
   }
 
-  getBI(dataIni: Date, dataFim: Date): Observable<any> {
-    return this.http.get(
-      `${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]
-      }`,
-      this.httpOptions
-    );
+
+  
+  getBI(dataIni: Date, dataFim: Date): Observable<Blob> {
+    return this.http.get(`${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, { responseType: 'blob' });
   }
 
   // getCombosServidor(): Promise<any> {

@@ -120,8 +120,10 @@ export class IndisponibilidadeComponent implements OnInit {
       return;
 
     this.dados = this.dados.filter(x => x.Id != event.Indisponibilidade.Id);
-    if (event.Excluir)
+    if (event.Excluir){
+      this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Indisponibilidade Excluída com sucesso!' });
       return;
+    }
 
     //this.dados.push(event.Indisponibilidade);
     this.dados = [event.Indisponibilidade].concat(this.dados);

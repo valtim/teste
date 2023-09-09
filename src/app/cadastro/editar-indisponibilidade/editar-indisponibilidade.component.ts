@@ -126,8 +126,7 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
   }
 
   excluir() {
-    var ret = { Indisponibilidade: this.indisponibilidade, Salvar: false, Excluir : true, };
-    this.retorno.emit(ret);
+    this.salvar(true);
   }
 
 
@@ -160,7 +159,7 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
       this.indisponibilidade.Exibir = false;
       this.indisponibilidade = x;
 
-      var ret = { Indisponibilidade: this.indisponibilidade, Salvar: true, Excluir : false };
+      var ret = { Indisponibilidade: this.indisponibilidade, Salvar: true, Excluir : excluir };
       this.retorno.emit(ret);
     })
 

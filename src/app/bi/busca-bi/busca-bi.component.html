@@ -3,32 +3,20 @@
 
 <p-toast position="center"></p-toast>
 
+<p-toolbar class="m-4 align-items-start">
 
-
-
-<div class="row p-mt-1">
-    <div class="col">
+    <div class="p-toolbar-group-left">
         <button type="button" pButton pRipple label="Inicial"></button>
-        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy"
-            showIcon="true"></p-calendar>
-    </div>
-    <div class="col">
+        <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true" class="mr-2"></p-calendar>
+    
         <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy"
-            showIcon="true"></p-calendar>
-    </div>
-    <div class="col">
+        <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true" class="mr-2"></p-calendar>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
             class="p-ml-2"></button>
     </div>
+    
+</p-toolbar>
 
-    <div class="col">
-        <p-fileUpload #fileInput name="fileIcon" url="someurl">
-            <ng-template pTemplate="toolbar">
-                <button pButton type="button" label="Download Files"
-                (click)="rodarRelatorio()">
-                </button>
-            </ng-template> 
-        </p-fileUpload>
-    </div>
-</div>
+<p-toolbar class="m-4">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>

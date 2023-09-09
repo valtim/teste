@@ -3,11 +3,13 @@ import { Component, OnInit } from '@angular/core';
 // import {SelectItem} from 'primeng/api';
 import { ApiService } from '../../shared/api.service';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-analise-de-risco',
   templateUrl: './analise-de-risco.component.html',
-  styleUrls: ['./analise-de-risco.component.css']
+  styleUrls: ['./analise-de-risco.component.css'],
+  providers: [MessageService]
 })
 export class AnaliseDeRiscoComponent implements OnInit {
 
@@ -30,8 +32,9 @@ export class AnaliseDeRiscoComponent implements OnInit {
 
   constructor(
     private api: ApiService,
-    private router: Router, ) {
-    
+    private router: Router,
+    private messageService: MessageService,) {
+
     this.locale_pt = this.api.getLocale('pt');
 
 
@@ -45,10 +48,12 @@ export class AnaliseDeRiscoComponent implements OnInit {
       Datas: this.dates,
 
     }
-
+    this.carregando = true;
 
     this.api.postTelaConsultaRisco(filtro).then(x => {
-      this.grid = x;
+      this.grid = x; this.carregando = false;
+    }).catch(() => {
+      this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao Fazer a consulta!' });
     })
   }
 
@@ -67,23 +72,23 @@ export class AnaliseDeRiscoComponent implements OnInit {
         this.tripulantes = x.Tripulante;
 
         //this.grid= x.PrimeiraConsulta;
+        this.carregando = false;
       }
     )
 
-    this.api.getTelaConsultaRisco().then(x => {
-      this.grid = x;
-      this.carregando = false;
-    })
+    // this.api.getTelaConsultaRisco().then(x => {
+    //   this.grid = x;
+    // })
   }
 
 
   display = [true];
 
   showDialog(id) {
-    for(let i =0; i< this.grid.length;i++){
+    for (let i = 0; i < this.grid.length; i++) {
       this.grid[i].display = false;
     }
-    let valor = this.grid.find(x=>x.Id == id);
+    let valor = this.grid.find(x => x.Id == id);
     valor.Display = true;
     // document.getElementById("idx" + i).visible = true;
     //this.display[0] = !this.display[0];

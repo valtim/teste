@@ -465,6 +465,14 @@ const routes: Routes = [
     component: CcoComponent,
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'busca-bi',
+    component: BuscaBiComponent,
+    canActivate: [AuthGuardService],
+  },
+
+  
+
   { path: '**', pathMatch: 'full', 
   component: LogoffComponent },
 ];
