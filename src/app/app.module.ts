@@ -115,6 +115,7 @@ import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diari
 import { CcoComponent } from './painel/cco/cco.component';
 import { FlightStripComponent } from './operacoes/flight-strip/flight-strip.component';
 import { LoggingComponent } from './seguranca/logging/logging.component';
+import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -230,6 +231,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlightStripComponent,
     LoggingComponent,
     CcoComponent,
+    JornadaDiariaComponent,
   ],
   imports: [
     AppRoutingModule,
