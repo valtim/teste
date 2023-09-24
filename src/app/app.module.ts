@@ -115,6 +115,8 @@ import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diari
 import { CcoComponent } from './painel/cco/cco.component';
 import { FlightStripComponent } from './operacoes/flight-strip/flight-strip.component';
 import { LoggingComponent } from './seguranca/logging/logging.component';
+import { CurriculosComponent } from './cadastro/curriculos/curriculos.component';
+import { EditarCurriculoComponent } from './cadastro/editar-curriculo/editar-curriculo.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -230,6 +232,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlightStripComponent,
     LoggingComponent,
     CcoComponent,
+    CurriculosComponent,
+    EditarCurriculoComponent,
   ],
   imports: [
     AppRoutingModule,

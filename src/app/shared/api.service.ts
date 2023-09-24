@@ -1203,4 +1203,14 @@ export class ApiService {
       .get(`${this.url}painel/disponibilidade`, this.httpOptions));
   }
 
+  async getCurriculos(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}curriculos`, this.httpOptions));
+  }
+
+  async getCurriculoById(id: String): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}curriculo/${id}`, this.httpOptions));    
+  }
+
 }
