@@ -1,3 +1,7 @@
+div.div-checkbox {
+    display: inline-block;
+}
+
 div.div-checkbox::after {
     height: 0;
     content: '';

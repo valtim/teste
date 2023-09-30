@@ -1,5 +1,5 @@
 div.editar-curriculo {
-    width: 800px;
+    width: 100%;
     min-height: 400px;
 }
 
@@ -22,4 +22,109 @@ div.div-loading {
 div.div-loading > svg {
     width: 50px;
     height: 50px;
+}
+
+div.div-loading > span {
+    width: 200px;
+    line-height: 50px;
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+    margin: 200px auto;
+    background-color: #dddddd;
+    text-align: center;    
+}
+
+button.salvar-tripulante {
+    position: absolute;
+    top: 20px;
+    right: 66px;
+}
+
+button.salvar-tripulante2 {
+    position: absolute;
+    top: 20px;
+    right: 160px;
+}
+
+div button.label-fixo {
+    width: 100px;
+    box-sizing: border-box;
+}
+
+div button.label-fixo-2 {
+    width: 100px;
+    box-sizing: border-box;
+}
+
+div button.label-15 {
+    width: 20%;
+    box-sizing: border-box;
+}
+
+div button.label-fixo {
+    width: 40%;
+    box-sizing: border-box;
+}
+
+div button.label-fixo-2 {
+    width: 40%;
+    box-sizing: border-box;
+}
+
+div input[type=text].input-fixo {
+    width: 60%;
+    box-sizing: border-box;
+}
+
+div input[type=text].input-grande {
+    width: 80%;
+    box-sizing: border-box;
+}
+
+div input[type=text].cinza {
+    background-color: #eeeeee;
+}
+
+div.outer-foto-tripulante {
+    text-align: right;
+}
+
+div.outer-foto-tripulante > div.foto-tripulante {
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    
+    width: 165px;
+    height: 220px;
+    background-image: url(/assets/imgs/foto-padrao.jpg);    
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+div.cabecalho-horas {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;    
+}
+
+div.cabecalho-horas::after {
+    height: 0;
+    clear: both;
+    content: '';
+    display: block;
+}
+
+div.cabecalho-horas > h2 {
+    display: block;
+    float: left;
+    line-height: 20px;
+    margin: 0 10px 0 0;
+    padding: 10px 0 0 0;
+}
+
+div.cabecalho-horas > button {
+    display: block;
+    float: left;
 }

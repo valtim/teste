@@ -12,22 +12,35 @@ export class CurriculosComponent implements OnInit {
   locale_pt: string;
   curriculos: any[] = [];
   cacheCurriculos: any[] = [];
-  curriculosMarcados: any[] = [];
   curriculoSelecionado: any;
 
   filtroSemCurriculo: boolean = false;
+  filtroComCurriculo: boolean = false;
   filtro: string;
   exibirEdicao: boolean = false;
+  exibirBotaoExportar: boolean = false;
+  todosMarcados: boolean = false;
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
   }
 
-  ngOnInit(): void {
-    this.api.getCurriculos().then((x) => {
-      this.curriculos = x;
-      this.cacheCurriculos = this.curriculos;
-      this.carregando = false;      
+  gerarNomeArquivo(curriculo: any): string {
+    let nome = `Curriculo_${curriculo.Tripulante.Trato.toUpperCase().replace(" ", "-")}.pdf`;
+    return nome;
+  }
+
+  ngOnInit(): void {    
+    this.api.getCurriculos().then((x) => {      
+      this.curriculos = x;      
+      this.curriculos = this.curriculos.map(obj => ({
+            ...obj,
+            Marcado: false,
+            NomeArquivo: this.gerarNomeArquivo(obj)
+        }));
+
+        this.cacheCurriculos = this.curriculos;
+        this.carregando = false;
     });
   }
 
@@ -40,29 +53,65 @@ export class CurriculosComponent implements OnInit {
               t.Tripulante.Trato.includes(this.filtro) || 
               String(t.Tripulante.CodigoANAC).includes(this.filtro) ||
               String(t.Tripulante.Matricula).includes(this.filtro)
-            ) &&
-          ((this.filtroSemCurriculo && t.CurriculoIncompleto) || (!this.filtroSemCurriculo))
-        );
+            ) && (
+            (this.filtroSemCurriculo && t.CurriculoIncompleto) ||
+            (this.filtroComCurriculo && !t.CurriculoIncompleto) ||
+            (!this.filtroSemCurriculo && !this.filtroComCurriculo)
+          )
+        ).map(obj => ({
+            ...obj,
+            Marcado: false
+        }));
       } else {
         this.curriculos = this.cacheCurriculos.filter(
-          t => ((this.filtroSemCurriculo && t.CurriculoIncompleto) || (!this.filtroSemCurriculo))
-        );
+          t => (
+            (this.filtroSemCurriculo && t.CurriculoIncompleto) ||
+            (this.filtroComCurriculo && !t.CurriculoIncompleto) ||
+            (!this.filtroSemCurriculo && !this.filtroComCurriculo)
+          )
+        ).map(obj => ({
+            ...obj,
+            Marcado: false
+        }));
       }      
     }
   }
 
-  marcarCheckboxCurriculo(evento,curriculo): void {
-    let marcado = evento.target.checked;
-    if (marcado) {
-      this.curriculosMarcados.push(curriculo);
-    } else {
-      let index = this.curriculosMarcados.findIndex(x => x["Id"] === curriculo["Id"]);
-      if (index > -1) {
-        this.curriculosMarcados.splice(index, 1);
-      }
-    }
+  marcarCheckboxCurriculo(): void {    
+    this.exibirBotaoExportar = (this.curriculos.filter(t => t.Marcado).length > 0);    
+  }
+
+  marcarTodos() {
+    this.curriculos = this.curriculos.map(obj => ({
+        ...obj,
+        Marcado: this.todosMarcados
+    }));
+
+    this.exibirBotaoExportar = (this.curriculos.filter(t => t.Marcado).length > 0);
+  }
+
+  downloadResponse(res) {    
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute('style','display: none');
+    let url = URL.createObjectURL(res.blob);
+    a.href = url;
+    a.download = res.fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    this.carregando = false;
+    this.exibirBotaoExportar = (this.curriculos.filter(t => t.Marcado).length > 0);
+  }
+
+  exportar(): void {    
+    this.exibirBotaoExportar = false;
+    this.carregando = true;
     
-    // this.botaoExcluir = (this.tripulantesMarcadosCheckbox.length > 0);
+    let exportar = this.curriculos.filter(t => t.Marcado);    
+    this.api.obterCurriculosPDF(exportar).then((x) => {
+        this.downloadResponse(x);
+    });
   }
 
   exibirDialogoEdicao(curriculo): void {
@@ -81,6 +130,10 @@ export class CurriculosComponent implements OnInit {
   ocultarDialogoEdicao(): void {
     this.curriculoSelecionado = null;
     this.exibirEdicao = false;    
+  }
+
+  ocultarDialogoEdicaoRetorno(incompleto: any): void {    
+    this.curriculoSelecionado.CurriculoIncompleto = incompleto;    
   }
 
 }
