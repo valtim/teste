@@ -44,30 +44,32 @@ export class RelRdvComponent implements OnInit {
       this.cancelada = this.rdv.Cancelada;
       this.nomeArquivo = this.definirNomeArquivo();
 
-      this.api.baseAssinaturaRDV(this.rdv.Id).then((base: any) => {        
+      // this.api.baseAssinaturaRDV(this.rdv.Id).then((base: any) => {        
         
-        if ((base != null) && (base != undefined) && (base.Ok)) {
+      //   if ((base != null) && (base != undefined) && (base.Ok)) {
       
-          this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {                
-            this.DadosAssinatura = dados;
-            this.statusAssinatura = this.DadosAssinatura.Status;
-            this.desabilitarBotaoAssinatura = false;
+      //     this.api.getAssinaturaRDV(this.rdv.Id).then((dados: any) => {                
+      //       this.DadosAssinatura = dados;
+      //       this.statusAssinatura = this.DadosAssinatura.Status;
+      //       this.desabilitarBotaoAssinatura = false;
   
-            this.DadosAssinatura.atualizar = (Status) => {
-              this.statusAssinatura = Status;
-              console.log('Status da Assinatura: ' + Status);
-            }
+      //       this.DadosAssinatura.atualizar = (Status) => {
+      //         this.statusAssinatura = Status;
+      //         console.log('Status da Assinatura: ' + Status);
+      //       }
     
-            this.tudoPronto = true;
-          });
+      //       this.tudoPronto = true;
+      //     });
 
-        } else {
-          console.log(base);
-          this.DadosAssinatura = { Status: false };
-          this.desabilitarBotaoAssinatura = true;
+      //   } else {
+      //     console.log(base);
+      //     this.DadosAssinatura = { Status: false };
+      //     this.desabilitarBotaoAssinatura = true;
+      //     this.tudoPronto = true;
+      //   }     
+      // });
+      
           this.tudoPronto = true;
-        }     
-      });
       
     }).catch((e) => {
       if ( e.status == 404)

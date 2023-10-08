@@ -101,7 +101,7 @@ import {SidebarModule} from 'primeng/sidebar';
     RadioButtonModule,
     ChartModule,
     TooltipModule,
-    SidebarModule
+    SidebarModule,
   ],
   exports: [
     AccordionModule,

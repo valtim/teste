@@ -88,6 +88,21 @@ export class DuplaAdmComponent implements OnInit {
   mudeiAqui(e, dados, tipo) {
 
     if (tipo == 'deslocamento') {
+
+      if (dados.Definir == false && dados.Hora == undefined)
+        return;
+
+      if (dados.Deslocamento == undefined)
+        return;
+
+      dados.Tripulante = { Id: dados.Tripulante.Id, Trato: dados.Tripulante.Trato };
+
+    }
+
+
+
+
+    if (tipo == 'deslocamento') {
       this.apigenerico.postGenerico('DeslocamentoDia', [dados])
         .then(() => this.messageService.add({ sticky: false, severity: 'success', summary: 'SOL Sistemas', detail: `Deslocamento Salvo` }))
         .catch(() => this.messageService.add({ sticky: false, severity: 'error', summary: 'SOL Sistemas', detail: `Erro ao salvar` }))
@@ -193,31 +208,31 @@ export class DuplaAdmComponent implements OnInit {
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       }
 
-      if (linha.PIC.Fadiga <= 50 ) {
-        let mensagem = `Tripulante ${linha.PIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;        
+      if (linha.PIC.Fadiga <= 50) {
+        let mensagem = `Tripulante ${linha.PIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;
         desc.push(mensagem);
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       }
 
-      if (linha.SIC.Fadiga <= 50 ) {
-        let mensagem = `Tripulante ${linha.SIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;        
+      if (linha.SIC.Fadiga <= 50) {
+        let mensagem = `Tripulante ${linha.SIC.Trato} não pode ser escalado pois a fadiga dele está em vermelho`;
         desc.push(mensagem);
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       }
 
-      if (!linha.PIC.EhInstrutor && linha.SIC.SoVoaComInstrutor){
+      if (!linha.PIC.EhInstrutor && linha.SIC.SoVoaComInstrutor) {
         let mensagem = `Tripulantes ${linha.PIC.Trato} e ${linha.SIC.Trato} não podem ser escalados juntos pois ${linha.SIC.Trato} só pode voar com Instrutores`;
         desc.push(mensagem);
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       }
 
-      if (linha.PIC.SemVooHa45Dias || linha.PIC.MenosDe50Horas || linha.PIC.MenosDe15Horas || linha.PIC.MenosDe3Pousos){
+      if (linha.PIC.SemVooHa45Dias || linha.PIC.MenosDe50Horas || linha.PIC.MenosDe15Horas || linha.PIC.MenosDe3Pousos) {
         let mensagem = `O Tripulante ${linha.PIC.Trato} tem pendência de recência e só pode voar após "CHECK" com instrutor`;
         desc.push(mensagem);
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
       }
 
-      if (!linha.PIC.EhInstrutor && (linha.SIC.SemVooHa45Dias || linha.SIC.MenosDe50Horas || linha.SIC.MenosDe15Horas || linha.SIC.MenosDe3Pousos)){
+      if (!linha.PIC.EhInstrutor && (linha.SIC.SemVooHa45Dias || linha.SIC.MenosDe50Horas || linha.SIC.MenosDe15Horas || linha.SIC.MenosDe3Pousos)) {
         let mensagem = `O Tripulante ${linha.SIC.Trato} tem pendência de recência e só pode voar após "CHECK" com instrutor`;
         desc.push(mensagem);
         this.messageService.add({ sticky: true, severity: 'error', summary: mensagem });
@@ -339,7 +354,9 @@ export class DuplaAdmComponent implements OnInit {
           Data: this.dataSelecionada,
           Tripulante: null,
           Ativo: true,
-          Hora: '00:00'
+          Hora: undefined,
+          Definir: false,
+          Deslocamento: undefined
         });
       }
     })

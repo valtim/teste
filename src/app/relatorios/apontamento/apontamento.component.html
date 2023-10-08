@@ -1,175 +1,202 @@
 <app-titulo titulo="Apontamento Aéreo" [carregando]="!tudoPronto"></app-titulo>
 
-<br>
-<div class="grid">       
-    <div class="col-3">
+<p-toolbar>
+    <div class="p-toolbar-group-left">
         <button type="button" pButton pRipple label="Data"></button>
         <p-calendar [(ngModel)]="dataSelecionada" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
             [inputStyle]="{'width':'120px'}"></p-calendar>
-        <button pButton style="margin-left: 10px" type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button>
-    </div>                 
-    <div class="col-2">
-        <button class="p-button" pButton type="button" icon="pi pi-plus" label="Inserir Linha Abaixo" (click)="inserir(true)" *ngIf="botoes"></button>
+        <button type="button" pButton pRipple label="Base" class="ml-2"></button>
+        <p-dropdown [options]="baseDeOperacao" [(ngModel)]="baseDeOperacaoSelecionada" [filter]="true"
+            filterBy="label,value.name" optionLabel="Nome"></p-dropdown>
+        <button pButton style="margin-left: 10px" type="button" icon="pi pi-search" iconPos="left"
+            (click)="rodarRelatorio()" class="ml-2"></button>
     </div>
-    <div class="col-2">
-        <button class="p-button" pButton type="button" icon="pi pi-plus" label="Inserir Linha Acima" (click)="inserir(false)" *ngIf="botoes"></button>
+    <div class="p-toolbar-group-right">
+        <button pButton pButton type="button" icon="pi pi-plus" label="Inserir Linha" (click)="inserir()"
+            [disabled]="apontamentosMarcados.length != 1" class="ml-2"></button>
+        <button pButton pButton type="button" icon="pi pi-trash" label="Excluir Selecionados"
+            [disabled]="apontamentosMarcados.length == 0" (click)="exibirDialogoExclusao()" *ngIf="tudoPronto"
+            class="ml-2"></button>
+        <button pButton type="button" icon="pi pi-trash" label="Gerar XML e SALVAR" (click)="gerarXML()"
+            *ngIf="tudoPronto" class="ml-2 p-button-success"></button>
     </div>
-    <div class="col-2">
-        <button class="p-button-danger" pButton type="button" icon="pi pi-trash" label="Excluir Selecionados" (click)="exibirDialogoExclusao()" *ngIf="botoes"></button>
-    </div>    
-</div>
+</p-toolbar>
 
-<p-table [value]="apontamentos" [resizableColumns]="true" [autoLayout]="true">    
-    <ng-template pTemplate="header">
-        <tr>
-            <th></th>
-            <th>Item</th>
-            <th>Equipamento</th>
-            <th>Atendimento</th>
-            <th>Escala</th>
-            <th>Descrição da Operação</th>
-            <th>Grupo de Códigos</th>
-            <th>Código da Operação</th>            
-            <th>Data Inicial</th>     
-            <th>Hora Inicial</th>
-            <th>Hora Final</th>
-            <th>Horas Voadas</th>       
-            <th>Horas Glosadas</th>
-            <th>Qtde Item Avulso</th>
-            <th>Observações</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-apontamento>        
-        <tr>
-            <td><input [disabled]="!tudoPronto" type="checkbox" (change)="marcarCheckboxApontamento($event,apontamento)"></td>
-            <td>{{apontamento.Item}}</td>
+<p-toolbar *ngIf="!apontamentos" class="m-4">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Equipamento" (keydown.enter)="alterar(apontamento)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.Equipamento}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Atendimento" (keydown.enter)="alterar(apontamento)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.Atendimento}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+<p-card *ngIf="apontamentos" id="tabela">
+    <p-table [value]="apontamentos" [resizableColumns]="true" scrollHeight="75vh">
+        <ng-template pTemplate="header">
+            <tr>
+                <th><p-checkbox type="checkbox" (onChange)="selecionarTudo($event)"
+                        class="d-print-none" [value]="true"></p-checkbox></th>
+                <th>Item</th>
+                <th>Equipamento</th>
+                <th>Atendimento</th>
+                <th>Escala</th>
+                <th>Descrição da Operação</th>
+                <th>Grupo de Códigos</th>
+                <th>Código da Operação</th>
+                <th>Data Inicial</th>
+                <th>Hora Inicial</th>
+                <th>Hora Final</th>
+                <th>Horas Voadas</th>
+                <th>Horas Glosadas</th>
+                <th>Qtde Item Avulso</th>
+                <th>Observações</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-apontamento>
+            <tr>
+                <td><p-checkbox [value]="apontamento.Id" [(ngModel)]="apontamentosMarcados" class="d-print-none"></p-checkbox></td>
+                <td>{{apontamento.Item}}</td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Escala" (keydown.enter)="alterar(apontamento)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.Escala}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Equipamento"
+                                (keydown.enter)="alterar(apontamento)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.Equipamento}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <p-dropdown [disabled]="!tudoPronto" appendTo="body" [options]="codigos" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
-                            [showClear]="true" [(ngModel)]="apontamento.Codigo" [style]="{'width':'400px'}" (onChange)="alterar(apontamento)"></p-dropdown>
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.Codigo.DescricaoOperacao}}
-                    </ng-template>
-                </p-cellEditor>                
-            </td>
-            <td (click)="mensagemAviso()">{{apontamento.Codigo.GrupoCodigos}}</td>
-            <td>{{apontamento.Codigo.CodigoOperacao}}</td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Atendimento"
+                                (keydown.enter)="alterar(apontamento)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.Atendimento}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td>{{apontamento.DataInicial | date: "dd/MM/yyyy"}}</td>
-            
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                                                
-                        <p-inputMask [disabled]="!tudoPronto" mask="99:99" [(ngModel)]="apontamento.HoraInicialString" [style]="{'width': '80px'}" (change)="alterarHora(apontamento,'HoraInicial',$event.target.value)" />
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.HoraInicial | date: "HH:mm"}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Escala"
+                                (keydown.enter)="alterar(apontamento)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.Escala}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                                                
-                        <p-inputMask [disabled]="!tudoPronto" mask="99:99" [(ngModel)]="apontamento.HoraFinalString" [style]="{'width': '80px'}" (change)="alterarHora(apontamento,'HoraFinal',$event.target.value)" />
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.HoraFinal | date: "HH:mm"}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-dropdown [disabled]="!tudoPronto" appendTo="body" [options]="codigos" dataKey="Id"
+                                placeholder="Selecione" optionLabel="Nome" [showClear]="true"
+                                [(ngModel)]="apontamento.Codigo" [style]="{'width':'400px'}"
+                                (onChange)="alterar(apontamento)"></p-dropdown>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.Codigo.DescricaoOperacao}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <td (click)="mensagemAviso()">{{apontamento.Codigo.GrupoCodigos}}</td>
+                <td>{{apontamento.Codigo.CodigoOperacao}}</td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                                                
-                        <p-inputMask [disabled]="!tudoPronto" mask="99:99" [(ngModel)]="apontamento.HorasVoadasString" [style]="{'width': '80px'}" (change)="alterarHora(apontamento,'HorasVoadas',$event.target.value)" />
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.HorasVoadas | date: "HH:mm"}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td>{{apontamento.DataInicial | date: "dd/MM/yyyy"}}</td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                                                
-                        <p-inputMask [disabled]="!tudoPronto" mask="99:99" [(ngModel)]="apontamento.HorasGlosadasString" [style]="{'width': '80px'}" (change)="alterarHora(apontamento,'HorasGlosadas',$event.target.value)" />
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.HorasGlosadas | date: "HH:mm"}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-            
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.QuantidadeItemAvulso" (keydown.enter)="alterar(apontamento)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.QuantidadeItemAvulso}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputMask [disabled]="!tudoPronto" mask="99:99"
+                                [(ngModel)]="apontamento.HoraInicialTS" [style]="{'width': '80px'}" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.HoraInicialTS}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-            <td pEditableColumn>
-                <p-cellEditor>
-                    <ng-template pTemplate="input">                        
-                        <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Observacoes" (keydown.enter)="alterar(apontamento)">
-                    </ng-template>
-                    <ng-template pTemplate="output">
-                        {{apontamento.Observacoes}}
-                    </ng-template>
-                </p-cellEditor>
-            </td>         
-        </tr>
-    </ng-template>
-</p-table>
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputMask [disabled]="!tudoPronto" mask="99:99" [(ngModel)]="apontamento.HoraFinalTS"
+                                [style]="{'width': '80px'}" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.HoraFinalTS}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
 
-<p-dialog header="Excluir Apontamento" [(visible)]="exibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoExclusao()">    
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputMask [disabled]="!tudoPronto" mask="99:99"
+                                [(ngModel)]="apontamento.HorasVoadasTS" [style]="{'width': '80px'}" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.HorasVoadasTS}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <p-inputMask [disabled]="!tudoPronto" mask="99:99"
+                                [(ngModel)]="apontamento.HorasGlosadasTS" [style]="{'width': '80px'}"
+                                (change)="alterarHora(apontamento,'HorasGlosadas',$event.target.value)" />
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.HorasGlosadasTS}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input [disabled]="!tudoPronto" pInputText type="text"
+                                [(ngModel)]="apontamento.QuantidadeItemAvulso" (keydown.enter)="alterar(apontamento)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.QuantidadeItemAvulso}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+
+                <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                            <input [disabled]="!tudoPronto" pInputText type="text" [(ngModel)]="apontamento.Observacoes"
+                                (keydown.enter)="alterar(apontamento)">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{apontamento.Observacoes}}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>
+
+
+
+<p-dialog header="Excluir Apontamento" [(visible)]="exibirDialogo" [modal]="true" [baseZIndex]="10000"
+    (onHide)="ocultarDialogoExclusao()">
     <h5>
         Realmente deseja excluir os Apontamentos selecionados?
     </h5>
     <div class="botoes">
-        <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light" (click)="ocultarDialogoExclusao()"></button>
-        <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="apagarApontamentos()"></button>
+        <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light"
+            (click)="ocultarDialogoExclusao()"></button>
+        <button pButton type="button" icon="pi pi-trash" label="Excluir" (click)="apagarApontamentos()"></button>
     </div>
 </p-dialog>
 
-<p-toast position="bottom-right"></p-toast> 
+<p-toast position="bottom-right"></p-toast>

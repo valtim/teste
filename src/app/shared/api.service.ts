@@ -4,6 +4,7 @@ import { DataUtil } from "./../shared/DataUtil";
 import { Observable, lastValueFrom } from "rxjs";
 import * as Globals from './global';
 import { promise } from "protractor";
+import { Apontamento } from "../models/Apontamento";
 
 @Injectable({
   providedIn: "root",
@@ -147,8 +148,8 @@ export class ApiService {
 
   async loggar(Funcionalidade: string) {
     await lastValueFrom(
-      this.http.post(`${this.url}log-information`, { Funcionalidade: Funcionalidade }, this.httpOptions)      
-    ).then(usuario=>{
+      this.http.post(`${this.url}log-information`, { Funcionalidade: Funcionalidade }, this.httpOptions)
+    ).then(usuario => {
       console.log(`${usuario['UsuarioLogado']} acessou ${Funcionalidade}`);
     });
   }
@@ -158,8 +159,8 @@ export class ApiService {
       .get(`${this.url}log-funcionalidades`, this.httpOptions)
       .toPromise();
   }
-  
-  getLogs(funcionalidade: string,data: string): Promise<any> {
+
+  getLogs(funcionalidade: string, data: string): Promise<any> {
     if ((data != null) && (data != "")) {
       return this.http
         .get(`${this.url}log-information/${funcionalidade}/${data}`, this.httpOptions)
@@ -168,7 +169,7 @@ export class ApiService {
       return this.http
         .get(`${this.url}log-information/${funcionalidade}`, this.httpOptions)
         .toPromise();
-    }    
+    }
   }
 
   getDiarioByDate(date: string): Promise<any> {
@@ -233,34 +234,40 @@ export class ApiService {
       .toPromise();
   }
 
-  getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
-    return this.http
-      .get(`${this.url}novodiario/${id}/${month}/${year}`, this.httpOptions)
-      .toPromise();
+  async getDiarioTripulante(id: string, month: string, year: string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}novodiario/${id}/${month}/${year}`, this.httpOptions));
   }
 
-  getApontamentos(data: Date): Promise<any> {
-    return this.http
-      .get(`${this.url}api/apontamentos/${data.toISOString().split("T")[0]}`, this.httpOptions)
-      .toPromise();
+  // async getCodigosDeApontamento(): Promise<any> {
+  //   return await lastValueFrom(this.http
+  //     .get<any>(`${this.url}apontamentos/codigos`, this.httpOptions));
+  // }
+
+  async getApontamentos(data: Date, base: string): Promise<Apontamento[]> {
+    return await lastValueFrom(this.http
+      .get<Apontamento[]>(`${this.url}apontamentos/${data.toISOString().split("T")[0]}/${base}`, this.httpOptions));
   }
 
-  postApontamento(apontamento: any): Promise<any> {
-    return this.http
-      .post(`${this.url}api/apontamento`, apontamento, this.httpOptions)
-      .toPromise();
+  async postApontamento(apontamento: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}apontamento`, apontamento, this.httpOptions));
   }
 
-  apagarApontamentos(apontamentos: any[]): Promise<any> {
+  postApontamentoXML(apontamento: any, baseop: string): Observable<Blob> {
     return this.http
-      .post(`${this.url}api/apagar-apontamentos`, apontamentos, this.httpOptions)
-      .toPromise();
+      .post(`${this.url}apontamento/XML/${baseop}`, apontamento, { responseType: 'blob' });
   }
 
-  postNovoApontamento(apontamento: any): Promise<any> {
-    return this.http
-      .post(`${this.url}api/novo-apontamento`, apontamento, this.httpOptions)
-      .toPromise();
+
+  async apagarApontamentos(apontamentos: any[]): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}apagar-apontamentos`, apontamentos, this.httpOptions));
+  }
+
+  async postNovoApontamento(apontamento: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}novo-apontamento`, apontamento, this.httpOptions));
   }
 
   getPagamento(data: string): Promise<any> {
@@ -684,7 +691,7 @@ export class ApiService {
   }
 
 
-  
+
   getBI(dataIni: Date, dataFim: Date): Observable<Blob> {
     return this.http.get(`${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, { responseType: 'blob' });
   }
@@ -701,6 +708,12 @@ export class ApiService {
   //   });
   //   return promise;
   // }
+
+
+  async getCombosRestrito(lista: string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}combos-light/${lista}`, this.httpOptions))
+  }
 
   async getCombos(): Promise<any> {
     return await lastValueFrom(this.http
@@ -795,6 +808,12 @@ export class ApiService {
       .toPromise();
   }
 
+
+  async getRdvFile(id: string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}RelRdv/pdf/ff678bba-099b-4d7c-9455-2ce3d424b08b`, this.httpOptions))
+  }
+
   assinarBoca(Assinatura_id: string, EmailAssinante: string, nomeArquivo: string): Promise<any> {
     return this.http
       .get(`${this.url}assinar-pdf-boca/` + Assinatura_id + '/' + EmailAssinante + '/' + nomeArquivo, this.httpOptions)
@@ -827,6 +846,17 @@ export class ApiService {
     return this.http
       .post(`${this.url}RelBoca`, JSON.stringify(filtro), this.httpOptions)
       .toPromise();
+  }
+
+
+  async getRelBoca(data: string, baseBoca:string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}RelBoca/enviados/${data}/${baseBoca}`, this.httpOptions));
+  }
+
+  getRelBocaPdf(data: string, baseBoca:string):  Observable<Blob> {
+    return this.http
+      .get(`${this.url}RelBoca/${data}/${baseBoca}`, { responseType: 'blob' });
   }
 
   getHorasVoadasPorDia(data: Date): Promise<any> {
@@ -1180,6 +1210,12 @@ export class ApiService {
   }
 
 
+  async getGenericoController(controller: string): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}${controller}`, this.httpOptions));
+  }
+
+
   async getGenerico(controller: string, filtro: string): Promise<any> {
     return await lastValueFrom(this.http
       .get(`${this.url}${controller}/${filtro}`, this.httpOptions));
@@ -1195,6 +1231,12 @@ export class ApiService {
   async emailEscalaMensal(filtro: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}escala-mensal/individual`, filtro, this.httpOptions));
+  }
+
+
+  async emailBOCA(data: string, base: string, destinatarios : any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}RelBoca/assinado/${data}/${base}`, destinatarios, this.httpOptions));
   }
 
 

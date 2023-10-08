@@ -6,3 +6,5 @@ window.location.host === "localhost:4200"
 // renomeie esse arquivo para "globals.ts"
 // coloque o link para api que deseja.
 // é importante que termine com a '/' 
+
+

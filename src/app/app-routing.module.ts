@@ -21,7 +21,6 @@ import { RelPousoComponent } from "./relatorios/rel-pouso/rel-pouso.component";
 import { PaxTransportadosComponent } from "./relatorios/pax-transportados/pax-transportados.component";
 import { DocumentoImpressoComponent } from "./documento-impresso/documento-impresso.component";
 import { AnaliseDeRiscoComponent } from "./relatorios/analise-de-risco/analise-de-risco.component";
-import { GraficoComponent } from "./grafico/grafico.component";
 import { TratamentoDaFadigaComponent } from "./controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component";
 import { ComunicarTripulantesComponent } from "./controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component";
 import { FadigaComponent } from "./controle-da-fadiga/fadiga/fadiga.component";
@@ -149,11 +148,6 @@ const routes: Routes = [
   {
     path: "tratamento-da-fadiga/:id",
     component: TratamentoDaFadigaComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: "grafico",
-    component: GraficoComponent,
     canActivate: [AuthGuardService],
   },
   {
