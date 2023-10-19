@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { DataUtil } from "./../shared/DataUtil";
 import { Observable, lastValueFrom } from "rxjs";
 import * as Globals from './global';
+import { map } from 'rxjs/operators';
 import { promise } from "protractor";
 import { Apontamento } from "../models/Apontamento";
 
@@ -1244,6 +1245,58 @@ export class ApiService {
     return await lastValueFrom(this.http
       .get(`${this.url}painel/disponibilidade`, this.httpOptions));
   }
+
+  async getCurriculos(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}curriculos`, this.httpOptions));
+  }
+
+  async getCurriculoById(id: String): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}curriculo/${id}`, this.httpOptions));    
+  }
+
+  async obterCurriculosPDF(curriculos: any[]): Promise<any> {
+    let NomeArquivo = 'Curriculos.zip';
+    let tipo = 'application/zip';
+    if (curriculos.length == 1) {
+      NomeArquivo = curriculos[0].NomeArquivo;
+      tipo = 'application/pdf';
+    }
+
+    return await lastValueFrom(
+      this.http.post(`${this.url}curriculos/pdf`, curriculos, { responseType: 'blob'}).pipe(
+        map((res) => {                        
+            return { blob: new Blob([res], { type: tipo }), fileName: NomeArquivo };
+        })
+      )
+    );
+  }
+
+  async salvarCurriculo(curriculo: any): Promise<any> {
+    return await lastValueFrom(
+      this.http.post(`${this.url}curriculo`, curriculo, this.httpOptions)
+    );
+  }
+
+  async salvarFotoTripulante(id: any, files: any): Promise<any> {
+    /*
+    const url = this.url + `foto-tripulante/${id}`;
+    return await lastValueFrom(this.http.post(url, files, {
+      headers: new HttpHeaders({
+        'Content-Type': 'multipart/form-data',
+        Authorization: localStorage.getItem("Authorization"),
+      })
+    }));
+    */
+
+    const url = this.url + `foto-tripulante/${id}`;
+    return this.http.post(url, files).toPromise();
+  }
+
+  async deleteAnexo(id: string): Promise<any> {
+    const url = this.url + `arquivo/${id}/delete`;
+    return await lastValueFrom(this.http.get(url, this.httpOptions));
 
   async getJornadaDiaria(data: Date): Promise<any> {
     return await lastValueFrom(this.http

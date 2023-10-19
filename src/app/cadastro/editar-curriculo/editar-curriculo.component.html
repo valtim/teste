@@ -1,0 +1,222 @@
+<div class="grid editar-curriculo">    
+
+    <p-toast position="center"></p-toast>
+
+    <div class="div-loading" [class.mostrar-loading]="mostrarLoading">
+        <!-- <svg viewBox="25 25 50 50" class="p-progress-spinner-svg" style="animation-duration: 2s;"><circle cx="50" cy="50" r="20" stroke-miterlimit="10" class="p-progress-spinner-circle" fill="none" stroke-width="2"></circle></svg> -->
+        <span>Carregando...</span>
+    </div>
+
+    <button type="button" label="Exportar Currículo" pButton pRipple icon="pi pi-file" (click)="exportar()"
+        class="botao-excel p-button-success mr-2 salvar-tripulante2" [disabled]="!exibirBotaoExportar"></button>
+    <button [disabled]="!liberarBotaoSalvar" (click)="salvar()" type="button" class="p-button-success salvar-tripulante" icon="pi pi-check" pButton pRipple label="Salvar"></button>
+    
+    <div class="col-7">      
+        <div class="grid">
+            <div class="col-12">        
+                <button type="button" class="label-15" pButton pRipple label="Nome"></button>
+                <input pInputText class="input-grande cinza" type="text" [(ngModel)]="curriculoSelecionado.Tripulante.NomeCompleto" readonly>            
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Trato"></button>
+                <input pInputText class="input-fixo cinza" type="text" [(ngModel)]="curriculoSelecionado.Tripulante.Trato" readonly>                    
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="ANAC"></button>
+                <input pInputText class="input-fixo cinza" type="text" [(ngModel)]="curriculoSelecionado.Tripulante.CodigoANAC" readonly>                    
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Cargo"></button>
+                <input pInputText class="input-fixo cinza" type="text" [(ngModel)]="TripulanteCargo" readonly>                                                           
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Base"></button>
+                <input pInputText class="input-fixo cinza" type="text" [(ngModel)]="TripulanteBase" readonly>
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Classe C.M.A."></button>
+                <input pInputText class="input-fixo" type="text" [(ngModel)]="curriculoSelecionado.ClasseCMA">                    
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Validade C.M.A."></button>
+                <p-calendar [(ngModel)]="curriculoSelecionado.ValidadeCMA" selectionMode="single" dateFormat="dd/mm/yy"
+                    showIcon="true"></p-calendar>                    
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Licença"></button>
+                <input pInputText class="input-fixo" type="text" [(ngModel)]="curriculoSelecionado.Licenca">                    
+            </div>
+            <div class="col-6">        
+                <button type="button" class="label-fixo" pButton pRipple label="Expedição"></button>
+                <p-calendar [(ngModel)]="curriculoSelecionado.DataExpedicao" selectionMode="single" dateFormat="dd/mm/yy"
+                    showIcon="true"></p-calendar>                    
+            </div>            
+        </div>                              
+    </div>
+    <div class="col-5">
+        <div class="grid">
+            <div class="col-8">        
+                <p-fileUpload name="anexos[]" accept="image/png" customUpload="true" chooseLabel="Foto Tripulante"
+                    [disabled]="!liberarBotaoUpload" [auto]="true" (uploadHandler)="uploadAnexos($event)" maxFileSize="1000000000" multiple="multiple">
+        
+                    <ng-template pTemplate="toolbar">
+                    </ng-template>
+                    <ng-template let-file pTemplate="file">
+                    </ng-template>
+        
+                    <ng-template pTemplate="content">
+        
+                        <p-table [value]="fotos" width="100%">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                            <th>Arquivo</th>
+                            <th></th>
+                            </tr>
+                        </ng-template>
+        
+                        <ng-template pTemplate="body" let-file>
+                            <tr>
+                                <td (click)="abrirArquivo(file.Id)">
+                                    <i class="pi pi-file-pdf"></i>
+                                    {{file.FileName}}
+                                </td>
+                                <td style="width: 60px;">
+                                    <button pButton icon="pi pi-trash" class="p-button-danger botao-cinza"
+                                    (click)="apagarAnexo(file.Id)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        </p-table>
+        
+                    </ng-template>
+                </p-fileUpload>                            
+            </div>
+            <div class="col-4 outer-foto-tripulante">
+                <div class="foto-tripulante" [style.background-image]="urlFoto"></div>
+            </div>
+        </div>                    
+    </div>    
+
+    <div class="col-12">
+        <div class="cabecalho-horas">
+            <h2>Horas Voadas</h2>
+            <button pButton type="button" label="Adicionar Horas Voadas" icon="pi pi-plus"
+                class="p-button-raised" (click)="novoHorario()"></button>
+        </div>                        
+        <hr>
+        <p-toolbar *ngIf="(curriculoSelecionado != null) && (curriculoSelecionado.CurriculosDados.length == 0)" class="m-4">
+            Nenhum registro de Horas Voadas!
+        </p-toolbar>
+        <p-table #dt dataKey="Id" editMode="row" [value]="curriculoSelecionado.CurriculosDados" *ngIf="(curriculoSelecionado != null) && (curriculoSelecionado.CurriculosDados.length > 0)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Operador Aéreo</th>
+                    <th style="width: 125px;">Início Período</th>
+                    <th style="width: 125px;">Fim Período</th>
+                    <th>Modelo</th>
+                    <th style="width: 100px;">Comando</th>
+                    <th style="width: 100px;">Copiloto</th>
+                    <th style="width: 100px;">Total</th>
+                    <th style="width: 130px;"></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+                <tr  [pEditableRow]="linha">
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="linha.OperadorAereo"
+                                appendTo="body">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.OperadorAereo}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar [(ngModel)]="linha.PeriodoInicio" selectionMode="single" dateFormat="dd/mm/yy"
+                                    showIcon="true" appendTo="body" [inputStyle]="{'width':'90px'}"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.PeriodoInicio | date:'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <p-calendar [(ngModel)]="linha.PeriodoFim" selectionMode="single" dateFormat="dd/mm/yy"
+                                    showIcon="true" appendTo="body" [inputStyle]="{'width':'90px'}"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.PeriodoFim | date:'dd/MM/yyyy'}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="linha.Modelo"
+                                appendTo="body">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.Modelo}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">                                
+                                <input pInputText type="text" [(ngModel)]="linha.HorasComando"
+                                    appendTo="body" (ngModelChange)="formatarDouble($event,linha.Id,'HorasComando')"
+                                    [style]="{'width':'70px'}">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.HorasComando}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">                                
+                                <input pInputText type="text" [(ngModel)]="linha.HorasCopiloto"
+                                    appendTo="body" (ngModelChange)="formatarDouble($event,linha.Id,'HorasCopiloto')"
+                                    [style]="{'width':'70px'}">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.HorasCopiloto}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    
+                    <td pInitEditableRow>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">                                
+                                <input pInputText type="text" [(ngModel)]="linha.Total"
+                                    appendTo="body" readonly class="cinza"
+                                    [style]="{'width':'70px'}">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{linha.Total}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td>
+                        <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-check" class="p-button-raised p-button-rounded p-button-secondary" style="background-color: #dddddd; border: 1px solid #dddddd;"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" class="p-button-raised p-button-rounded p-button-success"></button>
+                        <button pButton type="button" icon="pi pi-trash" style="margin-left: 10px"
+                            class="p-button-raised p-button-rounded p-button-danger"
+                            (click)="removerHorario(linha.Id)"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+    </div>
+
+</div>

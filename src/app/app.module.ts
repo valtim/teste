@@ -115,6 +115,8 @@ import { EmailDiarioCdoComponent } from './cadastro/email-diario-cdo/email-diari
 import { CcoComponent } from './painel/cco/cco.component';
 import { FlightStripComponent } from './operacoes/flight-strip/flight-strip.component';
 import { LoggingComponent } from './seguranca/logging/logging.component';
+import { CurriculosComponent } from './cadastro/curriculos/curriculos.component';
+import { EditarCurriculoComponent } from './cadastro/editar-curriculo/editar-curriculo.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
 
@@ -232,6 +234,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlightStripComponent,
     LoggingComponent,
     CcoComponent,
+    CurriculosComponent,
+    EditarCurriculoComponent,
     JornadaDiariaComponent,
     RelatorioAlunoComponent,
   ],

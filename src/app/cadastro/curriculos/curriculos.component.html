@@ -1,0 +1,58 @@
+<app-titulo titulo="GERENCIAR CURRÍCULOS" [carregando]="carregando"></app-titulo>
+<br>
+<div class="grid">    
+    <div class="col-6">        
+        <button type="button" pButton pRipple label="Trato"></button>
+        <input pInputText type="text" [(ngModel)]="filtro" (input)="filtrar($event)" placeholder="Trato, ANAC ou Matrícula">
+    
+        <div class="div-checkbox">
+            <input type="checkbox" [(ngModel)]="filtroComCurriculo" (change)="filtrarCurriculo()">        
+            <label>Currículo Completo</label>
+        </div>
+        <div class="div-checkbox">
+            <input type="checkbox" [(ngModel)]="filtroSemCurriculo" (change)="filtrarCurriculo()">        
+            <label>Currículo Incompleto</label>
+        </div>
+    </div>    
+    <div class="col-2">        
+        <button type="button" label="Exportar Currículos" pButton pRipple icon="pi pi-file" (click)="exportar()"
+        class="botao-excel p-button-success mr-2" [disabled]="!exibirBotaoExportar"></button>
+    </div>        
+</div>
+
+<p-toolbar *ngIf="carregando && ((curriculos == null) || (curriculos.length == 0))" class="m-4">
+    Carregando...
+</p-toolbar>
+
+<div class="tabela" *ngIf="curriculos">
+
+    <p-table [value]="curriculos" [scrollable]="true"
+        scrollHeight="83vh" id="" class="tabela">        
+        <ng-template pTemplate="header">
+            <tr>
+                <th><input type="checkbox" [(ngModel)]="todosMarcados" (change)="marcarTodos()"></th>
+                <th>Trato</th>
+                <th>ANAC</th>                                
+                <th>Matrícula</th>
+                <th>Matrícula TOTVS</th>           
+                <th>Currículo</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td><input type="checkbox" [(ngModel)]="rowData.Marcado" (change)="marcarCheckboxCurriculo()"></td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Tripulante.Trato}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Tripulante.CodigoANAC}}</td>                
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Tripulante.Matricula}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.Tripulante.MatriculaInterna}}</td>                                             
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.CurriculoIncompleto ? "Incompleto" : "Completo"}}</td>                
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+<p-dialog [style]="{'width':'95%', 'height':'95%'}" *ngIf="exibirEdicao" header="EDITAR CURRÍCULO" [(visible)]="exibirEdicao" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoEdicao()">
+    <app-editar-curriculo [curriculoSelecionado]="curriculoSelecionado" (retorno)="ocultarDialogoEdicaoRetorno($event)">
+    </app-editar-curriculo>
+</p-dialog>
