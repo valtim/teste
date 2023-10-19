@@ -1,0 +1,53 @@
+<app-titulo titulo="Relatório de Alunos" [carregando]="loading"></app-titulo>
+
+<p-toast position="top-center"></p-toast>
+
+
+<p-card>
+    <button type="button" pButton pRipple label="Data"></button>
+    <p-calendar [(ngModel)]="dataIni" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+        [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
+    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+        [inputStyle]="{'width':'150px'}" class="ml-2"></p-calendar>
+    <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
+        class="ml-2"></button>
+</p-card>
+
+
+<p-toolbar *ngIf="!dados" class="m-4 nao-imprimir">
+    Selecione o período e clique em PESQUISAR.
+</p-toolbar>
+
+<p-table *ngIf="dados" [value]="dados" styleClass="p-datatable-striped p-datatable-sm">
+    <ng-template pTemplate="caption" *ngIf="dados.length == 0">
+        Sem registros para o período selecionado
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <!-- <th style="width:20px"></th> -->
+            <th>Nome do Aluno</th>
+            <th>Curso Realizado</th>
+            <th>Nome do Instrutor</th>
+            <th>Local do Curso</th>
+            <th>Data do Curso</th>
+            <th>NRT</th>
+            <th>SAE</th>
+            <th>Anexos</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+        <tr>
+            <!-- <td>
+                <p-checkbox name="groupname" [value]="treino.Id" [(ngModel)]="paraExcluir"></p-checkbox>
+            </td> -->
+            <td>{{item.Aluno}}</td>
+            <td>{{item.Nome}}</td>
+            <td>{{item.Instrutor}}</td>
+            <td>{{item.Local}}</td>
+            <td [innerHTML]="item.DatasStr" nowrap></td>
+            <td nowrap><ul><li *ngFor="let item of item.NRTs" (click)="funDownload(item.Id)"><i class="pi pi-arrow-circle-down"></i>{{item.FileName | slice:0:8}}(...){{item.FileName | slice:-4}}</li></ul></td>
+            <td nowrap><ul><li *ngFor="let item of item.SAEs" (click)="funDownload(item.Id)"><i class="pi pi-arrow-circle-down"></i>{{item.FileName | slice:0:8}}(...){{item.FileName | slice:-4}}</li></ul></td>
+            <td nowrap><ul><li *ngFor="let item of item.Anexos" (click)="funDownload(item.Id)"><i class="pi pi-arrow-circle-down"></i>{{item.FileName | slice:0:8}}(...){{item.FileName | slice:-4}}</li></ul></td>
+        </tr>
+    </ng-template>
+</p-table>

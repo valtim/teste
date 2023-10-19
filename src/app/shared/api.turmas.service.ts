@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 import { ApiService } from './api.service';
 
 
@@ -103,10 +103,21 @@ export class ApiTurmasService {
     return this.http.post(url, files).toPromise();
   }
 
-  postUploadSimples(files: any): Promise<any> {
+  async postUploadSimples(files: any): Promise<any> {
     const url = this.api.url + `arquivo`;
-    return this.http.post(url, files).toPromise();
+    return await lastValueFrom(this.http.post(url, files));
   }
+
+  async postRelatorioAlunos(filtro: any): Promise<any> {
+    const url = this.api.url + `relatorio-de-alunos`;
+    return await lastValueFrom(this.http.post(url, filtro, this.api.httpOptions));
+  }
+
+  downloadPDF(id): Observable<Blob> {
+      return this.http
+        .get(`${this.url}arquivo/${id}`, { responseType: 'blob' });
+    }
+
 
   postComentario(comentario): Promise<any> {
     return this.http

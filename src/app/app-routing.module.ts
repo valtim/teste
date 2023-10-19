@@ -79,6 +79,7 @@ import { EmailEscalaComponent } from './escala/email-escala/email-escala.compone
 import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email-diario-fadiga.component';
 import { CcoComponent } from './painel/cco/cco.component';
 import { LoggingComponent } from './seguranca/logging/logging.component';
+import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -474,6 +475,12 @@ const routes: Routes = [
   {
     path: 'registros-acesso',
     component: LoggingComponent,
+    canActivate: [AuthGuardService],
+  },
+  
+  {
+    path: 'relatorio-aluno',
+    component: RelatorioAlunoComponent,
     canActivate: [AuthGuardService],
   },
   

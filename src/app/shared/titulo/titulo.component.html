@@ -1,7 +1,13 @@
 <p-toolbar>
     <span id="texto" (click)="exibir_menu()">{{titulo}}</span>
     <p-progressSpinner [style]="{width: '25px', height: '25px'}" *ngIf="carregando"></p-progressSpinner>
-    <button pButton type="button" icon="pi pi-sign-out" label="Sair" class="p-button-danger" [routerLink]="['/logoff']" routerLinkActive="router-link-active" ></button>
+    
+    <div class="p-toolbar-group-end">
+        <span class="m-2">{{usuario}}</span>
+        <button pButton type="button" icon="pi pi-sign-out" label="Sair" class="p-button-danger" [routerLink]="['/logoff']" routerLinkActive="router-link-active" ></button>
+    </div>
 </p-toolbar>
 
 <app-menu [exibir]="exibir"></app-menu>
+
+<p-toast></p-toast>

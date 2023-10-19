@@ -27,10 +27,28 @@
             <td><p-checkbox [value]="treino.Id" [(ngModel)]="valoresSelecionados" class="d-print-none"></p-checkbox>
             </td>
             <td (click)="editar(treino.Id)">{{treino.Nome}}</td>
-            <td (click)="editar(treino.Id)">{{treino.CargaHoraria}}</td>
-            <td (click)="editar(treino.Id)">{{treino.Equipamentos}}</td>
-            <td (click)="editar(treino.Id)"><span *ngIf="treino.HorasDeVoo">SIM</span><span
-                    *ngIf="!treino.HorasDeVoo">NÃO</span></td>
+            <td (click)="editar(treino.Id)">
+                <span *ngIf="treino.PagaInstrutor">SIM</span>
+                <span *ngIf="!treino.PagaInstrutor">NÃO</span>
+            </td>
+            <td (click)="editar(treino.Id)">
+                <span *ngIf="treino.PagaAluno">SIM</span>
+                <span *ngIf="!treino.PagaAluno">NÃO</span>
+            </td>
+            <td (click)="editar(treino.Id)">
+                <span *ngIf="treino.NaoControlado">SIM</span>
+                <span *ngIf="!treino.NaoControlado">NÃO</span>
+            </td>
+            <td (click)="editar(treino.Id)">
+                <span *ngIf="treino.NaoVence">SIM</span>
+                <span *ngIf="!treino.NaoVence">NÃO</span>
+            </td>
+            <td (click)="editar(treino.Id)">
+                <span *ngIf="!treino.NaoControlado">
+                    {{treino.Validade}}
+                </span>
+                <span *ngIf="treino.NaoControlado">N/A</span>
+            </td>
         </tr>
     </ng-template>
 </p-table>
@@ -38,12 +56,3 @@
 <app-editar-treinamento [treinamento]="treinamentoEditado" (retorno)="salvar($event)" *ngIf="editando"
     [tipos]="listaDeTiposDeTreinamento" [equipamentos]="listaDeEquipamentos"
     [instrutores]="listaDeInstrutores"></app-editar-treinamento>
-
-<!-- <p-dialog header="Treinamento" [(visible)]="displayModal" [modal]="true" [baseZIndex]="10000" [maximizable]="true"
-    (onShow)="showDialogMaximized(dialDetail)" #dialDetail> 
-    <div *ngFor="let item of treinamentos">
-        <app-editar-treinamento [treinamento]="item" *ngIf="item.Display" [tipos]="listaDeTiposDeTreinamento"
-            [equipamentos]="listaDeEquipamentos" [instrutores]="listaDeInstrutores"
-            (newItemEvent)="displayModal = false"></app-editar-treinamento>
-    </div>
- </p-dialog> -->

@@ -38,7 +38,7 @@ export class RelBocaComponent implements OnInit {
   blobPDF: any;
   NumerosDosVoos: [];
   Rdv: any[];
-  emails = "cc-AVTA@petrobras.com.br; coordvoocabofrio <coordvoocabofrio@bristowgroup.com>; Transporte Aereo e Resgate PB-LOG <TARPB@petrobras.com.br>; taereo.cabofrio@petrobras.com.br; Nelson Pinheiro <Nelson.Pinheiro@bristowgroup.com>; Inglison Oliveira <inglison.oliveira@bristowgroup.com>";
+  emails = "cc-AVTA@petrobras.com.br, coordvoocabofrio@bristowgroup.com, TARPB@petrobras.com.br, taereo.cabofrio@petrobras.com.br,Nelson.Pinheiro@bristowgroup.com,inglison.oliveira@bristowgroup.com";
   assinaturas: any;
 
   constructor(private api: ApiService, private sanitizer: DomSanitizer) { }

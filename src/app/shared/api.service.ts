@@ -587,8 +587,8 @@ export class ApiService {
     return this.http.get(`${this.url}listas/usuario`).toPromise();
   }
 
-  getUsuario(): Promise<any> {
-    return this.http.get(`${this.url}controledeacesso`).toPromise();
+  async getUsuarioLogado(): Promise<any> {
+    return await lastValueFrom(this.http.get(`${this.url}usuariologado`, this.httpOptions));
   }
 
   postUsuario(usuarioList: Array<any>): Promise<any> {

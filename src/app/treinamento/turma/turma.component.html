@@ -2,14 +2,14 @@
 <!-- <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog> -->
 <!-- <p-messages [(value)]="messages"></p-messages> -->
 
-<!-- <p-toast position="top-center" key="tc"></p-toast> -->
+<p-toast position="top-center"></p-toast>
 
 <span class="p-buttonset botoes_salvar">
     <button pButton type="button" label="Salvar" (click)="enviar(turmaInterna)" icon="pi pi-check"
         class="p-button-raised p-button-rounded" *ngIf="!turmaInterna.Concluido"></button>
     <button pButton type="button" label="Concluir Treinamento" (click)="onConcluirTreinamento()" icon="pi pi-calendar"
         class="p-button-raised p-button-rounded" *ngIf="!turmaInterna.Concluido && concluirTreinamento"></button>
-    <button pButton type="button" label="Cancelar" (click)="cancelar()" icon="pi pi-times"
+    <button pButton type="button" label="Fechar sem Salvar" (click)="cancelar()" icon="pi pi-times"
         class="p-button-raised p-button-rounded p-button-warning"></button>
 </span>
 
@@ -346,14 +346,14 @@
     <p-fieldset legend="Anexos" [toggleable]="true">
         <div class="p-fluid p-formgrid grid">
             <div class="p-field col-6">
-                <h2>Anexos da Turma</h2>
+                <h2>Anexos da Turma (são enviados por e-mail)</h2>
                 <div class="p-field">
-                    <app-anexos [listaArquivos]='turmaInterna.Anexos' [callbackFunction]="uploadCompletoAnexos"></app-anexos>
+                    <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.Anexos' [callbackFunction]="uploadCompletoAnexos"></app-anexos>
                 </div>
             </div>
             <div class="p-field  col-6">
                 <h2>NRT</h2>
-                <app-anexos [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompletoNRTs"></app-anexos>
+                <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompletoNRTs"></app-anexos>
             </div>
         </div>
         <div *ngIf="turmaInterna.Treinamento">
@@ -361,12 +361,12 @@
                 <div class="p-field col-6">
                     <h2>SAE</h2>
                     <div class="p-field">
-                        <app-anexos [listaArquivos]='turmaInterna.SAEs' [callbackFunction]="uploadCompletoSAEs"></app-anexos>
+                        <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.SAEs' [callbackFunction]="uploadCompletoSAEs"></app-anexos>
                     </div>
                 </div>
                 <div class="p-field  col-6">
                     <h2>NEC</h2>
-                    <app-anexos [listaArquivos]='turmaInterna.NECs' [callbackFunction]="uploadCompletoNECs"></app-anexos>
+                    <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.NECs' [callbackFunction]="uploadCompletoNECs"></app-anexos>
                 </div>
             </div>
         </div>

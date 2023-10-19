@@ -13,6 +13,7 @@ import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
 })
 export class AnexosComponent implements OnInit {
   @Input() turma: string;
+  @Input() tipoDeAnexo: string;
   @Input() prefix: string;
   @Input() ignorePrefix: string;
 
