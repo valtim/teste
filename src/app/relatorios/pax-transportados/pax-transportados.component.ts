@@ -27,6 +27,7 @@ export class PaxTransportadosComponent implements OnInit {
   carregando = true;
   decolagens: any;
   pousos: any;
+  formPronto: boolean;
 
   constructor(private api: ApiService) {
     this.api.getCombos().then((x) => {
@@ -34,6 +35,7 @@ export class PaxTransportadosComponent implements OnInit {
       this.clientes = x.Cliente;
       this.bases = x.BaseDoTripulante;
       this.basesSelecionadas = x.BaseDoTripulante.map(y => y.Id);
+      this.formPronto = true;
       this.carregando = false;
     });
   }
@@ -68,7 +70,7 @@ export class PaxTransportadosComponent implements OnInit {
     this.dataFim = new Date(date.getFullYear(), 11, 31);
     this.locale_pt = this.api.getLocale("pt");
 
-    this.rodarRelatorio();
+    // this.rodarRelatorio();
   }
 
   exportExcel() {

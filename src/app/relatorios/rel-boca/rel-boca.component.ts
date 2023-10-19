@@ -3,6 +3,7 @@ import { ApiService } from '../../shared/api.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { DataUtil } from 'src/app/shared/DataUtil';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-rel-boca',
@@ -27,17 +28,20 @@ export class RelBocaComponent implements OnInit {
   AeronavesUtilizadas;
   BaseDeOperacoes: any;
 
-  
+
   statusAssinatura = false;
   desabilitarBotaoAssinatura = true;
-  
+
   nomeArquivo: string;
   exibirAssinatura = false;
   DadosAssinatura: any = { Status: false };
   blobPDF: any;
   NumerosDosVoos: [];
+  Rdv: any[];
+  emails = "cc-AVTA@petrobras.com.br, coordvoocabofrio@bristowgroup.com, TARPB@petrobras.com.br, taereo.cabofrio@petrobras.com.br,Nelson.Pinheiro@bristowgroup.com,inglison.oliveira@bristowgroup.com";
+  assinaturas: any;
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     const date = new Date();
@@ -47,7 +51,7 @@ export class RelBocaComponent implements OnInit {
     // Para testar
     // this.data = new Date(2023, 5, 5);
 
-    this.api.getCombos().then(x => {
+    this.api.getCombosRestrito('BaseDeOperacao').then(x => {
 
       this.baseDeOperacao = x.BaseDeOperacao;
       this.baseDeOperacaoSelecionada = this.baseDeOperacao[0];
@@ -62,93 +66,144 @@ export class RelBocaComponent implements OnInit {
 
   }
 
+
+  emailBOCA() {
+    
+    this.tudoPronto = false;
+    this.api.emailBOCA(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id, { emails: this.emails }).then(
+      x => {
+        alert('email enviado');
+        this.tudoPronto = true;
+      }
+    ).catch(x => {
+      alert('erro ao enviar email');
+      this.tudoPronto = true;
+    })
+  }
+
+
+  pesquisarEnviados(){
+    this.relatorioConsultado = false;
+    this.tudoPronto = false;
+    this.blobPDF = undefined;
+    this.api.getRelBoca(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id).then( x=>{
+      this.assinaturas = x;
+      this.tudoPronto = true;
+    } );
+  }
+
   rodarRelatorio() {
     this.tudoPronto = false;
-    this.relatorioConsultado = false;    
-    this.statusAssinatura = false;
-    this.api.postRelBoca(
-      {
-        data: this.data,
-        clientes: [{ 'Id': '31965f5a-e078-11e7-a923-0026b94bb39e' },
-        { 'Id': 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998' }],
-        base: this.baseDeOperacaoSelecionada
-      }).then(x => {        
+    this.relatorioConsultado = false;
 
-        //colunas = colunas, filtro = filtro, listas = listas
-        this.cols = x.colunas;
-        this.dados = x.valores;
-        this.filtroRetorno = x.filtroRetorno;
-        this.TotalDeVoos = x.TotalDeVoos;
-        this.AeronavesUtilizadas = x.AeronavesUtilizadas;
-        this.BaseDeOperacoes = x.BaseDeOperacoes;    
-        this.NumerosDosVoos = x.NumerosDosVoos; 
+    this.api.getRelBocaPdf(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id).subscribe((blob: any) => {
 
-        this.api.postAssinaturaBoca({
-          BaseDoTripulante_Id: this.BaseDeOperacoes.Id,
-          BocaData: this.formatarDataAssinaturaBoca(),
-          NumerosDosVoos: this.NumerosDosVoos
-        }).then((dados: any) => {                          
-          this.DadosAssinatura = dados;          
-          this.desabilitarBotaoAssinatura = false;
-          this.nomeArquivo = this.definirNomeArquivo();
 
-          this.DadosAssinatura.atualizar = (Status) => {
-            this.statusAssinatura = Status;
-            console.log('Status da Assinatura: ' + Status);
-          }
+      this.blobPDF = this.sanitizer.bypassSecurityTrustResourceUrl(
+        URL.createObjectURL(blob)
+      );
 
-          if (
-            (this.DadosAssinatura.Status) &&
-            (this.DadosAssinatura.AssinaturaBoca) && 
-            (this.DadosAssinatura.AssinaturaBoca.Enviado)
-          ) {
-            this.statusAssinatura = true;
-          }          
 
-          this.tudoPronto = true;
-          this.relatorioConsultado = true;
-        });
-        
-      })
-      .catch(x => {
-        
-      })
+      this.relatorioConsultado = true;
+      this.tudoPronto = true;
+      //this.blobPDF = blob;
+      // var resume = result["data"];
+      // var fileName = resume.resumeName;
+      // var fileType = resume.resumeType;
+
+      // const file = new Blob([resume.resume], { type: fileType });//Is this correct or do i need to use 'application/octet-stream' here?
+
+      //saveAs(file, fileName);
+    });
+
+    // this.api.postRelBoca(
+    //   {
+    //     data: this.data,
+    //     clientes: [{ 'Id': '31965f5a-e078-11e7-a923-0026b94bb39e' },
+    //     { 'Id': 'cfd3aa3b-5c1d-4796-abec-1de79cb7a998' }],
+    //     base: this.baseDeOperacaoSelecionada
+    //   }).then(x => {
+
+    //     //colunas = colunas, filtro = filtro, listas = listas
+    //     this.cols = x.colunas;
+    //     this.dados = x.valores;
+    //     this.Rdv = x.Rdv;
+    //     this.Rdv.forEach(x => { x.Link = this.api.url + 'RelRdv/pdf/' + x.Id });
+    //     this.filtroRetorno = x.filtroRetorno;
+    //     this.TotalDeVoos = x.TotalDeVoos;
+    //     this.AeronavesUtilizadas = x.AeronavesUtilizadas;
+    //     this.BaseDeOperacoes = x.BaseDeOperacoes;
+    //     this.NumerosDosVoos = x.NumerosDosVoos;
+
+
+
+
+    //     //  this.api.postAssinaturaBoca({
+    //     //     BaseDoTripulante_Id: this.BaseDeOperacoes.Id,
+    //     //     DataBoca: this.data,
+    //     //     NumerosDosVoos: this.NumerosDosVoos
+    //     //   }).then((dados: any) => {                          
+    //     //     this.DadosAssinatura = dados;          
+    //     //     this.desabilitarBotaoAssinatura = false;
+    //     //     this.nomeArquivo = this.definirNomeArquivo();
+
+    //     //     this.DadosAssinatura.atualizar = (Status) => {
+    //     //       this.statusAssinatura = Status;
+    //     //       console.log('Status da Assinatura: ' + Status);
+    //     //     }
+
+    //     //     if (
+    //     //       (this.DadosAssinatura.Status) &&
+    //     //       (this.DadosAssinatura.AssinaturaBoca) && 
+    //     //       (this.DadosAssinatura.AssinaturaBoca.Enviado)
+    //     //     ) {
+    //     //       this.statusAssinatura = true;
+    //     //     }          
+
+    //     //   });
+
+    //     this.tudoPronto = true;
+    //     this.relatorioConsultado = true;
+    //   })
+    //   .catch(x => {
+
+    //   })
   }
 
   formatarDataAssinaturaBoca(): string {
-    let data = '0000-00-00';    
-    if (this.data) {      
-      data = DataUtil.formatDateURL(this.data);      
+    let data = '0000-00-00';
+    if (this.data) {
+      data = DataUtil.formatDateURL(this.data);
     }
     return data;
   }
 
-  abrirDialogoAssinatura() : void {        
-        
-    this.convertoToPDF((pdf: any) => {      
-      this.blobPDF = pdf;      
+  abrirDialogoAssinatura(): void {
+
+    this.convertoToPDF((pdf: any) => {
+      this.blobPDF = pdf;
       this.exibirAssinatura = true;
     });
   }
 
-  fecharDialogoAssinatura(): void {    
+  fecharDialogoAssinatura(): void {
     this.exibirAssinatura = false;
-    this.statusAssinatura = this.DadosAssinatura.Status;    
+    this.statusAssinatura = this.DadosAssinatura.Status;
   }
 
-  definirNomeArquivo(): string {      
-    let parteData = '00-00';    
+  definirNomeArquivo(): string {
+    let parteData = '00-00';
     if (this.data) {
       let temp = DataUtil.formatDateURL(this.data).split('-');
-      parteData = temp[2] + '-' + temp[1];      
-    }    
+      parteData = temp[2] + '-' + temp[1];
+    }
     let tempICAO = 'AAA';
 
-    if ( (this.DadosAssinatura.BaseDoTripulante) && (this.DadosAssinatura.BaseDoTripulante.ICAO) ) {
-      tempICAO = this.DadosAssinatura.BaseDoTripulante.ICAO;      
+    if ((this.DadosAssinatura.BaseDoTripulante) && (this.DadosAssinatura.BaseDoTripulante.ICAO)) {
+      tempICAO = this.DadosAssinatura.BaseDoTripulante.ICAO;
     }
     // BOCA - SBVT - 13-07.pdf
-    return 'BOCA_' + tempICAO  + '_' + parteData + '.pdf';
+    return 'BOCA_' + tempICAO + '_' + parteData + '.pdf';
   }
 
   @ViewChild('screen') screen: ElementRef;
@@ -156,14 +211,14 @@ export class RelBocaComponent implements OnInit {
   @ViewChild('downloadLink') downloadLink: ElementRef;
 
   converterRelatorioParaImagem(callback) {
-    let width = this.screen.nativeElement.offsetWidth; 
+    let width = this.screen.nativeElement.offsetWidth;
     let height = this.screen.nativeElement.offsetHeight;
-    
+
     html2canvas(this.screen.nativeElement).then(canvas => {
       this.canvas.nativeElement.src = canvas.toDataURL();
-      callback({ 
-        img: canvas.toDataURL('image/png'), 
-        width: width, 
+      callback({
+        img: canvas.toDataURL('image/png'),
+        width: width,
         height: height
       });
     });
@@ -172,7 +227,7 @@ export class RelBocaComponent implements OnInit {
   convertoToPDF(callback) {
     this.converterRelatorioParaImagem(imageData => {
       var base64 = document.getElementById('imageid');
-      let doc = new jsPDF('l', 'px', [imageData.width+20, imageData.height+420]);      
+      let doc = new jsPDF('l', 'px', [imageData.width + 20, imageData.height + 420]);
       doc.addImage(
         imageData.img,
         'PNG',
@@ -181,7 +236,7 @@ export class RelBocaComponent implements OnInit {
         imageData.width,
         imageData.height
       );
-      callback(doc.output('blob'));      
+      callback(doc.output('blob'));
     });
   }
 

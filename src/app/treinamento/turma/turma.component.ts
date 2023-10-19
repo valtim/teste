@@ -142,10 +142,10 @@ export class TurmaComponent implements OnInit, AfterViewInit {
       this.messageService.addAll(erros);
       return;
     }
-    this.salvarTurma(turma, () => { });
+    this.salvarTurma(turma, false);
   }
 
-  salvarTurma(turma: Turma, callback) {
+  salvarTurma(turma: Turma, fechar : boolean) {
 
     // if (turma.Equipamento == null) {
     //   this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Antes de Salvar é necessário escolher um Equipamento` });
@@ -228,14 +228,16 @@ export class TurmaComponent implements OnInit, AfterViewInit {
         });
 
         this.api.postTurma(turma).then(x => {
-          //this.messageService.add({ severity: 'success', summary: 'SOl', detail: `A turma foi salva com sucesso!` });
+          this.messageService.add({ severity: 'success', summary: 'SOL', detail: `A turma foi salva com sucesso!` });
           Object.assign(this.turmaInterna, x);
-          this.evento.emit({ Turma: this.turmaInterna, Salvo: true});
-          callback();
+          // this.messageService.addAll(erros);
+          if ( fechar )
+            this.evento.emit({ Turma: this.turmaInterna, Salvo: true});
+          // callback();
         }).catch(x => {
           console.log(x);
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: `Erro ao Salvar` });
-          callback();
+          // callback();
         });
 
 
@@ -606,9 +608,7 @@ export class TurmaComponent implements OnInit, AfterViewInit {
     this.api.onLoading();
     this.turmaInterna.Concluido = true;
     this.atualizarStatusTurma(() => {
-      this.salvarTurma(this.turmaInterna, () => {
-        this.api.onLoading();
-      });
+      this.salvarTurma(this.turmaInterna, true);
     });
   }
 

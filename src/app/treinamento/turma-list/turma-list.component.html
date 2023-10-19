@@ -28,61 +28,71 @@
 
 
 
+    <p-toolbar *ngIf="!turmasFiltro" class="m-4 nao-imprimir">
+        Selecione o período e clique em PESQUISAR.
+    </p-toolbar>
 
-    <div class="row m-2 mt-4">
-        <div class="col-3">
-            <span class="p-float-label">
-                <input type="text" id="inputtext" pInputText [(ngModel)]="filtro" (keyup)="filtrar($event)">
-                <label for="inputtext">Busca</label>
-            </span>
+    <div *ngIf="turmasFiltro" >
+
+        <div class="row m-2 mt-4">
+            <div class="col-3">
+                <span class="p-float-label">
+                    <input type="text" id="inputtext" pInputText [(ngModel)]="filtro" (keyup)="filtrar($event)">
+                    <label for="inputtext">Busca</label>
+                </span>
+            </div>
         </div>
+    
+    
+        <p-table [value]="turmasFiltro" styleClass="p-datatable-striped p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width:20px"></th>
+                    <th>Curso</th>
+                    <th>Periodo</th>
+                    <th>Instrutor</th>
+                    <th>Alunos</th>
+                    <th>TempoDeCurso</th>
+                    <th>TempoDeCursoNoturno</th>
+                    <!--<th>Tempo</th>-->
+                </tr>
+            </ng-template>
+            <tr>
+                <td colspan="6"><input type="text" name="" id=""></td>
+            </tr>
+            <ng-template pTemplate="body" let-treino>
+                <tr>
+                    <td>
+                        <p-checkbox name="groupname" [value]="treino.Id" [(ngModel)]="paraExcluir"></p-checkbox>
+                    </td>
+                    <td (click)="editar(treino.Id)">{{treino.Treinamento != undefined ? treino.Treinamento.Nome : ''}}</td>
+                    <td (click)="editar(treino.Id)">{{treino.DataDeInicio | date:'dd/MM/yyyy'}} - {{treino.DataDeFim | date:'dd/MM/yyyy'}}
+                    <td (click)="editar(treino.Id)"><span *ngIf="treino.InstrutorExterno">Externo</span><span
+                            *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span>
+                    </td>
+                    <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
+                    <td (click)="editar(treino.Id)">{{treino.TempoDeCurso | timespan:'HH:mm'}}</td>
+                    <td (click)="editar(treino.Id)">{{treino.TempoDeCursoNoturno | timespan:'HH:mm'}}</td>
+                    <!--<td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>-->
+                    <!--<td>
+                        <app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino">
+                        </app-turma-status>
+                    </td>-->
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td COLSPAN="5"></td>
+                    <td >{{Totais.TempoDeCurso}}</td>
+                    <td >{{Totais.TempoDeCursoNoturno}}</td>
+                    
+                </tr>
+            </ng-template>
+        </p-table>
+
     </div>
 
-    <p-table [value]="turmasFiltro">
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="width:20px"></th>
-                <th>Curso</th>
-                <th>Periodo</th>
-                <th>Instrutor</th>
-                <th>Alunos</th>
-                <th>TempoDeCurso</th>
-                <th>TempoDeCursoNoturno</th>
-                <!--<th>Tempo</th>-->
-            </tr>
-        </ng-template>
-        <tr>
-            <td colspan="6"><input type="text" name="" id=""></td>
-        </tr>
-        <ng-template pTemplate="body" let-treino>
-            <tr>
-                <td>
-                    <p-checkbox name="groupname" [value]="treino.Id" [(ngModel)]="paraExcluir"></p-checkbox>
-                </td>
-                <td (click)="editar(treino.Id)">{{treino.Treinamento != undefined ? treino.Treinamento.Nome : ''}}</td>
-                <td (click)="editar(treino.Id)">{{treino.DataDeInicio | date:'dd/MM/yyyy'}} - {{treino.DataDeFim | date:'dd/MM/yyyy'}}
-                <td (click)="editar(treino.Id)"><span *ngIf="treino.InstrutorExterno">Externo</span><span
-                        *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span>
-                </td>
-                <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
-                <td (click)="editar(treino.Id)">{{treino.TempoDeCurso | timespan:'HH:mm'}}</td>
-                <td (click)="editar(treino.Id)">{{treino.TempoDeCursoNoturno | timespan:'HH:mm'}}</td>
-                <!--<td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>-->
-                <!--<td>
-                    <app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino">
-                    </app-turma-status>
-                </td>-->
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="footer">
-            <tr>
-                <td COLSPAN="5"></td>
-                <td >{{Totais.TempoDeCurso}}</td>
-                <td >{{Totais.TempoDeCursoNoturno}}</td>
-                
-            </tr>
-        </ng-template>
-    </p-table>
+    
 
 </div>
 

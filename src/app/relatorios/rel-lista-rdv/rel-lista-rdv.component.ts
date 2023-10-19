@@ -45,7 +45,7 @@ export class RelListaRdvComponent implements OnInit {
 
 
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), date.getDate()-1);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     this.dataFim = new Date(date.getFullYear(), date.getMonth() , date.getDate());
     this.locale_pt = this.api.getLocale('pt');
 

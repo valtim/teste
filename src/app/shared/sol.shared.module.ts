@@ -50,6 +50,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
 import {SidebarModule} from 'primeng/sidebar';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import {SidebarModule} from 'primeng/sidebar';
     RadioButtonModule,
     ChartModule,
     TooltipModule,
-    SidebarModule
+    SidebarModule,
+    InputNumberModule,
   ],
   exports: [
     AccordionModule,
@@ -151,6 +153,7 @@ import {SidebarModule} from 'primeng/sidebar';
     RadioButtonModule,
     TooltipModule,
     SidebarModule,
+    InputNumberModule,
     
   ],
 })

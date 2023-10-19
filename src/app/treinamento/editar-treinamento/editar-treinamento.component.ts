@@ -53,13 +53,15 @@ export class EditarTreinamentoComponent implements OnInit {
   }
 
   cancelar() {
-    let ret = { "Salvar": false};
+    let ret = { "Salvar": false };
 
     this.retorno.emit(ret);
   }
 
 
-
+  funMudaVencimento(prazo) {
+    this.treinamento.ControleEmDias = prazo == 'dias';
+  }
 
   enviar(obj) {
     //Object.assign(this.treinamento, this.fg.value);
@@ -74,6 +76,12 @@ export class EditarTreinamentoComponent implements OnInit {
     // this.treinamento.Conteudos.forEach(x => {
     //   x.CargaHoraria2 = x.CargaHoraria2 + ":00.0000000"
     // });
+
+
+    if (this.treinamento.ControleEmDias)
+      this.treinamento.ValidadeEmMeses = 0;
+    else
+      this.treinamento.ValidadeEmDias = 0;
 
     let ret = { "Salvar": true, "Treinamento": this.treinamento };
 

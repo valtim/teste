@@ -31,14 +31,20 @@ export class BuscaBiComponent implements OnInit {
   rodarRelatorio() {
     this.tudoPronto = false;
 
-    
-    this.api.getBI(this.dataInicio, this.dataFim).subscribe((blob : any) => {
-      let filename = `diariodebordo_${this.dataInicio.toISOString().split("T")[0]}_${this.dataFim.toISOString().split("T")[0]}_${new Date().toLocaleTimeString().replace(':', '_')}.xlsx`
-      saveAs.saveAs(blob, filename)
-      //this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      this.messageService.add({severity:'success', summary:'Arquivo Baixado', detail:'Arquivo Baixado, procure na pasta "downloads"'});
-      this.tudoPronto = true;
-    });
+
+    this.api.getBI(this.dataInicio, this.dataFim).subscribe(
+      (blob: any) => {
+        let filename = `diariodebordo_${this.dataInicio.toISOString().split("T")[0]}_${this.dataFim.toISOString().split("T")[0]}_${new Date().toLocaleTimeString().replace(':', '_')}.xlsx`
+        saveAs.saveAs(blob, filename)
+        //this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        this.messageService.add({ severity: 'success', summary: 'Arquivo Baixado', detail: 'Arquivo Baixado, procure na pasta "downloads"' });
+        this.tudoPronto = true;
+      },
+      err => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao Executar Consulta' });
+        this.tudoPronto = true;
+      }
+    );
 
     //   this.api.getBI(this.dataInicio, this.dataFim).subscribe(data => this.downloadFile(data)),//console.log(data),
     //   error => console.log('Error downloading the file.'),
