@@ -1245,4 +1245,14 @@ export class ApiService {
       .get(`${this.url}painel/disponibilidade`, this.httpOptions));
   }
 
+  async getJornadaDiaria(data: Date): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}jornada-diaria/${data.toISOString().split("T")[0]}`, this.httpOptions));
+  }
+
+  async salvarJornadaDiaria(escala: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}jornada-diaria`, escala, this.httpOptions));
+  }
+
 }
