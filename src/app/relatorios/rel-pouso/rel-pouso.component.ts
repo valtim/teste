@@ -30,6 +30,9 @@ export class RelPousoComponent implements OnInit {
   clientes: any;
   clientesSelecionados: any;
 
+
+  formularioPronto = false;
+
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
@@ -39,14 +42,15 @@ export class RelPousoComponent implements OnInit {
 
     this.locale_pt = this.api.getLocale("pt");
 
-    this.api.getCombos().then((x) => {
+    this.api.getCombosRestrito("Prefixo, Cliente, BaseDoTripulante").then((x) => {
       this.prefixos = x.Prefixo;
-      this.localidades = x.Localidade;
+      this.localidades = x.BaseDoTripulante;
       this.clientes = x.Cliente;
+      this.formularioPronto = true;
       this.carregando = false;
     });
 
-    this.rodarRelatorio();
+    //this.rodarRelatorio();
   }
 
   rodarRelatorio() {

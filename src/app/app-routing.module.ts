@@ -21,7 +21,6 @@ import { RelPousoComponent } from "./relatorios/rel-pouso/rel-pouso.component";
 import { PaxTransportadosComponent } from "./relatorios/pax-transportados/pax-transportados.component";
 import { DocumentoImpressoComponent } from "./documento-impresso/documento-impresso.component";
 import { AnaliseDeRiscoComponent } from "./relatorios/analise-de-risco/analise-de-risco.component";
-import { GraficoComponent } from "./grafico/grafico.component";
 import { TratamentoDaFadigaComponent } from "./controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component";
 import { ComunicarTripulantesComponent } from "./controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component";
 import { FadigaComponent } from "./controle-da-fadiga/fadiga/fadiga.component";
@@ -81,6 +80,7 @@ import { EmailDiarioFadigaComponent } from './cadastro/email-diario-fadiga/email
 import { CcoComponent } from './painel/cco/cco.component';
 import { LoggingComponent } from './seguranca/logging/logging.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
+import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -150,11 +150,6 @@ const routes: Routes = [
   {
     path: "tratamento-da-fadiga/:id",
     component: TratamentoDaFadigaComponent,
-    canActivate: [AuthGuardService],
-  },
-  {
-    path: "grafico",
-    component: GraficoComponent,
     canActivate: [AuthGuardService],
   },
   {
@@ -487,6 +482,12 @@ const routes: Routes = [
   {
     path: "jornada-diaria",
     component: JornadaDiariaComponent,
+    canActivate: [AuthGuardService],
+  },
+  
+  {
+    path: 'relatorio-aluno',
+    component: RelatorioAlunoComponent,
     canActivate: [AuthGuardService],
   },
   

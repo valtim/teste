@@ -15,6 +15,8 @@ import { ApiService } from 'src/app/shared/api.service';
 export class CrudComponent implements OnInit {
 
 
+  @Input() controller: string;
+
   @Input() tipo: any;
 
   @Input() titulo: any;
@@ -42,7 +44,7 @@ export class CrudComponent implements OnInit {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Prefixo", "Tripulante", "Int32"];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Tripulante", "Int32"];
   listas: any[];
 
 
@@ -77,7 +79,7 @@ export class CrudComponent implements OnInit {
   constructor(
     private api: ApiService,
     private apiGenerico: ApiGenericoService,
-    private fb: UntypedFormBuilder, 
+    private fb: UntypedFormBuilder,
     private messageService: MessageService) {
 
   }
@@ -112,7 +114,22 @@ export class CrudComponent implements OnInit {
     this.api.getCombos().then(x => {
       this.listas = x;
 
+
+      if (this.controller != null) {
+        this.api.getGenericoController(this.controller).then(x => {
+          this.dados = x.lista;
+          if (this.Ordem != undefined)
+            this.dados = x.lista.sort(this.Ordem);
+          this.colunas = x.propriedades.filter(x => (this.colunasExibidas.indexOf(x.field) > -1));
+          this.todasAsColunas = x.propriedades;
+          this.tela_ok = true;
+          this.consulta_ok = true;
+        })
+        return;
+      }
+
       if (this.camposAutomaticos != null) {
+
         this.api.getGenerico(this.camposAutomaticos.controller, this.camposAutomaticos.filtro).then(x => {
           this.dados = x.lista;
           if (this.Ordem != undefined)
@@ -148,7 +165,7 @@ export class CrudComponent implements OnInit {
         this.pesquisar();
         this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
-    ).catch(()=>{
+    ).catch(() => {
       this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
     });
 
@@ -165,8 +182,8 @@ export class CrudComponent implements OnInit {
           this.verBotoes();
           this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
         }
-        
-      ).catch(()=>{
+
+      ).catch(() => {
         this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
       });
       return;
@@ -181,7 +198,7 @@ export class CrudComponent implements OnInit {
         this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
 
-    ).catch(()=>{
+    ).catch(() => {
       this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
     })
   }

@@ -24,7 +24,7 @@ export class TurmaListComponent implements OnInit {
   dataIni: Date;
   dataFim: Date;
 
-  loading = true;
+  loading = false;
   locale_pt: any;
 
   constructor(private api: ApiTurmasService,
@@ -32,9 +32,9 @@ export class TurmaListComponent implements OnInit {
     this.locale_pt = this.api.getLocale('pt');
   }
 
-  turmas: Array<Turma> = [];
+  turmas: Array<Turma>;
 
-  turmasFiltro: Array<Turma> = [];
+  turmasFiltro: Array<Turma>;
 
   ngOnInit(): void {
 
@@ -47,7 +47,7 @@ export class TurmaListComponent implements OnInit {
       this.dataFim = new Date(2023, 3, 30);
     }
 
-    this.rodarRelatorio();
+    //this.rodarRelatorio();
   }
 
   filtro = '';
@@ -136,8 +136,8 @@ export class TurmaListComponent implements OnInit {
   }
 
   ocultar(e) {
-    if (e.Salvo)
-      this.messageService.add({ severity: 'success', summary: 'SOl', detail: `A turma foi salva com sucesso!` });
+    // if (e.Salvo)
+    //   this.messageService.add({ severity: 'success', summary: 'SOl', detail: `A turma foi salva com sucesso!` });
     let turma = this.turmas.find(x => x.Id == e.Turma.Id);
     Object.assign(turma, e);
     turma.Display = false;

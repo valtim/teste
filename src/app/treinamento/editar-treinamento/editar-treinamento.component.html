@@ -13,16 +13,34 @@
             </div>
         </div>
         <div class="p-field  col-4">
-            <label for="nome">Validade</label>
-            <p-inputMask type="tel" [(ngModel)]="treinamento.ValidadeEmDias" mask="999"></p-inputMask>
+            <div class="grid">
+                <div class="col-6">
+                    <button type="button" [ngClass]="treinamento.ControleEmDias ? '' : 'p-button-secondary'" pButton
+                        pRipple label="Em dias" (click)="funMudaVencimento('dias')"></button>
+                    <p-inputNumber [(ngModel)]="treinamento.ValidadeEmDias" mode="decimal" [useGrouping]="false"
+                        [disabled]="!treinamento.ControleEmDias"></p-inputNumber>
+                </div>
+                <div class="col-6">
+                    <button type="button" [ngClass]="treinamento.ControleEmDias ? 'p-button-secondary' : ''" pButton
+                        pRipple label="Em meses" (click)="funMudaVencimento('meses')"></button>
+                    <p-inputNumber [(ngModel)]="treinamento.ValidadeEmMeses" mode="decimal" [useGrouping]="false"
+                        [disabled]="treinamento.ControleEmDias"></p-inputNumber>
+                </div>
+            </div>
         </div>
 
-        <div class="p-field col-2">            
-            <p-inputSwitch id="horasdevoo" [(ngModel)]="treinamento.HorasDeVoo"></p-inputSwitch>
+        <div class="p-field col-2">
+            <p-inputSwitch [(ngModel)]="treinamento.PagaInstrutor"></p-inputSwitch>
+            <label for="horasdevoo">Paga Horas de Instrução</label>
+            <br>
+            <p-inputSwitch [(ngModel)]="treinamento.HorasDeVoo"></p-inputSwitch>
             <label for="horasdevoo">Paga Horas de Voo</label>
             <br>
-            <p-inputSwitch id="naocontrolado" [(ngModel)]="treinamento.NaoControlado"></p-inputSwitch>
+            <p-inputSwitch [(ngModel)]="treinamento.NaoControlado"></p-inputSwitch>
             <label for="naocontrolado">Não Controlado</label>
+            <br>
+            <p-inputSwitch [(ngModel)]="treinamento.NaoVence"></p-inputSwitch>
+            <label for="naocontrolado">Não Vence</label>
         </div>
     </div>
     <div class="p-fluid p-formgrid grid">
@@ -41,15 +59,6 @@
                 styleClass="form-control" display="chip"></p-multiSelect>
         </div>
     </div>
-
-    <!-- <div class="p-fluid p-formgrid grid">
-        <div class="p-field col-12">
-            <label for="nome">Instrutor</label>
-            <p-multiSelect maxSelectedLabels="6" defaultLabel="Tipo de treinamento" name="tipoEquipamento"
-                [options]="instrutores" [(ngModel)]="treinamento.Instrutores" optionLabel="Trato" dataKey="Id"
-                styleClass="form-control" display="chip"></p-multiSelect>
-        </div>
-    </div> -->
 
     <div class="p-fluid p-formgrid grid">
         <div class="p-field col-6">

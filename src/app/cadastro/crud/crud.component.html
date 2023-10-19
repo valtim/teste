@@ -46,6 +46,17 @@
                     </p-cellEditor>
 
 
+                    <p-cellEditor *ngIf="col.type == 'DateTime?'">
+
+                        <ng-template pTemplate="input">
+                            <p-inputMask mask="99/99/9999" [(ngModel)]="rowData[col.field]"
+                            (change)="mudeiAquiData($event, rowData, col.field)" (focus)="$event.target.select()"></p-inputMask>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{rowData[col.field] | date:'dd/MM/yyyy'}}
+                        </ng-template>
+                    </p-cellEditor>
+
                     <p-cellEditor *ngIf="col.type == 'DateTime'">
 
                         <ng-template pTemplate="input">
@@ -103,17 +114,17 @@
 
 
 
-                    <p-cellEditor *ngIf="col.type == 'Prefixo'">
+                    <!-- <p-cellEditor *ngIf="col.type == 'Prefixo'">
 
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="listas['soPrefixo']" [(ngModel)]="rowData[col.field]" [filter]="true"
-                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome" filterBy="Nome" 
+                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome" optionValue="Id"
                                 [showClear]="true"></p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
                             <span *ngIf="rowData[col.field] != null">{{rowData[col.field].PrefixoCompleto}}</span>
                         </ng-template>
-                    </p-cellEditor>
+                    </p-cellEditor> -->
 
 
 
@@ -148,11 +159,12 @@
 
                         <ng-template pTemplate="input">
                             <p-dropdown [options]="listas[col.type]" [(ngModel)]="rowData[col.field]" [filter]="true"
-                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome"
+                                (onChange)="mudeiAqui($event, rowData)" [placeholder]="col.field" optionLabel="Nome" dataKey="Id"
                                 [showClear]="true"></p-dropdown>
                         </ng-template>
                         <ng-template pTemplate="output">
-                            <span *ngIf="rowData[col.field] != null">{{rowData[col.field].Nome}}</span>                            
+                            <span *ngIf="rowData[col.field] != null">{{rowData[col.field].Nome}} </span>                            
+                            <!-- {{rowData[col.field]|json}} -->
                         </ng-template>
                     </p-cellEditor>
 

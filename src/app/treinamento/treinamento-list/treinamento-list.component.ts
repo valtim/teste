@@ -27,9 +27,11 @@ export class TreinamentoListComponent implements OnInit {
   treinamentos = [];
   cols = [
     { field: 'Nome', header: 'Nome' },
-    { field: 'CargaHoraria', header: 'Carga Horária' },
-    { field: 'Equipamentos', header: 'Equipamentos' },
-    { field: 'HorasDeVoo', header: 'Horas de Voo' },
+    { field: 'PagaInstrutor', header: 'Paga Instrutor' },
+    { field: 'PagaAluno', header: 'Paga Aluno' },
+    { field: 'NaoControlado', header: 'Não Controlado' },
+    { field: 'NaoVence', header: 'Não Vence' },
+    { field: 'ValidadeEmDias', header: 'Validade' },
   ];
 
   editar(id) {
