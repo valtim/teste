@@ -20,7 +20,7 @@ export class ImprimirJornadaNovoComponent implements AfterViewInit {
   confirmacaoDoTripulante;
   confirmacaoDoGerente;
 
-  carregando = true;
+  // carregando = true;
 
 
   @Input() jornada: any = { Id : null };
@@ -31,38 +31,11 @@ export class ImprimirJornadaNovoComponent implements AfterViewInit {
 
   @Input() tripulante: any;
 
-  constructor(private api: ApiService,
-    private route: ActivatedRoute) { }
+  constructor(private api: ApiService) { }
 
 
   ngAfterViewInit(): void {
-         this.carregando = false;
-
-
-    // this.id = this.route.snapshot.paramMap.get("id");
-
-    // if (this.id == null)
-    //   this.id = this.jornada.Id;
-
-    // if (this.id != null) {
-    //   this.api.getJornadaImpressaoPeloId(this.id).then(
-    //     x => {
-
-    //       this.retorno = x;
-    //       this.carregando = false;
-
-    //       if (x.Jornada.ConfirmacaoDoTripulante != null)
-    //         this.confirmacaoDoTripulante = x.Jornada.ConfirmacaoDoTripulante;
-
-    //       if (x.Jornada.ConfirmacaoDoGerente != null)
-    //         this.confirmacaoDoGerente = x.Jornada.ConfirmacaoDoGerente;
-
-    //       this.myAngularxQrCode = this.retorno.Caminho;
-    //     }
-    //   )
-    //   return;
-    // }
-
+        //  this.carregando = false;
   }
 
   confirmarJornada(ehGerente:boolean, id){

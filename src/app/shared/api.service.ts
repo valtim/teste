@@ -587,8 +587,9 @@ export class ApiService {
     return this.http.get(`${this.url}listas/usuario`).toPromise();
   }
 
-  async getUsuarioLogado(): Promise<any> {
-    return await lastValueFrom(this.http.get(`${this.url}usuariologado`, this.httpOptions));
+  async getUsuarioLogado(url:string): Promise<any> {
+    let json = { 'caminho' : url};
+    return await lastValueFrom(this.http.post(`${this.url}usuariologado`, JSON.stringify(json), this.httpOptions));
   }
 
   postUsuario(usuarioList: Array<any>): Promise<any> {

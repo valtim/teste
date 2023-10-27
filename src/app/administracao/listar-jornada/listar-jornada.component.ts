@@ -18,14 +18,14 @@ export class ListarJornadaComponent implements OnInit {
   gerente : boolean = false ;
   analista : boolean = false ;
 
-  carregando = true;
+  carregando = false;
 
 
   constructor(private api: ApiService, private router: Router) {
     this.locale_pt = this.api.getLocale('pt');
   }
   ngOnInit(): void {
-    this.rodarRelatorio();
+    // this.rodarRelatorio();
   }
 
 

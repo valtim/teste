@@ -1,15 +1,15 @@
-<div class="spinner-border" *ngIf="carregando">
+<!-- <div class="spinner-border">
     <span class="sr-only">Loading...</span>
-</div>
+</div> -->
 
 
-<div *ngIf="!carregando">
+<div>
 
 
     <div *ngIf="jornada">
 
-        <button *ngIf="gerente" pButton type="button" label="Confirmar"
-            (click)="confirmarJornada(true, jornada.Id)"></button>
+        <!-- <button *ngIf="gerente" pButton type="button" label="Confirmar"
+            (click)="confirmarJornada(true, jornada.Id)"></button> -->
 
         <button *ngIf="analista" pButton type="button" label="Confirmar"
             (click)="confirmarJornada(false, jornada.Id)"></button>
@@ -41,15 +41,15 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
-                <tr *ngIf="item.Data == 'Total'">
+                <!-- <tr *ngIf="item.Data == 'Total'">
                     <td colspan="9">{{item.Data}}</td>
                     <td>{{item.HorasDeVooVFR}}</td>
                     <td>{{item.HorasDeVooIFR}}</td>
                     <td>{{item.HorasDeVooNot}}</td>
                     <td>{{item.HorasDeVooDia}}</td>
                     <td>-</td>
-                </tr>
-                <tr *ngIf="item.Data != 'Total'">
+                </tr> -->
+                <tr *ngIf="!item.Total">
                     <td>{{item.Data | date:'dd/MM/yyyy'}}</td>
                     <td>{{item.Apresentacao | date:'HH:mm'}}</td>
                     <td><span *ngIf="item.Almoco">{{item.Almoco | date:'HH:mm'}}</span></td>
@@ -65,118 +65,4 @@
         </p-table>
 
     </div>
-
-
-    <!-- <div id="mobile">
-        <table class="table table-sm">
-            <tbody *ngFor="let item of jornada.Escalas; let i = index">
-
-                <ng-container *ngIf="item.Data == 'Total'">
-                    <tr>
-                        <th colspan="2">{{item.Data}}</th>
-                    </tr>
-                    <tr>
-                        <th>Voo VFR</th>
-                        <td>{{item.HorasDeVooVFR}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo IFR</th>
-                        <td>{{item.HorasDeVooIFR}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo Noturno</th>
-                        <td>{{item.HorasDeVooNot}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo no Dia</th>
-                        <td>{{item.HorasDeVooDia}}</td>
-                    </tr>
-
-                </ng-container>
-
-                <ng-container *ngIf="item.Data != 'Total'">
-                    <tr>
-                        <th width="50%">Data</th>
-                        <td width="50%">{{item.Data}}</td>
-                    </tr>
-                    <tr>
-                        <th>Cod</th>
-                        <td>{{item.Escala}}</td>
-                    </tr>
-                    <tr>
-                        <th>Dom/Fer</th>
-                        <td *ngIf="item.DomingoOuFeriado">SIM</td>
-                        <td *ngIf="!item.DomingoOuFeriado">NÃO</td>
-                    </tr>
-                    <tr>
-                        <th>Apresentação</th>
-                        <td>{{item.Apresentacao}}</td>
-                    </tr>
-                    <tr>
-                        <th>Refeição</th>
-                        <td>{{item.Almoco}}</td>
-                    </tr>
-                    <tr>
-                        <th>Fim da Refeição</th>
-                        <td>{{item.FimAlmoco}}</td>
-                    </tr>
-                    <tr>
-                        <th>Refeição</th>
-                        <td>{{item.Almoco2}}</td>
-                    </tr>
-                    <tr>
-                        <th>Fim da Refeição</th>
-                        <td>{{item.FimAlmoco2}}</td>
-                    </tr>
-                    <tr>
-                        <th>Fim da Jornada</th>
-                        <td>{{item.FimDaJornada}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo VFR</th>
-                        <td>{{item.HorasDeVooVFR}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo IFR</th>
-                        <td>{{item.HorasDeVooIFR}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo Noturno</th>
-                        <td>{{item.HorasDeVooNot}}</td>
-                    </tr>
-                    <tr>
-                        <th>Voo Dia</th>
-                        <td>{{item.HorasDeVooDia}}</td>
-                    </tr>
-                    <tr>
-                        <th>Últ. 30 dias</th>
-                        <td>{{item.Horas30Dias}}</td>
-                    </tr>
-                </ng-container>
-            </tbody>
-
-            <tr>
-                <td colspan="14">
-                    <h6>Foi-me concedido diariamente, (1) uma hora de refeição a cada 6 (seis) horas de jornada
-                    </h6>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td colspan="2">Tripulante: {{jornada.Tripulante.NomeCompleto}} - ANAC
-                    {{jornada.Tripulante.CodigoANAC}}
-                    <span *ngIf="confirmacaoDoTripulante"><br />Assinado eletronicamente pelo tripulante em
-                        {{confirmacaoDoTripulante}}</span>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">Gerente de Operações: LEANDRO Barboza Antunes - ANAC 124089
-                    <span *ngIf="confirmacaoDoGerente"><br />Assinado eletronicamente pelo Gerente de Operações
-                        em
-                        {{confirmacaoDoGerente}}</span>
-                </td>
-            </tr>
-        </table>
-    </div> -->
 </div>

@@ -15,7 +15,12 @@
     <div class="col"></div>
 </div>
 
-<div *ngIf="dados">
+<p-toolbar *ngIf="!dados" class="m-4">
+    Selecione o mês e clique em PESQUISAR.
+</p-toolbar>
+
+
+<div *ngIf="dados && !carregando">
 
     <p-table [value]="dados" styleClass="p-datatable-striped">
         <ng-template pTemplate="header" let-columns>
@@ -26,7 +31,7 @@
                 <th>ALERTAS</th>
                 <th>OK. TRIP</th>
                 <th>OK. ANALISTA</th>
-                <th>OK. GERENTE</th>
+                <!-- <th>OK. GERENTE</th> -->
                 <th></th>
             </tr>
         </ng-template>
@@ -55,10 +60,10 @@
                     <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] |
                         date:'dd/MM/yyyy'}}</span>
                 </td>
-                <td>
+                <!-- <td>
                     <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] |
                         date:'dd/MM/yyyy'}}</span>
-                </td>
+                </td> -->
                 <td><button pButton type="button" icon="pi pi-print" iconPos="left"
                         (click)="imprimir(rowData.Id)"></button></td>
             </tr>

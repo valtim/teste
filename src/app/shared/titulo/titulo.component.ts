@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiService } from '../api.service';
 import { MessageService } from 'primeng/api';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-titulo',
@@ -15,14 +16,16 @@ export class TituloComponent implements OnInit {
 
   exibir = false;
 
+  currentApplicationVersion;
 
   usuario;
 
   constructor(private api: ApiService, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.api.getUsuarioLogado().then(x => {
+    this.api.getUsuarioLogado(window.location.href).then(x => {
       this.usuario = x;
+      this.currentApplicationVersion = environment.appVersion;
     }).catch(x => {
       if (x.status == 401) {
         this.messageService.add({ severity: 'error', summary: 'Sessão Encerrada', detail: 'Sua sessão foi encerrada, será necessário logar novamente' });
