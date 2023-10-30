@@ -119,6 +119,8 @@ import { CurriculosComponent } from './cadastro/curriculos/curriculos.component'
 import { EditarCurriculoComponent } from './cadastro/editar-curriculo/editar-curriculo.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
+import { ParametrosClienteComponent } from './administracao/parametros-cliente/parametros-cliente.component';
+import { EditarParametrosClienteComponent } from './administracao/editar-parametros-cliente/editar-parametros-cliente.component';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -238,6 +240,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EditarCurriculoComponent,
     JornadaDiariaComponent,
     RelatorioAlunoComponent,
+    ParametrosClienteComponent,
+    EditarParametrosClienteComponent,
   ],
   imports: [
     AppRoutingModule,

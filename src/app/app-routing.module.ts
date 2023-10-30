@@ -82,6 +82,7 @@ import { LoggingComponent } from './seguranca/logging/logging.component';
 import { CurriculosComponent } from './cadastro/curriculos/curriculos.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
+import { ParametrosClienteComponent } from './administracao/parametros-cliente/parametros-cliente.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -496,6 +497,12 @@ const routes: Routes = [
     component: RelatorioAlunoComponent,
     canActivate: [AuthGuardService],
   },
+
+  {
+    path: 'parametros-cliente',
+    component: ParametrosClienteComponent,
+    canActivate: [AuthGuardService],
+  },  
   
   {
     path: '**', pathMatch: 'full',

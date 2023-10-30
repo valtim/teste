@@ -1,0 +1,33 @@
+div.div-filtros {
+    padding-left: 0;
+}
+
+p-dropdown ::ng-deep  .dropdown-filtro {
+    width: 200px;
+}
+
+button.nova-configuracao {
+    display: inline-block;    
+    margin-right: 10px;
+}
+
+p-dialog h5 {
+    margin-top: 0;
+}
+
+p-dialog div.botoes {
+    height: 0;
+    content: '';
+    clear: both;
+    display: block;
+}
+
+p-dialog div.botoes > button:nth-child(1) {
+    display: block;
+    float: left;
+}
+
+p-dialog div.botoes > button:nth-child(2) {
+    display: block;
+    float: right;
+}

@@ -1,0 +1,78 @@
+<app-titulo titulo="PARÂMETROS DO CLIENTE" [carregando]="carregando"></app-titulo>
+
+<br>
+
+<div class="grid div-filtros">    
+    <div class="col-3">        
+        <button type="button" pButton pRipple label="Prefixo"></button>
+        <p-dropdown [options]="prefixosFiltro" [(ngModel)]="prefixoFiltro"
+            optionLabel="Nome" dataKey="Id" (onChange)="filtrarCurriculos()"
+            styleClass="dropdown-filtro"></p-dropdown>        
+    </div>
+    <div class="col-3">        
+        <button type="button" pButton pRipple label="Cliente"></button>
+        <p-dropdown [options]="clientesFiltro" [(ngModel)]="clienteFiltro"
+            optionLabel="Nome" dataKey="Id" (onChange)="filtrarCurriculos()"
+            styleClass="dropdown-filtro"></p-dropdown>        
+    </div>
+    <div class="col-3">        
+        <button type="button" pButton pRipple label="Configuração"></button>
+        <p-dropdown [options]="configuracoesFiltro" [(ngModel)]="configuracaoFiltro"
+            optionLabel="Nome" dataKey="Id" (onChange)="filtrarCurriculos()"
+            styleClass="dropdown-filtro"></p-dropdown>        
+    </div>
+    <div class="col-3">        
+        <button class="nova-configuracao" pButton type="button" icon="pi pi-plus" label="Nova Configuração" (click)="exibirDialogoNovo()" *ngIf="!carregando"></button>
+        <button class="p-button-danger" pButton type="button" icon="pi pi-trash" label="Excluir" (click)="exibirDialogoExclusao()" *ngIf="!carregando && botaoExcluir"></button>       
+    </div>      
+</div>
+
+<p-toolbar *ngIf="carregando" class="m-4">
+    Carregando...
+</p-toolbar>
+
+<p-toolbar *ngIf="!carregando && ((parametros == null) || (parametros.length == 0))" class="m-4">
+    Nenhum registro encontrado!
+</p-toolbar>
+
+<div class="tabela" *ngIf="!carregando && (parametros != null) && (parametros.length > 0)">
+
+    <p-table [value]="parametros" [scrollable]="true"
+        scrollHeight="83vh" id="" class="tabela">        
+        <ng-template pTemplate="header">
+            <tr>
+                <th></th>
+                <th>Prefixo</th>
+                <th>Tipo de Aeronave</th>                                
+                <th>Configuração</th>
+                <th>Cliente</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData>
+            <tr>
+                <td><input type="checkbox" [(ngModel)]="rowData.Marcado" (change)="marcarCheckbox()"></td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.RelPrefixo}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.RelTipoDeAeronave}}</td>                
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.RelConfiguracao}}</td>
+                <td (click)="exibirDialogoEdicao(rowData)">{{rowData.RelCliente}}</td>                
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>
+
+<p-dialog header="Excluir Parâmetros" [(visible)]="exibirDialogo" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoExclusao()">    
+    <h5>
+        Realmente deseja excluir os Parâmetros selecionados?
+    </h5>
+    <div class="botoes">
+        <button pButton type="button" icon="pi pi-arrow-left" label="Não Excluir" class="p-button-light" (click)="ocultarDialogoExclusao()"></button>
+        <button pButton type="button" icon="pi pi-trash" label="Excluir" class="p-button-danger" (click)="excluirParametros()"></button>
+    </div>
+</p-dialog>
+
+<p-dialog [style]="{'width':'70%', 'height':'95%'}" *ngIf="exibirEdicao" header="EDITAR PARÂMETROS CLIENTE" [(visible)]="exibirEdicao" [modal]="true" [baseZIndex]="10000" (onHide)="ocultarDialogoEdicao()">
+    <app-editar-parametros-cliente [parametroSelecionado]="parametroSelecionado" [prefixos]="prefixosParaEdicao"
+    [clientes]="clientesParaEdicao" [aeroportos]="aeroportos" (retorno)="retornoDialogoEdicao($event)">
+    </app-editar-parametros-cliente>
+</p-dialog>

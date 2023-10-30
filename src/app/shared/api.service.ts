@@ -1298,7 +1298,8 @@ export class ApiService {
   async deleteAnexo(id: string): Promise<any> {
     const url = this.url + `arquivo/${id}/delete`;
     return await lastValueFrom(this.http.get(url, this.httpOptions));
-
+  }
+  
   async getJornadaDiaria(data: Date): Promise<any> {
     return await lastValueFrom(this.http
       .get(`${this.url}jornada-diaria/${data.toISOString().split("T")[0]}`, this.httpOptions));
@@ -1307,6 +1308,21 @@ export class ApiService {
   async salvarJornadaDiaria(escala: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}jornada-diaria`, escala, this.httpOptions));
+  }
+
+  async getParametrosCliente(): Promise<any> {
+    return await lastValueFrom(this.http
+      .get(`${this.url}parametros-cliente`, this.httpOptions))
+  }
+
+  async deleteParametrosCliente(parametros: any[]): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}parametros-cliente/excluir`, parametros, this.httpOptions))
+  }
+
+  async postParametrosCliente(parametro: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}parametros-cliente`, parametro, this.httpOptions))
   }
 
 }

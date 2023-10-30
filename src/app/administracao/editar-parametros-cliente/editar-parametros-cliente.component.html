@@ -1,0 +1,124 @@
+<div class="grid editar-parametros">
+
+    <p-toast position="center"></p-toast>
+
+    <div class="div-loading" [class.mostrar-loading]="mostrarLoading">
+        <svg viewBox="25 25 50 50" class="p-progress-spinner-svg" style="animation-duration: 2s;"><circle cx="50" cy="50" r="20" stroke-miterlimit="10" class="p-progress-spinner-circle" fill="none" stroke-width="2"></circle></svg>
+    </div>
+    
+    <button [disabled]="!liberarBotaoSalvar" (click)="salvar()" type="button" class="p-button-success salvar-parametro" icon="pi pi-check" pButton pRipple label="Salvar"></button>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Prefixo"></button>
+        <p-dropdown [options]="prefixos" dataKey="Id" placeholder="Selecione" optionLabel="Nome" (onChange)="selecionarPrefixo()"
+                    [(ngModel)]="prefixoSelecionado" [style]="{'width':'250px'}" ></p-dropdown>                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Configuração" [disabled]="configuracaoDisabled"></button>
+        <p-dropdown [options]="prefixoSelecionado.Configuracoes" dataKey="Id" placeholder="Selecione" optionLabel="Nome" [disabled]="configuracaoDisabled"
+                    [(ngModel)]="configuracaoSelecionada" [style]="{'width':'250px'}" ></p-dropdown>                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Cliente"></button>
+        <p-dropdown [options]="clientes" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
+                    [(ngModel)]="parametroSelecionado.Cliente" [style]="{'width':'250px'}" ></p-dropdown>                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Distância"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.Distancia"
+            (ngModelChange)="formatarDouble($event,'Distancia')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Aeroporto"></button>
+        <p-dropdown [options]="aeroportos" dataKey="Id" placeholder="Selecione" optionLabel="Nome"
+        [filter]="true" filterBy="Nome" [(ngModel)]="aeroportoSelecionado" [style]="{'width':'250px'}" ></p-dropdown>                           
+    </div>
+    <div class="col-6">        
+        <div class="div-checkbox">
+            <input type="checkbox" [(ngModel)]="parametroSelecionado.PodeArredondar">        
+            <label>Pode Arredondar</label>
+        </div>                                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Velocidade"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.Velocidade"
+            (ngModelChange)="formatarDouble($event,'Velocidade')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.Consumo"
+            (ngModelChange)="formatarDouble($event,'Consumo')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Correção Partida"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.CorrecaoPartida"
+            (ngModelChange)="formatarDouble($event,'CorrecaoPartida')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo Partida"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.ConsumoPartida"
+            (ngModelChange)="formatarDouble($event,'ConsumoPartida')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Correção Entre"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.CorrecaoEntre"
+            (ngModelChange)="formatarDouble($event,'CorrecaoEntre')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo Entre"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.ConsumoEntre"
+            (ngModelChange)="formatarDouble($event,'ConsumoEntre')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Correção Pouso"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.CorrecaoPouso"
+            (ngModelChange)="formatarDouble($event,'CorrecaoPouso')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo Pouso"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.ConsumoPouso"
+            (ngModelChange)="formatarDouble($event,'ConsumoPouso')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Correção TCUM"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.CorrecaoTCUM"
+            (ngModelChange)="formatarDouble($event,'CorrecaoTCUM')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo TCUM"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.ConsumoTCUM"
+            (ngModelChange)="formatarDouble($event,'ConsumoTCUM')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Correção de Descida"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.CorrecaoDeDescida"
+            (ngModelChange)="formatarDouble($event,'CorrecaoDeDescida')"
+            [style]="{'width':'250px'}">                   
+    </div>
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Consumo de Descida"></button>
+        <input pInputText type="text" [(ngModel)]="parametroSelecionado.ConsumoDeDescida"
+            (ngModelChange)="formatarDouble($event,'ConsumoDeDescida')"
+            [style]="{'width':'250px'}">                   
+    </div>
+
+</div>
