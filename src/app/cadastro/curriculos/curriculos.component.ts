@@ -12,7 +12,7 @@ export class CurriculosComponent implements OnInit {
   locale_pt: string;
   curriculos: any[] = [];
   cacheCurriculos: any[] = [];
-  curriculoSelecionado: any;
+  IdTripulante: any;
 
   filtroSemCurriculo: boolean = false;
   filtroComCurriculo: boolean = false;
@@ -20,6 +20,8 @@ export class CurriculosComponent implements OnInit {
   exibirEdicao: boolean = false;
   exibirBotaoExportar: boolean = false;
   todosMarcados: boolean = false;
+
+  selectedItems : any[] = [];
 
   constructor(private api: ApiService) {
     this.locale_pt = this.api.getLocale('pt');
@@ -50,9 +52,9 @@ export class CurriculosComponent implements OnInit {
       if ((this.filtro != undefined) && (this.filtro != null) && (this.filtro != '')) {        
         this.curriculos = this.cacheCurriculos.filter(
           t => (
-              t.Tripulante.Trato.includes(this.filtro) || 
-              String(t.Tripulante.CodigoANAC).includes(this.filtro) ||
-              String(t.Tripulante.Matricula).includes(this.filtro)
+              t.Tripulante.Trato.toUpperCase().includes(this.filtro.toUpperCase()) || 
+              String(t.Tripulante.CodigoANAC).includes(this.filtro.toUpperCase()) ||
+              String(t.Tripulante.Matricula).includes(this.filtro.toUpperCase())
             ) && (
             (this.filtroSemCurriculo && t.CurriculoIncompleto) ||
             (this.filtroComCurriculo && !t.CurriculoIncompleto) ||
@@ -82,12 +84,22 @@ export class CurriculosComponent implements OnInit {
   }
 
   marcarTodos() {
-    this.curriculos = this.curriculos.map(obj => ({
-        ...obj,
-        Marcado: this.todosMarcados
-    }));
+    this.exibirBotaoExportar = false;
+    if ( this.selectedItems.length == 0 )
+    {
+      this.exibirBotaoExportar = true;
+      this.selectedItems = this.curriculos.map(x=>x.Tripulante.Id);
+      return;
+    }
 
-    this.exibirBotaoExportar = (this.curriculos.filter(t => t.Marcado).length > 0);
+    this.selectedItems = [];
+
+    // this.curriculos = this.curriculos.map(obj => ({
+    //     ...obj,
+    //     Marcado: this.todosMarcados
+    // }));
+
+    //this.exibirBotaoExportar = (this.curriculos.filter(t => t.Marcado).length > 0);
   }
 
   downloadResponse(res) {    
@@ -109,13 +121,14 @@ export class CurriculosComponent implements OnInit {
     this.carregando = true;
     
     let exportar = this.curriculos.filter(t => t.Marcado);    
-    this.api.obterCurriculosPDF(exportar).then((x) => {
+    this.api.obterCurriculosPDF(this.selectedItems, undefined).then((x) => {
         this.downloadResponse(x);
     });
   }
 
-  exibirDialogoEdicao(curriculo): void {
-    this.curriculoSelecionado = curriculo;
+  exibirDialogoEdicao(trip): void {
+    this.IdTripulante = trip;
+    // this.curriculoSelecionado = curriculo;
     this.exibirEdicao = true;
   }
 
@@ -128,12 +141,13 @@ export class CurriculosComponent implements OnInit {
   }
 
   ocultarDialogoEdicao(): void {
-    this.curriculoSelecionado = null;
+    // this.curriculoSelecionado = null;
     this.exibirEdicao = false;    
   }
 
   ocultarDialogoEdicaoRetorno(incompleto: any): void {    
-    this.curriculoSelecionado.CurriculoIncompleto = incompleto;    
+    this.IdTripulante = undefined;
+    // this.curriculoSelecionado.CurriculoIncompleto = incompleto;    
   }
 
 }

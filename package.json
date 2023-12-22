@@ -1,6 +1,6 @@
 {
   "name": "sol",
-  "version": "1.1.63",
+  "version": "1.1.104",
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
@@ -50,6 +50,7 @@
     "@angular/cli": "^15.2.0",
     "@angular/compiler-cli": "^15.2.0",
     "@angular/language-service": "^15.2.0",
+    "@angular/localize": "^15.2.10",
     "@types/file-saver": "^2.0.5",
     "@types/jasmine": "^3.6.0",
     "@types/jasminewd2": "^2.0.3",

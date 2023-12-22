@@ -2,8 +2,9 @@ import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular
 import * as saveAs from 'file-saver';
 import { MessageService } from 'primeng/api';
 import { SortEvent } from 'primeng/api/sortevent';
-import { OverlayPanel } from 'primeng/overlaypanel';
 import { ApiService } from 'src/app/shared/api.service';
+import { Vencimento } from '../editar-vencimento/vencimento-model';
+import { VencimentoTripulante } from '../editar-vencimento/vencimento-tripulante-model';
 
 @Component({
   selector: 'app-vencimento-carteira',
@@ -22,25 +23,21 @@ export class VencimentoCarteiraComponent implements OnInit {
 
 
   valorEditado: any;
-  exibirModal: false;
-  valores;
+  exibirModal: boolean = false;
+  exibirDialogo: boolean = false;
+  valores: any;
 
   valorExibido;
 
+  dados: VencimentoTripulante[];
 
-  @ViewChild('op') myDiv: OverlayPanel;
 
-  editarValor(event, valor) {
-
-    if (valor.Certificado.Readonly) {
-      this.ultimosVoos = valor.UltimosVoos;
-      this.myDiv.toggle(event)
-      return;
-    }
-
+  editarValor(valor : Vencimento) {
     this.valorEditado = valor;
-    // alert(valor.Id);
+    this.exibirModal = !valor.Certificado.ReadOnly;
+    this.exibirDialogo = valor.Certificado.ReadOnly;
   }
+
 
   podeEditar = window.location.href.indexOf("readonly") == -1;
 
@@ -49,37 +46,35 @@ export class VencimentoCarteiraComponent implements OnInit {
 
   retornoCarteira(retorno) {
 
-    console.log(retorno);
-
-
     if (!retorno.Confirmado) {
       this.valorEditado = undefined;
       return;
     }
 
-    //retorno.Display = false;
     this.api.postAtualizaVencimento(retorno.Certificado).then(x => {
-      // var item = this.valores.filter(y => y.Trato == x.Tripulante.Trato)[0][x.Certificado.Nome];
-      // item.Display = false;
+      var iTripulante = this.dados.findIndex(t=>t.Tripulante.Id == x.Tripulante.Id);
+      var iVencimento = this.dados[iTripulante].Vencimentos.findIndex(t=>t.Certificado.Id == x.Certificado.Id);
+      this.dados[iTripulante].Vencimentos[iVencimento] = new Vencimento(x);
       this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });
-
-      this.valorEditado.CorNaTela = x;
-
       this.valorEditado = undefined;
-      //this.valores[this.valores.findIndex(x => x.Id == this.vencimentoEditado.Id)] = { ...this.vencimentoEditado };
     }).catch
       (e => {
 
         this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao salvar, verifique os dados.' });
 
       })
-
-
-
   }
 
   ehObjeto(value) {
     return typeof (value) == "object";
+  }
+
+
+  formatVencimento(x) {
+    for (var i = 1; i < x.length; i++) {
+      x[i] = new Vencimento(x);
+    }
+    return
   }
 
   ngOnInit() {
@@ -87,8 +82,19 @@ export class VencimentoCarteiraComponent implements OnInit {
     this.api.getQuadroDeTripulantes().then(result => {
       this.loading = false;
       this.columns = result.columns;
+
+
       this.valores = result.valores;
-    }).catch(() => {
+
+      this.valores.forEach(x => {
+        for (const [key, value] of Object.entries(x)) {
+          x[key] = new Vencimento(value);
+        }
+      });
+
+      this.dados = result.novaResposta.map(x=>new VencimentoTripulante(x));
+
+    }).catch(e => {
       this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao pesquisar, por favor tente novamente.' });
     });
   }
@@ -96,19 +102,6 @@ export class VencimentoCarteiraComponent implements OnInit {
 
     //alert(coluna);
   }
-  // salvarVencimento() {
-  //   if (this.vencimentoListToSave.length) {
-  //     this.api.postVencimento(this.vencimentoListToSave)
-  //       .then((response) => {
-  //         this.vencimentoListToSave = [];
-  //         document.getElementById('salvar').style.fill = '#000000';
-  //       })
-  //       .catch((e) => {
-  //         alert('erro ao salvar vencimento\n' + e)
-
-  //       });
-  //   }
-  // }
 
   comparaDatas(data1, data2): number {
     if (data1 == null || data1 == null)
@@ -158,15 +151,6 @@ export class VencimentoCarteiraComponent implements OnInit {
 
     item.Display = true;
   }
-
-  // exibirVoos(evento, item) {
-
-  //   this.myDiv.nativeElement.innerHTML = "";
-  //   item.UltimosVoos.forEach(x => {
-  //     this.myDiv.nativeElement.innerHTML += "<a target='_new' href='/rel-rdv/" + x.NumeroDaFolha + "'>" + x.Data.substring(8, 10) + '/' + x.Data.substring(5, 7) + '/' + x.Data.substring(2, 4) + ' - ' + x.Prefixo + ' - ' + x.NumeroDaFolha + '</a><br/>'
-  //   });
-
-  // }
 
 
   exportExcel() {

@@ -103,6 +103,12 @@ export class ApiTurmasService {
     return this.http.post(url, files).toPromise();
   }
 
+  async postReferenciaTipo(referencia: string, tipo:string, files: any): Promise<any> {
+    const url = this.api.url + `arquivo/${referencia}/${tipo}`;
+    return await lastValueFrom(this.http.post(url, files));
+  }
+
+
   async postUploadSimples(files: any): Promise<any> {
     const url = this.api.url + `arquivo`;
     return await lastValueFrom(this.http.post(url, files));
@@ -265,8 +271,12 @@ export class ApiTurmasService {
       .get(`${this.api.url}turma/usuario`, this.api.httpOptions)
       .toPromise();
   }
-  getTurmasByData(dataIni: Date, dataFim: Date): Promise<any> {
-    return this.http.get(`${this.api.url}turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.api.httpOptions).toPromise();
+  async getTurmasByData(dataIni: Date, dataFim: Date): Promise<any> {
+    return await lastValueFrom(this.http.get(`${this.api.url}turmaPorData/${dataIni.toISOString().split('T')[0]}/${dataFim.toISOString().split('T')[0]}`, this.api.httpOptions));
+  }
+
+  async getTurmasListas(): Promise<any> {
+    return await lastValueFrom(this.http.get(`${this.api.url}turma/listas`, this.api.httpOptions));
   }
 
   getTurmaById(id: string): Promise<any> {

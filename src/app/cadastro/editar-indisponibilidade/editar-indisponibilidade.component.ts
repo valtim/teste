@@ -133,21 +133,21 @@ export class EditarIndisponibilidadeComponent implements AfterViewInit {
   salvar(excluir: boolean) {
     let postagem = Object.assign({}, this.fg.value);
     postagem.Ativo = !excluir;
-    postagem.Inicio = DataUtil.ParaDataISO(this.fg.value.Inicio);
-    postagem.Fim = DataUtil.ParaDataISO(this.fg.value.Fim);
+    postagem.Inicio = DataUtil.ParaData(this.fg.value.Inicio);
+    postagem.Fim = DataUtil.ParaData(this.fg.value.Fim);
 
     postagem.Ocorrencias = [];
     this.tbIndisponibilidades.controls.forEach(x => {
       let item = Object.assign({}, x.value);
-      item.Inicio = DataUtil.ParaDataISO(item.Inicio);
-      item.Termino = DataUtil.ParaDataISO(item.Termino);
+      item.Inicio = DataUtil.ParaData(x.value.Inicio);
+      item.Termino = DataUtil.ParaData(x.value.Termino);
       postagem.Ocorrencias.push(item);
     });
 
     postagem.Observacoes = [];
     this.tbObs.controls.forEach(x => {
       let item = Object.assign({}, x.value);
-      //item.Inicio = DataUtil.ParaDataISO(item.Inicio);
+      //item.Inicio = item.Inicio);
       item.Motivo = { Id: item.Motivo.Id };
       postagem.Observacoes.push(item);
     });

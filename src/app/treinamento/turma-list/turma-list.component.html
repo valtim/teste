@@ -1,8 +1,8 @@
-<app-titulo titulo="Turma" [carregando]="loading"></app-titulo>
+<app-titulo titulo="Turma" [carregando]="loading || loadingListas"></app-titulo>
 
 <p-toast position="top-center"></p-toast>
 
-<div *ngIf="!displayModal">
+<div *ngIf="!turmaSelecionada">
     <p-toolbar>
         <div class="p-toolbar-group-left">
             <!-- <p-button icon="pi pi-home" styleClass="p-button-success" routerLink="/home"></p-button>         -->
@@ -37,7 +37,7 @@
         <div class="row m-2 mt-4">
             <div class="col-3">
                 <span class="p-float-label">
-                    <input type="text" id="inputtext" pInputText [(ngModel)]="filtro" (keyup)="filtrar($event)">
+                    <input type="text" id="inputtext" pInputText [(ngModel)]="filtro" (keyup)="filtrar()">
                     <label for="inputtext">Busca</label>
                 </span>
             </div>
@@ -65,14 +65,14 @@
                     <td>
                         <p-checkbox name="groupname" [value]="treino.Id" [(ngModel)]="paraExcluir"></p-checkbox>
                     </td>
-                    <td (click)="editar(treino.Id)">{{treino.Treinamento != undefined ? treino.Treinamento.Nome : ''}}</td>
-                    <td (click)="editar(treino.Id)">{{treino.DataDeInicio | date:'dd/MM/yyyy'}} - {{treino.DataDeFim | date:'dd/MM/yyyy'}}
-                    <td (click)="editar(treino.Id)"><span *ngIf="treino.InstrutorExterno">Externo</span><span
+                    <td (click)="editar(treino)">{{treino.Treinamento != undefined ? treino.Treinamento.Nome : ''}}</td>
+                    <td (click)="editar(treino)">{{treino.DataDeInicio | date:'dd/MM/yyyy'}} - {{treino.DataDeFim | date:'dd/MM/yyyy'}}
+                    <td (click)="editar(treino)"><span *ngIf="treino.InstrutorExterno">Externo</span><span
                             *ngIf="(!treino.InstrutorExterno && treino.Instrutor != null)">{{treino.Instrutor.Trato}}</span>
                     </td>
-                    <td (click)="editar(treino.Id)">{{treino.AlunosStr}}</td>
-                    <td (click)="editar(treino.Id)">{{treino.TempoDeCurso | timespan:'HH:mm'}}</td>
-                    <td (click)="editar(treino.Id)">{{treino.TempoDeCursoNoturno | timespan:'HH:mm'}}</td>
+                    <td (click)="editar(treino)">{{treino.ListaDeAlunos}}</td>
+                    <td (click)="editar(treino)">{{treino.TempoDeCurso | timespan:'HH:mm'}}</td>
+                    <td (click)="editar(treino)">{{treino.TempoDeCursoNoturno | timespan:'HH:mm'}}</td>
                     <!--<td (click)="editar(treino.Id)">{{treino.TempoDeCurso|timespan:'HH:mm'}}</td>-->
                     <!--<td>
                         <app-turma-status [indexStatus]="treino.indexStatus" *ngIf="treino.Carregada" [turma]="treino">
@@ -98,8 +98,8 @@
 
 
 
-<div *ngFor="let turma of turmas">
-    <app-turma [turma]="turma" *ngIf="turma.Display" [treinamentos]="treinamentos" [equipamentos]="equipamentos"
-        [instrutores]="instrutores" [tripulantes]="tripulantes" [deslocamentos]="deslocamentos"
+<div *ngIf="turmaSelecionada">
+    <app-turma [turma]="turmaSelecionada" *ngIf="turmaSelecionada" [treinamentos]="treinamentos" [equipamentos]="equipamentos"
+        [instrutores]="instrutores" [tripulantes]="tripulantes" [deslocamentos]="deslocamentos" [tiposDeAnexo]="tiposDeAnexo"
         (evento)="ocultar($event)"></app-turma>
 </div>

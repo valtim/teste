@@ -42,9 +42,13 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
     private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+
+    // this.messageService.add({ severity: 'error', summary: 'Atenção!!', detail: 'O filtro padrão desta tela mudou. Agora está mostrando o mês corrente!!' })
+
+
     const date = new Date();
-    this.dataInicio = new Date(date.getFullYear(), date.getMonth() - 1, 1);
-    this.dataFim = new Date(date.getFullYear(), date.getMonth(), 0);
+    this.dataInicio = new Date(date.getFullYear(), date.getMonth(), 1);
+    this.dataFim = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
     this.locale_pt = this.api.getLocale("pt");
 
@@ -54,7 +58,7 @@ export class HorasVoadasQuinzenaComponent implements OnInit {
         this.tripulantes = x.tripulante;
         this.tudoPronto = true;
       })
-      .catch(() => this.messageService.add({ severity: 'warning', summary: 'SOL Sistemas', detail: 'Erro ao carregar tripulantes' }));
+      .catch(() => this.messageService.add({ severity: 'warn', summary: 'SOL Sistemas', detail: 'Erro ao carregar tripulantes' }));
 
     //this.rodarRelatorio();
   }

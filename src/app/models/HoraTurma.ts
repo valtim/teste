@@ -2,8 +2,19 @@ import { GuidUtil } from "../shared/GuidUtil";
 
 export class HoraTurma 
 {
-    constructor(){
-        this.Id = GuidUtil.NewGuid();
+    constructor(dados = null){
+        if ( dados == null )
+        {
+            this.Id = GuidUtil.NewGuid();
+            return;
+        }
+        this.Data = dados.Data;
+        this.HoraInicio = dados.HoraInicio;
+        this.HoraTermino = dados.HoraTermino;
+        this.Descricao = dados.Descricao;
+        this.ParaPagamento = dados.ParaPagamento;
+        this.OitoHoras = dados.OitoHoras;
+            
     }
 
     public Id : string;

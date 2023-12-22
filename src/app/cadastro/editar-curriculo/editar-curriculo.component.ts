@@ -3,6 +3,7 @@ import { callback } from 'chart.js/dist/helpers/helpers.core';
 import { MessageService } from "primeng/api";
 import { ApiService } from 'src/app/shared/api.service';
 import { v4 as uuidv4 } from 'uuid';
+import { CurriculoDados } from './curriculo-dados-model';
 
 @Component({
   selector: 'app-editar-curriculo',
@@ -12,67 +13,75 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class EditarCurriculoComponent implements OnInit {
 
-  @Input() curriculoSelecionado: any;
+  @Input() IdTripulante: any;
   @Output() retorno = new EventEmitter();
+
+  curriculoSelecionado: any;
 
   mostrarLoading: boolean = false;
   locale_pt: string;
   liberarBotaoSalvar: boolean = false;
   liberarBotaoUpload: boolean = false;
   anexos: [];
-  defaultUrlFoto: string = 'url(/assets/imgs/foto-padrao.jpg)'; 
+  defaultUrlFoto: string = 'url(/assets/imgs/foto-padrao.jpg)';
   urlFoto: string = 'url(/assets/imgs/foto-padrao.jpg)';
-  fotos: any[];  
-  TripulanteCargo: string = "";
-  TripulanteBase: string = "";
+  fotos: any[];
+  // TripulanteCargo: string = "";
+  // TripulanteBase: string = "";
   exibirBotaoExportar: boolean = false;
+  horasDeVoo: any;
 
   constructor(private api: ApiService, private messageService: MessageService, private cd: ChangeDetectorRef) {
     this.locale_pt = this.api.getLocale('pt');
   }
 
-  cleanDecimalsString(value) {    
+
+  cancelar() {
+    this.retorno.emit({ cancelar: true });
+  }
+
+  cleanDecimalsString(value) {
     if (value.includes(",")) {
-      let size = value.split(",")[1].length || 0; 
-    if (size >= 4) {
-      let partes = value.split(",");
-      return partes[0] + ',' + partes[1][0];
+      let size = value.split(",")[1].length || 0;
+      if (size >= 4) {
+        let partes = value.split(",");
+        return partes[0] + ',' + partes[1][0];
+      } else {
+        return value;
+      }
     } else {
       return value;
-    }      
-    } else {
-      return value;
-    }    
+    }
   }
 
   convertDoubleToString(valor): string {
-    if ((valor == undefined) || (valor == null) || (valor == '')) {      
+    if ((valor == undefined) || (valor == null) || (valor == '')) {
       return '0';
     } else {
-      let retorno = valor.toString().replace('.',',');
+      let retorno = valor.toString().replace('.', ',');
       return this.cleanDecimalsString(retorno);
     }
   }
 
   countDecimals(value) {
-    if(Math.floor(value) === value) return 0;
-    return value.toString().split(".")[1].length || 0; 
+    if (Math.floor(value) === value) return 0;
+    return value.toString().split(".")[1].length || 0;
   }
 
   convertStringToDouble(valor): any {
-    if ((valor == undefined) || (valor == null) || (valor == 0)) {      
+    if ((valor == undefined) || (valor == null) || (valor == 0)) {
       return 0;
     } else {
-      let retorno = parseFloat(valor.replace(',','.'));
+      let retorno = parseFloat(valor.replace(',', '.'));
       if (this.countDecimals(retorno) >= 4) {
         return retorno.toFixed(1);
       } else {
         return retorno;
-      }             
+      }
     }
   }
 
-  isInt(n: any): boolean{
+  isInt(n: any): boolean {
     return Number(n) === n && n % 1 === 0;
   }
 
@@ -82,15 +91,15 @@ export class EditarCurriculoComponent implements OnInit {
 
   validarString(v: any) {
     let s = String(v);
-    let valor = parseFloat(s.replace(',','.'));
+    let valor = parseFloat(s.replace(',', '.'));
     if (this.isInt(valor) || this.isFloat(valor)) {
-       return true;     
+      return true;
     }
     return false;
   }
 
   gerarNomeArquivo(): void {
-    this.curriculoSelecionado.NomeArquivo = `Curriculo_${this.curriculoSelecionado.Tripulante.Trato.toUpperCase().replace(" ", "-")}.pdf`;        
+    this.curriculoSelecionado.NomeArquivo = `Curriculo_${this.curriculoSelecionado.Tripulante.Trato.toUpperCase().replace(" ", "-")}.pdf`;
   }
 
   ajustarData(data: any): any {
@@ -121,95 +130,94 @@ export class EditarCurriculoComponent implements OnInit {
     return new Date(data);
   }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.mostrarLoading = true;
     this.liberarBotaoSalvar = false;
     this.exibirBotaoExportar = false;
-    
-    if ((this.curriculoSelecionado == undefined) || (this.curriculoSelecionado == null)) {
-      this.curriculoSelecionado = {
-        CurriculosDados: []
-      };
-    } else {
-      if ((this.curriculoSelecionado.CurriculosDados == undefined) || (this.curriculoSelecionado.CurriculosDados == null)) {
-        this.curriculoSelecionado.CurriculosDados = [];
-      }
-    }    
-    
-    this.api.getCurriculoById(this.curriculoSelecionado.Tripulante.Id).then((x) => {  
-      this.fotos = [];    
-      this.curriculoSelecionado = x.Curriculo;
+
+    // if ((this.curriculoSelecionado == undefined) || (this.curriculoSelecionado == null)) {
+    //   this.curriculoSelecionado = {
+    //     CurriculosDados: []
+    //   };
+    // } else {
+    //   if ((this.curriculoSelecionado.CurriculosDados == undefined) || (this.curriculoSelecionado.CurriculosDados == null)) {
+    //     this.curriculoSelecionado.CurriculosDados = [];
+    //   }
+    // }    
+
+    this.api.getCurriculoById(this.IdTripulante).then((x) => {
+      this.fotos = [];
+      this.curriculoSelecionado = x.CurriculoDeVoo[0];
+      this.horasDeVoo = x.HorasDeVoo;
       this.gerarNomeArquivo();
-      this.curriculoSelecionado.ValidadeCMA = this.ajustarData(this.curriculoSelecionado.ValidadeCMA);
-      this.curriculoSelecionado.DataExpedicao = this.ajustarData(this.curriculoSelecionado.DataExpedicao);
+
+
+      this.curriculoSelecionado.Tripulante.Admissao = new Date(this.curriculoSelecionado.Tripulante.Admissao).toLocaleDateString();
+      this.curriculoSelecionado.Tripulante.DataLicenca = new Date(this.curriculoSelecionado.Tripulante.DataLicenca).toLocaleDateString();
+      this.curriculoSelecionado.Tripulante.VencimentoCMA = new Date(x.Certificados.filter(x=> x.Sigla == 'CMA')[0].DataDeVencimento).toLocaleDateString();
       this.definirFoto(x.FotoTripulante);
 
-      this.curriculoSelecionado.CurriculosDados =
-        this.curriculoSelecionado.CurriculosDados.map(obj => ({
-          ...obj,
-          HorasComando: this.convertDoubleToString(obj.HorasComando),
-          HorasCopiloto: this.convertDoubleToString(obj.HorasCopiloto),
-          Total: this.convertDoubleToString(obj.HorasComando + obj.HorasCopiloto),
-          Curriculo: { Id: this.curriculoSelecionado.Id }
-        }));
+      this.curriculoSelecionado.CurriculosDados = this.curriculoSelecionado.CurriculosDados.map(x => new CurriculoDados(x));
 
-      if (this.curriculoSelecionado.Tripulante.Cargo) {
-        this.TripulanteCargo = this.curriculoSelecionado.Tripulante.Cargo.Nome;
-      }
-      if (this.curriculoSelecionado.Tripulante.Base) {
-        this.TripulanteBase = this.curriculoSelecionado.Tripulante.Base.Nome;
-      }    
+      //this.curriculoSelecionado.CurriculosDados = x.curriculoSelecionado.CurriculoDeVoo.map(x => new CurriculoDados(x)).sort((x,y)=> x.PeriodoInicio > y.PeriodoInicio);
+
+      // if (this.curriculoSelecionado.Tripulante.Cargo) {
+      //   this.TripulanteCargo = this.curriculoSelecionado.Tripulante.Cargo.Nome;
+      // }
+      // if (this.curriculoSelecionado.Tripulante.Base) {
+      //   this.TripulanteBase = this.curriculoSelecionado.Tripulante.Base.Nome;
+      // }
 
       this.mostrarLoading = false;
       this.liberarBotaoSalvar = true;
       this.exibirBotaoExportar = true;
-    });      
+    });
   }
 
   removerHorario(id) {
-    this.curriculoSelecionado.CurriculosDados = this.curriculoSelecionado.CurriculosDados.filter(x => x.Id != id);        
+    this.curriculoSelecionado.CurriculosDados = this.curriculoSelecionado.CurriculosDados.filter(x => x.Id != id);
   }
 
-  formatarDouble(event,id,prop) {    
-    this.cd.detectChanges();
-    let valor = event;
-    valor = valor.replace(/[^\d,]+/g, '');
-    
-    let linha = this.curriculoSelecionado.CurriculosDados.filter(x => x.Id == id)[0];
-    linha[prop] = valor;
-    linha.Total = this.calcularTotal(linha);
-  }
+  // formatarDouble(event, id, prop) {
+  //   this.cd.detectChanges();
+  //   let valor = event;
+  //   valor = valor.replace(/[^\d,]+/g, '');
 
-  calcularTotal(linha) {    
+  //   let linha = this.curriculoSelecionado.CurriculosDados.filter(x => x.Id == id)[0];
+  //   linha[prop] = valor;
+  //   linha.Total = this.calcularTotal(linha);
+  // }
+
+  calcularTotal(linha) {
     let HorasComando = 0;
     let HorasCopiloto = 0;
 
     if (this.validarString(linha.HorasComando)) {
-      HorasComando = this.convertStringToDouble(linha.HorasComando);      
-    }
-    
-    if (this.validarString(linha.HorasCopiloto)) {
-      HorasCopiloto = this.convertStringToDouble(linha.HorasCopiloto);      
+      HorasComando = this.convertStringToDouble(linha.HorasComando);
     }
 
-    return this.convertDoubleToString( HorasComando + HorasCopiloto );
+    if (this.validarString(linha.HorasCopiloto)) {
+      HorasCopiloto = this.convertStringToDouble(linha.HorasCopiloto);
+    }
+
+    return this.convertDoubleToString(HorasComando + HorasCopiloto);
   }
 
   novoHorario() {
-    let nova = {   
+    let nova = {
       "Id": uuidv4(),
-      Ativo: true,   
+      Ativo: true,
       OperadorAereo: '',
       PeriodoInicio: null,
-      PeriodoFim : null,
+      PeriodoFim: null,
       Modelo: '',
       HorasComando: '0',
       HorasCopiloto: '0',
       Total: '0',
       Curriculo: { Id: this.curriculoSelecionado.Id },
-      Ordem: this.curriculoSelecionado.CurriculosDados.length 
+      Ordem: this.curriculoSelecionado.CurriculosDados.length
     };
-    this.curriculoSelecionado.CurriculosDados.push(nova);    
+    this.curriculoSelecionado.CurriculosDados.push(nova);
   }
 
   definirFoto(foto: any): void {
@@ -221,7 +229,7 @@ export class EditarCurriculoComponent implements OnInit {
       (foto.Id != "")
     ) {
       this.fotos.push(foto);
-      this.urlFoto = `url(${this.api.url}arquivo/${foto.Id})`;      
+      this.urlFoto = `url(${this.api.url}arquivo/${foto.Id})`;
       this.liberarBotaoUpload = false;
     } else {
       this.urlFoto = this.defaultUrlFoto;
@@ -233,24 +241,24 @@ export class EditarCurriculoComponent implements OnInit {
     this.mostrarLoading = true;
     const formData = new FormData();
     event.files.forEach((arq, index) => {
-      let nameFile = "FOTO_" + this.curriculoSelecionado.Tripulante.Trato.replace(/ /g, '_');            
+      let nameFile = "FOTO_" + this.curriculoSelecionado.Tripulante.Trato.replace(/ /g, '_');
       formData.append(`file[${index}]`, arq, nameFile);
-    
+
       if (index == (event.files.length - 1)) {
         this.fotos = [];
-        this.api.salvarFotoTripulante(this.curriculoSelecionado.Tripulante.Id,formData).then((arquivos) => {                              
+        this.api.salvarFotoTripulante(this.curriculoSelecionado.Tripulante.Id, formData).then((arquivos) => {
           arquivos.forEach((arquivo, indexArquivos) => {
             if (indexArquivos == (arquivos.length - 1)) {
-              this.definirFoto(arquivo);              
-              this.mostrarLoading = false;                            
+              this.definirFoto(arquivo);
+              this.mostrarLoading = false;
             }
-          });                    
-        });        
+          });
+        });
       }
     });
   }
 
-  apagarAnexo(id : string){
+  apagarAnexo(id: string) {
     this.mostrarLoading = true;
     this.api.deleteAnexo(id).then(() => {
       this.fotos = [];
@@ -259,44 +267,44 @@ export class EditarCurriculoComponent implements OnInit {
     });
   }
 
-  abrirArquivo(id : string) {    
+  abrirArquivo(id: string) {
     if (this.fotos.length == 1) {
-      window.open(`${this.api.url}arquivo/${this.fotos[0].Id}`,'_blank');
-    }    
-  }
-
-  validar(curriculo,callback) {
-    let valido = true;
-
-    if (curriculo.CurriculosDados.length == 0) {
-      callback(true);
-    } else {
-      curriculo.CurriculosDados.forEach((entry,index) => {
-        if (this.validarString(entry.HorasComando)) {
-          entry.HorasComando = this.convertStringToDouble(entry.HorasComando);
-        } else {
-          valido = false;
-        }
-        if (this.validarString(entry.HorasCopiloto)) {
-          entry.HorasCopiloto = this.convertStringToDouble(entry.HorasCopiloto);
-        } else {
-          valido = false;
-        }
-        if (valido) {
-          entry.Total = entry.HorasComando + entry.HorasCopiloto;
-        }
-        
-        if (index == (curriculo.CurriculosDados.length - 1)) {
-          callback(valido);
-        }
-      });
+      window.open(`${this.api.url}arquivo/${this.fotos[0].Id}`, '_blank');
     }
   }
 
-  downloadResponse(res) {    
+  // validar(curriculo, callback) {
+  //   let valido = true;
+
+  //   if (curriculo.CurriculosDados.length == 0) {
+  //     callback(true);
+  //   } else {
+  //     curriculo.CurriculosDados.forEach((entry, index) => {
+  //       // if (this.validarString(entry.HorasComando)) {
+  //       //   entry.HorasComando = this.convertStringToDouble(entry.HorasComando);
+  //       // } else {
+  //       //   valido = false;
+  //       // }
+  //       // if (this.validarString(entry.HorasCopiloto)) {
+  //       //   entry.HorasCopiloto = this.convertStringToDouble(entry.HorasCopiloto);
+  //       // } else {
+  //       //   valido = false;
+  //       // }
+  //       // if (valido) {
+  //       //   entry.Total = entry.HorasComando + entry.HorasCopiloto;
+  //       // }
+
+  //       if (index == (curriculo.CurriculosDados.length - 1)) {
+  //         callback(valido);
+  //       }
+  //     });
+  //   }
+  // }
+
+  downloadResponse(res) {
     let a = document.createElement("a");
     document.body.appendChild(a);
-    a.setAttribute('style','display: none');
+    a.setAttribute('style', 'display: none');
     let url = URL.createObjectURL(res.blob);
     a.href = url;
     a.download = res.fileName;
@@ -307,12 +315,12 @@ export class EditarCurriculoComponent implements OnInit {
     this.exibirBotaoExportar = true;
   }
 
-  exportar(): void {    
+  exportar(): void {
     this.exibirBotaoExportar = false;
     this.mostrarLoading = true;
-    
-    this.api.obterCurriculosPDF([this.curriculoSelecionado]).then((x) => {
-        this.downloadResponse(x);
+
+    this.api.obterCurriculosPDF([this.curriculoSelecionado.Tripulante.Id], this.curriculoSelecionado.Tripulante.Trato).then((x) => {
+      this.downloadResponse(x);
     });
   }
 
@@ -323,40 +331,40 @@ export class EditarCurriculoComponent implements OnInit {
     // Clonar objeto para validar e converter doubles
     let curriculo = JSON.parse(JSON.stringify(this.curriculoSelecionado));
 
-    this.validar(curriculo,valido=>{
-      if (!valido) {
-        this.mostrarLoading = false;
-        this.liberarBotaoSalvar = true;
-        this.messageService.add({
-          severity: "error",
-          summary: "Erro",
-          detail: "Há erros nos campos horas de Comando e Copiloto!",
-        });
-      } else {        
+    // this.validar(curriculo, valido => {
+    //   if (!valido) {
+    //     this.mostrarLoading = false;
+    //     this.liberarBotaoSalvar = true;
+    //     this.messageService.add({
+    //       severity: "error",
+    //       summary: "Erro",
+    //       detail: "Há erros nos campos horas de Comando e Copiloto!",
+    //     });
+    //   } else {
         this.api.salvarCurriculo(curriculo).then(x => {
-          if (!x.Salvo) {            
-            this.messageService.add({severity: "error", summary: "SOL Sistemas", detail: "Erro ao salvar o Currículo!" });
+          if (!x.Salvo) {
+            this.messageService.add({ severity: "error", summary: "SOL Sistemas", detail: "Erro ao salvar o Currículo!" });
           } else {
             this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Currículo salvo com sucesso!' });
           }
-          console.log(x.Mensagem);                          
+          console.log(x.Mensagem);
           this.mostrarLoading = false;
           this.liberarBotaoSalvar = true;
-          
+
           if (this.curriculoSelecionado.CurriculosDados.length > 0) {
-            this.curriculoSelecionado.CurriculoIncompleto = false;            
+            this.curriculoSelecionado.CurriculoIncompleto = false;
           } else {
             this.curriculoSelecionado.CurriculoIncompleto = true;
           }
-          this.retorno.emit(this.curriculoSelecionado.CurriculoIncompleto);         
+          this.retorno.emit(this.curriculoSelecionado.CurriculoIncompleto);
 
-        }).catch((x) => {
-          this.mostrarLoading = false;
-          this.liberarBotaoSalvar = true;
-          console.error(x);
-          this.messageService.add({severity: "error", summary: "SOL Sistemas", detail: "Erro ao salvar o Currículo!" });
-        });        
-      }
-    });    
+        // }).catch((x) => {
+        //   this.mostrarLoading = false;
+        //   this.liberarBotaoSalvar = true;
+        //   console.error(x);
+        //   this.messageService.add({ severity: "error", summary: "SOL Sistemas", detail: "Erro ao salvar o Currículo!" });
+        // });
+      // }
+    });
   }
 }

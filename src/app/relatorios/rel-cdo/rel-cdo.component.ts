@@ -11,8 +11,8 @@ export class RelCdoComponent implements OnInit {
 
   @ViewChild ('conteudo') conteudo;
 
-  tela_ok = false;
-  consulta_ok = false;
+  tela_ok = true;
+  consulta_ok = true;
 
   data = new Date();
   locale_pt;
@@ -40,14 +40,14 @@ export class RelCdoComponent implements OnInit {
     if ( this.api.GetSettings() != null )
     {
       this.data = new Date(this.api.GetSettings());
-      this.rodarRelatorio();
+      // this.rodarRelatorio();
       return;
     }
 
     let data = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay() + 1);
 
     this.data.setDate(data.getDate() - 1);
-    this.rodarRelatorio();
+    // this.rodarRelatorio();
     
   }
 

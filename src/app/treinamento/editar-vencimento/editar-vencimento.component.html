@@ -1,0 +1,32 @@
+<div class="grid">
+    <div class="col-12">
+        <h4>Vencimento em <b>{{dados.Certificado.ValidadeEmDias >0 ? + dados.Certificado.ValidadeEmDias + " DIAS" :
+                dados.Certificado.ValidadeEmMeses + " MESES"}}</b></h4>
+    </div>
+    <div class="col-10 m-0">
+        <h4>Realização</h4>
+        <div class="card flex justify-content-center">
+            <p-calendar class="max-w-full" [(ngModel)]="dadosLocal.DataDeRealizacao" [inline]="true"
+                [style]="{width: '30vw' }" [disabled]="dadosLocal.NaoControlado"
+                (onSelect)="dadosLocal.DataDeVencimento = dadosLocal.CalcularVencimento()"></p-calendar>
+        </div>
+    </div>
+    <div class="col-2">
+        <h4>Vencimento</h4><br>
+        <b>{{dadosLocal.DataDeVencimento | date:'dd/MM/yyyy'}}</b>
+
+        <br><br>
+
+
+        <div class="input-group-append">
+            <span class="input-group-text">N/A</span>
+            <p-inputSwitch [(ngModel)]="dadosLocal.NaoControlado"></p-inputSwitch>
+        </div>
+    </div>
+    <div class="col-12 text-center">
+        <button type="button" pButton icon="pi pi-check" (click)="salvar()" label="Salvar"
+            class="p-button-success"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar"
+            class="p-button-danger ml-2"></button>
+    </div>
+</div>

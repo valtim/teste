@@ -20,20 +20,20 @@ export class LoginComponent implements OnInit {
   public password: string;
   public loading = false;
 
-  jaLogouRemoto = localStorage.length == 4;
+  jaLogouRemoto = localStorage.length >= 4;
 
   ngOnInit() {
     
     this.api.EhProducao().then(x=>{
       this.ehProducao = x;
-      if (localStorage.length == 4) {
-        this.loginRemoto();
-        return;
-      }
       
       if (localStorage.getItem["Authorization"] != null && localStorage.length >= 4)
         return;
 
+        if (localStorage.length >= 4) {
+          this.loginRemoto();
+          return;
+        }
 
 
     })
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
 
     for (let i = 0; i < localStorage.length; i++) {
       let item = JSON.parse(localStorage.getItem(localStorage.key(i)));
-      if (!(item.secret && item.credentialType == "AccessToken"))
+      if (!(item.secret && item.credentialType == "IdToken"))
         continue;
       login = item.secret;
     }

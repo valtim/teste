@@ -1,66 +1,22 @@
 <app-titulo titulo="Horas Voadas" [carregando]="!tudoPronto"></app-titulo>
 
-<div class="row p-mt-1">
+<div class="grid">
   <div class="col"></div>
-  <div class="col">
+  <div class="col-10">
     <button type="button" pButton pRipple label="Inicial"></button>
-    <p-calendar
-      [(ngModel)]="dataInicio"
-      selectionMode="single"
-      dateFormat="dd/mm/yy"
-      
-      showIcon="true"
-      [inputStyle]="{ width: '100px' }"
-    ></p-calendar>
-
-    <button type="button" pButton pRipple label="Final" class="p-ml-2"></button>
-    <p-calendar
-      [(ngModel)]="dataFim"
-      selectionMode="single"
-      dateFormat="dd/mm/yy"
-      
-      showIcon="true"
-      [inputStyle]="{ width: '100px' }"
-    ></p-calendar>
+    <p-calendar [(ngModel)]="dataInicio" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+      [inputStyle]="{ width: '100px' }"></p-calendar>
+    <button type="button" pButton pRipple label="Final" class=" ml-2"></button>
+    <p-calendar [(ngModel)]="dataFim" selectionMode="single" dateFormat="dd/mm/yy" showIcon="true"
+      [inputStyle]="{ width: '100px' }"></p-calendar>
+    <button type="button" pButton pRipple label="Tripulantes" class=" ml-2"></button>
+    <p-dropdown [options]="tripulantes" [(ngModel)]="tripulanteSelecionado" [filter]="true" filterBy="Nome"
+      optionLabel="Nome"></p-dropdown>
+    <button pButton type="button" label="Pesquisar" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()" class="ml-2"></button>
+    <button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+      class="botao-excel p-button-success ml-2" pTooltip="XLS" tooltipPosition="bottom"></button>
   </div>
-  <div class="col">
-    <button
-      type="button"
-      pButton
-      pRipple
-      label="Tripulantes"
-      class="p-ml-2"
-    ></button>
-    <p-dropdown
-      [options]="tripulantes"
-      [(ngModel)]="tripulanteSelecionado"
-      [filter]="true"
-      filterBy="Nome"
-      optionLabel="Nome"
-    ></p-dropdown>
-
-    <button
-      pButton
-      type="button"
-      icon="pi pi-search"
-      iconPos="left"
-      (click)="rodarRelatorio()"
-      class="p-ml-2"
-    ></button>
-  </div>
-  <div class="col">
-    <button
-      type="button"
-      label="Exportar"
-      pButton
-      pRipple
-      icon="pi pi-file-excel"
-      (click)="exportExcel()"
-      class="botao-excel p-button-success mr-2"
-      pTooltip="XLS"
-      tooltipPosition="bottom"
-    ></button>
-  </div>
+  <div class="col"></div>
 </div>
 
 <div *ngIf="filtroRetorno">

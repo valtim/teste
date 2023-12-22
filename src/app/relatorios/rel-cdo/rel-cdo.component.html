@@ -18,4 +18,9 @@
 
 </div>
 
+<p-toolbar *ngIf="!htmlContent" class="m-4">
+    Selecione a data e clique em PESQUISAR.
+</p-toolbar>
+
+
 <div class="_html" *ngIf="consulta_ok" [innerHTML]="htmlContent"></div>

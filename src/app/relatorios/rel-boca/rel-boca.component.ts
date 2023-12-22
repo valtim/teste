@@ -60,6 +60,11 @@ export class RelBocaComponent implements OnInit {
       this.tudoPronto = true;
       this.relatorioConsultado = false;
 
+
+      this.api.getGenerico('email', 'boca').then(mail => {
+        this.emails = mail.lista.map(y => y.Email);
+      })
+
     })
 
 
@@ -68,7 +73,7 @@ export class RelBocaComponent implements OnInit {
 
 
   emailBOCA() {
-    
+
     this.tudoPronto = false;
     this.api.emailBOCA(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id, { emails: this.emails }).then(
       x => {
@@ -82,14 +87,14 @@ export class RelBocaComponent implements OnInit {
   }
 
 
-  pesquisarEnviados(){
+  pesquisarEnviados() {
     this.relatorioConsultado = false;
     this.tudoPronto = false;
     this.blobPDF = undefined;
-    this.api.getRelBoca(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id).then( x=>{
+    this.api.getRelBoca(this.data.toISOString().split('T')[0], this.baseDeOperacaoSelecionada.Id).then(x => {
       this.assinaturas = x;
       this.tudoPronto = true;
-    } );
+    });
   }
 
   rodarRelatorio() {

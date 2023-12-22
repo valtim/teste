@@ -1,0 +1,83 @@
+<app-titulo titulo="Vencimentos" [carregando]="!valores"></app-titulo>
+<p-toast position="top-center" key="tc"></p-toast>
+
+<button type="button" label="Exportar" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+    class="botao-excel p-button-success mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+<div class="tabela" *ngIf="valores">
+
+
+    <!-- 
+    <table id="quadro">
+        <tr>
+            <th *ngFor="let col of columns">{{col}}</th>
+        </tr>
+        <tr *ngFor="let item of valores">
+            <td *ngFor="let col of columns; let i = index"
+                (click)="i == 0 ? null : editarValor($event, item[col])"
+                [class]="item[col].CorNaTela">{{item[col].ValorExibido}}
+            </td>
+        </tr>
+    </table> -->
+
+    <table id="quadro">
+        <tr>
+            <th *ngFor="let col of columns">{{col}}</th>
+        </tr>
+        <tr *ngFor="let trip of dados">
+            <td>{{trip.Tripulante.Trato}}</td>
+            <td *ngFor="let item of trip.Vencimentos"
+                (click)="editarValor(item)"
+                [class]="item.CorNaTela">{{item.ValorExibido}}
+            </td>
+        </tr>
+    </table>
+
+
+    <div *ngIf="valorEditado">
+        <p-dialog [header]="valorEditado.Tripulante.Trato + ' - ' + valorEditado.Certificado.Nome.toUpperCase()"
+            [(visible)]="exibirModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false"
+            [resizable]="false">
+            <app-editar-vencimento *ngIf="exibirModal" [dados]="valorEditado" (retorno)="retornoCarteira($event)">
+            </app-editar-vencimento>
+        </p-dialog>
+
+
+        <p-dialog header="Header" [(visible)]="exibirDialogo" [modal]="true" [style]="{ width: '50vw' }"
+            [draggable]="false" [resizable]="false">
+            <ul *ngIf="valorEditado.Certificado.ReadOnly">
+                <li *ngFor="let item of valorEditado.UltimosVoos">{{item.Data | date:'dd/MMyyyy'}} -
+                    {{item.NumeroDaFolha}} - {{item.NumeroDoDiario}}</li>
+            </ul>
+        </p-dialog>
+    </div>
+
+
+
+    <!-- <p-dialog *ngIf="valorEditado" [(visible)]="valorEditado" [modal]="true" [baseZIndex]="10000">
+
+        <app-editar-vencimento [dados]="valorEditado" (retorno)="retornoCarteira($event)">
+        </app-editar-vencimento>
+
+    </p-dialog> -->
+
+    <p-overlayPanel #op [dismissable]="true" [showCloseIcon]="true">
+        <ng-template pTemplate>
+            <ul>
+                <li *ngFor="let item of ultimosVoos">{{item.Data| date: 'dd/MM/yyyy'}} - {{item.NumeroDoDiario}} -
+                    {{item.NumeroDaFolha}}</li>
+            </ul>
+        </ng-template>
+    </p-overlayPanel>
+
+</div>
+
+<div class="grid text-center font-weight-bold barra_de_cores">
+    <div class="col-3 azul">60 dias</div>
+    <div class="col-3 amarelo">30 dias</div>
+    <div class="col-3 laranja">15 dias</div>
+    <div class="col-3 vermelho">Vencidos</div>
+</div>
+
+<!-- <p-overlayPanel #op>
+    <div #myDiv></div>
+</p-overlayPanel> -->

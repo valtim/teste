@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpEvent, HttpHeaders } from "@angular/common/http";
 import { DataUtil } from "./../shared/DataUtil";
 import { Observable, lastValueFrom } from "rxjs";
 import * as Globals from './global';
@@ -588,8 +588,8 @@ export class ApiService {
     return this.http.get(`${this.url}listas/usuario`).toPromise();
   }
 
-  async getUsuarioLogado(url:string): Promise<any> {
-    let json = { 'caminho' : url};
+  async getUsuarioLogado(url: string): Promise<any> {
+    let json = { 'caminho': url };
     return await lastValueFrom(this.http.post(`${this.url}usuariologado`, JSON.stringify(json), this.httpOptions));
   }
 
@@ -692,10 +692,40 @@ export class ApiService {
       .toPromise();
   }
 
-
+  /*get(url: string, options: {
+          headers?: HttpHeaders | {
+              [header: string]: string | string[];
+          };
+          context?: HttpContext;
+          observe?: 'body';
+          params?: HttpParams | {
+              [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean>;
+          };
+          reportProgress?: boolean;
+          responseType: 'arraybuffer';
+          withCredentials?: boolean;
+      }): Observable<ArrayBuffer>;
+      
+      , options: this.httpOptions, responseType: 'blob' }
+      
+  url, { headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }, responseType: 'blob', observe: 'response' }
+  
+      Authorization: localStorage.getItem("Authorization"),
+      */
 
   getBI(dataIni: Date, dataFim: Date): Observable<Blob> {
-    return this.http.get(`${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`, { responseType: 'blob' });
+    var url = `${this.url}consultabi/${dataIni.toISOString().split("T")[0]}/${dataFim.toISOString().split("T")[0]}`;
+    return this.http.get(url, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: localStorage.getItem("Authorization"),
+      }
+      , responseType: 'blob'
+    });
   }
 
   // getCombosServidor(): Promise<any> {
@@ -851,12 +881,12 @@ export class ApiService {
   }
 
 
-  async getRelBoca(data: string, baseBoca:string): Promise<any> {
+  async getRelBoca(data: string, baseBoca: string): Promise<any> {
     return await lastValueFrom(this.http
       .get(`${this.url}RelBoca/enviados/${data}/${baseBoca}`, this.httpOptions));
   }
 
-  getRelBocaPdf(data: string, baseBoca:string):  Observable<Blob> {
+  getRelBocaPdf(data: string, baseBoca: string): Observable<Blob> {
     return this.http
       .get(`${this.url}RelBoca/${data}/${baseBoca}`, { responseType: 'blob' });
   }
@@ -985,10 +1015,9 @@ export class ApiService {
       .toPromise();
   }
 
-  postCrudIndisponibilidade(filtro: any): Promise<any> {
-    return this.http
-      .post(`${this.url}CrudIndiponibilidade`, filtro, this.httpOptions)
-      .toPromise();
+  async postCrudIndisponibilidade(indisponibilidade: any): Promise<any> {
+    return await lastValueFrom(this.http
+      .post(`${this.url}CrudIndiponibilidade`, JSON.stringify(indisponibilidade), this.httpOptions));
   }
 
   postPontualidade(filtro: any): Promise<any> {
@@ -1071,6 +1100,20 @@ export class ApiService {
       .toPromise();
   }
 
+
+  postPdfJornada(data: Date, jornadas: string[]): Observable<HttpEvent<Blob>> {
+    var json = { data: data, jornadas: jornadas };
+
+
+    return this.http.post<HttpEvent<Blob>>(`${this.url}pdf/jornadamensal`,
+      JSON.stringify(json),
+      this.httpOptions);
+  }
+
+
+
+
+
   getIncompatibilidadeCRUD(): Promise<any> {
     return this.http
       .get(`${this.url}Incompatibilidade`, this.httpOptions)
@@ -1082,6 +1125,8 @@ export class ApiService {
       .post(`${this.url}Incompatibilidade`, dados, this.httpOptions)
       .toPromise();
   }
+
+
 
   deleteIncompatibilidadeCRUD(dados): Promise<any> {
     return this.http
@@ -1190,10 +1235,10 @@ export class ApiService {
       ));
   }
 
-  async getProximosVencimentos(referencia: Date): Promise<any> {
+  async getProximosVencimentos(referencia: Date, limiteEmMeses: number): Promise<any> {
     return await lastValueFrom(
       this.http
-        .get(`${this.url}ultimosVencimentos/${referencia.toISOString().split('T')[0]}`, this.httpOptions)
+        .get(`${this.url}ultimosVencimentos/${referencia.toISOString().split('T')[0]}/${limiteEmMeses}`, this.httpOptions)
     );
   }
   async postAtualizaVencimento(vencimento: any): Promise<any> {
@@ -1209,6 +1254,21 @@ export class ApiService {
         filtro,
         this.httpOptions
       ));
+  }
+
+  async postRelarioMedicaoXLS(filtro): Promise<any> {
+
+    var data = new Date();
+
+    var NomeArquivo = `Medicao_${data.getFullYear()}_${data.getMonth()}_${data.getDate()}_${data.getHours()}_${data.getMinutes()}_${data.getSeconds()}.xlsx`;
+
+    return await lastValueFrom(
+      this.http.post(`${this.url}relmedicao/xls`, filtro, { responseType: 'blob' }).pipe(
+        map((res) => {
+          return { blob: new Blob([res], { type: "application/xls" }), fileName: NomeArquivo };
+        })
+      )
+    );
   }
 
 
@@ -1236,7 +1296,7 @@ export class ApiService {
   }
 
 
-  async emailBOCA(data: string, base: string, destinatarios : any): Promise<any> {
+  async emailBOCA(data: string, base: string, destinatarios: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}RelBoca/assinado/${data}/${base}`, destinatarios, this.httpOptions));
   }
@@ -1254,21 +1314,21 @@ export class ApiService {
 
   async getCurriculoById(id: String): Promise<any> {
     return await lastValueFrom(this.http
-      .get(`${this.url}curriculo/${id}`, this.httpOptions));    
+      .get(`${this.url}curriculo/${id}`, this.httpOptions));
   }
 
-  async obterCurriculosPDF(curriculos: any[]): Promise<any> {
+  async obterCurriculosPDF(curriculos: string[], fileName): Promise<any> {
     let NomeArquivo = 'Curriculos.zip';
     let tipo = 'application/zip';
-    if (curriculos.length == 1) {
-      NomeArquivo = curriculos[0].NomeArquivo;
+    if (fileName != null) {
+      NomeArquivo = fileName + ".pdf";
       tipo = 'application/pdf';
     }
 
     return await lastValueFrom(
-      this.http.post(`${this.url}curriculos/pdf`, curriculos, { responseType: 'blob'}).pipe(
-        map((res) => {                        
-            return { blob: new Blob([res], { type: tipo }), fileName: NomeArquivo };
+      this.http.post(`${this.url}curriculos/pdf`, curriculos, { responseType: 'blob' }).pipe(
+        map((res) => {
+          return { blob: new Blob([res], { type: tipo }), fileName: NomeArquivo };
         })
       )
     );
@@ -1298,6 +1358,7 @@ export class ApiService {
   async deleteAnexo(id: string): Promise<any> {
     const url = this.url + `arquivo/${id}/delete`;
     return await lastValueFrom(this.http.get(url, this.httpOptions));
+  }
 
   async getJornadaDiaria(data: Date): Promise<any> {
     return await lastValueFrom(this.http
@@ -1307,6 +1368,16 @@ export class ApiService {
   async salvarJornadaDiaria(escala: any): Promise<any> {
     return await lastValueFrom(this.http
       .post(`${this.url}jornada-diaria`, escala, this.httpOptions));
+  }
+
+
+
+  async putGlosa(medicao : any) {    
+    return await lastValueFrom(this.http
+      .post(`${this.url}glosa`,
+        medicao,
+        this.httpOptions))
+    //api/salvar/{tipo}/{id}/{valor}
   }
 
 }

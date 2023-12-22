@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { ApiGenericoService } from 'src/app/shared/api.generico.service';
 import { ApiService } from 'src/app/shared/api.service';
+import { TimeSpan } from 'src/app/shared/time-span-model';
+import { DiaMedicao } from './dia-medicao-model';
+import { RelMedicao } from './rel-medicao-model';
 
 @Component({
   selector: 'app-rel-medicao',
   templateUrl: './rel-medicao.component.html',
-  styleUrls: ['./rel-medicao.component.css']
+  styleUrls: ['./rel-medicao.component.css'],
+  providers: [MessageService]
 })
 export class RelMedicaoComponent {
   tudoPronto: boolean;
@@ -18,27 +24,34 @@ export class RelMedicaoComponent {
   prefixoSelecionado: any;
   exibirPrefixos: boolean;
   indisponibilidade: any[];
+  locale_pt: any;
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService,
+    private messageService: MessageService) {
+    this.locale_pt = this.api.getLocale('pt');
+  }
 
   ngOnInit(): void {
     this.tudoPronto = false;
-    this.api.getCombos().then(x => {
+    this.api.getCombosRestrito('BaseDeOperacao, Cliente').then(x => {
       let nova = [{ value: undefined, label: '' }];
       this.filtroBase = x.BaseDeOperacao;
       this.filtroClientes = x.Cliente;
 
       /* Campos filtros */
       var date = new Date();
-      this.dataSelecionada = new Date(date.getFullYear(), date.getMonth(), 1);      
+      this.dataSelecionada = new Date(date.getFullYear(), date.getMonth(), 1);
       this.baseDeOperacaoSelecionada = this.filtroBase[0].Id;
       this.clienteSelecionado = this.filtroClientes[0].Id;
 
-      this.rodarRelatorio();
+      this.tudoPronto = true;
+
+
+      // this.rodarRelatorio();
     });
   }
 
-  rodarRelatorio(){
+  rodarRelatorio(xls: boolean = false) {
     this.tudoPronto = false;
 
     /* Dados para consultar API */
@@ -47,706 +60,80 @@ export class RelMedicaoComponent {
     console.log(this.dataSelecionada);
 
     var filtro = {
-      base : this.baseDeOperacaoSelecionada,
-      cliente : this.clienteSelecionado,
-      data : this.dataSelecionada,
+      base: this.baseDeOperacaoSelecionada,
+      cliente: this.clienteSelecionado,
+      data: this.dataSelecionada,
     }
 
+    if (!xls) {
 
-    this.api.postRelarioMedicao(filtro).then(dados => {
+      this.api.postRelarioMedicao(filtro).then(dados => {
 
-      this.prefixos = dados.Prefixos;
-      this.indisponibilidade = dados.Indisponibilidade;
-      this.prefixos.push({ Prefixo: 'DISPONIBILIDADE' });
-      this.prefixoSelecionado = this.prefixos[0];
-      this.exibirPrefixos = true;
+        this.prefixos = dados.Prefixos.map(x => new RelMedicao(x));
 
-      this.tudoPronto = true;
-    });        
+
+        // this.prefixos.forEach(x=> x.Dias = x.Dias.map(y=>new DiaMedicao(y)))
+
+        this.indisponibilidade = dados.Indisponibilidade;
+        this.prefixos.push({ Prefixo: 'DISPONIBILIDADE' });
+        this.prefixoSelecionado = this.prefixos[0];
+        this.exibirPrefixos = true;
+
+        this.tudoPronto = true;
+      });
+      return;
+    }
+
+    this.api.postRelarioMedicaoXLS(filtro).then((x) => {
+      this.downloadResponse(x);
+    });
+
   }
 
-  definirAbaSelecionada($event) {    
+  downloadResponse(res) {
+    let a = document.createElement("a");
+    document.body.appendChild(a);
+    a.setAttribute('style', 'display: none');
+    let url = URL.createObjectURL(res.blob);
+    a.href = url;
+    a.download = res.fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    this.tudoPronto = true;
+  }
+
+
+  definirAbaSelecionada($event) {
     if ($event.index == (this.prefixos.length - 1)) {
       this.exibirPrefixos = false;
     } else {
       this.exibirPrefixos = true;
       this.prefixoSelecionado = this.prefixos[$event.index];
-    }    
+    }
   }
 
-  /* Retirar quando backend ficar pronto */
-  consultarAPI(): Promise<any> {    
-    return new Promise(resolve => {
-        resolve(this.MOCK());
+  funLimpar(medicao: DiaMedicao) {
+    medicao.TempoGlosada = new TimeSpan();
+    this.funMudou(medicao);
+  }
+
+
+  funMudou(medicao: DiaMedicao) {
+
+
+    let glosa = {
+      Id: medicao.Id,
+      TempoGlosada: medicao.TempoGlosada,
+    }
+
+    this.api.putGlosa(glosa).then(x => {
+      this.messageService.add({ severity: 'success', summary: 'SOL', detail: `A Glosa de ${medicao.TempoGlosada} no dia ${new Date(medicao.Data).toLocaleDateString()} foi salva com sucesso!` });
+    })
+    .catch(() => {
+      this.messageService.add({ severity: 'error', summary: 'SOL', detail: `Erro ao salvar a Glosa de ${medicao.TempoGlosada} no dia ${new Date(medicao.Data).toLocaleDateString()}` });
     });
+
   }
 
-  MOCK() {
-    return {
-      Prefixos: [
-        {
-          Prefixo: "EFX",
-          Contrato: "5900.0111573.19.2",
-          Base: "SBCB",
-          Inicio: "2022-04-25T06:30:00",
-          Fim: "2022-05-25T06:30:00",
-          
-          // Resumo
-          TotalTempoFB:	'22:54',
-          TotalBackUp: '00:00',
-          TotalConsumoFB: '20409', // Libras
-          TotalDowtime: '68:09',
-          TotalTempoGlosado: '00:00:00',
-          TempoTotalFaturado: '22:54:00',
-          // Resumo
-
-          Dias: [
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            }
-          ]
-        },
-        
-        {
-          Prefixo: "NLN",
-          
-          Contrato: "5900.0111573.19.2",
-          Base: "SBCB",
-          Inicio: "2022-04-25T06:30:00",
-          Fim: "2022-05-25T06:30:00",
-          
-          // Resumo
-          TotalTempoFB:	'22:54',
-          TotalBackUp: '00:00',
-          TotalConsumoFB: '20409', // Libras
-          TotalDowtime: '68:09',
-          TotalTempoGlosado: '00:00:00',
-          TempoTotalFaturado: '22:54:00',
-          // Resumo
-
-          Dias: [
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'INDISPONIVEL',
-              Backup: "",
-              Base: "SBCB",
-              Tempo: "00:00",
-              CombustivelConsumido: "0",
-              TempoGlosada: "00:00",
-              CombustivelAbastecido: null,
-              TempoFaturado: null,
-              Observacao: "",
-              Periodo: "06:30 A 10:00",
-              IndisponibilidadeDiaria: "03:30"
-            },
-            {
-              Data: '2023-04-27',
-              FolhaDeBordo: 'xxx',
-              Backup: "PR-MRT",
-              Base: "SBCB",
-              Tempo: "01:52",
-              CombustivelConsumido: 1529,
-              TempoGlosada: "00:20",
-              CombustivelAbastecido: 123,
-              TempoFaturado: "01:32",
-              Observacao: "",
-              Periodo: "",
-              IndisponibilidadeDiaria: ""
-            }
-          ]
-        }
-      ],
-      Indisponibilidade: [
-        {
-          Contrato: "5900.0111573.19.2",
-          Estado: "INDISPONÍVEL",
-          Inicio: "2022-04-25T06:30:00",
-          Fim: "2022-04-25T06:30:00"
-        },
-        {
-          Contrato: "5900.0111573.19.2",
-          Estado: "INDISPONÍVEL",
-          Inicio: "2022-04-25T06:30:00",
-          Fim: "2022-04-25T06:30:00"
-        },
-        {
-          Contrato: "5900.0111573.19.2",
-          Estado: "INDISPONÍVEL",
-          Inicio: "2022-04-25T06:30:00",
-          Fim: "2022-04-25T06:30:00"
-        }
-      ]
-    };
-  }
 }

@@ -50,15 +50,30 @@
     </p-table>
 
 
-    <div class="grid"  *ngIf="blobPDF">
-        <div class="col-10">
-            <textarea pInputTextarea [(ngModel)]="emails" [rows]="5" [cols]="160"></textarea>
+    <div class="grid">
+
+        <div class="col-2"></div>
+        <div class="col-8">
+            <p-card>
+                <ng-template pTemplate="header">
+                    <h2>Destinatários</h2>
+                </ng-template>
+                <ul>
+                    <li *ngFor="let mail of emails">{{mail}}</li>
+                </ul>
+                <ng-template pTemplate="footer">
+                    <p-button label="Inserir Novos Destinatários" icon="pi pi-plus"
+                        [routerLink]="'/cad-email-boca'"></p-button>
+                    <button pButton type="button" *ngIf="blobPDF" icon="pi pi-send" iconPos="right" label="Enviar por Email"
+                        (click)="emailBOCA()" class="ml-4" [disabled]="!relatorioConsultado"></button>
+                </ng-template>
+
+            </p-card>
+
         </div>
-        <div class="col-2">
-            <button pButton type="button" icon="pi pi-send" iconPos="right" label="Enviar por Email"
-                (click)="emailBOCA()" class="ml-4" [disabled]="!relatorioConsultado"></button>
-        </div>
-        <div class="col-12">
+        <div class="col-2"></div>
+
+        <div class="col-12" *ngIf="blobPDF">
             <iframe *ngIf="blobPDF" [src]="blobPDF" width="1200" height="500"></iframe>
         </div>
     </div>
@@ -66,7 +81,7 @@
 
 
 
-    
+
 
     <!-- <div #screen *ngIf="tudoPronto && relatorioConsultado" id="tabela">
 

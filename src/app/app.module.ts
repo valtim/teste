@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { SegurancaModule } from './seguranca/seguranca.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,8 +17,8 @@ import { RelBocaComponent } from './relatorios/rel-boca/rel-boca.component';
 import { RelRdvComponent } from './relatorios/rel-rdv/rel-rdv.component';
 import { RelListaRdvComponent } from './relatorios/rel-lista-rdv/rel-lista-rdv.component';
 import { VoosRealizadosComponent } from './relatorios/voos-realizados/voos-realizados.component';
-import { VencimentoCarteiraComponent } from './relatorios/vencimento-carteira/vencimento-carteira.component';
-import { EditarVencimentoComponent } from './relatorios/editar-vencimento/editar-vencimento.component';
+import { VencimentoCarteiraComponent } from './treinamento/vencimento-carteira/vencimento-carteira.component';
+import { EditarVencimentoComponent } from './treinamento/editar-vencimento/editar-vencimento.component';
 import { RelStatusDaFrotaComponent } from './relatorios/rel-status-da-frota/rel-status-da-frota.component';
 import { RelDiarioHorasVoadasComponent } from './relatorios/rel-diario-horas-voadas/rel-diario-horas-voadas.component';
 import { ControleDeTripulantesComponent } from './relatorios/controle-de-tripulantes/controle-de-tripulantes.component';
@@ -58,9 +58,6 @@ import { ErrosNoDbComponent } from './relatorios/erros-no-db/erros-no-db.compone
 import { InformativoComponent } from './cadastro/informativo/informativo.component';
 import { ListaInformativoComponent } from './cadastro/lista-informativo/lista-informativo.component';
 import { IncompatibilidadeComponent } from './cadastro/incompatibilidade/incompatibilidade.component';
-
-
-import { AgendaComponent } from './treinamento/agenda/agenda.component';
 import { AnexosComponent } from './treinamento/anexos/anexos.component';
 import { CertificadoComponent } from './treinamento/certificado/certificado.component';
 import { ComentarioComponent } from './treinamento/comentario/comentario.component';
@@ -70,7 +67,6 @@ import { RegistroFrequenciaComponent } from './treinamento/registro-frequencia/r
 import { TreinamentoListComponent } from './treinamento/treinamento-list/treinamento-list.component';
 import { TurmaComponent } from './treinamento/turma/turma.component';
 import { TurmaListComponent } from './treinamento/turma-list/turma-list.component';
-import { TurmaStatusComponent } from './treinamento/turma-status/turma-status.component';
 
 
 import { MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
@@ -119,6 +115,9 @@ import { CurriculosComponent } from './cadastro/curriculos/curriculos.component'
 import { EditarCurriculoComponent } from './cadastro/editar-curriculo/editar-curriculo.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
+import { CadastroEmailBocaComponent } from './cadastro/cadastro-email-boca/cadastro-email-boca.component';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
 const rodandoLocal = window.location.host == 'localhost:4200';
@@ -127,12 +126,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
 
+registerLocaleData(localePt);
+
 @NgModule({
   providers: [
+     {provide: LOCALE_ID, useValue: 'pt-BR' }
   ],
   declarations: [
     AppComponent,
-    AgendaComponent,
     AnexosComponent,
     CertificadoComponent,
     ComentarioComponent,
@@ -143,7 +144,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TurmaComponent,
     EditarTreinamentoComponent,
     TurmaListComponent,
-    TurmaStatusComponent,
     AnaliseDeRiscoComponent,
     CabecalhoImpressaoComponent,
     CadastroDeEmailReporteComponent,
@@ -238,6 +238,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EditarCurriculoComponent,
     JornadaDiariaComponent,
     RelatorioAlunoComponent,
+    CadastroEmailBocaComponent,
   ],
   imports: [
     AppRoutingModule,

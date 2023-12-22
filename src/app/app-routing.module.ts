@@ -24,7 +24,7 @@ import { AnaliseDeRiscoComponent } from "./relatorios/analise-de-risco/analise-d
 import { TratamentoDaFadigaComponent } from "./controle-da-fadiga/tratamento-da-fadiga/tratamento-da-fadiga.component";
 import { ComunicarTripulantesComponent } from "./controle-da-fadiga/comunicar-tripulantes/comunicar-tripulantes.component";
 import { FadigaComponent } from "./controle-da-fadiga/fadiga/fadiga.component";
-import { VencimentoCarteiraComponent } from "./relatorios/vencimento-carteira/vencimento-carteira.component";
+import { VencimentoCarteiraComponent } from "./treinamento/vencimento-carteira/vencimento-carteira.component";
 import { MotivoDaIndisponibilidadeComponent } from "./cadastro/motivo-da-indisponibilidade/motivo-da-indisponibilidade.component";
 import { MotivoDoErroNoPreenchimentoComponent } from "./cadastro/motivo-do-erro-no-preenchimento/motivo-do-erro-no-preenchimento.component";
 import { ObservacaoDbComponent } from "./cadastro/observacao-db/observacao-db.component";
@@ -40,7 +40,6 @@ import { EscalaSemanalComponent } from "./escala/escala-semanal/escala-semanal.c
 import { ErrosNoDbComponent } from "./relatorios/erros-no-db/erros-no-db.component";
 import { ListaInformativoComponent } from "./cadastro/lista-informativo/lista-informativo.component";
 import { IncompatibilidadeComponent } from "./cadastro/incompatibilidade/incompatibilidade.component";
-import { AgendaComponent } from "./treinamento/agenda/agenda.component";
 import { TurmaListComponent } from "./treinamento/turma-list/turma-list.component";
 import { TreinamentoListComponent } from "./treinamento/treinamento-list/treinamento-list.component";
 import { BuscaBiComponent } from "./bi/busca-bi/busca-bi.component";
@@ -82,6 +81,7 @@ import { LoggingComponent } from './seguranca/logging/logging.component';
 import { CurriculosComponent } from './cadastro/curriculos/curriculos.component';
 import { JornadaDiariaComponent } from './escala/jornada-diaria/jornada-diaria.component';
 import { RelatorioAlunoComponent } from './treinamento/relatorio-aluno/relatorio-aluno.component';
+import { CadastroEmailBocaComponent } from './cadastro/cadastro-email-boca/cadastro-email-boca.component';
 
 const routes: Routes = [
   { path: "", component: LoginLdapComponent },
@@ -103,12 +103,6 @@ const routes: Routes = [
   {
     path: "motivo-do-erro-no-preenchimento",
     component: MotivoDoErroNoPreenchimentoComponent,
-    canActivate: [AuthGuardService],
-  },
-
-  {
-    path: "agenda-de-treinamento",
-    component: AgendaComponent,
     canActivate: [AuthGuardService],
   },
   {
@@ -294,6 +288,11 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
+    path: "cad-email-boca",
+    component: CadastroEmailBocaComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
     path: "cad-email-cdo",
     component: CadastroEmailCdoComponent,
     canActivate: [AuthGuardService],
@@ -450,6 +449,11 @@ const routes: Routes = [
   },
   {
     path: 'vencimento-treinamento',
+    component: RelVencimentoTreinamentoComponent,
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'vencimento-treinamento/:data',
     component: RelVencimentoTreinamentoComponent,
     canActivate: [AuthGuardService],
   },

@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { TimeSpan } from '../time-span-model';
 
 @Pipe({
   name: 'timespan',
@@ -6,30 +7,35 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TimespanPipe implements PipeTransform {
 
-  transform(value: string, arg1: string): string {
-    if (value == undefined) return '';
-    if (value == null) return '';
-    if (value == '') return '';
+  transform(value: any, arg1: string): string {
+    if ( value instanceof TimeSpan)
+      return value.toString();    
+    
+    var ts = new TimeSpan(value);
 
-    if (value.indexOf(':') == -1) return '';
+    // if (value == undefined) return '';
+    // if (value == null) return '';
+    // if (value == '') return '';
 
-    let pedacos = value.split(':');
+    // if (value.indexOf(':') == -1) return '';
 
-    if (pedacos[0].indexOf('.') > -1) {
-      let ponto = pedacos[0].split('.');
+    // let pedacos = value.split(':');
 
-      let dias: number = Number(ponto[0]) * 24;
-      let horas: number = Number(ponto[1]);
+    // if (pedacos[0].indexOf('.') > -1) {
+    //   let ponto = pedacos[0].split('.');
 
-      horas += dias;
+    //   let dias: number = Number(ponto[0]) * 24;
+    //   let horas: number = Number(ponto[1]);
 
-      pedacos[0] = horas.toString();
-    }
+    //   horas += dias;
+
+    //   pedacos[0] = horas.toString();
+    // }
 
     if (arg1 == "HH:mm")
-      return pedacos[0] + ':' + pedacos[1];
+      return ts.toString();
 
-    return pedacos[0] + ':' + pedacos[1] + ':00';
+    return ts.ToString("HH:mm:ss");
 
   }
 

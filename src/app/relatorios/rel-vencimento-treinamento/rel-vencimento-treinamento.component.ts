@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { MessageService, SortEvent } from 'primeng/api';
 import { ApiService } from 'src/app/shared/api.service';
+import { Vencimento } from 'src/app/treinamento/editar-vencimento/vencimento-model';
 
 @Component({
   selector: 'app-rel-vencimento-treinamento',
@@ -9,6 +11,7 @@ import { ApiService } from 'src/app/shared/api.service';
   providers: [MessageService]
 })
 export class RelVencimentoTreinamentoComponent implements OnInit {
+
   dados: any[];
   titulo = 'Próximos Vencimentos';
   consulta_ok = false;
@@ -16,65 +19,75 @@ export class RelVencimentoTreinamentoComponent implements OnInit {
   dataReferencia = new Date();
 
   messages;
+  valorEditado: Vencimento;
+  exibirModal: boolean;
+  data: string;
+  limiteEmMeses: number = 3;
 
-  constructor(private api: ApiService,
+
+  constructor(private api: ApiService, 
+    private activatedRoute: ActivatedRoute,
     private messageService: MessageService) {
 
   }
 
+  retornoCarteira(retorno) {
 
-  save() {
-
-
-    let pedaco = this.vencimentoEditado.ValorExibido.split('/');
-
-    let dia = this.vencimentoEditado.SomenteMes ? 1 : pedaco[0];
-    let mes = this.vencimentoEditado.SomenteMes ? pedaco[0] - 1 : pedaco[1] - 1;
-    let ano = this.vencimentoEditado.SomenteMes ? pedaco[1] : pedaco[2];
-    let vencimento = new Date(ano, mes, dia);
-
-
-    this.vencimentoEditado.DataDeVencimento = vencimento;
-
-    this.api.postAtualizaVencimento(this.vencimentoEditado).then(() => {
-
-      this.messageService.add({key: 'tc', severity:'success', summary: 'Salvo', detail: `Vencimento do Tripulante Salvos`});
-
-      this.dados[this.dados.findIndex(x => x.Id == this.vencimentoEditado.Id)] = { ...this.vencimentoEditado };
-
-
-      this.hide()
-
+    if (!retorno.Confirmado) {
+      this.valorEditado = undefined;
+      return;
     }
-    );
 
+    this.api.postAtualizaVencimento(retorno.Certificado).then(x => {
+      var iTripulante = this.dados.findIndex(t => t.Tripulante.Id == x.Tripulante.Id);
+      var iVencimento = this.dados[iTripulante].Vencimentos.findIndex(t => t.Certificado.Id == x.Certificado.Id);
+
+      this.dados[iTripulante].Vencimentos[iVencimento] = new Vencimento(x);
+
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Confirmado', detail: 'Dados Salvos com Sucesso' });
+      this.valorEditado = undefined;
+    }).catch
+      (e => {
+        this.messageService.add({ key: 'tc', severity: 'error', summary: 'Erro', detail: 'Erro ao salvar, verifique os dados.' });
+      })
   }
 
-  hide() {
-    this.vencimentoEditado = undefined;
-  }
-
-  editarVencimento(data) {
-    this.vencimentoEditado = { ...data };
+  editarVencimento(valor: Vencimento) {
+    this.valorEditado = valor;
+    this.exibirModal = true;
   }
 
   rodarRelatorio() {
     this.consulta_ok = false;
-    this.api.getProximosVencimentos(this.dataReferencia).then(x => {
-      this.dados = x;
+    this.api.getProximosVencimentos(this.dataReferencia, this.limiteEmMeses).then(x => {
+      this.dados = x.map(m => new Vencimento(m));
       this.consulta_ok = true;
     });
   }
 
   ngOnInit(): void {
+
+    this.data = this.activatedRoute.snapshot.paramMap.get('data');
+
+    if ( this.data != null)
+      this.dataReferencia = new Date(this.data+'T03:00:00.000Z');
+
     this.rodarRelatorio();
   }
 
   customSort(event: SortEvent) {
     this.consulta_ok = false;
     event.data.sort((data1, data2) => {
+
+      let fields = event.field.split('.');
       let value1 = data1[event.field];
       let value2 = data2[event.field];
+
+      if (fields.length > 1) {
+        value1 = data1[fields[0]][fields[1]];
+        value2 = data2[fields[0]][fields[1]];
+      }
+
       let result = null;
 
       if (value1 == null && value2 != null)

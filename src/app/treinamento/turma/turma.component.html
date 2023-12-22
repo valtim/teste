@@ -1,390 +1,381 @@
-<p-toast position="top-center"></p-toast>
-<!-- <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog> -->
-<!-- <p-messages [(value)]="messages"></p-messages> -->
+<div *ngIf="turmaInterna">
+    <p-toast position="top-center"></p-toast>
+    <!-- <p-confirmDialog header="Confirmation" width="425"></p-confirmDialog> -->
+    <!-- <p-messages [(value)]="messages"></p-messages> -->
 
-<p-toast position="top-center"></p-toast>
+    <p-toast position="top-center"></p-toast>
+    <p-confirmDialog></p-confirmDialog>
 
-<span class="p-buttonset botoes_salvar">
-    <button pButton type="button" label="Salvar" (click)="enviar(turmaInterna)" icon="pi pi-check"
-        class="p-button-raised p-button-rounded" *ngIf="!turmaInterna.Concluido"></button>
-    <button pButton type="button" label="Concluir Treinamento" (click)="onConcluirTreinamento()" icon="pi pi-calendar"
-        class="p-button-raised p-button-rounded" *ngIf="!turmaInterna.Concluido && concluirTreinamento"></button>
-    <button pButton type="button" label="Fechar sem Salvar" (click)="cancelar()" icon="pi pi-times"
-        class="p-button-raised p-button-rounded p-button-warning"></button>
-</span>
+    <span class="p-buttonset botoes_salvar">
+        <button pButton type="button" label="Salvar" (click)="enviar(turmaInterna)" icon="pi pi-check"
+            class="p-button-raised p-button-rounded" *ngIf="!turmaInterna.Concluido"></button>
+        <button pButton type="button" label="Fechar" (click)="cancelar($event)" icon="pi pi-times"
+            class="p-button-raised p-button-rounded p-button-warning"></button>
+        <button pButton type="button" label="Concluir Treinamento" iconPos="right" (click)="confirm($event)"
+            icon="pi pi-thumbs-up" class="p-button-raised p-button-rounded p-button-success"
+            [disabled]="turmaInterna.Status < 3" *ngIf="!turmaInterna.Concluido"></button>
+    </span>
 
+    <p-steps id="status-geral" [model]="statusTurma" [readonly]="true"
+        [activeIndex]="this.turmaInterna.Status"></p-steps>
 
-<p-card>
-    <p-steps id="status-geral" [model]="statusTurma" [readonly]="true" [activeIndex]="indexStatusTurma"></p-steps>
-
-    <div class="p-fluid p-formgrid grid">
-        <div class="p-field col-3">
-            <div class="p-field">
-                <label for="Nome">Equipamentos</label>
-                <p-dropdown [options]="equipamentos" [(ngModel)]="turmaInterna.Equipamento" optionLabel="Nome" dataKey="Id"
-                    [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Equipamento"
-                    appendTo="body"></p-dropdown>
-                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
-                    (completeMethod)="buscar($event, equipamentos, 'Nome')" field="Nome" autoHighlight="true"
-                    appendTo="body" /> -->
+    <p-card>
+        <div class="p-fluid p-formgrid grid">
+            <div class="p-field col-3">
+                <div class="p-field">
+                    <label for="Nome">Equipamentos</label>
+                    <p-dropdown [options]="equipamentos" [(ngModel)]="turmaInterna.Equipamento" optionLabel="Nome"
+                        dataKey="Id" [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Equipamento"
+                        appendTo="body"></p-dropdown>
+                    <!-- <p-autoComplete [(ngModel)]="turmaInterna.Equipamento" [suggestions]="autoCompleteResults"
+                            (completeMethod)="buscar($event, equipamentos, 'Nome')" field="Nome" autoHighlight="true"
+                            appendTo="body" /> -->
+                </div>
+            </div>
+            <div class="p-field col-3">
+                <div class="p-field">
+                    <label for="Nome">Treinamento</label>
+                    <p-dropdown [options]="treinamentos" [(ngModel)]="turmaInterna.Treinamento" optionLabel="Nome"
+                        dataKey="Id" [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Treinamento"
+                        appendTo="body"></p-dropdown>
+                    <!-- <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
+                            (completeMethod)="buscar($event, treinamentos, 'Nome')" field="Nome" autoHighlight="true"
+                            appendTo="body" /> -->
+                </div>
+            </div>
+            <div class="p-field col-3">
+                <div class="p-field">
+                    <label for="Trato">Instrutor</label>
+                    <p-dropdown [options]="instrutores" [(ngModel)]="turmaInterna.Instrutor"
+                        [disabled]="turmaInterna.InstrutorExterno" optionLabel="Trato" [filter]="true" filterBy="Trato"
+                        dataKey="Id" [showClear]="true" placeholder="Tripulante" appendTo="body"></p-dropdown>
+                    <!-- <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
+                            [suggestions]="autoCompleteResults" (completeMethod)="buscar($event, instrutores, 'Trato')"
+                            field="Trato" autoHighlight="true" appendTo="body" /> -->
+                    <p-inputSwitch [(ngModel)]="turmaInterna.InstrutorExterno">
+                    </p-inputSwitch>Instrutor Externo
+                </div>
+            </div>
+            <div class="p-field col-3">
+                <div class="p-field">
+                    <label for="nome">Local</label>
+                    <input pInputText type="text" [(ngModel)]="turmaInterna.Local">
+                    <p-inputSwitch [(ngModel)]="turmaInterna.LocalReservado"></p-inputSwitch>Local do treinamento já foi
+                    reservado
+                </div>
             </div>
         </div>
-        <div class="p-field col-3">
-            <div class="p-field">
-                <label for="Nome">Treinamento</label>
-                <p-dropdown [options]="treinamentos" [(ngModel)]="turmaInterna.Treinamento" optionLabel="Nome" dataKey="Id"
-                    [filter]="true" filterBy="Nome" [showClear]="true" placeholder="Treinamento"
-                    appendTo="body"></p-dropdown>
-                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Treinamento" [suggestions]="autoCompleteResults"
-                    (completeMethod)="buscar($event, treinamentos, 'Nome')" field="Nome" autoHighlight="true"
-                    appendTo="body" /> -->
+    </p-card>
+
+
+    <div class="mt-2">
+        <p-fieldset legend="Programação" [toggleable]="true">
+            <div class="grid">
+                <!-- <div class="p-field  col-5"> -->
+                <div class="col-fixed" style="width:450px">
+                    <label for="nome">Período</label>
+                    <p-calendar dateFormat="dd/mm/yy" [inline]="true" (onSelect)="mudancaDeData($event)"
+                        (onBlur)="mudancaDeData($event)">
+                    </p-calendar>
+                    <div>
+                        {{turmaInterna.CargaHoraria}} minutos / {{periodosSomados}} minutos
+                    </div>
+                </div>
+                <div class="col">
+                    <div *ngFor="let item of turmaInterna.PeriodosDeCurso">{{item.Data | date:'dd/MM/yyyy'}}
+                        <button pButton type="button" label="Adicionar Horário" icon="pi pi-plus"
+                            class="p-button-raised p-button-rounded" (click)="novaHora(item.Data)"></button>
+                        <button pButton type="button" label="Remover Dia" icon="pi pi-trash"
+                            class="p-button-raised p-button-rounded p-button-danger"
+                            (click)="removerData(item.Data)"></button>
+                        <hr>
+                        <p-table [value]="item.Horas" *ngIf="item.Horas.length > 0">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Início</th>
+                                    <th>Fim</th>
+                                    <th>Descrição</th>
+                                    <th>Remunerado</th>
+                                    <!-- <th style="width: 20px;"></th> -->
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-hora let-rowIndex="rowIndex">
+                                <tr>
+                                    <td>
+                                        <p-inputMask type="tel"
+                                            (change)="alterarHoraInicial(rowIndex, item.Data, $event.target.value)"
+                                            [(ngModel)]="hora.HoraInicio" mask="99:99" required>
+                                        </p-inputMask>
+                                    </td>
+                                    <td>
+                                        <p-inputMask type="tel"
+                                            (change)="alterarHoraFinal(rowIndex, item.Data, $event.target.value)"
+                                            [(ngModel)]="hora.HoraTermino" mask="99:99" [required]="true"></p-inputMask>
+                                    </td>
+                                    <td>
+                                        <input pInputText type="text" [(ngModel)]="hora.Descricao" required>
+                                    </td>
+                                    <td>
+                                        <p-checkbox [(ngModel)]="hora.ParaPagamento" [binary]="true"
+                                            inputId="binary"></p-checkbox>
+                                    </td>
+                                    <td>
+                                        {{hora.diferenca}}
+                                    </td>
+                                    <!-- <td><button pButton type="button" icon="pi pi-trash"
+                                            class="p-button-raised p-button-rounded p-button-danger"
+                                            (click)="removerHorario(item, hora.Id)"></button></td> -->
+                                </tr>
+                            </ng-template>
+                        </p-table>
+
+                    </div>
+                    <br />
+                </div>
+
             </div>
-        </div>
-        <div class="p-field col-3">
-            <div class="p-field">
-                <label for="Trato">Instrutor</label>
-                <p-dropdown [options]="tripulantes" [(ngModel)]="turmaInterna.Instrutor"
-                    [disabled]="turmaInterna.InstrutorExterno" optionLabel="Trato" [filter]="true" filterBy="Trato" dataKey="Id"
-                    [showClear]="true" placeholder="Tripulante" appendTo="body"></p-dropdown>
-                <!-- <p-autoComplete [(ngModel)]="turmaInterna.Instrutor" [disabled]="turmaInterna.InstrutorExterno"
-                    [suggestions]="autoCompleteResults" (completeMethod)="buscar($event, instrutores, 'Trato')"
-                    field="Trato" autoHighlight="true" appendTo="body" /> -->
-                <p-inputSwitch [(ngModel)]="turmaInterna.InstrutorExterno">
-                </p-inputSwitch>Instrutor Externo
-            </div>
-        </div>
-        <div class="p-field col-3">
-            <div class="p-field">
-                <label for="nome">Local</label>
-                <input pInputText type="text" [(ngModel)]="turmaInterna.Local">
-                <p-inputSwitch [(ngModel)]="turmaInterna.LocalReservado"></p-inputSwitch>Local do treinamento já foi
-                reservado
-            </div>
-        </div>
+        </p-fieldset>
     </div>
 
 
-    <p-fieldset legend="Programação" [toggleable]="true">
-        <div class="grid">
-            <!-- <div class="p-field  col-5"> -->
-            <div class="col-fixed" style="width:450px">
-                <label for="nome">Período</label>
-                <p-calendar dateFormat="dd/mm/yy" [inline]="true" (onSelect)="mudancaDeData($event)"
-                    (onBlur)="mudancaDeData($event)">
-                </p-calendar>
-                <div>
-                    {{turmaInterna.CargaHoraria}} minutos / {{periodosSomados}} minutos
-                </div>
-            </div>
-            <div class="col">
-                <div *ngFor="let item of turmaInterna.PeriodosDeCurso">{{item.Data | date:'dd/MM/yyyy'}}
-                    <button pButton type="button" label="Adicionar Horário" icon="pi pi-plus"
-                        class="p-button-raised p-button-rounded" (click)="novaHora(item.Data)"></button>
-                    <button pButton type="button" label="Remover Dia" icon="pi pi-trash"
-                        class="p-button-raised p-button-rounded p-button-danger"
-                        (click)="removerData(item.Data)"></button>
-                    <hr>
-                    <p-table [value]="item.Horas" *ngIf="item.Horas.length > 0">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Início</th>
-                                <th>Fim</th>
-                                <th>Descrição</th>
-                                <th>Remunerado</th>
-                                <th style="width: 20px;"></th>
-                            </tr>
+
+    <div class="mt-2">
+        <p-fieldset legend="Participantes" [toggleable]="true">
+            <div class="p-fluid p-formgrid grid">
+                <div class="p-field col-12">
+                    <p-pickList [source]="tripulantes" sourceHeader="Tripulantes"
+                        [target]="turmaInterna.TurmaAluno" targetHeader="Alunos" filterBy="Aluno.Trato"
+                        [showSourceControls]="false" [showTargetControls]="false" [responsive]="true"
+                        [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}">
+                        <ng-template let-item pTemplate="item">
+                            <div>
+                                <b>{{item.Aluno.Trato}} / {{item.Aluno.CodigoANAC}}</b>
+                            </div>
                         </ng-template>
-                        <ng-template pTemplate="body" let-hora let-rowIndex="rowIndex">
-                            <tr>
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <p-inputMask type="tel"
-                                                (change)="alterarHoraInicial(rowIndex, item.Data, $event.target.value)"
-                                                [(ngModel)]="hora.HoraInicio" mask="99:99" required>
-                                            </p-inputMask>
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{hora.HoraInicio}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <p-inputMask type="tel"
-                                                (change)="alterarHoraFinal(rowIndex, item.Data, $event.target.value)"
-                                                [(ngModel)]="hora.HoraTermino" mask="99:99"
-                                                [required]="true"></p-inputMask>
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{hora.HoraTermino}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <input pInputText type="text" [(ngModel)]="hora.Descricao" required>
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{hora.Descricao}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-                                <td pEditableColumn>
-                                    <p-cellEditor>
-                                        <ng-template pTemplate="input">
-                                            <p-checkbox [(ngModel)]="hora.ParaPagamento" [binary]="true"
-                                                inputId="binary"></p-checkbox>
-                                        </ng-template>
-                                        <ng-template pTemplate="output">
-                                            {{hora.ParaPagamento ? "SIM" : "NÃO"}}
-                                        </ng-template>
-                                    </p-cellEditor>
-                                </td>
-                                <td>
-                                    {{hora.diferenca}}
-                                </td>
-                                <td><button pButton type="button" icon="pi pi-trash"
-                                        class="p-button-raised p-button-rounded p-button-danger"
-                                        (click)="removerHorario(item, hora.Id)"></button></td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-
-                </div>
-                <br />
-            </div>
-
-        </div>
-    </p-fieldset>
-
-
-
-
-    <p-fieldset legend="Participantes" [toggleable]="true">
-        <div class="p-fluid p-formgrid grid">
-            <div class="p-field col-12">
-                <p-pickList #picklist [source]="tripulantes" sourceHeader="Tripulantes" [target]="alunos"
-                    targetHeader="Alunos" filterBy="Trato" [showSourceControls]="false" [showTargetControls]="false"
-                    [responsive]="true" [sourceStyle]="{'max-height':'50px'}" [targetStyle]="{'max-height':'50px'}"
-                    (onMoveToTarget)="moverAlunos()" (onMoveToSource)="moverAlunos()"
-                    (onMoveAllToTarget)="moverAlunos()" (onMoveAllToSource)="moverAlunos()">
-                    <ng-template let-item pTemplate="item">
-                        <div>
-                            <b>{{item.Trato}} / {{item.CodigoANAC}}</b>
-                        </div>
-                    </ng-template>
-                </p-pickList>
-            </div>
-        </div>
-        <div class="p-fluid p-formgrid grid">
-            <div class="p-field col-6">
-                <div class="p-field"></div>
-            </div>
-            <div class="p-field col">
-                <div class="p-field"><button pButton (click)="onNotificar()" type="button" label="Notificar Envolvidos"
-                        icon="pi pi-send" class="p-button-raised p-button-rounded"></button></div>
-            </div>
-        </div>
-
-        <p-table [value]="alunos" *ngIf="usuarioLogado.ehAdministrador">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Nome</th>
-                    <th>CHT</th>
-                    <th>Função</th>
-                    <th>CANAC</th>
-                    <th>Confirmação</th>
-                    <th>Avaliação</th>
-                    <th>Notificação</th>
-                    <th>Nota</th>
-                    <th>Ações</th>
-                </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body" let-aluno>
-                <tr>
-                    <td>{{aluno.Trato}}</td>
-                    <td>{{aluno.Licenca}}</td>
-                    <td>{{aluno.Cargo}}</td>
-                    <td>{{aluno.CodigoANAC}}</td>
-                    <td>{{aluno.Confirmado ? "Sim" : "Não"}}</td>
-                    <td>{{aluno.Avaliado ? "Sim" : "Não"}}</td>
-                    <td>{{aluno.Notificado ? "Sim" : "Não"}}</td>
-                    <!--<td>
-                        
-                        {{aluno.Nota == 0 ? "-" : aluno.Nota}}
-                        <p-inputMask type="tel" (change)="avaliarAluno(aluno)" [(ngModel)]="aluno.Nota" mask="99" styleClass="inputMask_menor">
-                        </p-inputMask>
-                    </td>-->
-                    <td pEditableColumn>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-inputMask type="val" (change)="avaliarAluno(aluno)" [(ngModel)]="aluno.Nota"
-                                    mask="9?9" styleClass="inputMask_menor"></p-inputMask>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{aluno.Nota == 0 ? "-" : aluno.Nota}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-                    <td><button pButton type="button" icon="pi pi-trash" (click)="removerAluno(aluno)"
-                            class="p-button-raised p-button-rounded p-button-danger"></button></td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-fieldset>
-    <p-fieldset legend="Deslocamento" [toggleable]="true">
-
-        <span class="p-buttonset">
-            <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
-                class="p-button-raised p-button-rounded"></button>
-        </span>
-
-        <p-table #dt [value]="turmaInterna.Deslocamentos" dataKey="Id" editMode="row">
-
-            <ng-template pTemplate="colgroup">
-                <colgroup>
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:25%">
-                    <col style="width:20%">
-                    <col style="width:5%">
-                </colgroup>
-            </ng-template>
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Tripulante</th>
-                    <th>Data</th>
-                    <th>Hora</th>
-                    <th>A definir</th>
-                    <th>Deslocamento</th>
-                    <th></th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
-                <tr [pEditableRow]="linha">
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown [options]="envolvidos" [(ngModel)]="linha.Tripulante" dataKey="Id"
-                                    optionLabel="Trato" [showClear]="true" placeholder="Tripulante" appendTo="body"
-                                    [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)" filter="true">
-                                </p-dropdown>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
-                                    showIcon="true" (onInput)="mudeiAqui($event, linha)" appendTo="body"
-                                    (onSelect)="mudeiAqui($event, linha)"></p-calendar>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                {{linha.Data | date:'dd/MM/yyyy'}}
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-inputMask type="tel" (change)="mudeiAqui($event, linha)" [(ngModel)]="linha.Hora"
-                                    mask="99:99" [disabled]="linha.Definir">
-                                </p-inputMask>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Hora">{{linha.Hora}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-checkbox [(ngModel)]="linha.Definir" [binary]="true"
-                                inputId="binary"></p-checkbox>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Definir">SIM</span>
-                                <span *ngIf="!linha.Definir">NÃO</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <td pInitEditableRow>
-                        <p-cellEditor>
-                            <ng-template pTemplate="input">
-                                <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id" appendTo="body"
-                                    optionLabel="Nome" [showClear]="true" placeholder="Base" [style]="{'width': '100%'}"
-                                    (onChange)="mudeiAqui($event, linha)">
-                                </p-dropdown>
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
-                            </ng-template>
-                        </p-cellEditor>
-                    </td>
-
-                    <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
-                        class="p-button-raised p-button-rounded p-button-danger"></button>
-
-                </tr>
-            </ng-template>
-        </p-table>
-    </p-fieldset>
-
-
-    <p-fieldset legend="Anexos" [toggleable]="true">
-        <div class="p-fluid p-formgrid grid">
-            <div class="p-field col-6">
-                <h2>Anexos da Turma (são enviados por e-mail)</h2>
-                <div class="p-field">
-                    <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.Anexos' [callbackFunction]="uploadCompletoAnexos"></app-anexos>
+                    </p-pickList>
                 </div>
             </div>
-            <div class="p-field  col-6">
-                <h2>NRT</h2>
-                <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.NRTs' [callbackFunction]="uploadCompletoNRTs"></app-anexos>
-            </div>
-        </div>
-        <div *ngIf="turmaInterna.Treinamento">
-            <div class="p-fluid p-formgrid grid" *ngIf="turmaInterna.Treinamento.Pratico">
+            <div class="p-fluid p-formgrid grid">
                 <div class="p-field col-6">
-                    <h2>SAE</h2>
+                    <div class="p-field"></div>
+                </div>
+                <div class="p-field col">
+                    <div class="p-field"><button pButton (click)="onNotificar()" type="button"
+                            label="Notificar Envolvidos" icon="pi pi-send"
+                            class="p-button-raised p-button-rounded"></button></div>
+                </div>
+            </div>
+
+            <p-table [value]="turmaInterna.TurmaAluno" *ngIf="usuarioLogado.ehAdministrador">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nome</th>
+                        <th>CHT</th>
+                        <th>Função</th>
+                        <th>CANAC</th>
+                        <th>Confirmação</th>
+                        <th>Avaliação</th>
+                        <th>Notificação</th>
+                        <th>Nota</th>
+                        <th>Ações</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-aluno>
+                    <tr>
+                        <td>{{aluno.Aluno.Trato}}</td>
+                        <td>{{aluno.Aluno.Licenca}}</td>
+                        <td>{{aluno.Aluno.Cargo.Nome}}</td>
+                        <td>{{aluno.Aluno.CodigoANAC}}</td>
+                        <td>{{aluno.Confirmado ? "Sim" : "Não"}}</td>
+                        <td>{{aluno.Avaliado ? "Sim" : "Não"}}</td>
+                        <td>{{aluno.Notificado ? "Sim" : "Não"}}</td>
+                        <!--<td>
+                            
+                            {{aluno.Nota == 0 ? "-" : aluno.Nota}}
+                            <p-inputMask type="tel" (change)="avaliarAluno(aluno)" [(ngModel)]="aluno.Nota" mask="99" styleClass="inputMask_menor">
+                            </p-inputMask>
+                        </td>-->
+                        <td pEditableColumn>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputMask type="val" (change)="avaliarAluno(aluno)" [(ngModel)]="aluno.Nota"
+                                        mask="9?9" styleClass="inputMask_menor"></p-inputMask>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{aluno.Nota == 0 ? "-" : aluno.Nota}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <!-- <td><button pButton type="button" icon="pi pi-trash" (click)="removerAluno(aluno)"
+                                class="p-button-raised p-button-rounded p-button-danger"></button></td> -->
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-fieldset>
+    </div>
+
+    <div class="mt-2">
+        <p-fieldset legend="Deslocamento" [toggleable]="true">
+
+            <span class="p-buttonset">
+                <button pButton type="button" label="Novo" (click)="novoDeslocamento()" icon="pi pi-plus"
+                    class="p-button-raised p-button-rounded"></button>
+            </span>
+
+            <p-table #dt [value]="turmaInterna.Deslocamentos" dataKey="Id" editMode="row">
+
+                <ng-template pTemplate="colgroup">
+                    <colgroup>
+                        <col style="width:25%">
+                        <col style="width:25%">
+                        <col style="width:25%">
+                        <col style="width:20%">
+                        <col style="width:5%">
+                    </colgroup>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Tripulante</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+                        <th>A definir</th>
+                        <th>Deslocamento</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-linha let-editing="editing" let-ri="rowIndex">
+                    <tr [pEditableRow]="linha">
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown [options]="turmaInterna.Envolvidos" [(ngModel)]="linha.Tripulante"
+                                        dataKey="Id" optionLabel="Trato" [showClear]="true" placeholder="Tripulante"
+                                        appendTo="body" [style]="{'width': '100%'}"
+                                        (onChange)="mudeiAqui($event, linha)" filter="true">
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Tripulante">{{linha.Tripulante.Trato}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-calendar [(ngModel)]="linha.Data" selectionMode="single" dateFormat="dd/mm/yy"
+                                        showIcon="true" (onInput)="mudeiAqui($event, linha)" appendTo="body"
+                                        (onSelect)="mudeiAqui($event, linha)"></p-calendar>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{linha.Data | date:'dd/MM/yyyy'}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-inputMask type="tel" (change)="mudeiAqui($event, linha)" [(ngModel)]="linha.Hora"
+                                        mask="99:99" [disabled]="linha.Definir">
+                                    </p-inputMask>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Hora">{{linha.Hora}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-checkbox [(ngModel)]="linha.Definir" [binary]="true"
+                                        inputId="binary"></p-checkbox>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Definir">SIM</span>
+                                    <span *ngIf="!linha.Definir">NÃO</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <td pInitEditableRow>
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <p-dropdown [options]="deslocamentos" [(ngModel)]="linha.Deslocamento" dataKey="Id"
+                                        appendTo="body" optionLabel="Nome" [showClear]="true" placeholder="Base"
+                                        [style]="{'width': '100%'}" (onChange)="mudeiAqui($event, linha)">
+                                    </p-dropdown>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span *ngIf="linha.Deslocamento">{{linha.Deslocamento.Nome}}</span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+
+                        <button pButton type="button" (click)="excluirDeslocamento(linha.Id)" icon="pi pi-trash"
+                            class="p-button-raised p-button-rounded p-button-danger"></button>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-fieldset>
+    </div>
+
+
+    <div class="mt-2">
+        <p-fieldset legend="Anexos" [toggleable]="true">
+            <div class="p-fluid p-formgrid grid">
+                <div class="p-field col-6">
+                    <h2>Anexos da Turma (são enviados por e-mail)</h2>
                     <div class="p-field">
-                        <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.SAEs' [callbackFunction]="uploadCompletoSAEs"></app-anexos>
+                        <app-anexos [turma]="turmaInterna.Id" [tipoDeAnexo]="getTipoAnexo('TR-ANEXO').Id" [listaArquivos]='turmaInterna.Anexos'
+                            [callbackFunction]="uploadCompletoAnexos"></app-anexos>
                     </div>
                 </div>
                 <div class="p-field  col-6">
-                    <h2>NEC</h2>
-                    <app-anexos [turma]="turmaInterna.Id" [listaArquivos]='turmaInterna.NECs' [callbackFunction]="uploadCompletoNECs"></app-anexos>
+                    <h2>NRT</h2>
+                    <app-anexos [turma]="turmaInterna.Id" [tipoDeAnexo]="getTipoAnexo('TR-NRT').Id" [listaArquivos]='turmaInterna.NRTs'
+                        [callbackFunction]="uploadCompletoNRTs"></app-anexos>
                 </div>
             </div>
-        </div>
-    </p-fieldset>
+            <div *ngIf="turmaInterna.Treinamento">
+                <div class="p-fluid p-formgrid grid" *ngIf="turmaInterna.Treinamento.Pratico">
+                    <div class="p-field col-6">
+                        <h2>SAE</h2>
+                        <div class="p-field">
+                            <app-anexos [turma]="turmaInterna.Id "[tipoDeAnexo]="getTipoAnexo('TR-SAE').Id"  [listaArquivos]='turmaInterna.SAEs'
+                                [callbackFunction]="uploadCompletoSAEs"></app-anexos>
+                        </div>
+                    </div>
+                    <div class="p-field  col-6">
+                        <h2>NEC</h2>
+                        <app-anexos [turma]="turmaInterna.Id" [tipoDeAnexo]="getTipoAnexo('TR-NEC').Id" [listaArquivos]='turmaInterna.NECs'
+                            [callbackFunction]="uploadCompletoNECs"></app-anexos>
+                    </div>
+                </div>
+            </div>
+        </p-fieldset>
+    </div>
 
 
 
-    <p-fieldset legend="Comentários" [toggleable]="true">
 
-        <textarea [rows]="5" style="width:100%" pInputTextarea [autoResize]="true" [(ngModel)]="comentario"></textarea>
+    <div class="mt-2">
+        <p-fieldset legend="Comentários" [toggleable]="true">
 
-        <div *ngFor="let item of turmaInterna.TurmasComentarios">
-            {{item.Data | date:'dd/MM/yyyy'}} <span *ngIf="item.Instrutor">{{item.Instrutor.Trato}}</span><span
-                *ngIf="item.Usuario">{{item.Usuario.Username}}</span><br />
-            <pre>{{item.Comentario}}</pre>
-            <hr>
-        </div>
+            <textarea [rows]="5" style="width:100%" pInputTextarea [autoResize]="true"
+                [(ngModel)]="comentario"></textarea>
 
-    </p-fieldset>
+            <div *ngFor="let item of turmaInterna.TurmasComentarios">
+                {{item.Data | date:'dd/MM/yyyy'}} <span *ngIf="item.Instrutor">{{item.Instrutor.Trato}}</span><span
+                    *ngIf="item.Usuario">{{item.Usuario.Username}}</span><br />
+                <pre>{{item.Comentario}}</pre>
+                <hr>
+            </div>
 
-</p-card>
+        </p-fieldset>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, isDevMode } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Turma } from 'src/app/models/Turma';
+import { TurmaAluno } from 'src/app/models/TurmaAluno';
 import { _ClasseBasica } from 'src/app/models/_ClasseBasica';
 import { ApiTurmasService } from 'src/app/shared/api.turmas.service';
 
@@ -18,14 +19,18 @@ export class TurmaListComponent implements OnInit {
   tripulantes: any;
 
 
+  turmaSelecionada: Turma;
+
   displayModal = false;
   paraExcluir = [];
 
   dataIni: Date;
   dataFim: Date;
 
-  loading = false;
+  loading:boolean = false;
   locale_pt: any;
+  loadingListas: boolean = true;
+  tiposDeAnexo: any[];
 
   constructor(private api: ApiTurmasService,
     private messageService: MessageService) {
@@ -47,6 +52,17 @@ export class TurmaListComponent implements OnInit {
       this.dataFim = new Date(2023, 3, 30);
     }
 
+
+    this.api.getTurmasListas().then(x => {
+      this.treinamentos = x.Treinamentos;
+      this.equipamentos = x.Equipamentos;
+      this.instrutores = x.Instrutores;
+      this.tripulantes = x.Tripulantes.map(x => new TurmaAluno(x));
+      this.deslocamentos = x.Deslocamentos;
+      this.tiposDeAnexo = x.TiposDeAnexo;
+      this.loadingListas = false;
+    })
+
     //this.rodarRelatorio();
   }
 
@@ -61,7 +77,7 @@ export class TurmaListComponent implements OnInit {
     return totais;
   }
 
-  filtrar(event) {
+  filtrar() {
     this.turmasFiltro = this.turmas.filter(x => x.Filtro.indexOf(this.filtro.toUpperCase()) > -1);
   }
 
@@ -70,11 +86,6 @@ export class TurmaListComponent implements OnInit {
   rodarRelatorio() {
     this.loading = true;
     this.api.getTurmasByData(this.dataIni, this.dataFim).then(x => {
-      this.treinamentos = x.Treinamentos;
-      this.equipamentos = x.Equipamentos;
-      this.instrutores = x.Instrutores;
-      this.tripulantes = x.Tripulantes;
-      this.deslocamentos = x.Deslocamentos;
 
       this.turmas = [];
 
@@ -97,12 +108,14 @@ export class TurmaListComponent implements OnInit {
             turma.DataDeFim = dataFinal;
             if (index_turma == (x.Turmas.length - 1)) {
 
-              this.turmas = x.Turmas;
-              this.turmasFiltro = x.Turmas;
+              this.turmas = x.Turmas.map(x => new Turma(x));
+              this.turmasFiltro = x.Turmas.map(x => new Turma(x));
             }
           }
         });
       });
+
+      this.turmasFiltro = this.turmasFiltro.map(x => new Turma(x));
 
       this.loading = false;
     })
@@ -114,13 +127,10 @@ export class TurmaListComponent implements OnInit {
   }
 
   novaTurma() {
-    let turma = new Turma();
-    turma.Id = this.api.newGuid()
-    turma.Display = true;
+    let turma = new Turma(null);
+    turma.Id = this.api.newGuid();
     turma.Novo = true;
-
-    this.turmas.push(turma);
-    this.editar(turma.Id);
+    this.editar(turma);
     //this.displayModal = true;
   }
 
@@ -130,25 +140,30 @@ export class TurmaListComponent implements OnInit {
     })
   }
 
-  editar(id) {
-    this.turmas.find(x => x.Id == id).Display = true;
-    this.displayModal = true;
+  editar(turma) {
+    this.turmaSelecionada = turma;
   }
 
   ocultar(e) {
+
+    if (e.Cancelar) { return; }
     // if (e.Salvo)
     //   this.messageService.add({ severity: 'success', summary: 'SOl', detail: `A turma foi salva com sucesso!` });
-    let turma = this.turmas.find(x => x.Id == e.Turma.Id);
-    Object.assign(turma, e);
-    turma.Display = false;
-    turma.Novo = false;
-    this.displayModal = false;
-    if (e.DialogResult == 'OK') {
-      Object.assign(turma, e);
+
+    if ( e.Salvar && e.Turma.Novo){
+      this.turmas.splice(0, 0, e.Turma);
     }
-    // if (e.Novo == true) {
-    //   this.turmas = this.turmas.filter(x => x.Id != e.Id);
-    // }
+
+    if (e.Salvar) {
+      let idx = this.turmas.findIndex(x => x.Id == e.Turma.Id);
+      this.turmas = this.turmas.filter(x => x.Id != e.Turma.Id);
+      this.turmas.splice(idx, 0, e.Turma);
+      this.filtrar();
+    }
+
+    if (!e.Fechar) { return; }
+
+    this.turmaSelecionada = undefined;
   }
 
 }

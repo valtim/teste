@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiService } from "./api.service";
+import { lastValueFrom } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -18,11 +19,11 @@ export class ApiGenericoService {
       .toPromise();
   }
 
-  deleteGenerico(tipo: string, itens: any[]): Promise<any> {
+  async deleteGenerico(tipo: string, itens: any[]): Promise<any> {
     //let httpParams = new HttpParams().set('itens', JSON.stringify(itens));
 
     let caminho = `${this.api.url}Generico/delete/${tipo}`;
-    return this.http.post(caminho, itens, this.api.httpOptions).toPromise();
+    return await lastValueFrom(this.http.post(caminho, JSON.stringify(itens), this.api.httpOptions));
   }
 
   postGenerico(tipo: string, dados: any): Promise<any> {
@@ -38,4 +39,6 @@ export class ApiGenericoService {
       )
       .toPromise();
   }
+
+
 }

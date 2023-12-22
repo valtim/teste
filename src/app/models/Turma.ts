@@ -4,9 +4,60 @@ import { TurmaAluno } from "./TurmaAluno";
 
 export class Turma {
   DatasDeDeslocamento: any;
-  constructor() {
-    //this.HorasTurma = this.HorasTurma.map(x=> Object.assign(new HoraTurma, x));
+  constructor(dados: Turma = null) {
+    if (dados == null)
+      return;
+    this.Novo = dados.Novo;
+    this.Id = dados.Id;
+    this.Local = dados.Local;
+    this.LocalReservado = dados.LocalReservado;
+    this.Datas = dados.Datas;
+    this.Concluido = dados.Concluido;
+    this.Instrutor = dados.Instrutor;
+    this.InstrutorExterno = dados.InstrutorExterno;
+    this.Treinamento = dados.Treinamento;
+    this.Equipamento = dados.Equipamento;
+    //    this.Alunos = dados.Alunos;
+    this.TurmasComentarios = dados.TurmasComentarios;
+    this.HorasTurma = dados.HorasTurma.map(x => new HoraTurma(x));
+    this.TurmaAluno = dados.TurmaAluno.map(x => new TurmaAluno(x));
+    this.PeriodosDeCurso = dados.PeriodosDeCurso;
+    this.Cancelado = dados.Cancelado;
+    this.Deslocamentos = dados.Deslocamentos;
+    this.DataDeInicio = dados.DataDeInicio;
+    this.DataDeFim = dados.DataDeFim;
+    this.TempoDeCurso = dados.TempoDeCurso;
+    this.TempoDeCursoNoturno = dados.TempoDeCursoNoturno;
+
+    this.Anexos = dados.Anexos;
+    this.NRTs = dados.NRTs;
+    this.SAEs = dados.SAEs;
+    this.NECs = dados.NECs;
+
+
   }
+
+  public get Status(): number {
+
+
+    if (this.Concluido)
+      return 5;
+
+    if (this.NRTs.length > 0)
+      return 4;
+
+    if (this.TurmaAluno != null && this.TurmaAluno.filter(x => x.Notificado).length > 0)
+      return 3;
+
+    if (this.TurmaAluno != null && this.TurmaAluno.length > 0)
+      return 2;
+
+    if (this.Instrutor != null || this.InstrutorExterno)
+      return 1;
+
+    return 0;
+  }
+
   public Novo: boolean = false;
   public Id: string = "";
   public Local: string = "";
@@ -20,36 +71,15 @@ export class Turma {
   public Alunos: any[] = [];
   public TurmaAluno: TurmaAluno[] = [];
   public TurmasComentarios: any[] = [];
-  public HorasTurma: Array<HoraTurma> = [];
-  public TurmaStatus: any[];  
+  public HorasTurma: HoraTurma[] = [];
   public PeriodosDeCurso: any[] = [];
   public Cancelado: boolean = false;
-
   public Deslocamentos: any[] = [];
-
   public Avanco: number = 0;
   public DataDeInicio: Date;
-  public Filtro: String = "";
-
+  public DataDeFim: Date;
   public TempoDeCurso: String = "";
   public TempoDeCursoNoturno: String = "";
-
-  /*
-  get diferenca(): number {
-
-      if ( this.HorasTurma == undefined ) return 0;
-
-      if ( this.HorasTurma.length == 0)
-          return 0;
-
-      var lista : Array<HoraTurma> = this.HorasTurma.map(x=> Object.assign(new HoraTurma, x));
-
-
-      return lista.map(x=>x.diferenca).reduce((a, b) => a + b, 0)                
-    }
-    */
-
-  //public TurmaStatus : any;
   public Anexos: any[] = [];
   public NRTs: any[] = [];
   public SAEs: any[] = [];
@@ -57,30 +87,74 @@ export class Turma {
   public CargaHoraria: any;
 
   public Display: boolean = false;
+  public TurmaStatus: any[] = [
+    {
+      Ordem: 1,
+      Nome: 'Treinamento Agendado',
+      DataEvento: null,
+      Efetivada: false
+    },
+    {
+      Ordem: 2,
+      Nome: 'Instrutor Designado',
+      DataEvento: null,
+      Efetivada: false
+    },
+    {
+      Ordem: 3,
+      Nome: 'Alunos Matriculados',
+      DataEvento: null,
+      Efetivada: false
+    },
+    {
+      Ordem: 4,
+      Nome: 'Envolvidos Notificados',
+      DataEvento: null,
+      Efetivada: false
+    },
+    {
+      Ordem: 5,
+      Nome: 'NRT Cadastrada',
+      DataEvento: null,
+      Efetivada: false
+    },
+    {
+      Ordem: 6,
+      Nome: 'Treinamento Concluído',
+      DataEvento: null,
+      Efetivada: false
+    }
+  ];
 
 
-  /*public virtual string Local { get; set; }
-          public virtual bool LocalReservado { get; set; }
-          public virtual IList<DataTurma> Datas { get; set; }   
-          public virtual DateTime InicioTreinamento { get; set; }
-          public virtual DateTime FimTreinamento { get; set; }
-          public virtual bool Concluido { get; set; } = false;
-          //public virtual string Nrt { get; set; }
-  
-          public virtual Tripulante Instrutor { get; set; }
-          public virtual Certificado Treinamento { get; set; }
-          public virtual TipoDeAeronave TipoEquipamento { get; set; }  
-          public virtual IList<Tripulante> Alunos { get; set; }
-          public virtual IList<TurmasComentarios> TurmasComentarios { get; set; }
-          public virtual IList<HoraTurma> HorasTurma { get; set; }
-          public virtual IList<TurmaStatus> TurmaStatus { get; set; }
-          public virtual IList<ArquivoTurma> Anexos { get; set; }
-          public virtual IList<ArquivoNRT> NRTs { get; set; }
-          */
+  get Envolvidos() {
+    var envolvidos = this.TurmaAluno.map(x => ({ Id: x.Aluno.Id, Trato: x.Aluno.Trato }));
 
-  // setTurma(turma: any) {
-  //     this = turma;
-  //   }
+    if (this.Instrutor != null) {
+      const instrutor = { Id: this.Instrutor.Id, Trato: this.Instrutor.Trato };
+      envolvidos.push(instrutor);
+    }
+    return envolvidos;
+  }
+
+
+  get ListaDeAlunos(): string {
+    if (this.TurmaAluno == null)
+      return "";
+    if (this.TurmaAluno.length == 0)
+      return "";
+    return this.TurmaAluno.map(x => x.Aluno.Trato).join(', ');
+  }
+
+  get Filtro(): string {
+    var itens = [];
+    itens.push(this.Treinamento.Nome);
+    if (this.Instrutor != null)
+      itens.push(this.Instrutor.Trato);
+    itens = itens.concat(this.TurmaAluno.map(y => y.Aluno.Trato));
+    return itens.join(', ').toUpperCase();
+  }
+
 
   getTurma() {
     return this;

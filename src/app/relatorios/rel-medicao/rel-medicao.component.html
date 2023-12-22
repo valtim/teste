@@ -1,5 +1,5 @@
 <app-titulo titulo="Dados de Medição" [carregando]="!tudoPronto"></app-titulo>
-
+<p-toast position="top-center"></p-toast>
 
 <p-toolbar class=" d-print-none">
 
@@ -18,10 +18,17 @@
             optionValue="Id" optionLabel="Nome" appendTo="body"></p-dropdown>
         <button pButton type="button" icon="pi pi-search" iconPos="left" (click)="rodarRelatorio()"
             class="ml-2"></button>
+        <button pButton type="button" icon="pi pi-file-excel" iconPos="left" (click)="rodarRelatorio(true)"
+            class="ml-2"></button>
     </div>
 
 
 
+</p-toolbar>
+
+
+<p-toolbar *ngIf="!prefixos" class="m-4">
+    Selecione os dados e clique em PESQUISAR.
 </p-toolbar>
 
 <p-tabView *ngIf="prefixos && tudoPronto" (onChange)="definirAbaSelecionada($event)">
@@ -63,20 +70,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let dia of prefixo.Dias;">
-                    <td>{{dia.Data | date: "dd/MM/yyyy"}}</td>
-                    <td>{{dia.FolhaDeBordo}}</td>
-                    <td>{{dia.Backup}}</td>
-                    <td>{{dia.Base}}</td>
-                    <td>{{dia.Tempo}}</td>
-                    <td>{{dia.CombustivelConsumido}}</td>
-                    <td>{{dia.TempoGlosada}}</td>
-                    <td>{{dia.CombustivelAbastecido}}</td>
-                    <td>{{dia.TempoFaturado}}</td>
-                    <td>{{dia.Observacao}}</td>
-                    <td>{{dia.Periodo}}</td>
-                    <td>{{dia.IndisponibilidadeDiaria}}</td>
-                </tr>
+                <ng-template ngFor let-dia let-i="index" [ngForOf]="prefixo.Dias">
+                <!-- <tr *ngFor="let dia of prefixo.Dias;"> -->
+                    <tr>
+                        <td>{{dia.Data | date: "dd/MM/yyyy"}}</td>
+                        <td>{{dia.FolhaDeBordo}}</td>
+                        <td>{{dia.Backup}}</td>
+                        <td>{{dia.Base}}</td>
+                        <td>{{dia.Tempo}}</td>
+                        <td>{{dia.CombustivelConsumido}}</td>
+                        <td><p-inputMask mask="99:99" [id]="dia.Id" [(ngModel)]="dia.TempoGlosada.toInput" placeholder="__:__"
+                                *ngIf="dia.PodeGlosa" size="5" [showClear]=true (onComplete)="funMudou(dia)" (onClear)="funLimpar(dia)"></p-inputMask>
+                        </td>
+                        <td>{{dia.CombustivelAbastecido}}</td>
+                        <td>{{dia.TempoFaturado}}</td>
+                        <td>{{dia.Observacao}}</td>
+                        <td>{{dia.Periodo}}</td>
+                        <td>{{dia.IndisponibilidadeDiaria}}</td>
+                    </tr>
+                    <!-- (keyup)="funMudou(prefixo.Dias, i)" -->
+                </ng-template>
             </tbody>
         </table>
 

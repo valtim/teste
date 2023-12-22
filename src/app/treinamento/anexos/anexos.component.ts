@@ -35,13 +35,13 @@ export class AnexosComponent implements OnInit {
       formData.append(`file[${index}]`, arq, nameFile);
     });
 
-    this.api.postUploadSimples(formData).then((a) => {
+    this.api.postReferenciaTipo(this.turma, this.tipoDeAnexo, formData).then((a) => {
 
-      this.listaArquivos = [];
+      // this.listaArquivos = [];
 
-      a.forEach((arq, index) => {
-        this.listaArquivos.push(arq);
-      });
+      // a.forEach((arq, index) => {
+        this.listaArquivos.push(a);
+      // });
 
       let message = '1 arquivo carregado com sucesso!';
       if ( a.length > 1)
@@ -71,6 +71,8 @@ export class AnexosComponent implements OnInit {
   constructor(private api: ApiTurmasService, private messageService: MessageService ) { }
 
   ngOnInit() {
+
+
     // if (this.turma) {
     //   this.getListOfFile();
     // }

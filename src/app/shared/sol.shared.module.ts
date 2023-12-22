@@ -28,7 +28,6 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MenubarModule } from 'primeng/menubar';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -51,6 +50,7 @@ import { BadgeModule } from 'primeng/badge';
 import { TooltipModule } from 'primeng/tooltip';
 import {SidebarModule} from 'primeng/sidebar';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
   declarations: [
@@ -104,6 +104,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TooltipModule,
     SidebarModule,
     InputNumberModule,
+    ConfirmPopupModule,
   ],
   exports: [
     AccordionModule,
@@ -154,6 +155,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TooltipModule,
     SidebarModule,
     InputNumberModule,
+    ConfirmPopupModule
     
   ],
 })

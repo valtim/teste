@@ -54,6 +54,7 @@ export class EditarGerenciarTripulantesComponent implements OnInit {
       this.ultimoPesoKg = this.convertPoundsToKilograms(this.tripulante.UltimoPeso);
       this.tripulante.ComandanteEm = this.converterDataBancoParaTela(this.tripulante.ComandanteEm);
       this.tripulante.InstrutorEm = this.converterDataBancoParaTela(this.tripulante.InstrutorEm);
+      this.tripulante.DataLicenca = this.converterDataBancoParaTela(this.tripulante.DataLicenca);
     });
   }
 

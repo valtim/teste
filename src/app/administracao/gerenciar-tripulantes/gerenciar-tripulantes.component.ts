@@ -57,7 +57,7 @@ export class GerenciarTripulantesComponent implements OnInit {
     if ((this.cacheTripulantes != undefined) && (this.cacheTripulantes != null)) {
       this.tripulantes = this.cacheTripulantes.filter(
         t => (
-            t.Trato.includes(this.filtro) || 
+            t.Trato.toUpperCase().includes(this.filtro.toUpperCase()) || 
             String(t.CodigoANAC).includes(this.filtro) ||
             String(t.Matricula).includes(this.filtro)
           ) &&

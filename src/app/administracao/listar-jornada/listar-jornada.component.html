@@ -6,11 +6,12 @@
         <button type="button" pButton pRipple label="Data"></button>
         <p-calendar [(ngModel)]="data" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"
             ></p-calendar>
-        <!-- <p-calendar [(ngModel)]="data" selectionMode="single" dateFormat="mm-yy"  showIcon="true"
-            [inputStyle]="{'width':'100px'}"></p-calendar> -->
 
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
-            class="p-ml-2"></button>
+            class="ml-2"></button>
+
+            <button pButton type="button" icon="pi pi-print" iconPos="right" label="Imprimir" (click)="imprimirPdf()"
+            class="ml-2" [disabled]="!dados"></button>
     </div>
     <div class="col"></div>
 </div>
@@ -25,6 +26,7 @@
     <p-table [value]="dados" styleClass="p-datatable-striped">
         <ng-template pTemplate="header" let-columns>
             <tr>
+                <th style="width:20px"></th>
                 <th>TRIPULANTE</th>
                 <th>INÍCIO</th>
                 <th>FIM</th>
@@ -38,25 +40,26 @@
 
 
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr (click)="rowData.Visible = true">
-                <td>
+            <tr>
+                <td><p-checkbox [(ngModel)]="jornadasSelecionadas" [value]="rowData.Id"></p-checkbox></td>
+                <td (click)="rowData.Visible = true">
                     {{rowData['Tripulante'].Trato}}
                 </td>
-                <td>
+                <td (click)="rowData.Visible = true">
                     {{rowData['DataDeInicio'] | date:'dd/MM/yyyy'}}
                 </td>
-                <td>
+                <td (click)="rowData.Visible = true">
                     {{rowData['DataDeFim'] | date:'dd/MM/yyyy'}}
                 </td>
-                <td>
+                <td (click)="rowData.Visible = true">
                     <span *ngIf="rowData['Alertas'] == 0 ">válido</span>
                     <span *ngIf="rowData['Alertas'] > 0">{{rowData['Alertas']}} alertas</span>
                 </td>
-                <td>
+                <td (click)="rowData.Visible = true">
                     <span *ngIf="rowData['ConfirmacaoDoTripulante']">{{rowData['ConfirmacaoDoTripulante'] |
                         date:'dd/MM/yyyy'}}</span>
                 </td>
-                <td>
+                <td (click)="rowData.Visible = true">
                     <span *ngIf="rowData['ConfirmacaoDoAssistente']">{{rowData['ConfirmacaoDoAssistente'] |
                         date:'dd/MM/yyyy'}}</span>
                 </td>
@@ -64,7 +67,7 @@
                     <span *ngIf="rowData['ConfirmacaoDoGerente']">{{rowData['ConfirmacaoDoGerente'] |
                         date:'dd/MM/yyyy'}}</span>
                 </td> -->
-                <td><button pButton type="button" icon="pi pi-print" iconPos="left"
+                <td (click)="rowData.Visible = true"><button pButton type="button" icon="pi pi-print" iconPos="left"
                         (click)="imprimir(rowData.Id)"></button></td>
             </tr>
         </ng-template>

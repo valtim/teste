@@ -62,11 +62,6 @@
         <button type="button" class="label-fixo-2" pButton pRipple label="Matrícula"></button>
         <input pInputText type="text"[(ngModel)]="tripulante.Matricula">
     </div>
-    
-    <div class="col-6">        
-        <button type="button" class="label-fixo-2" pButton pRipple label="Licença"></button>
-        <input pInputText type="text"[(ngModel)]="tripulante.Licenca">                    
-    </div>
     <div class="col-6">        
         <button type="button" class="label-fixo" pButton pRipple label="Data Nascimento"></button>
         <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="dataNascimento" selectionMode="single" dateFormat="dd/mm/yy"
@@ -105,15 +100,25 @@
         <button type="button" pButton pRipple label="Kg"></button>
     </div>
 
+    
+    <div class="col-6">        
+        <button type="button" class="label-fixo-2" pButton pRipple label="Licença"></button>
+        <input pInputText type="text" [(ngModel)]="tripulante.Licenca">                    
+    </div>
+
+    
+    
+    <div class="col-6">        
+        <button type="button" class="label-fixo" pButton pRipple label="Data Licença"></button>
+        <p-calendar [inputStyle]="{'width':'162px'}" [(ngModel)]="tripulante.DataLicenca" selectionMode="single" dateFormat="dd/mm/yy"
+            showIcon="true"></p-calendar>                    
+    </div>
 
     <div class="col-6">        
         <button type="button" class="label-fixo-2" pButton pRipple label="Voo com Instrutor"></button>
         <input type="checkbox" [(ngModel)]="tripulante.SoVoaComInstrutor">
     </div>
-
-    <div class="col-6"></div>
-
-    
+   
 
     <div class="col-6">        
         <button type="button" class="label-fixo" pButton pRipple label="Data Comando"></button>

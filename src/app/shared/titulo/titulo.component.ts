@@ -32,7 +32,7 @@ export class TituloComponent implements OnInit {
         window.location.href = "/logoff";
         return;
       }
-      this.messageService.add({ severity: 'error', summary: 'Sessão Encerrada', detail: 'Erro ao tentar buscar e-mail do usuário, tente logar novamente' });
+      // this.messageService.add({ severity: 'error', summary: 'Sessão Encerrada', detail: 'Erro ao tentar buscar e-mail do usuário, tente logar novamente' });
     })
   }
 

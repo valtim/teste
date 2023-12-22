@@ -4,6 +4,9 @@
   "newProjectRoot": "projects",
   "projects": {
     "sol": {
+      "i18n": {
+        "sourceLocale": "pt"
+      },
       "projectType": "application",
       "schematics": {},
       "root": "",

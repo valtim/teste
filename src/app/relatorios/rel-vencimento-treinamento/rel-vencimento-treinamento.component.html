@@ -1,100 +1,88 @@
 <app-titulo [titulo]="titulo" [carregando]="(!consulta_ok)"></app-titulo>
 
-
-<p-card>
-    <span class="p-float-label">
-        <p-calendar [(ngModel)]="dataReferencia" dateFormat="dd/mm/yy" id="data" [disabled]="!consulta_ok"></p-calendar>
-        <label htmlFor="data">Data de Referência</label>
+<p-toolbar>
+    <div class="p-toolbar-group-start mt-2">
+        <span class="p-float-label mr-2">
+            <p-calendar [(ngModel)]="dataReferencia" dateFormat="dd/mm/yy" id="data" [disabled]="!consulta_ok"></p-calendar>
+            <label htmlFor="data">Data de Referência</label>
+        </span>
+        <span class="p-float-label mr-2">
+            <input pInputText id="meses" [(ngModel)]="limiteEmMeses" />
+            <label htmlFor="meses">Limite em meses</label>
+        </span>
         <button pButton type="button" icon="pi pi-search" iconPos="right" label="Perquisar" (click)="rodarRelatorio()"
             [disabled]="!consulta_ok"></button>
-    </span>
-</p-card>
-
-<p-toast position="top-center" key="tc"></p-toast>
+    </div>
+</p-toolbar>
 
 
-<p-dialog [(visible)]="vencimentoEditado" [style]="{width: '450px'}" header="Vencimento" [modal]="true"
-    styleClass="p-fluid">
-    <ng-template pTemplate="content">
-        <h4>{{vencimentoEditado.Trato}}</h4>
-        <h4>{{vencimentoEditado.Nome}}</h4>
-        <div class="input-group mb-3">
-            <div class="input-group-append">
-                <span class="input-group-text">Vencimento</span>
-            </div>
-            <p-inputMask [mask]="vencimentoEditado.Certificado.Mascara" [(ngModel)]="vencimentoEditado.ValorExibido"
-                [disabled]="vencimentoEditado.NaoControlado"></p-inputMask>
+<!-- <table>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr *ngFor="let item of dados">
+            <td>{{item.Certificado.Nome}}</td>
+            <td>{{item.Tripulante.Trato}}</td>
+            <td>{{item.ValorExibido}}</td>
+        </tr>
+</table> -->
 
-        </div>
 
 
-        <div class="input-group mb-3">
-            <div class="input-group-append">
-                <span class="input-group-text">N/A</span>
-                <p-inputSwitch [(ngModel)]="vencimentoEditado.NaoControlado"></p-inputSwitch>
-            </div>
-        </div>
-
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger" (click)="hide()"></button>
-        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success" (click)="save()"></button>
-    </ng-template>
-</p-dialog>
 <p-table [value]="dados" (sortFunction)="customSort($event)" [customSort]="true" styleClass="p-datatable-striped">
 
     <ng-template pTemplate="caption">
         {{titulo}}
     </ng-template>
-    <ng-template pTemplate="header" let-columns>
+    <ng-template pTemplate="header">
         <tr>
-            <!-- <th style="width:50px"></th> -->
-            <th pSortableColumn="Nome"><p-sortIcon field="code"></p-sortIcon>
+            <th pSortableColumn="Certificado.Nome"><p-sortIcon field="Certificado.Nome"></p-sortIcon>
                 Curso
             </th>
-            <th pSortableColumn="Trato"><p-sortIcon field="code"></p-sortIcon>
+            <th pSortableColumn="Tripulante.Trato"><p-sortIcon field="Tripulante.Trato"></p-sortIcon>
                 Tripulante
             </th>
-            <th pSortableColumn="DataDeVencimento"><p-sortIcon field="code"></p-sortIcon>
+            <th pSortableColumn="DataDeVencimento"><p-sortIcon field="DataDeVencimento"></p-sortIcon>
                 Vencimento
             </th>
-
         </tr>
         <tr>
             <th>
-                <p-columnFilter type="text" field="Nome">Curso</p-columnFilter>
+                <p-columnFilter type="text" field="Certificado.Nome">Curso</p-columnFilter>
             </th>
             <th>
-                <p-columnFilter type="text" field="Trato">Tripulante</p-columnFilter>
+                <p-columnFilter type="text" field="Tripulante.Trato">Tripulante</p-columnFilter>
             </th>
             <th>
-
             </th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <ng-template pTemplate="body" let-rowData>
         <tr>
-
             <td (click)="editarVencimento(rowData)">
-                {{rowData["Nome"]}}
+                {{rowData.Certificado.Nome}}
             </td>
-
-
             <td (click)="editarVencimento(rowData)">
-                {{rowData["Trato"]}}
+                {{rowData.Tripulante.Trato}}
             </td>
-
-
             <td (click)="editarVencimento(rowData)">
-                {{rowData["ValorExibido"]}}
+                {{rowData.ValorExibido}}
             </td>
-
-
-
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
         <b>SOL SISTEMAS</b>
     </ng-template>
 </p-table>
+
+<div *ngIf="valorEditado && exibirModal">
+    <p-dialog [header]="valorEditado.Tripulante.Trato + ' - ' + valorEditado.Certificado.Nome.toUpperCase()"
+        [(visible)]="exibirModal" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+        <app-editar-vencimento [dados]="valorEditado" (retorno)="retornoCarteira($event)">
+        </app-editar-vencimento>
+    </p-dialog>
+</div>
+
+<p-toast position="top-center" key="tc"></p-toast>

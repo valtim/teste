@@ -44,7 +44,7 @@ export class CrudComponent implements OnInit {
   colunasExibidas: string[];
   todasAsColunas: any;
 
-  tiposBasicos: string[] = ["Boolean", "DateTime", "String", "Double", "TimeSpan", "Tripulante", "Int32"];
+  tiposBasicos: string[] = ["Boolean", "DateTime", "DateTime?", "String", "Double", "TimeSpan", "Tripulante", "Int32"];
   listas: any[];
 
 
@@ -163,7 +163,7 @@ export class CrudComponent implements OnInit {
     this.apiGenerico.deleteGenerico(this.tipo, this.valoresSelecionados).then(
       () => {
         this.pesquisar();
-        this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
+        this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
     ).catch(() => {
       this.messageService.add({ severity: 'error', summary: 'SOL Sistemas', detail: 'Erro ao salvar' });
@@ -180,7 +180,7 @@ export class CrudComponent implements OnInit {
             delete x.Modificado;
           });
           this.verBotoes();
-          this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
+          this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
         }
 
       ).catch(() => {
@@ -195,7 +195,7 @@ export class CrudComponent implements OnInit {
           delete x.Modificado;
         });
         this.verBotoes();
-        this.messageService.add({ severity: 'Success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
+        this.messageService.add({ severity: 'success', summary: 'SOL Sistemas', detail: 'Salvo com sucesso' });
       }
 
     ).catch(() => {
